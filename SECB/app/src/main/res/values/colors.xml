@@ -1,0 +1,29 @@
+<resources>
+	<!-- GBA Colors -->
+    <color name="gba_black">#090708</color>
+    <color name="gba_categ_row">#eaecee</color>
+    <color name="gba_blog_det_desc">#1d1d1d</color>
+    <color name="gba_blog_list_lgrey">#e6e7e8</color>
+    <color name="gba_menu_item_select">#4Acdd1d5</color>
+	<color name="gba_blog_det_darker">#52000000</color>
+	
+    <color name="link_color">#324f85</color>
+    <color name="light_green">#ccda2d</color>
+    <color name="orange">#f26f1f</color>
+    <color name="yellow">#fdc500</color>
+    <color name="appwidget_text">#ffffffff</color>
+    <color name="blue_color">#085394</color>
+    <color name="darkgrey_color">#555555</color>
+    <color name="dimgrey_color">#696969</color>
+    <color name="light_grey">#bdb9b9</color>
+    <color name="dark_white">#ece7e7</color>
+    <color name="red">#FF0000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="purble">#8E35EF</color>
+    <color name="light_purble">#8847b5</color>
+    <color name="light_blue">#14b8f6</color>
+    <color name="purple_shide">#FF0080</color>
+    <color name="dark_blue">#006699</color>
+</resources>
