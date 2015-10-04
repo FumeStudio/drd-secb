@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="loading">جاري التحميل..</string>
+
+    <!--Login-->
+    <string name="login_forget_pass">نسيت كلمة السر</string>
+    <string name="login_login">دخول</string>
+    <string name="login_signup">حساب جديد</string>
+    <string name="email_address">البريد الالكتروني</string>
+    <string name="password">كلمة السر</string>
+
+    <!--sign up-->
+    <string name="sign_up_registeration_url">http://secb.linkdev.com/ar/Pages/QuickRegistration.aspx</string>
+    <string name="lost_connection">تم قطع الارسال !</string>
+
+<!--reset password-->
+    <string name="resetPassword">ارسال الرابط</string>
+
+<!--menu-->
+    <string name="home">Home</string>
+    <string name="eservices">E-Services</string>
+    <string name="news">News</string>
+    <string name="eguide">E-Guide</string>
+    <string name="events">Events</string>
+    <string name="images">Images</string>
+    <string name="videos">Videos</string>
+    <string name="aboutus">About Us</string>
+    <string name="contactus">Contac Us</string>
+</resources>

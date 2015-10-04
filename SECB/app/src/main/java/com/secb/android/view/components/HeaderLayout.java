@@ -29,7 +29,6 @@ public class HeaderLayout extends LinearLayout
 	public HeaderLayout(Context context, AttributeSet attrs)
   {
 	  super(context, attrs);
-	  
 	  init();
   }
 	private void init()
@@ -55,8 +54,17 @@ public class HeaderLayout extends LinearLayout
   }
 	private void handleButtonsEvents()
 	{
-		if(imageViewMenuHeader != null && menuOnClickListener != null)
-			imageViewMenuHeader.setOnClickListener(menuOnClickListener);
+		if(imageViewMenuHeader != null  )
+		{
+			if(menuOnClickListener != null)
+			{
+				imageViewMenuHeader.setOnClickListener(menuOnClickListener);
+				imageViewMenuHeader.setVisibility(View.VISIBLE);
+			}
+			else {
+				imageViewMenuHeader.setVisibility(View.GONE);
+			}
+		}
 		
 		if(imageViewBackHeader != null)
 		{
@@ -84,6 +92,15 @@ public class HeaderLayout extends LinearLayout
 	public void disableBackButton()
 	{
 		enableBackButton(null);
+	}
+	public void enableMenuButton(OnClickListener menuOnClickListener)
+	{
+		this.menuOnClickListener = menuOnClickListener;
+		handleButtonsEvents();
+	}
+	public void disableMenuButton()
+	{
+		enableMenuButton(null);
 	}
 	
 	public void setHeaderBGColor(int color) {

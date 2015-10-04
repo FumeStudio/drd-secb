@@ -1,0 +1,28 @@
+<!-- email-->
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/email_icon"
+        android:layout_gravity="center_vertical"
+        android:visibility="visible"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/imgv_emailIcon"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/login_input_text_size"
+        android:text=""
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/login_input_text_margin_left"
+        android:padding="@dimen/login_input_text_pad"
+        android:singleLine="true"
+        android:hint="@string/email_address"
+        android:layout_toLeftOf="@+id/imgv_emailIcon"
+        android:id="@+id/edt_email" />
+</RelativeLayout>

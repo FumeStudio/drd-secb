@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_logo_margin_top">56dp</dimen> <!-- 112PX - HEIGHT -->
+    <dimen name="login_logo_margin_bottom">43dp</dimen> <!-- 85PX - HEIGHT -->
+    <dimen name="login_page_horizontal_pad">24dp</dimen> <!-- 48PX - WIDTH -->
+    <dimen name="login_input_container_height">100dp</dimen> <!-- 200PX - HEIGHT -->
+    <dimen name="login_input_container_pad_left">25dp</dimen> <!-- 50PX - WIDTH -->
+    <dimen name="login_input_container_pad_right">20dp</dimen> <!-- 40PX - WIDTH -->
+    <dimen name="login_input_container_vertical_pad">18dp</dimen> <!-- 35PX - WIDTH -->
+    <dimen name="login_input_text_margin_left">10dp</dimen> <!-- 20PX - WIDTH -->
+    <dimen name="login_input_text_pad">9dp</dimen> <!-- 17PX - HEIGHT -->
+    <dimen name="login_input_text_size">14sp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="login_input_pass_margin_top">24dp</dimen> <!-- 48PX - HEIGHT -->
+    <dimen name="login_forget_pass_vertical_margin">20dp</dimen> <!-- 40PX - HEIGHT -->
+    <dimen name="login_forget_pass_text_size">12dp</dimen> <!-- 22PX - HEIGHT -->
+    <dimen name="login_button_height">46dp</dimen> <!-- 91PX - WIDTH -->
+    <dimen name="login_button_text_size">17sp</dimen> <!-- 33PX - WIDTH -->
+    <dimen name="login_button_signup_margin_top">10dp</dimen> <!-- 20PX - WIDTH -->
+
+    <dimen name="forget_pass_input_container_vertical_pad">13dp</dimen> <!-- 25PX - HEIGHT -->
+
+    <dimen name="menu_item_icon_horizontal_margin">28dp</dimen> <!-- 55PX - WIDTH -->
+    <dimen name="menu_item_vertical_margin">38dp</dimen> <!-- 75PX - HEIGHT -->
+    <dimen name="menu_margin_top">50dp</dimen> <!-- 100PX - HEIGHT -->
+    <dimen name="menu_item_text_size">14sp</dimen> <!-- 28PX - HEIGHT -->
+
+</resources>
