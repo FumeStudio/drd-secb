@@ -35,7 +35,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.google.android.gms:play-services:7.3.0'
     compile 'commons-io:commons-io:+'
     compile 'org.apache.httpcomponents:httpmime:4.2.3'
