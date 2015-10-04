@@ -26,5 +26,6 @@
         android:padding="@dimen/login_input_text_pad"
         android:singleLine="true"
         android:text="@string/home"
+        android:textColor="@color/white"
         android:textSize="@dimen/menu_item_text_size" />
 </RelativeLayout>

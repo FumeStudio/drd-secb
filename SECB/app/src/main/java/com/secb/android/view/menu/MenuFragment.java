@@ -18,16 +18,9 @@ import java.util.ArrayList;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
     View view;
-    int []icons= {R.drawable.home_icon,R.drawable.eservices_icon,R.drawable.news_icon,
-            R.drawable.eguide_icon,R.drawable.events_icon,R.drawable.images_icon,
-            R.drawable.videos_icon,R.drawable.aboutus_icon,R.drawable.contactus_icon};
+    int []icons;
 
-    String[] strings = {getResources().getString(R.string.home),getResources().getString(R.string.eservices),
-            getResources().getString(R.string.news),getResources().getString(R.string.eguide),
-            getResources().getString(R.string.events),getResources().getString(R.string.images),
-            getResources().getString(R.string.videos),getResources().getString(R.string.aboutus),
-            getResources().getString(R.string.contactus)
-    };
+    String[] strings ;
     ArrayList<MenuItemObject> menuItemsList;
 
     RecyclerView menuItemRecyclerView;
@@ -50,7 +43,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             return view;
         } else
         {
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.menu, container, false);
+//            view = LayoutInflater.from(getActivity()).inflate(R.layout.menu, container, false);
+            view = inflater.inflate(R.layout.menu, container, false);
             initializeMenu(view);
             handleButtonsEvents();
             applyFonts();
@@ -60,6 +54,16 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initializeMenu(View view) {
+        strings =new String[] {getResources().getString(R.string.home),getResources().getString(R.string.eservices),
+                getResources().getString(R.string.news),getResources().getString(R.string.eguide),
+                getResources().getString(R.string.events),getResources().getString(R.string.images),
+                getResources().getString(R.string.videos),getResources().getString(R.string.aboutus),
+                getResources().getString(R.string.contactus)
+        };
+        icons= new int[]{R.drawable.home_icon,R.drawable.eservices_icon,R.drawable.news_icon,
+                R.drawable.eguide_icon,R.drawable.events_icon,R.drawable.images_icon,
+                R.drawable.videos_icon,R.drawable.aboutus_icon,R.drawable.contactus_icon};
+
         menuItemRecyclerView = (RecyclerView)view.findViewById(R.id.menuItemRecyclerView);
         menuItemRecyclerAdapter = new MenuItemRecyclerAdapter(getActivity(), getMenuItems());
         /*adapter.setRecyclerClickListener(this);*/

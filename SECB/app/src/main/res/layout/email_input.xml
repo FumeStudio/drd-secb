@@ -24,5 +24,6 @@
         android:singleLine="true"
         android:hint="@string/email_address"
         android:layout_toRightOf="@+id/imgv_emailIcon"
-        android:id="@+id/edt_email" />
+        android:id="@+id/edt_email"
+        />
 </RelativeLayout>
