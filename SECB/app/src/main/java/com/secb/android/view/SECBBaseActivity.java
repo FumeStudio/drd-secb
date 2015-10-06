@@ -37,16 +37,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     private static final String TAG = "SECBBaseActivity";
 
     ArrayList<FragmentBackObserver> backObservers = null;    // observers list to hold the back of inner fragments
-    private boolean mAllowSideMenu = true;                                    // to allow sliding menu or not
+    private boolean mAllowSideMenu = true;                                    // to allow sliding menu_layout or not
     private int mActivityLayout;                                                        // inner layout to be inflatted
 
-    MenuFragment fragmentLeftMenu;                                                    // menu fragment
+    MenuFragment fragmentLeftMenu;                                                    // menu_layout fragment
 
-    private DrawerLayout mDrawerLayout;                                            // menu holder
+    private DrawerLayout mDrawerLayout;                                            // menu_layout holder
     private HeaderLayout headerLayoutHome;                                    // header layout
 
     public static SECBBaseActivity activity;
-    public static MenuItem menuItemSelected = null;                    // Current menu item selected
+    public static MenuItem menuItemSelected = null;                    // Current menu_layout item selected
 
     public int MENU_GRAVITY=Gravity.START;
 
@@ -143,7 +143,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             backObservers = new ArrayList<FragmentBackObserver>();
 
 
-            //if arabic open menu from right to left
+            //if arabic open menu_layout from right to left
             if(Utilities.getLanguage().startsWith("ar"))
                 MENU_GRAVITY =Gravity.END;
             //else open from left to right
@@ -190,13 +190,13 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
-    // Enable header 'menu' button
+    // Enable header 'menu_layout' button
     public void enableHeaderMenuButton(View.OnClickListener menuOnClickListener) {
         headerLayoutHome.enableMenuButton(menuOnClickListener);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
     }
 
-    // Disable header 'menu' button
+    // Disable header 'menu_layout' button
     public void disableHeaderMenuButton() {
         headerLayoutHome.disableMenuButton();
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -372,7 +372,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
 
     /*
-     * Handle open/close menu
+     * Handle open/close menu_layout
      */
     public void handleMenuAppearance()
     {

@@ -43,8 +43,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             return view;
         } else
         {
-//            view = LayoutInflater.from(getActivity()).inflate(R.layout.menu, container, false);
-            view = inflater.inflate(R.layout.menu, container, false);
+//            view = LayoutInflater.from(getActivity()).inflate(R.layout.menu_layout, container, false);
+            view = inflater.inflate(R.layout.menu_layout, container, false);
             initializeMenu(view);
             handleButtonsEvents();
             applyFonts();
@@ -100,7 +100,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         ((SECBBaseActivity) getActivity()).onMenuItemPressed(v.getId());
     }
 
-    //make list of items used in the sliding menu
+    //make list of items used in the sliding menu_layout
     private ArrayList<MenuItemObject> getMenuItems()
     {
         if(menuItemsList!=null && menuItemsList.size()==icons.length)

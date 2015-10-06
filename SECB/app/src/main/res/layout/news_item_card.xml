@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/event_card_margin"
+    android:paddingBottom="@dimen/event_card_margin"
+    android:weightSum="5"
+    android:background="@color/white"
+    >
+
+    <ImageView
+    android:id="@+id/imgv_eventImg"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="match_parent"
+    android:layout_marginRight="@dimen/event_card_margin"
+    android:src="@drawable/event_card_img"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="3.5"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/event_card_margin"
+        android:weightSum="2.5">
+
+        <TextView
+            android:id="@+id/txtv_eventTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:textColor="@color/sceb_dark_blue"
+            android:textSize="@dimen/event_card_h1_text_size"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/txtv_eventDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:textColor="@color/darkgrey_color"
+            android:textSize="@dimen/event_card_h2_text_size"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/txtv_event_timeValue"
+                android:layout_width="match_parent"
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:text="2:30 PM"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:textColor="@color/darkgrey_color"
+                android:textSize="@dimen/event_card_h3_text_size"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

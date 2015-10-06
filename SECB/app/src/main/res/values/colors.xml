@@ -11,6 +11,18 @@
     <color name="sceb_dark_blue">#122d53</color>
     <color name="sceb_orange">#e5952f</color>
     <color name="sceb_grey">#6e6f79</color>
+    <color name="sceb_blue">#0f305d</color>
+
+    <color name="colorAccent">#006699</color>
+    <color name="colorPrimary">#0f305d</color>
+    <color name="colorPrimaryDark">#122d53</color>
+
+    <color name="graph_color_closed">#7ec241</color>
+    <color name="graph_color_inbox">#ee402e</color>
+    <color name="graph_color_inProgress">#23a9df</color>
+
+
+
 
     <color name="link_color">#324f85</color>
     <color name="light_green">#ccda2d</color>

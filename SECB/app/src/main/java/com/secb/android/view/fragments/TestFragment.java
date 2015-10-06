@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.secb.android.R;
-import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.FragmentBackObserver;
+import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.menu.MenuItem;
 
 public class TestFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener
 {
 	View view;
+
 	
 	public static TestFragment newInstance()
 	{

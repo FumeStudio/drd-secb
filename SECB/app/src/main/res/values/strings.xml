@@ -21,21 +21,21 @@
     <string name="conn_error">Connection error occurred, try again later</string>
     <string name="unhandled_error">Unhandled Error</string>
 
-<!--Login-->
+    <!--Login-->
     <string name="login_forget_pass">Forget Password</string>
     <string name="login_login">Login</string>
     <string name="login_signup">Sign Up</string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
 
-<!--sign up-->
+    <!--sign up-->
     <string name="sign_up_registeration_url">http://secb.linkdev.com/en/Pages/QuickRegistration.aspx</string>
     <string name="lost_connection">The connection is lost !</string>
 
-<!--reset password-->
+    <!--reset password-->
     <string name="resetPassword">Reset Password</string>
 
-<!--menu-->
+    <!--menu_layout-->
     <string name="home">Home</string>
     <string name="eservices">E-Services</string>
     <string name="news">News</string>
@@ -45,5 +45,19 @@
     <string name="videos">Videos</string>
     <string name="aboutus">About Us</string>
     <string name="contactus">Contac Us</string>
+    <string name="services_requests">Services Requests</string>
+    <string name="last_news">Last News</string>
+
+    <string name="graph_title_closed">
+        <![CDATA[<strong>Closed</strong> <br/>Requests]]>
+    </string>
+
+    <string name="graph_title_inbox">
+        <![CDATA[<strong>Inbox</strong> <br/>Requests]]>
+    </string>
+    <string name="graph_title_inProgress">
+        <![CDATA[<strong>In Progress</strong> <br/>Requests]]>
+    </string>
+    <string name="view_all_news">View All News</string>
 
 </resources>

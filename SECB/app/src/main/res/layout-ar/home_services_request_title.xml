@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutContainerHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageViewIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/home_graphs_card_padding"
+        android:src="@drawable/eservices_icon_2" />
+
+    <TextView
+        android:id="@+id/textViewTitleHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/imageViewIcon"
+        android:textColor="@color/sceb_dark_blue"
+        android:text="@string/services_requests"
+        android:textSize="@dimen/header_title_text_size"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:gravity="right"/>
+
+</RelativeLayout>

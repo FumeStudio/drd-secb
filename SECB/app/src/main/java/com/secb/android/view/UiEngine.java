@@ -1,6 +1,7 @@
 package com.secb.android.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,42 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class UiEngine {
-	public static void initialize(Context context) {
+	public static void initialize(Context context)
+	{
 		Fonts.TEST_FONT = null; // Typeface.createFromAsset(context.getAssets(), "fonts/test_font.otf");
-		// TODO:: add ur font in assets/fonts and use it
+
+		Fonts.HVCN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTPro-HvCn.otf");
+		Fonts.BDCN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTStd-BdCn.otf");
+		Fonts.CN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTStd-Cn.otf");
+		Fonts.LTCN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTStd-LtCn.otf");
 	}
 
+
+	//return color represents the value to be used in progress wheel , bar chart
+	public static int getValueColor(int mval)
+	{
+		if (mval >= 0 && mval < 35)
+		{
+			return Color.parseColor("#ff0000");
+		}
+		else if (mval >= 35 && mval < 75)
+		{
+			return Color.parseColor("#ffaa00");
+		}
+		else if (mval>= 75 && mval <= 100)
+		{
+			return Color.parseColor("#57de57");
+		}
+
+		return 0;
+	}
 	public static class Fonts {
 		public static Typeface TEST_FONT;
+
+		public static Typeface HVCN;
+		public static Typeface BDCN;
+		public static Typeface CN;
+		public static Typeface LTCN;
 	}
 
 	public static void applyCustomFont(TextView textView, Typeface typeface) {

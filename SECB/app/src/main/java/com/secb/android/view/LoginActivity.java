@@ -47,7 +47,7 @@ public class LoginActivity extends SECBBaseActivity {
                 startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
                 break;
             case R.id.btn_login:
-                displayToast("login");
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 break;
             case R.id.btn_signUp:
                 startActivity(new Intent(LoginActivity.this,SignUpActivity.class));

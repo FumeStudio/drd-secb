@@ -23,4 +23,29 @@
     <dimen name="menu_item_vertical_margin">26dp</dimen> <!-- 75PX - HEIGHT -->
     <dimen name="menu_margin_top">35dp</dimen> <!-- 100PX - HEIGHT -->
     <dimen name="menu_item_text_size">9sp</dimen> <!-- 28PX - HEIGHT -->
+    <dimen name="menu_width">222dp</dimen> <!-- 500PX - WIDTH -->
+
+
+    <dimen name="header_menu_icon_margin_start">16dp</dimen> <!-- 38PX - WIDTH -->
+    <dimen name="header_menu_icon_margin_end">32dp</dimen> <!-- 73PX - WIDTH -->
+    <dimen name="header_title_text_size">14sp</dimen><!-- 40PX - HEIGHT -->
+
+
+    <dimen name="home_graphs_card_margin_top">3dp</dimen> <!-- 10PX - HEIGHT -->
+    <dimen name="home_graphs_card_height">115dp</dimen> <!-- 324PX - HEIGHT -->
+    <dimen name="home_graphs_card_padding">8dp</dimen> <!-- 25PX - HEIGHT -->
+    <dimen name="home_graphs_card_vertical_margin">5dp</dimen> <!-- 15PX - HEIGHT -->
+    <dimen name="home_graphs_wheel_size">45dp</dimen> <!-- 128PX - HEIGHT -->
+    <dimen name="home_graphs_value_text_size">17dp</dimen> <!-- 48PX - HEIGHT -->
+    <dimen name="home_graphs_title_text_size">9dp</dimen> <!-- 27PX - HEIGHT -->
+    <dimen name="home_graphs_horizontal_margin">31dp</dimen> <!-- 90PX - HEIGHT -->
+
+    <dimen name="event_card_margin">7dp</dimen> <!-- 20PX - HEIGHT -->
+    <dimen name="event_card_h1_text_size">9dp</dimen> <!-- 28PX - HEIGHT -->
+    <dimen name="event_card_h2_text_size">9dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="event_card_h3_text_size">7dp</dimen> <!-- 22PX - HEIGHT -->
+
+    <dimen name="home_news_recycler_height">110dp</dimen> <!-- 310PX - HEIGHT -->
+    <dimen name="home_news_recycler_items_margin">8dp</dimen> <!-- 25PX - HEIGHT -->
+
 </resources>
