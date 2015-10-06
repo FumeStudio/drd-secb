@@ -34,12 +34,12 @@ public class SplashActivity extends SECBBaseActivity {
     }
 
     /*
-	 * Redirect to home page
+	 * Redirect to home_fragment page
 	 */
     private void redirect()
     {
-//		// User logged in -> open home
-//		if (UserManager.getInstance().isUserLoggedIn())
+//		// User logged in -> open home_fragment
+//		if (UserManager.getLayoutView().isUserLoggedIn())
 //			startActivity(new Intent(SplashActivity.this, MainActivity.class)); // TestActivity
 //
 //      User not logged in -> open Login

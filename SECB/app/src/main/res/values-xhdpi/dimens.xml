@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="base_filter_btn_margin">21dp</dimen> <!-- 42PX - HEIGHT -->
+
+
+    <dimen name="login_container_width">312dp</dimen> <!-- 624PX - WIDTH -->
     <dimen name="login_logo_margin_top">56dp</dimen> <!-- 112PX - HEIGHT -->
     <dimen name="login_logo_margin_bottom">43dp</dimen> <!-- 85PX - HEIGHT -->
     <dimen name="login_page_horizontal_pad">24dp</dimen> <!-- 48PX - WIDTH -->
@@ -16,6 +21,8 @@
     <dimen name="login_button_height">46dp</dimen> <!-- 91PX - WIDTH -->
     <dimen name="login_button_text_size">17sp</dimen> <!-- 33PX - WIDTH -->
     <dimen name="login_button_signup_margin_top">10dp</dimen> <!-- 20PX - WIDTH -->
+    <dimen name="login_logo_img_width">147dp</dimen> <!-- 294PX - WIDTH -->
+    <dimen name="login_logo_img_height">108dp</dimen> <!-- 215PX - HEIGHT -->
 
     <dimen name="forget_pass_input_container_vertical_pad">13dp</dimen> <!-- 25PX - HEIGHT -->
 
@@ -45,6 +52,13 @@
     <dimen name="event_card_h2_text_size">13dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="event_card_h3_text_size">11dp</dimen> <!-- 22PX - HEIGHT -->
 
+    <dimen name="home_event_card_height">100dp</dimen> <!-- 200PX - HEIGHT -->
+
     <dimen name="home_news_recycler_height">155dp</dimen> <!-- 310PX - HEIGHT -->
     <dimen name="home_news_recycler_items_margin">13dp</dimen> <!-- 25PX - HEIGHT -->
+    <dimen name="news_item_card_height">70dp</dimen> <!-- 140PX - HEIGHT -->
+
+    <dimen name="news_filter_padding">15dp</dimen> <!-- 30PX - WIDTH -->
+    <dimen name="news_filter_text_size">11dp</dimen> <!-- 21PX - HEIGHT -->
+    <dimen name="news_filter_btn_text_size">15dp</dimen> <!-- 30PX - HEIGHT -->
 </resources>

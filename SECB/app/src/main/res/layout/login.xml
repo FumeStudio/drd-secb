@@ -6,20 +6,26 @@
     android:background="@drawable/bg"
     android:paddingLeft="@dimen/login_page_horizontal_pad"
     android:paddingRight="@dimen/login_page_horizontal_pad"
+    android:gravity="center"
     >
+<LinearLayout
 
-<!--logo-->
+    android:layout_width="@dimen/login_container_width"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--logo-->
     <ImageView
-        android:layout_width="294px"
-        android:layout_height="215px"
+        android:layout_width="@dimen/login_logo_img_width"
+        android:layout_height="@dimen/login_logo_img_height"
         android:src="@drawable/login_logo"
         android:scaleType="centerCrop"
         android:visibility="visible"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/login_logo_margin_top"
         android:layout_marginBottom="@dimen/login_logo_margin_bottom"/>
 
-<!--input fields-->
+    <!--input fields-->
     <!-- @dimen/login_input_container_height-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,79 +36,44 @@
         android:paddingTop="@dimen/login_input_container_vertical_pad"
         android:paddingBottom="@dimen/login_input_container_vertical_pad"
         android:orientation="vertical">
-    <!-- email-->
+        <!-- email-->
         <!-- email-->
         <include layout="@layout/email_input"/>
-        <!--<TableRow android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/email_icon"
-                android:layout_gravity="center_vertical"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/login_input_text_size"
-                android:layout_marginLeft="@dimen/login_input_text_margin_left"
-                android:padding="@dimen/login_input_text_pad"
-                android:singleLine="true"
-                android:hint="@string/email_address"
-                android:id="@+id/edt_email" />
-        </TableRow>-->
-    <!--password-->
+        <!--password-->
         <include layout="@layout/password_input"/>
-       <!-- <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/login_input_pass_margin_top">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/password_icon"
-                android:layout_gravity="center"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/login_input_text_size"
-                android:layout_marginLeft="@dimen/login_input_text_margin_left"
-                android:padding="@dimen/login_input_text_pad"
-                android:singleLine="true"
-                android:hint="@string/password"
-                android:id="@+id/edt_password" />
-        </TableRow>-->
     </LinearLayout>
 
-<!--forget pass-->
+    <!--forget pass-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:text="@string/login_forget_pass"
-        android:textColor="@color/white"
+        android:textColor="@color/secb_light_text"
         android:textSize="@dimen/login_forget_pass_text_size"
         android:layout_marginTop="@dimen/login_forget_pass_vertical_margin"
         android:layout_marginBottom="@dimen/login_forget_pass_vertical_margin"
         android:id="@+id/txtv_forgetPassword" />
 
-<!--login button-->
+    <!--login button-->
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/login_button_height"
         android:text="@string/login_login"
         android:textSize="@dimen/login_button_text_size"
-        android:textColor="@color/sceb_dark_blue"
+        android:textColor="@color/secb_dark_text"
         android:background="@color/sceb_orange"
         android:id="@+id/btn_login" />
 
-<!--sign up button-->
+    <!--sign up button-->
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/login_button_height"
         android:layout_marginTop="@dimen/login_button_signup_margin_top"
         android:text="@string/login_signup"
         android:textSize="@dimen/login_button_text_size"
-        android:textColor="@color/white"
+        android:textColor="@color/secb_light_text"
         android:background="@color/sceb_grey"
         android:id="@+id/btn_signUp" />
+</LinearLayout>
 </LinearLayout>

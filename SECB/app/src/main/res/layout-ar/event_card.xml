@@ -22,18 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
-            android:textColor="@color/sceb_dark_blue"
+            android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h1_text_size"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:maxLines="2"/>
 
         <TextView
             android:id="@+id/txtv_eventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
-            android:textColor="@color/darkgrey_color"
+            android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/event_card_h2_text_size"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:maxLines="2"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +60,7 @@
                 android:text="2:30 PM"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:textColor="@color/sceb_dark_blue"
+                android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"/>
 
             <ImageView
@@ -76,7 +78,7 @@
                 android:text="Jaddah"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:textColor="@color/sceb_dark_blue"
+                android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"/>
 
             <ImageView
@@ -94,7 +96,7 @@
                 android:text="Organization"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:textColor="@color/sceb_dark_blue"
+                android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"/>
         </LinearLayout>
     </LinearLayout>

@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/imageViewIcon"
-        android:textColor="@color/sceb_dark_blue"
+        android:textColor="@color/secb_dark_text"
         android:text="@string/last_news"
         android:textSize="@dimen/header_title_text_size"
         android:textStyle="bold"

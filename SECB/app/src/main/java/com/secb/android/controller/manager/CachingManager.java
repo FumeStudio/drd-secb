@@ -37,9 +37,9 @@ public class CachingManager {
 	
 	
 	protected CachingManager(){
-		//contentCachingDirectory = MazikaController.getInstance().getAppContext().getDir(FOLDER_NAME_CACHED_DATA, Context.MODE_protected);
-		//albumCachingDirectory = MazikaController.getInstance().getAppContext().getDir(FOLDER_NAME_CACHED_ALBUMS, Context.MODE_protected);
-		//categoryCachingDirectory = MazikaController.getInstance().getAppContext().getDir(FOLDER_NAME_CACHED_CATEGORY_ALBUMS, Context.MODE_protected);
+		//contentCachingDirectory = MazikaController.getLayoutView().getAppContext().getDir(FOLDER_NAME_CACHED_DATA, Context.MODE_protected);
+		//albumCachingDirectory = MazikaController.getLayoutView().getAppContext().getDir(FOLDER_NAME_CACHED_ALBUMS, Context.MODE_protected);
+		//categoryCachingDirectory = MazikaController.getLayoutView().getAppContext().getDir(FOLDER_NAME_CACHED_CATEGORY_ALBUMS, Context.MODE_protected);
 	}
 	
 	protected boolean isObjectCachedAndNotExpired(long expireInHours, File objectFile) {

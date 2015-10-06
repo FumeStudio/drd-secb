@@ -40,7 +40,7 @@
             android:layout_toLeftOf="@+id/imageViewMenuHeader"
             android:paddingLeft="@dimen/header_menu_icon_margin_end"
             android:text="@string/home"
-            android:textColor="@color/white"
+            android:textColor="@color/secb_light_text"
             android:textSize="@dimen/header_title_text_size"
             android:textStyle="bold"
             android:visibility="visible" />

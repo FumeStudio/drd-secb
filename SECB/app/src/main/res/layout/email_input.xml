@@ -1,29 +1,29 @@
 <!-- email-->
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/imgv_emailIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/email_icon"
-        android:layout_gravity="center_vertical"
-        android:visibility="visible"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:id="@+id/imgv_emailIcon"/>
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/email_icon"
+        android:visibility="visible" />
 
     <EditText
+        android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/login_input_text_size"
-        android:text=""
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/login_input_text_margin_left"
+        android:layout_toRightOf="@+id/imgv_emailIcon"
+        android:hint="@string/email_address"
         android:padding="@dimen/login_input_text_pad"
         android:singleLine="true"
-        android:hint="@string/email_address"
-        android:layout_toRightOf="@+id/imgv_emailIcon"
-        android:id="@+id/edt_email"
-        />
+        android:text=""
+        android:textColor="@color/secb_dark_text"
+        android:textSize="@dimen/login_input_text_size" />
 </RelativeLayout>

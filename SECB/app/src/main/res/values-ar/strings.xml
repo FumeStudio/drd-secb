@@ -41,4 +41,13 @@
     </string>
 
     <string name="view_all_news">عرض الكل</string>
+    <string name="filter_type">Type</string>
+    <string name="filter_time">Time</string>
+    <string name="filter_time_from">From</string>
+    <string name="filter_time_to">To</string>
+    <string name="news_filter_all_types">All Types</string>
+    <string name="news_filter_economic_type">Economic Type</string>
+    <string name="news_filter_political_type">Political Type</string>
+    <string name="news_filter_public_type">Public Type</string>
+    <string name="filters_apply_filter">Apply Filters</string>
 </resources>

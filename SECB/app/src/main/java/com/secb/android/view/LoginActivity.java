@@ -1,6 +1,7 @@
 package com.secb.android.view;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ public class LoginActivity extends SECBBaseActivity {
         btn_signUp = (Button) findViewById(R.id.btn_signUp);
 
         txtv_forgetPassword.setOnClickListener(this);
+        txtv_forgetPassword.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         btn_login.setOnClickListener(this);
         btn_signUp.setOnClickListener(this);
     }

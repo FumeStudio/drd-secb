@@ -24,6 +24,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
+
+        <!--filter button-->
+        <ImageView
+            android:id="@+id/imgv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/filter_icon"
+            android:layout_alignBottom="@+id/simple_fragment"
+            android:layout_alignRight="@+id/simple_fragment"
+            android:layout_marginBottom="@dimen/base_filter_btn_margin"
+            android:layout_marginRight="@dimen/base_filter_btn_margin"
+            />
+        <!--filter screen-->
+        <LinearLayout
+            android:id="@+id/filter_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/simple_fragment"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
     </RelativeLayout>
 
     <include android:id="@+id/menuContainer" layout="@layout/menu_fagment"/>

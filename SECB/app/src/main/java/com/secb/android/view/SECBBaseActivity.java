@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
@@ -50,7 +52,25 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     public int MENU_GRAVITY=Gravity.START;
 
+    public int FILTER_NEWS=1;
+    public int FILTER_EVENTS=2;
+    public int FILTER_ORGANIZERS=3;
+    public int FILTER_EGUIDE=4;
 
+    //icon when clicked , display filter view
+    ImageView imgv_filter;
+
+    //filter of fragments
+    LinearLayout filterLayout;
+
+    //holder in base activity for holding fragment's filters
+    LinearLayout filterLayoutHolder;
+
+    //view of the filter to be loaded inside base activity holder
+    private View filterLayoutView;
+
+    //on click listener for the apply filters button
+    View.OnClickListener applyFilterClickListener;
 
 //	private /*static*/ ImageFetcher mImageFetcher;
 
@@ -107,6 +127,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             setContentView(R.layout.main);
 
             ViewGroup contentLayout = (ViewGroup) findViewById(R.id.simple_fragment);
+            imgv_filter = (ImageView) findViewById(R.id.imgv_filter);
+            imgv_filter.setVisibility(View.GONE);
+            imgv_filter.setOnClickListener(this);
+            filterLayoutHolder = (LinearLayout) findViewById(R.id.filter_holder);
+            filterLayoutHolder.setVisibility(View.GONE);
 
             if (mActivityLayout != -1)
                 LayoutInflater.from(this).inflate(mActivityLayout, contentLayout, true);
@@ -166,8 +191,62 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //		}
     }
 
+
     private void handleButtonsEvents() {
     }
+
+    /*
+     * *****************************************************************************
+     * *********************** Filter Layout Part **********************************
+     * *****************************************************************************
+     */
+/*filter button*/
+    public void showFilterButton(boolean isVisible){
+        imgv_filter.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    public void setApplyFilterClickListener(View.OnClickListener listener){
+        applyFilterClickListener =(listener);
+    }
+
+    public void setFilterLayout(LinearLayout filterLayout) {
+        this.filterLayout = filterLayout;
+    }
+
+    public void setFilterLayoutView(View filterLayoutView) {
+        this.filterLayoutView = filterLayoutView;
+    }
+
+    public void handleFilterAppearance(View filterLayoutView) {
+        if(filterLayoutHolder !=null)
+        {
+            filterLayoutHolder.setVisibility(View.VISIBLE);
+            LoadFilterLayout();
+        }
+    }
+
+    public void LoadFilterLayout()
+    {
+        if(filterLayoutHolder !=null && filterLayoutView!=null)
+        {
+            filterLayoutHolder.removeAllViews();
+            filterLayoutHolder.addView(filterLayoutView);
+            if (filterLayoutView.findViewById(R.id.btn_applyFilter)!=null &&applyFilterClickListener!=null)
+            {
+                filterLayoutView.findViewById(R.id.btn_applyFilter).setOnClickListener(applyFilterClickListener);
+            }
+            if (filterLayoutView.findViewById(R.id.layout_dark_layer)!=null){
+                filterLayoutView.findViewById(R.id.layout_dark_layer).setOnClickListener(this);
+            }
+        }
+    }
+
+    public void hideFilterLayout()
+    {
+        if(this.filterLayoutHolder !=null)
+            this.filterLayoutHolder.setVisibility(View.GONE);
+    }
+
 
     /*
      * *****************************************************************************
@@ -278,7 +357,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         addFragment(fragment, true, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, isAnimated);
     }
 
-    public void finishFragmentOrActivity() {
+    public void finishFragmentOrActivity()
+    {
+        hideFilterLayout();
         FragmentManager manager = getSupportFragmentManager();
         Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
         if (manager.getBackStackEntryCount() > 0)
@@ -351,7 +432,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         return super.onKeyDown(keyCode, event);
     }
 
-    public boolean onBackButtonPressed() {
+    public boolean onBackButtonPressed()
+    {
         Log.v("FragmentStackAct", "Back " + getSupportFragmentManager().getBackStackEntryCount() + "  ");
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -422,11 +504,18 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             case R.id.imageViewMenuHeader: // Menu
                 handleMenuAppearance();
                 break;
+            case R.id.layout_dark_layer:
+                hideFilterLayout();
+                break;
+            case R.id.imgv_filter:
+                handleFilterAppearance(this.filterLayoutView);
+                break;
 
             default:
                 break;
         }
     }
+
 
     @Override
     protected void onDestroy() {
