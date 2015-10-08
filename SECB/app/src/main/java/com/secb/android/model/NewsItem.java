@@ -2,7 +2,9 @@ package com.secb.android.model;
 
 import android.graphics.Bitmap;
 
-public class NewsItem
+import java.io.Serializable;
+
+public class NewsItem implements Serializable
 {
     public Bitmap newsItemImage;
     public String newsItemTitle;

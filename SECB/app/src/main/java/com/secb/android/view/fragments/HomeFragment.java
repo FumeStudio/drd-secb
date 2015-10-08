@@ -126,7 +126,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	  switch (v.getId())
     {
 		case R.id.txtv_viewAllNews:
-			((MainActivity)getActivity()).startNewsActivity();
+			((MainActivity)getActivity()).openNewsListFragment();
 			default:
 				break;
 		}

@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +18,15 @@ import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.DividerItemDecoration;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
 import com.secb.android.view.components.news_recycler.NewsItemRecyclerAdapter;
+import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
 
 import java.util.ArrayList;
 
-public class NewsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
+public class NewsListFragment extends SECBBaseFragment
+        implements FragmentBackObserver, View.OnClickListener ,RecyclerCustomClickListener
+
+{
     RecyclerView newsRecyclerView;
     NewsItemRecyclerAdapter newsItemRecyclerAdapter;
     ArrayList<NewsItem> newsList;
@@ -30,8 +36,8 @@ public class NewsFragment extends SECBBaseFragment implements FragmentBackObserv
     private NewsFilterLayout newsFilterLayout=null;
 
 
-    public static NewsFragment newInstance() {
-        NewsFragment fragment = new NewsFragment();
+    public static NewsListFragment newInstance() {
+        NewsListFragment fragment = new NewsListFragment();
         return fragment;
     }
 
@@ -110,7 +116,7 @@ public class NewsFragment extends SECBBaseFragment implements FragmentBackObserv
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtv_viewAllNews:
-                ((MainActivity) getActivity()).startNewsActivity();
+                ((MainActivity) getActivity()).openNewsListFragment();
            /* case R.id.imgv_filter:
                 ((SECBBaseActivity) getActivity()).displayToast("NewsFragment + filterIconClicked");
                 */
@@ -135,6 +141,7 @@ public class NewsFragment extends SECBBaseFragment implements FragmentBackObserv
         newsList = new ArrayList<>();
         NewsItem newsItem = new NewsItem();
 
+        newsItem.newsItemImage=(BitmapFactory.decodeResource(getActivity().getResources(),R.drawable.news_img_sample));
         newsItem.newsItemTitle = "Saudi Exhibition and Convention";
         newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
         newsItem.newsItemDate = "2 days ago";
@@ -196,8 +203,18 @@ public class NewsFragment extends SECBBaseFragment implements FragmentBackObserv
         newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
+        newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
     }
 
+    @Override
+    public void onItemClicked(View v, int position)
+    {
+        ((MainActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
+    }
 
+    @Override
+    public void onItemLongClicked(View v, int position)
+    {
+
+    }
 }

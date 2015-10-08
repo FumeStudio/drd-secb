@@ -26,6 +26,7 @@ import com.flurry.android.FlurryAgent;
 import com.secb.android.R;
 import com.secb.android.model.Consts;
 import com.secb.android.view.components.HeaderLayout;
+import com.secb.android.view.components.LayoutAnimator;
 import com.secb.android.view.menu.MenuFragment;
 import com.secb.android.view.menu.MenuItem;
 
@@ -71,6 +72,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     //on click listener for the apply filters button
     View.OnClickListener applyFilterClickListener;
+    private LayoutAnimator layoutAnimator;
 
 //	private /*static*/ ImageFetcher mImageFetcher;
 
@@ -131,7 +133,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             imgv_filter.setVisibility(View.GONE);
             imgv_filter.setOnClickListener(this);
             filterLayoutHolder = (LinearLayout) findViewById(R.id.filter_holder);
-            filterLayoutHolder.setVisibility(View.GONE);
+            filterLayoutHolder.setVisibility(View.VISIBLE);
+            layoutAnimator = new LayoutAnimator(filterLayoutHolder);
+            layoutAnimator.moveDownFirst();
 
             if (mActivityLayout != -1)
                 LayoutInflater.from(this).inflate(mActivityLayout, contentLayout, true);
@@ -217,15 +221,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         this.filterLayoutView = filterLayoutView;
     }
 
-    public void handleFilterAppearance(View filterLayoutView) {
-        if(filterLayoutHolder !=null)
-        {
-            filterLayoutHolder.setVisibility(View.VISIBLE);
-            LoadFilterLayout();
-        }
-    }
-
-    public void LoadFilterLayout()
+    public void prepareFilerLayout()
     {
         if(filterLayoutHolder !=null && filterLayoutView!=null)
         {
@@ -238,13 +234,26 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             if (filterLayoutView.findViewById(R.id.layout_dark_layer)!=null){
                 filterLayoutView.findViewById(R.id.layout_dark_layer).setOnClickListener(this);
             }
+            showFilterLayout();
         }
     }
 
     public void hideFilterLayout()
     {
         if(this.filterLayoutHolder !=null)
-            this.filterLayoutHolder.setVisibility(View.GONE);
+        {
+//            this.filterLayoutHolder.setVisibility(View.GONE);
+            layoutAnimator.hidePreviewPanel();
+        }
+    }
+
+    public void showFilterLayout()
+    {
+        if(this.filterLayoutHolder !=null)
+        {
+//            this.filterLayoutHolder.setVisibility(View.VISIBLE);
+            layoutAnimator.showPreviewPanel();
+        }
     }
 
 
@@ -342,7 +351,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         addFragment(fragment, addToBackStack, transition, true);
     }
 
-    public void addFragment(Fragment fragment, boolean addToBackStack, int transition, boolean isAnimated) {
+    public void addFragment(Fragment fragment, boolean addToBackStack, int transition, boolean isAnimated)
+    {
+
         Log.v("addFragment", addToBackStack + " " + fragment);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (addToBackStack && isAnimated)
@@ -357,17 +368,47 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         addFragment(fragment, true, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, isAnimated);
     }
 
+
+    //always add fragment to back stack with a tag
+    public void addFragment(Fragment fragment, String Tag, int transition, boolean isAnimated)
+    {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (isAnimated)
+            ft.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out, R.anim.push_right_in, R.anim.push_right_out);
+        ft.replace(R.id.simple_fragment, fragment);
+        ft.addToBackStack(Tag);
+        ft.commit();
+    }
+
+
     public void finishFragmentOrActivity()
     {
         hideFilterLayout();
         FragmentManager manager = getSupportFragmentManager();
         Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
-        if (manager.getBackStackEntryCount() > 0)
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
             getSupportFragmentManager().popBackStack();
+
         else {
             moveTaskToBack(true);
         }
     }
+
+
+    public void finishFragmentOrActivity(String name)
+    {
+        hideFilterLayout();
+        FragmentManager manager = getSupportFragmentManager();
+        Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
+        boolean removed = false;
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
+            getSupportFragmentManager().popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        else {
+            moveTaskToBack(true);
+        }
+    }
+
 
     /*
      * pop to root of fragments list
@@ -508,7 +549,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
                 hideFilterLayout();
                 break;
             case R.id.imgv_filter:
-                handleFilterAppearance(this.filterLayoutView);
+                prepareFilerLayout();
                 break;
 
             default:

@@ -35,6 +35,7 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     @Override
     public void onBindViewHolder(NewsItemRecyclerViewHolder holder, int position) {
         NewsItem currentItem = itemsList.get(position);
+        holder.imgv_eventImg.setImageBitmap(currentItem.newsItemImage);
         holder.txtv_eventTitle.setText(currentItem.newsItemTitle);
         holder.txtv_eventDescription.setText(currentItem.newsItemDescription);
         holder.txtv_event_timeValue.setText(currentItem.newsItemDate);
@@ -49,7 +50,6 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
         itemsList.remove(position);
         notifyItemRemoved(position);
     }
-
 
 
 }

@@ -60,4 +60,12 @@
     <dimen name="news_filter_padding">18dp</dimen> <!-- 30PX - WIDTH -->
     <dimen name="news_filter_text_size">11dp</dimen> <!-- 21PX - HEIGHT -->
     <dimen name="news_filter_btn_text_size">16dp</dimen> <!-- 30PX - HEIGHT -->
+    <dimen name="news_details_padding">18dp</dimen> <!-- 33PX - HEIGHT -->
+    <dimen name="news_details_img_height">251dp</dimen> <!-- 470PX - HEIGHT -->
+    <dimen name="news_details_newTitle_text_size">15dp</dimen> <!-- 28PX - HEIGHT -->
+    <dimen name="news_details_newDate_text_size">14dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="news_details_newBody_text_size">14dp</dimen> <!-- 27PX - HEIGHT -->
+    <dimen name="news_details_newTitle_text_container">53dp</dimen> <!-- 99PX - HEIGHT -->
+    <dimen name="news_details_newDate_text_container">30dp</dimen> <!-- 55PX - HEIGHT -->
+    <dimen name="news_details_text_container_padding">11dp</dimen> <!-- 20PX - HEIGHT -->
 </resources>

@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout
-    android:id="@+id/filter_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#aa000000">
-<LinearLayout
-    android:id="@+id/layout_dark_layer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:clickable="true"
-    >
 
-</LinearLayout>
     <LinearLayout
-        android:layout_alignParentBottom="true"
+        android:id="@+id/layout_dark_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:orientation="vertical">
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/filter_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/filter_bg"
         android:orientation="vertical"
         android:padding="@dimen/news_filter_padding">
@@ -110,28 +111,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/news_filter_all_types"
-                    android:textColor="@color/secb_grey_text"/>
+                    android:textColor="@color/secb_grey_text" />
 
                 <RadioButton
                     android:id="@+id/radbtn_economicType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/secb_grey_text"
-                    android:text="@string/news_filter_economic_type" />
+                    android:text="@string/news_filter_economic_type"
+                    android:textColor="@color/secb_grey_text" />
 
                 <RadioButton
                     android:id="@+id/radbtn_politicalType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/secb_grey_text"
-                    android:text="@string/news_filter_political_type" />
-<!--android:buttonTint="@color/secb_dark_text"-->
+                    android:text="@string/news_filter_political_type"
+                    android:textColor="@color/secb_grey_text" />
+                <!--android:buttonTint="@color/secb_dark_text"-->
                 <RadioButton
                     android:id="@+id/radbtn_publicType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/secb_grey_text"
-                    android:text="@string/news_filter_public_type" />
+                    android:text="@string/news_filter_public_type"
+                    android:textColor="@color/secb_grey_text" />
 
             </RadioGroup>
         </LinearLayout>
@@ -150,4 +151,12 @@
 
 
     </LinearLayout>
+<!--shadow-->
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="2.3dp"
+        android:layout_above="@+id/filter_container"
+        android:background="@drawable/shadow">
+    </View>
 </RelativeLayout>

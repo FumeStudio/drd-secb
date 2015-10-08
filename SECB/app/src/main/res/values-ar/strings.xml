@@ -41,13 +41,14 @@
     </string>
 
     <string name="view_all_news">عرض الكل</string>
-    <string name="filter_type">Type</string>
-    <string name="filter_time">Time</string>
-    <string name="filter_time_from">From</string>
-    <string name="filter_time_to">To</string>
-    <string name="news_filter_all_types">All Types</string>
-    <string name="news_filter_economic_type">Economic Type</string>
-    <string name="news_filter_political_type">Political Type</string>
-    <string name="news_filter_public_type">Public Type</string>
-    <string name="filters_apply_filter">Apply Filters</string>
+    <string name="filter_type">النوع</string>
+    <string name="filter_time">الوقت</string>
+    <string name="filter_time_from">من</string>
+    <string name="filter_time_to">الي</string>
+    <string name="news_filter_all_types">الكل</string>
+    <string name="news_filter_economic_type">اقتصادي</string>
+    <string name="news_filter_political_type">سياسي</string>
+    <string name="news_filter_public_type">عام</string>
+    <string name="filters_apply_filter">اجراء</string>
+    <string name="news_details">تفاصيل الخبر</string>
 </resources>

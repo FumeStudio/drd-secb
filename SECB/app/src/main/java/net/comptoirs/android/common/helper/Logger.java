@@ -1,5 +1,7 @@
 package net.comptoirs.android.common.helper;
 
+import android.util.Log;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,7 +58,7 @@ public class Logger
 
 	public void v(String tag, Object msg, boolean writeToFile)
 	{
-//		Log.v(tag, msg + "");
+		Log.v(tag, msg + "");
 //		 if(canWrite && writeToFile)
 		// {
 		// try
