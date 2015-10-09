@@ -135,7 +135,7 @@ public class OrganizersListFragment extends SECBBaseFragment
     private void initViews(View view)
     {
         organizerList = DevData.getOrganizersList();
-        organizerRecyclerView = (RecyclerView) view.findViewById(R.id.organizerItemRecyclerView);
+        organizerRecyclerView = (RecyclerView) view.findViewById(R.id.organizerRecyclerView);
         organizerItemRecyclerAdapter = new OrganizerItemRecyclerAdapter(getActivity(), organizerList);
         organizerRecyclerView.setAdapter(organizerItemRecyclerAdapter);
 //        organizerRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));

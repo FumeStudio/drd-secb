@@ -88,4 +88,6 @@
     <dimen name="organizer_p_info_rows_margin">16dp</dimen> <!-- 30PX - HEIGHT -->
     <dimen name="organizer_details_margin">19dp</dimen> <!-- 35PX - HEIGHT -->
     <dimen name="organizer_details_margin_small">11dp</dimen> <!-- 20PX - HEIGHT -->
+
+    <dimen name="item_card_height">112dp</dimen> <!-- 210PX - HEIGHT -->
 </resources>

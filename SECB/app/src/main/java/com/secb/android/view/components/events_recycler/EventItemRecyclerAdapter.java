@@ -26,7 +26,7 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
 
     @Override
     public EventItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.event_card, parent, false);
+        View view = inflater.inflate(R.layout.event_item_card, parent, false);
 
         EventItemRecyclerViewHolder vh = new EventItemRecyclerViewHolder(view);
         return vh;

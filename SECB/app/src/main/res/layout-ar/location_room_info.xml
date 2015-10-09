@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/txtv_location_roomCapacityTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/location_roomCapacity"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtv_location_roomCapacityValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtv_location_roomCapacityTitle"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/secb_grey_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/txtv_location_roomTypeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:text="@string/location_roomType"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtv_location_roomTypeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtv_location_roomTypeTitle"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/secb_grey_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/organizer_details_margin_small"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/txtv_location_roomCountTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:text="@string/location_roomCountTitle"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtv_location_roomCountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtv_location_roomCountTitle"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/secb_grey_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/txtv_location_roomSpaceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:text="@string/location_roomSpace"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtv_location_roomSpaceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtv_location_roomSpaceTitle"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/secb_grey_text"
+                android:textSize="@dimen/organizer_p_info_h1_text_size" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

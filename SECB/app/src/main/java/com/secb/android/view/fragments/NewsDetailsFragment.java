@@ -31,7 +31,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     {
         NewsDetailsFragment fragment = new NewsDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("organizerItem",newsItem);
+        bundle.putSerializable("locationItem",newsItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,7 +72,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         Bundle bundle = getArguments();
         if(bundle!=null)
         {
-            newsItem = (NewsItem)bundle.getSerializable("organizerItem");
+            newsItem = (NewsItem)bundle.getSerializable("locationItem");
         }
         initViews(view);
         bindViews();
@@ -118,7 +118,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 
     private void initViews(View view)
     {
-//        NewsItem organizerItem = new NewsItem();
+//        NewsItem locationItem = new NewsItem();
         imgv_news_details_img = (ImageView) view.findViewById(R.id.imgv_news_details_img);
         txtv_news_details_newTitle = (TextView) view.findViewById(R.id.txtv_news_details_newTitle);
         txtv_news_details_newDate = (TextView) view.findViewById(R.id.txtv_news_details_newDate);

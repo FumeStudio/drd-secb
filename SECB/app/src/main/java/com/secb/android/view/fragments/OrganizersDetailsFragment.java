@@ -31,7 +31,7 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     {
         OrganizersDetailsFragment fragment = new OrganizersDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("organizerItem",organizerItem);
+        bundle.putSerializable("locationItem",organizerItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,7 +72,7 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
         Bundle bundle = getArguments();
         if(bundle!=null)
         {
-            organizerItem = (OrganizerItem)bundle.getSerializable("organizerItem");
+            organizerItem = (OrganizerItem)bundle.getSerializable("locationItem");
         }
         initViews(view);
         bindViews();
@@ -116,9 +116,6 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
 
     private void initViews(View view)
     {
-        View orgInfo = LayoutInflater.from(getActivity()).inflate(R.layout.organizer_personal_info, null);
-
-
         imgv_organizerImg = (ImageView) view.findViewById(R.id.imgv_organizerImg);
         txtv_organizerName = (TextView) view.findViewById(R.id.txtv_organizerName);
         txtv_organizerDescription = (TextView) view.findViewById(R.id.txtv_organizerDescription);

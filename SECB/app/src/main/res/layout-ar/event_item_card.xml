@@ -1,57 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/item_card_height"
     android:orientation="horizontal"
     android:paddingTop="@dimen/event_card_margin"
     android:paddingBottom="@dimen/event_card_margin"
-    android:weightSum="3"
-
-    >
-
-    <ImageView
-    android:id="@+id/imgv_eventImg"
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="match_parent"
     android:layout_marginRight="@dimen/event_card_margin"
-    android:src="@drawable/event_card_img"/>
-
+    android:weightSum="3"
+    >
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginRight="@dimen/event_card_margin"
+        android:layout_marginLeft="@dimen/event_card_margin"
+
         android:weightSum="2.5">
 
         <TextView
             android:id="@+id/txtv_eventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h1_text_size"
             android:layout_weight="1"
             android:maxLines="2"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            />
 
         <TextView
             android:id="@+id/txtv_eventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/event_card_h2_text_size"
             android:layout_weight="1"
-            android:maxLines="2"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:maxLines="2"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="4.5"
+            android:layout_weight="0.5"
             >
 
             <ImageView
@@ -115,4 +109,15 @@
                 android:textSize="@dimen/event_card_h3_text_size"/>
         </LinearLayout>
     </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/imgv_eventImg"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/event_card_margin"
+        android:src="@drawable/event_card_img"/>
+
 </LinearLayout>

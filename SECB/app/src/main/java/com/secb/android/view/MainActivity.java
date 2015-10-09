@@ -11,12 +11,15 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
+import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventDetailsFragment;
 import com.secb.android.view.fragments.EventsListFragment;
 import com.secb.android.view.fragments.HomeFragment;
+import com.secb.android.view.fragments.LocationsDetailsFragment;
+import com.secb.android.view.fragments.LocationsListFragment;
 import com.secb.android.view.fragments.NewsDetailsFragment;
 import com.secb.android.view.fragments.NewsListFragment;
 import com.secb.android.view.fragments.OrganizersDetailsFragment;
@@ -96,7 +99,8 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
     }
 
     public void openEguideLocationFragment() {
-
+        LocationsListFragment locationsListFragment = LocationsListFragment.newInstance();
+        addFragment(locationsListFragment, locationsListFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 
     public void openEguideOrganizersFragment()
@@ -109,6 +113,11 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
     public void openOrganizerDetailsFragment(OrganizerItem organizerItem) {
         OrganizersDetailsFragment organizersDetailsFragment = OrganizersDetailsFragment.newInstance(organizerItem);
         addFragment(organizersDetailsFragment, organizersDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+    }
+
+    public void openLocationDetailsFragment(LocationItem locationItem) {
+        LocationsDetailsFragment locationsDetailsFragment = LocationsDetailsFragment.newInstance(locationItem);
+        addFragment(locationsDetailsFragment, locationsDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 
 

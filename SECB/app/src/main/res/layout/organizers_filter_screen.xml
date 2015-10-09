@@ -56,8 +56,9 @@
                 android:id="@+id/txtv_news_filter_time_from_value"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:text=""
                 android:layout_height="match_parent"
-                android:text="@string/filter_time_from"
                 android:textColor="@color/secb_grey_text"
                 android:gravity="center_vertical"
                 android:textSize="@dimen/news_filter_text_size" />
@@ -91,8 +92,9 @@
                 android:id="@+id/txtv_city_filter_city_value"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:text=""
                 android:layout_height="match_parent"
-                android:text="@string/filter_city"
                 android:textColor="@color/secb_grey_text"
                 android:gravity="center_vertical"
                 android:textSize="@dimen/news_filter_text_size" />

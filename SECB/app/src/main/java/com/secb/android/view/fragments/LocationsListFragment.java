@@ -10,33 +10,33 @@ import android.view.ViewParent;
 
 import com.secb.android.R;
 import com.secb.android.controller.manager.DevData;
-import com.secb.android.model.EventItem;
-import com.secb.android.model.EventsFilterData;
+import com.secb.android.model.LocationItem;
+import com.secb.android.model.LocationsFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
-import com.secb.android.view.components.events_recycler.EventItemRecyclerAdapter;
-import com.secb.android.view.components.filters_layouts.EventsFilterLayout;
+import com.secb.android.view.components.filters_layouts.LocationsFilterLayout;
+import com.secb.android.view.components.locations_recycler.LocationsItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
 
 import java.util.ArrayList;
 
-public class EventsListFragment extends SECBBaseFragment
+public class LocationsListFragment extends SECBBaseFragment
         implements FragmentBackObserver, View.OnClickListener ,RecyclerCustomClickListener
 
 {
-    RecyclerView eventsRecyclerView;
-    EventItemRecyclerAdapter eventItemRecyclerAdapter;
-    ArrayList<EventItem> eventsList;
-    EventsFilterData eventsFilterData;
+    RecyclerView locationsRecyclerView;
+    LocationsItemRecyclerAdapter locationsItemRecyclerAdapter;
+    ArrayList<LocationItem> locationItems;
+    LocationsFilterData locationsFilterData;
 
     View view;
-    private EventsFilterLayout eventsFilterLayout=null;
+    private LocationsFilterLayout locationsFilterLayout =null;
 
 
-    public static EventsListFragment newInstance() {
-        EventsListFragment fragment = new EventsListFragment();
+    public static LocationsListFragment newInstance() {
+        LocationsListFragment fragment = new LocationsListFragment();
         return fragment;
     }
 
@@ -45,7 +45,7 @@ public class EventsListFragment extends SECBBaseFragment
     {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.events));
+        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.locationsList));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
 //        ((SECBBaseActivity) getActivity()).setFilterIconClickListener(this);
@@ -74,7 +74,7 @@ public class EventsListFragment extends SECBBaseFragment
             }
         }
         else {
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.events_list_fragment, container, false);
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.location_list_fragment, container, false);
             handleButtonsEvents();
             applyFonts();
         }
@@ -85,9 +85,9 @@ public class EventsListFragment extends SECBBaseFragment
 
     public void initFilterLayout()
     {
-        eventsFilterLayout= new EventsFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(eventsFilterLayout);
-        ((SECBBaseActivity) getActivity()).setFilterLayoutView(eventsFilterLayout.getLayoutView());
+        locationsFilterLayout = new LocationsFilterLayout(getActivity());
+        ((SECBBaseActivity) getActivity()).setFilterLayout(locationsFilterLayout);
+        ((SECBBaseActivity) getActivity()).setFilterLayoutView(locationsFilterLayout.getLayoutView());
     }
     private void handleButtonsEvents() {
     }
@@ -113,12 +113,8 @@ public class EventsListFragment extends SECBBaseFragment
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.txtv_viewAllNews:
-                ((MainActivity) getActivity()).openNewsListFragment();
-           /* case R.id.imgv_filter:
-                ((SECBBaseActivity) getActivity()).displayToast("NewsFragment + filterIconClicked");
-                */
+        switch (v.getId())
+        {
             case R.id.btn_applyFilter:
                 getFilterDataObject();
             default:
@@ -127,32 +123,38 @@ public class EventsListFragment extends SECBBaseFragment
     }
 
     private void getFilterDataObject() {
-        eventsFilterData =this.eventsFilterLayout.getFilterData();
-        if(eventsFilterData !=null){
+        locationsFilterData =this.locationsFilterLayout.getFilterData();
+        if(locationsFilterData !=null){
+            StringBuilder types = new StringBuilder();
+            for(int i : locationsFilterData.types){
+                types.append(i+" , ");
+            }
+
             ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
-                    " city: "+ eventsFilterData.city +"\n" +
-                    " Time From: "+ eventsFilterData.timeFrom+"\n" +
-                    " Time To: "+ eventsFilterData.timeTo+" \n" +
-                    " Type: "+ eventsFilterData.type);
+                    " name: "+ locationsFilterData.city +"\n" +
+                    " city: "+ locationsFilterData.city +"\n" +
+                    " Capacity From: "+ locationsFilterData.totalCapacityFrom+"\n" +
+                    " Capacity To: "+ locationsFilterData.totalCapacityTo+" \n" +
+                    " Types : "+ types.toString());
         }
     }
 
 
     private void initViews(View view)
     {
-        eventsList = DevData.getEventsList();
-        eventsRecyclerView = (RecyclerView) view.findViewById(R.id.eventsRecyclerView);
-        eventItemRecyclerAdapter = new EventItemRecyclerAdapter(getActivity(), eventsList);
-        eventsRecyclerView.setAdapter(eventItemRecyclerAdapter);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        locationItems = DevData.getLocationsList();
+        locationsRecyclerView = (RecyclerView) view.findViewById(R.id.locationsRecyclerView);
+        locationsItemRecyclerAdapter = new LocationsItemRecyclerAdapter(getActivity(), locationItems);
+        locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
+        locationsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        eventsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eventsRecyclerView, this));
+        locationsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), locationsRecyclerView, this));
     }
 
     @Override
     public void onItemClicked(View v, int position)
     {
-        ((MainActivity) getActivity()).openEventDetailsFragment(eventsList.get(position));
+        ((MainActivity) getActivity()).openLocationDetailsFragment(locationItems.get(position));
     }
 
     @Override

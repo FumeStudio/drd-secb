@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TableRow
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imgv_location_nameIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/location_name_icon" />
+
+        <TextView
+            android:id="@+id/txtv_location_nameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
+            android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:text="@string/location_nameTitle"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_card_h3_text_size" />
+
+        <TextView
+            android:id="@+id/txtv_location_nameValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="5000"
+            android:textColor="@color/secb_grey_text"
+            android:textSize="@dimen/event_card_h3_text_size" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/type_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/location_type_icon" />
+
+        <TextView
+            android:id="@+id/txtv_location_typeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
+            android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/filter_type"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_card_h3_text_size" />
+
+        <TextView
+            android:id="@+id/txtv_location_typeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="2222"
+            android:textColor="@color/secb_grey_text"
+            android:textSize="@dimen/event_card_h3_text_size" />
+    </TableRow>
+
+
+</LinearLayout>

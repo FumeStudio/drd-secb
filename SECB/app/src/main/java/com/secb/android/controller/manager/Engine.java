@@ -285,7 +285,7 @@ public class Engine {
 	}*/
 
     /**
-     * Expiry for each object type in hours
+     * Expiry for each object types in hours
      */
     public static class ExpiryInfo {
         final public static int EXPIRING_TEST_LIST = 24;

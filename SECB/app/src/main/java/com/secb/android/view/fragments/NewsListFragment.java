@@ -139,7 +139,7 @@ public class NewsListFragment extends SECBBaseFragment
     private void initViews(View view)
     {
         newsList = DevData.getNewsList();
-        newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsItemRecyclerView);
+        newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
         newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
         newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
 //        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));

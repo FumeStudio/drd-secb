@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
+import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.SECBApplication;
@@ -83,7 +84,7 @@ public class DevData
         ArrayList<EventItem> eventsList =new ArrayList<>();
         EventItem eventItem= new EventItem();
 
-        eventItem.eventItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.event_card_img));
+        eventItem.eventItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news_img_sample));
         eventItem.eventItemTitle = "event Saudi Exhibition and Convention";
         eventItem.eventItemDescription = "event لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
         eventItem.eventItemTime = "event 2 days ago";
@@ -120,5 +121,35 @@ public class DevData
         organizerItems.add(organizerItem);
         organizerItems.add(organizerItem);
         return organizerItems;
+    }
+
+    public static ArrayList<LocationItem> getLocationsList() {
+        ArrayList<LocationItem> locationItems= new ArrayList<>();
+        LocationItem locationItem = new LocationItem();
+
+        locationItem.LoccationItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news_img_sample));
+        locationItem.LoccationItemTitle ="Name Name Name";
+        locationItem.LoccationItemAddress="Address Address Address Address ";
+        locationItem.LoccationItemDescription="Description Description Description Description Description ";
+        locationItem.LoccationItemEmail="Email Email Email Email Email Email ";
+        locationItem.LoccationItemPhone="012222233555-012258554555";
+
+
+        locationItem.LoccationItemType="Type 1 ";
+        locationItem.LoccationItemCapacity= 120;
+        locationItem.LoccationItemSpace=2250;
+        locationItem.LoccationItemRoomType="room 1 ";
+        locationItem.LoccationItemRoomCapacity = 50;
+        locationItem.LoccationItemRoomSpace = 500;
+        locationItem.LoccationItemNumberOrRooms= 250;
+
+        locationItems.add(locationItem);
+        locationItems.add(locationItem);
+        locationItems.add(locationItem);
+        locationItems.add(locationItem);
+        locationItems.add(locationItem);
+        locationItems.add(locationItem);
+        return locationItems;
+
     }
 }

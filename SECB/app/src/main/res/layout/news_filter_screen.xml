@@ -81,7 +81,7 @@
 
         </LinearLayout>
 
-        <!--type title-->
+        <!--types title-->
         <TextView
             android:id="@+id/txtv_news_filter_type_title"
             android:layout_width="match_parent"
@@ -92,7 +92,7 @@
             android:textSize="@dimen/news_filter_btn_text_size"
             android:textStyle="bold" />
 
-        <!--type input-->
+        <!--types input-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -98,7 +98,7 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
      */
     private void applyFonts()
     {
-//        UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_organizerName)), UiEngine.Fonts.BDCN);
+//        UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_location_nameValue)), UiEngine.Fonts.BDCN);
     }
 
     private void goBack()

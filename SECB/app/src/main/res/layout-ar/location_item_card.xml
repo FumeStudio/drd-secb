@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_card_height"
+    android:layout_marginRight="@dimen/event_card_margin"
+    android:background="@color/off_white"
+    android:orientation="horizontal"
+    android:layout_marginBottom="@dimen/event_card_margin"
+    android:layout_marginTop="@dimen/event_card_margin"
+    android:weightSum="3"
+
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/event_card_margin"
+        android:layout_weight="2"
+        android:orientation="vertical"
+
+        android:weightSum="2.5">
+
+        <TextView
+            android:id="@+id/txtv_locationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_card_h1_text_size" />
+
+        <TextView
+            android:id="@+id/txtv_locationDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
+            android:textColor="@color/secb_grey_text"
+            android:textSize="@dimen/event_card_h2_text_size" />
+
+
+        <!--<include
+            android:id="@+id/location_capacity_info"
+            layout="@layout/location_capacity_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/off_white"
+            android:visibility="visible"
+            />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/space_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location_space_icon" />
+
+                <TextView
+                    android:id="@+id/txtv_location_spaceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/space_icon"
+
+                    android:gravity="center_vertical"
+                    android:text="@string/location_spaceTitle"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/organizer_p_info_h1_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtv_location_spaceValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txtv_location_spaceTitle"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+
+                    android:text="2222"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/organizer_p_info_h1_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imgv_location_capacityIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location_capacity_icon" />
+
+                <TextView
+                    android:id="@+id/txtv_location_capacityTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+
+
+                    android:layout_toLeftOf="@+id/imgv_location_capacityIcon"
+
+                    android:text="@string/location_capacityTitle"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/organizer_p_info_h1_text_size"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/txtv_location_capacityValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txtv_location_capacityTitle"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+
+                    android:maxLines="1"
+                    android:text="5000"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/organizer_p_info_h1_text_size" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imgv_locationImg"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/event_card_margin"
+        android:layout_weight="1"
+        android:src="@drawable/event_card_img" />
+
+</LinearLayout>

@@ -300,7 +300,7 @@ public final class SSLUtilities
 		 * @param chain
 		 *          the peer certificate chain.
 		 * @param authType
-		 *          the authentication type based on the client certificate.
+		 *          the authentication types based on the client certificate.
 		 */
 		public void checkClientTrusted(X509Certificate[] chain, String authType)
 		{

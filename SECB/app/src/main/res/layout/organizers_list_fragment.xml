@@ -6,7 +6,7 @@
     android:background="@color/white">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/organizerItemRecyclerView"
+        android:id="@+id/organizerRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/home_graphs_card_padding">

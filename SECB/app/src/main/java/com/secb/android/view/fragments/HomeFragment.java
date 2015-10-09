@@ -144,15 +144,15 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         newsList = DevData.getNewsList();
 
         if (newsList != null && newsList.size() > 2) {
-           /* for (int i = 2; i < eventsList.size(); i++) {
-                eventsList.remove(i);
+           /* for (int i = 2; i < locationItems.size(); i++) {
+                locationItems.remove(i);
             }*/
             while(newsList.size()>2)
             {
                 newsList.remove(newsList.size()-1);
             }
         }
-        newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsItemRecyclerView);
+        newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
         newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
         newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
 //        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));

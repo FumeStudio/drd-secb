@@ -81,5 +81,16 @@
     <string name="phone">Phone Number</string>
     <string name="website">Website</string>
     <string name="organizer_details">Organizers Details</string>
+    <string name="location_capacityTitle">Capacity:</string>
+    <string name="location_spaceTitle">Space:</string>
+    <string name="filter_location_name">Location Name</string>
+    <string name="filter_total_capacity">Total Capacity</string>
+    <string name="location_nameTitle">Name</string>
+    <string name="location_roomType">Room Type</string>
+    <string name="location_roomCapacity">Room Capacity</string>
+    <string name="location_roomSpace">Room Space</string>
+    <string name="location_roomCountTitle">Number of Rooms</string>
+    <string name="locationsList">Locations List</string>
+    <string name="location_details">Location Details</string>
 
 </resources>
