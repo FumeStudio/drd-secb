@@ -10,33 +10,33 @@ import android.view.ViewParent;
 
 import com.secb.android.R;
 import com.secb.android.controller.manager.DevData;
-import com.secb.android.model.NewsFilterData;
-import com.secb.android.model.NewsItem;
+import com.secb.android.model.EventItem;
+import com.secb.android.model.EventsFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
-import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
-import com.secb.android.view.components.news_recycler.NewsItemRecyclerAdapter;
+import com.secb.android.view.components.events_recycler.EventItemRecyclerAdapter;
+import com.secb.android.view.components.filters_layouts.EventsFilterLayout;
 import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
 
 import java.util.ArrayList;
 
-public class NewsListFragment extends SECBBaseFragment
+public class EventsListFragment extends SECBBaseFragment
         implements FragmentBackObserver, View.OnClickListener ,RecyclerCustomClickListener
 
 {
-    RecyclerView newsRecyclerView;
-    NewsItemRecyclerAdapter newsItemRecyclerAdapter;
-    ArrayList<NewsItem> newsList;
-    NewsFilterData newsFilterData;
+    RecyclerView eventsRecyclerView;
+    EventItemRecyclerAdapter eventItemRecyclerAdapter;
+    ArrayList<EventItem> eventsList;
+    EventsFilterData eventsFilterData;
 
     View view;
-    private NewsFilterLayout newsFilterLayout=null;
+    private EventsFilterLayout eventsFilterLayout=null;
 
 
-    public static NewsListFragment newInstance() {
-        NewsListFragment fragment = new NewsListFragment();
+    public static EventsListFragment newInstance() {
+        EventsListFragment fragment = new EventsListFragment();
         return fragment;
     }
 
@@ -45,7 +45,7 @@ public class NewsListFragment extends SECBBaseFragment
     {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news));
+        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.events));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
 //        ((SECBBaseActivity) getActivity()).setFilterIconClickListener(this);
@@ -74,7 +74,7 @@ public class NewsListFragment extends SECBBaseFragment
             }
         }
         else {
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.news_list_fragment, container, false);
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.events_list_fragment, container, false);
             handleButtonsEvents();
             applyFonts();
         }
@@ -85,9 +85,9 @@ public class NewsListFragment extends SECBBaseFragment
 
     public void initFilterLayout()
     {
-        newsFilterLayout= new NewsFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(newsFilterLayout);
-        ((SECBBaseActivity) getActivity()).setFilterLayoutView(newsFilterLayout.getLayoutView());
+        eventsFilterLayout= new EventsFilterLayout(getActivity());
+        ((SECBBaseActivity) getActivity()).setFilterLayout(eventsFilterLayout);
+        ((SECBBaseActivity) getActivity()).setFilterLayoutView(eventsFilterLayout.getLayoutView());
     }
     private void handleButtonsEvents() {
     }
@@ -127,31 +127,32 @@ public class NewsListFragment extends SECBBaseFragment
     }
 
     private void getFilterDataObject() {
-        newsFilterData =this.newsFilterLayout.getFilterData();
-        if(newsFilterData !=null){
-            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n Time From: "+ newsFilterData.timeFrom+"\n" +
-                    " Time To: "+ newsFilterData.timeTo+" \n" +
-                    " Type: "+ newsFilterData.type);
+        eventsFilterData =this.eventsFilterLayout.getFilterData();
+        if(eventsFilterData !=null){
+            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
+                    " city: "+ eventsFilterData.city +"\n" +
+                    " Time From: "+ eventsFilterData.timeFrom+"\n" +
+                    " Time To: "+ eventsFilterData.timeTo+" \n" +
+                    " Type: "+ eventsFilterData.type);
         }
     }
 
 
     private void initViews(View view)
     {
-        newsList = DevData.getNewsList();
-        newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsItemRecyclerView);
-        newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
-        newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
-//        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        eventsList = DevData.getEventsList();
+        eventsRecyclerView = (RecyclerView) view.findViewById(R.id.eventsItemRecyclerView);
+        eventItemRecyclerAdapter = new EventItemRecyclerAdapter(getActivity(), eventsList);
+        eventsRecyclerView.setAdapter(eventItemRecyclerAdapter);
+        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
+        eventsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eventsRecyclerView, this));
     }
 
     @Override
     public void onItemClicked(View v, int position)
     {
-        ((MainActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
+        ((MainActivity) getActivity()).openEventDetailsFragment(eventsList.get(position));
     }
 
     @Override

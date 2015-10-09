@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="@dimen/eguide_base_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/eguide_img"
+            android:layout_gravity="center_horizontal|top"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btn_location_eguide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/sceb_orange"
+            android:text="@string/location_eguide"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/eguide_base_text_size"
+            android:paddingTop="@dimen/eguide_base_padding"
+            android:paddingBottom="@dimen/eguide_base_padding"
+            android:layout_marginLeft="@dimen/eguide_base_btn_horizontal_margin"
+            android:layout_marginRight="@dimen/eguide_base_btn_horizontal_margin"
+            android:layout_marginBottom="@dimen/eguide_base_btn_vertical_margin"
+        />
+        <Button
+            android:id="@+id/btn_organizers_eguide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/sceb_orange"
+            android:text="@string/organizers_eguide"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/eguide_base_text_size"
+            android:paddingTop="@dimen/eguide_base_padding"
+            android:paddingBottom="@dimen/eguide_base_padding"
+            android:layout_marginLeft="@dimen/eguide_base_btn_horizontal_margin"
+            android:layout_marginRight="@dimen/eguide_base_btn_horizontal_margin"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -9,25 +9,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class EventItem implements Serializable {
-    public transient  Bitmap eventItemImage;
-    public String eventItemTitle;
-    public String eventItemDescription;
-    public String eventItemTime;
-    public String eventItemLocation;
-    public String eventItemCategory;
-    public String eventItemDuration;
-    public String eventItemRepeating;
+public class OrganizerItem implements Serializable
+{
+    public transient Bitmap OraganizerItemImage;
+    public String OraganizerItemTitle;
+    public String OraganizerItemDescription;
+    public String OraganizerItemAddress;
+    public String OraganizerItemPhone;
+    public String OraganizerItemEmail;
+    public String OraganizerItemWebsite;
 
-
-    private void writeObject(ObjectOutputStream oos) throws IOException{
+    private void writeObject(ObjectOutputStream oos) throws IOException {
         // This will serialize all fields that you did not mark with 'transient'
         // (Java's default behaviour)
         oos.defaultWriteObject();
         // Now, manually serialize all transient fields that you want to be serialized
-        if(eventItemImage!=null){
+        if(OraganizerItemImage!=null){
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            boolean success = eventItemImage.compress(Bitmap.CompressFormat.PNG, 100, byteStream);
+            boolean success = OraganizerItemImage.compress(Bitmap.CompressFormat.PNG, 100, byteStream);
             if(success){
                 oos.writeObject(byteStream.toByteArray());
             }
@@ -41,7 +40,7 @@ public class EventItem implements Serializable {
         // All other fields that you serialized
         byte[] image = (byte[]) ois.readObject();
         if(image != null && image.length > 0){
-            eventItemImage = BitmapFactory.decodeByteArray(image, 0, image.length);
+            OraganizerItemImage = BitmapFactory.decodeByteArray(image, 0, image.length);
         }
     }
 }

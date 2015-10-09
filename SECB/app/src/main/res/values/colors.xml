@@ -22,6 +22,7 @@
     <color name="graph_color_inProgress">#23a9df</color>
 
 
+    <color name="off_white">#e8e8e8</color>
 <!--text colors-->
     <color name="secb_dark_text">#122d53</color>
     <color name="secb_light_text">#ffffff</color>

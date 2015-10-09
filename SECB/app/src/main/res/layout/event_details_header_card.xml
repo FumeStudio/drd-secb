@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/event_details_header_card_height"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/event_card_margin"
+    android:paddingBottom="@dimen/event_card_margin"
+    android:weightSum="3"
+
+    >
+
+    <ImageView
+    android:id="@+id/imgv_eventImg"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="match_parent"
+    android:layout_marginRight="@dimen/event_card_margin"
+    android:src="@drawable/event_card_img"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/event_card_margin">
+
+        <TextView
+            android:id="@+id/txtv_eventTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_details_text_size"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
+</LinearLayout>

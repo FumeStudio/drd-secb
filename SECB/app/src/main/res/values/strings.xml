@@ -69,5 +69,17 @@
     <string name="news_filter_public_type">Public Type</string>
     <string name="filters_apply_filter">Apply Filters</string>
     <string name="news_details">News Details</string>
+    <string name="filter_city">City</string>
+    <string name="filter_time_starts">Starts</string>
+    <string name="filter_time_ends">Ends</string>
+    <string name="filter_category">Category</string>
+    <string name="event_details">Event Details</string>
+    <string name="location_eguide">Location E-Guide</string>
+    <string name="organizers_eguide">Organizer\'s E-Guide</string>
+    <string name="filter_organizer_name">Organizer Name</string>
+    <string name="address">Address:</string>
+    <string name="phone">Phone Number</string>
+    <string name="website">Website</string>
+    <string name="organizer_details">Organizers Details</string>
 
 </resources>

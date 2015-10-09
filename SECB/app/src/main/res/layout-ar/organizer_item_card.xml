@@ -17,7 +17,7 @@
         android:weightSum="2.5">
 
         <TextView
-            android:id="@+id/txtv_newTitle"
+            android:id="@+id/txtv_organizerTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,40 +28,22 @@
             android:textSize="@dimen/event_card_h1_text_size" />
 
         <TextView
-            android:id="@+id/txtv_newDescription"
+            android:id="@+id/txtv_organizerDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:maxLines="1"
+            android:maxLines="2"
             android:ellipsize="end"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/darkgrey_color"
             android:textSize="@dimen/event_card_h2_text_size" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="0.5">
 
-            <TextView
-                android:id="@+id/txtv_newTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="left"
-                android:text="2:30 PM"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textColor="@color/darkgrey_color"
-                android:textSize="@dimen/event_card_h3_text_size" />
-
-        </LinearLayout>
     </LinearLayout>
 
 
     <ImageView
-        android:id="@+id/imgv_newImg"
+        android:id="@+id/imgv_organizerImg"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"

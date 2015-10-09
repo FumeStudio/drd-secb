@@ -9,29 +9,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secb.android.R;
-import com.secb.android.model.NewsItem;
+import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
-import com.secb.android.view.UiEngine;
-import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
 
-public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
-    NewsItem newsItem;
-    ImageView imgv_news_details_img;
-    TextView txtv_news_details_newTitle;
-    TextView txtv_news_details_newDate;
-    TextView txtv_news_details_newBody;
+public class OrganizersDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
+    OrganizerItem organizerItem;
+
+    ImageView imgv_organizerImg;
+    TextView txtv_organizerName;
+    TextView txtv_organizerDescription;
+    TextView txtv_organizer_address_value;
+    TextView txtv_organizer_phone_value;
+    TextView txtv_organizer_email_value;
+    TextView txtv_organizer_website_value;
     View view;
 
-    private NewsFilterLayout newsFilterLayout = null;
 
-
-    public static NewsDetailsFragment newInstance(NewsItem newsItem)
+    public static OrganizersDetailsFragment newInstance(OrganizerItem organizerItem)
     {
-        NewsDetailsFragment fragment = new NewsDetailsFragment();
+        OrganizersDetailsFragment fragment = new OrganizersDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("organizerItem",newsItem);
+        bundle.putSerializable("organizerItem",organizerItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -40,7 +40,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     public void onResume() {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news_details));
+        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizer_details));
  //        SECBBaseActivity.setMenuItemSelected(MenuItem.MENU_HOME);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
@@ -65,14 +65,14 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
                 ((ViewGroup) oldParent).removeView(view);
             }
         } else {
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.news_details, container, false);
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.organizer_details, container, false);
             handleButtonsEvents();
             applyFonts();
         }
         Bundle bundle = getArguments();
         if(bundle!=null)
         {
-            newsItem = (NewsItem)bundle.getSerializable("organizerItem");
+            organizerItem = (OrganizerItem)bundle.getSerializable("organizerItem");
         }
         initViews(view);
         bindViews();
@@ -87,9 +87,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
      */
     private void applyFonts()
     {
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newDate)), UiEngine.Fonts.LTCN);
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newBody)), UiEngine.Fonts.HVCN);
+//		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
     }
 
     private void goBack()
@@ -118,20 +116,28 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 
     private void initViews(View view)
     {
-//        NewsItem organizerItem = new NewsItem();
-        imgv_news_details_img = (ImageView) view.findViewById(R.id.imgv_news_details_img);
-        txtv_news_details_newTitle = (TextView) view.findViewById(R.id.txtv_news_details_newTitle);
-        txtv_news_details_newDate = (TextView) view.findViewById(R.id.txtv_news_details_newDate);
-        txtv_news_details_newBody = (TextView) view.findViewById(R.id.txtv_news_details_newBody);
+        View orgInfo = LayoutInflater.from(getActivity()).inflate(R.layout.organizer_personal_info, null);
+
+
+        imgv_organizerImg = (ImageView) view.findViewById(R.id.imgv_organizerImg);
+        txtv_organizerName = (TextView) view.findViewById(R.id.txtv_organizerName);
+        txtv_organizerDescription = (TextView) view.findViewById(R.id.txtv_organizerDescription);
+        txtv_organizer_address_value = (TextView) view.findViewById(R.id.txtv_organizer_address_value);
+        txtv_organizer_phone_value = (TextView) view.findViewById(R.id.txtv_organizer_phone_value);
+        txtv_organizer_email_value = (TextView) view.findViewById(R.id.txtv_organizer_email_value);
+        txtv_organizer_website_value = (TextView) view.findViewById(R.id.txtv_organizer_website_value);
     }
 
     private void bindViews()
     {
-        if(this.newsItem!=null){
-            txtv_news_details_newTitle.setText(newsItem.newsItemTitle);
-            txtv_news_details_newDate.setText(newsItem.newsItemDate);
-            txtv_news_details_newBody.setText(newsItem.newsItemDescription);
-            imgv_news_details_img.setImageBitmap(newsItem.newsItemImage);
+        if(this.organizerItem !=null)
+        {
+            imgv_organizerImg.setImageBitmap(organizerItem.OraganizerItemImage);
+            txtv_organizerName.setText(organizerItem.OraganizerItemTitle);
+            txtv_organizer_address_value.setText(organizerItem.OraganizerItemAddress);
+            txtv_organizer_phone_value.setText(organizerItem.OraganizerItemPhone);
+            txtv_organizer_email_value.setText(organizerItem.OraganizerItemEmail);
+            txtv_organizer_website_value.setText(organizerItem.OraganizerItemWebsite);
         }
     }
 

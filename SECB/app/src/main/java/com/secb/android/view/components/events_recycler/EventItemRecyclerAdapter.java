@@ -1,4 +1,4 @@
-package com.secb.android.view.components.event_recycler;
+package com.secb.android.view.components.events_recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +26,7 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
 
     @Override
     public EventItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.menu_item_view, parent, false);
+        View view = inflater.inflate(R.layout.event_card, parent, false);
 
         EventItemRecyclerViewHolder vh = new EventItemRecyclerViewHolder(view);
         return vh;
@@ -35,7 +35,10 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
     @Override
     public void onBindViewHolder(EventItemRecyclerViewHolder holder, int position) {
         EventItem currentItem = itemsList.get(position);
-        holder.itemText.setText(currentItem.eventItemTitle);
+        holder.imgv_eventImg.setImageBitmap(currentItem.eventItemImage);
+        holder.txtv_eventTitle.setText(currentItem.eventItemTitle);
+        holder.txtv_eventDescription.setText(currentItem.eventItemDescription);
+        holder.txtv_event_timeValue.setText(currentItem.eventItemTime);
     }
 
     @Override
@@ -47,7 +50,6 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
         itemsList.remove(position);
         notifyItemRemoved(position);
     }
-
 
 
 }

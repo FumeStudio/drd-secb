@@ -5,34 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.secb.android.R;
-import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
-import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
 
-public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
-    NewsItem newsItem;
-    ImageView imgv_news_details_img;
-    TextView txtv_news_details_newTitle;
-    TextView txtv_news_details_newDate;
-    TextView txtv_news_details_newBody;
+public class EguideHomeFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
+
+    Button btn_locationEguid,btn_organizersEguide;
     View view;
 
-    private NewsFilterLayout newsFilterLayout = null;
-
-
-    public static NewsDetailsFragment newInstance(NewsItem newsItem)
+    public static EguideHomeFragment newInstance( )
     {
-        NewsDetailsFragment fragment = new NewsDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("organizerItem",newsItem);
-        fragment.setArguments(bundle);
+        EguideHomeFragment fragment = new EguideHomeFragment();
         return fragment;
     }
 
@@ -40,7 +29,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     public void onResume() {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news_details));
+        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.eguide));
  //        SECBBaseActivity.setMenuItemSelected(MenuItem.MENU_HOME);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
@@ -65,17 +54,11 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
                 ((ViewGroup) oldParent).removeView(view);
             }
         } else {
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.news_details, container, false);
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.eguide_home, container, false);
             handleButtonsEvents();
             applyFonts();
         }
-        Bundle bundle = getArguments();
-        if(bundle!=null)
-        {
-            newsItem = (NewsItem)bundle.getSerializable("organizerItem");
-        }
         initViews(view);
-        bindViews();
         return view;
     }
 
@@ -109,8 +92,12 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.txtv_viewAllNews:
-                ((MainActivity) getActivity()).openNewsListFragment();
+            case R.id.btn_location_eguide:
+                ((MainActivity) getActivity()).openEguideLocationFragment();
+                break;
+            case R.id.btn_organizers_eguide:
+                ((MainActivity) getActivity()).openEguideOrganizersFragment();
+                break;
             default:
                 break;
         }
@@ -118,22 +105,13 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 
     private void initViews(View view)
     {
-//        NewsItem organizerItem = new NewsItem();
-        imgv_news_details_img = (ImageView) view.findViewById(R.id.imgv_news_details_img);
-        txtv_news_details_newTitle = (TextView) view.findViewById(R.id.txtv_news_details_newTitle);
-        txtv_news_details_newDate = (TextView) view.findViewById(R.id.txtv_news_details_newDate);
-        txtv_news_details_newBody = (TextView) view.findViewById(R.id.txtv_news_details_newBody);
+        btn_locationEguid = (Button) view.findViewById(R.id.btn_location_eguide);
+        btn_organizersEguide = (Button) view.findViewById(R.id.btn_organizers_eguide);
+
+        btn_locationEguid.setOnClickListener(this);
+        btn_organizersEguide.setOnClickListener(this);
     }
 
-    private void bindViews()
-    {
-        if(this.newsItem!=null){
-            txtv_news_details_newTitle.setText(newsItem.newsItemTitle);
-            txtv_news_details_newDate.setText(newsItem.newsItemDate);
-            txtv_news_details_newBody.setText(newsItem.newsItemDescription);
-            imgv_news_details_img.setImageBitmap(newsItem.newsItemImage);
-        }
-    }
 
 
 }

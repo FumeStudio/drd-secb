@@ -11,17 +11,17 @@ import com.secb.android.R;
 //view holder===================================================
 public class NewsItemRecyclerViewHolder extends RecyclerView.ViewHolder
 {
-    TextView txtv_eventTitle;
-    TextView txtv_eventDescription;
-    TextView txtv_event_timeValue;
-    ImageView imgv_eventImg;
+    TextView txtv_newTitle;
+    TextView txtv_newDescription;
+    TextView txtv_newTime;
+    ImageView imgv_newImg;
 
     public NewsItemRecyclerViewHolder(View itemView)
     {
         super(itemView);
-        txtv_eventTitle = (TextView) itemView.findViewById(R.id.txtv_eventTitle);
-        txtv_eventDescription = (TextView) itemView.findViewById(R.id.txtv_eventDescription);
-        txtv_event_timeValue = (TextView) itemView.findViewById(R.id.txtv_event_timeValue);
-        imgv_eventImg = (ImageView)itemView.findViewById(R.id.imgv_eventImg);
+        txtv_newTitle = (TextView) itemView.findViewById(R.id.txtv_newTitle);
+        txtv_newDescription = (TextView) itemView.findViewById(R.id.txtv_newDescription);
+        txtv_newTime = (TextView) itemView.findViewById(R.id.txtv_newTime);
+        imgv_newImg = (ImageView)itemView.findViewById(R.id.imgv_newImg);
     }
 }

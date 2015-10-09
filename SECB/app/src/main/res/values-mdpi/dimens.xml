@@ -67,6 +67,24 @@
     <dimen name="news_details_newTitle_text_container">35dp</dimen> <!-- 99PX - HEIGHT -->
     <dimen name="news_details_newDate_text_container">19dp</dimen> <!-- 55PX - HEIGHT -->
     <dimen name="news_details_text_container_padding">7dp</dimen> <!-- 20PX - HEIGHT -->
+    <dimen name="event_details_map_height">83dp</dimen> <!-- 235PX - HEIGHT -->
+    <dimen name="event_details_header_card_height">67dp</dimen> <!-- 190PX - HEIGHT -->
+    <dimen name="event_details_iconed_info_space_width">42dp</dimen> <!-- 95PX - WIDTH -->
+    <dimen name="event_details_iconed_info__space_height">5dp</dimen> <!-- 15PX - HEIGHT -->
+    <dimen name="event_details_iconed_info_margin">12dp</dimen> <!-- 34PX - HEIGHT -->
+    <dimen name="event_details_text_size">8dp</dimen> <!-- 25PX - HEIGHT -->
+    <dimen name="event_details_iconed_info_icon_margin">5dp</dimen> <!-- 15PX - HEIGHT -->
+
+    <dimen name="eguide_base_text_size">11dp</dimen> <!-- 33PX - HEIGHT -->
+    <dimen name="eguide_base_padding">3dp</dimen> <!-- 10PX - HEIGHT -->
+    <dimen name="eguide_base_btn_horizontal_margin">17dp</dimen> <!-- 40PX - WIDTH -->
+    <dimen name="eguide_base_btn_vertical_margin">10dp</dimen> <!-- 30PX - HEIGHT -->
 
 
+    <dimen name="organizer_p_info_icon_margin">8dp</dimen> <!-- 25PX - HEIGHT -->
+    <dimen name="organizer_p_info_h1_text_size">9dp</dimen> <!-- 27PX - HEIGHT -->
+    <dimen name="organizer_p_info_h2_text_size">8dp</dimen> <!-- 24PX - HEIGHT -->
+    <dimen name="organizer_p_info_rows_margin">10dp</dimen> <!-- 30PX - HEIGHT -->
+    <dimen name="organizer_details_margin">12dp</dimen> <!-- 35PX - HEIGHT -->
+    <dimen name="organizer_details_margin_small">7dp</dimen> <!-- 20PX - HEIGHT -->
 </resources>

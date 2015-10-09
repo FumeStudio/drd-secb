@@ -135,7 +135,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             filterLayoutHolder = (LinearLayout) findViewById(R.id.filter_holder);
             filterLayoutHolder.setVisibility(View.VISIBLE);
             layoutAnimator = new LayoutAnimator(filterLayoutHolder);
-            layoutAnimator.moveDownFirst();
+//            layoutAnimator.moveDownFirst();
 
             if (mActivityLayout != -1)
                 LayoutInflater.from(this).inflate(mActivityLayout, contentLayout, true);

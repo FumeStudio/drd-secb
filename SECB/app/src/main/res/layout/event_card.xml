@@ -6,6 +6,7 @@
     android:paddingTop="@dimen/event_card_margin"
     android:paddingBottom="@dimen/event_card_margin"
     android:weightSum="3"
+
     >
 
     <ImageView
@@ -31,7 +32,9 @@
             android:text="Saudi Arabia has enhanced the development of exhibitions."
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h1_text_size"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/txtv_eventDescription"
@@ -40,7 +43,9 @@
             android:text="Saudi Arabia has enhanced the development of exhibitions."
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/event_card_h2_text_size"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:ellipsize="end"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +68,9 @@
                 android:layout_height="wrap_content"
                 android:text="2:30 PM"
                 android:layout_gravity="center_vertical"
+                android:maxLines="1"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"/>
 
@@ -81,7 +88,9 @@
                 android:layout_height="wrap_content"
                 android:text="Jaddah"
                 android:layout_gravity="center_vertical"
+                android:maxLines="1"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"/>
 
@@ -99,7 +108,9 @@
                 android:layout_height="wrap_content"
                 android:text="Organization"
                 android:layout_gravity="center_vertical"
+                android:maxLines="1"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"/>
         </LinearLayout>

@@ -10,13 +10,16 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.secb.android.R;
+import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
 import com.secb.android.view.menu.items_recycler.MenuItemObject;
 import com.secb.android.view.menu.items_recycler.MenuItemRecyclerAdapter;
 
 import java.util.ArrayList;
 
-public class MenuFragment extends Fragment implements View.OnClickListener {
+public class MenuFragment extends Fragment implements View.OnClickListener, RecyclerCustomClickListener {
     View view;
     int []icons;
 
@@ -69,19 +72,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         /*adapter.setRecyclerClickListener(this);*/
         menuItemRecyclerView.setAdapter(menuItemRecyclerAdapter);
         menuItemRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        menuItemRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), menuItemRecyclerView, this));
 
-        /*menuItemRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(getActivity(),menuItemRecyclerView,new RecyclerClickListener() {
-            @Override
-            public void onItemClicked(View v, int position) {
-                Toast.makeText(getActivity(), "onClicked", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClicked(View v, int position)
-            {
-                Toast.makeText(getActivity(),"onLongClicked",Toast.LENGTH_SHORT).show();
-            }
-        }));*/
     }
 
     private void handleButtonsEvents() {
@@ -112,6 +104,31 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             menuItemsList.add(new MenuItemObject(icons[i],strings[i]));
         }
         return  menuItemsList;
+
+    }
+
+    @Override
+    public void onItemClicked(View v, int position)
+    {
+        switch (position)
+        {
+            case 2:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                ((MainActivity)getActivity()).openNewsListFragment();
+                break;
+            case 3:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                ((MainActivity)getActivity()).openEguideHomeFragment();
+                break;
+            case 4:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                ((MainActivity)getActivity()).openEventListFragment();
+                break;
+        }
+    }
+
+    @Override
+    public void onItemLongClicked(View v, int position) {
 
     }
 }

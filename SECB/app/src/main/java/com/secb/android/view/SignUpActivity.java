@@ -17,15 +17,15 @@ public class SignUpActivity extends SECBBaseActivity {
    WebView webv_signUpPage;
 
     public SignUpActivity() {
-        super(R.layout.signup, true);
+        super(R.layout.signup, false);
     }
 
     @Override
     protected void doOnCreate(Bundle arg0)
     {
         initViews();
-        showHeader(true);
-        setHeaderTitleText(getResources().getString(R.string.login_signup));
+/*        showHeader(false);
+        setHeaderTitleText(getResources().getString(R.string.login_signup));*/
     }
 
     private void initViews()
