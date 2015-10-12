@@ -122,7 +122,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 break;
             case 4:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
-                ((MainActivity)getActivity()).openEventListFragment();
+                ((MainActivity)getActivity()).openEvenCalendarFragment();
                 break;
         }
     }

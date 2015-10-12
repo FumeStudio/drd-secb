@@ -187,7 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/news_filter_padding"
-            android:background="@color/sceb_orange"
+            android:background="@color/secb_orange"
             android:text="@string/filters_apply_filter"
             android:textColor="@color/secb_light_text"
             android:textSize="@dimen/news_filter_btn_text_size" />

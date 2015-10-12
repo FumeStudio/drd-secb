@@ -62,7 +62,7 @@
         android:text="@string/login_login"
         android:textSize="@dimen/login_button_text_size"
         android:textColor="@color/secb_dark_text"
-        android:background="@color/sceb_orange"
+        android:background="@color/secb_orange"
         android:id="@+id/btn_login" />
 
     <!--sign up button-->

@@ -16,6 +16,7 @@ import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventDetailsFragment;
+import com.secb.android.view.fragments.EventsCalendarFragment;
 import com.secb.android.view.fragments.EventsListFragment;
 import com.secb.android.view.fragments.HomeFragment;
 import com.secb.android.view.fragments.LocationsDetailsFragment;
@@ -91,6 +92,12 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
         EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(eventItem);
         addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
+
+    public void openEvenCalendarFragment() {
+        EventsCalendarFragment eventsCalendarFragment = EventsCalendarFragment.newInstance();
+        addFragment(eventsCalendarFragment, eventsCalendarFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+    }
+
 
     public void openEguideHomeFragment() {
         EguideHomeFragment eguideHomeFragment = EguideHomeFragment.newInstance();

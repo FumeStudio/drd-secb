@@ -92,5 +92,6 @@
     <string name="location_roomCountTitle">Number of Rooms</string>
     <string name="locationsList">Locations List</string>
     <string name="location_details">Location Details</string>
+    <string name="view_all_events">View All Events</string>
 
 </resources>
