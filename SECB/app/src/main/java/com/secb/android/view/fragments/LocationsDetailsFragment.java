@@ -80,7 +80,7 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
             locationItem = (LocationItem)bundle.getSerializable("locationItem");
         }
         initViews(view);
-//        bindViews();
+        bindViews();
         return view;
     }
 

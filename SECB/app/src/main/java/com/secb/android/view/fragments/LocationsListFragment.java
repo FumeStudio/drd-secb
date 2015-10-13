@@ -45,7 +45,7 @@ public class LocationsListFragment extends SECBBaseFragment
     {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.locationsList));
+        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.location_eguide));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
 //        ((SECBBaseActivity) getActivity()).setFilterIconClickListener(this);
@@ -86,7 +86,7 @@ public class LocationsListFragment extends SECBBaseFragment
     public void initFilterLayout()
     {
         locationsFilterLayout = new LocationsFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(locationsFilterLayout);
+        ((SECBBaseActivity) getActivity()).setFilterLayout(locationsFilterLayout,false);
         ((SECBBaseActivity) getActivity()).setFilterLayoutView(locationsFilterLayout.getLayoutView());
     }
     private void handleButtonsEvents() {

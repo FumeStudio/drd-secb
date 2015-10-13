@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 
-//view holder===================================================
+//view holder=============================  ======================
 public class EventItemRecyclerViewHolder extends RecyclerView.ViewHolder
 {
     TextView txtv_eventTitle;

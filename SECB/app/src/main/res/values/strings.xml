@@ -93,5 +93,9 @@
     <string name="locationsList">Locations List</string>
     <string name="location_details">Location Details</string>
     <string name="view_all_events">View All Events</string>
+    <string name="image_gallery">Images Gallary</string>
+    <string name="image_album">Image Album</string>
+    <string name="video_album">Videos Album</string>
+    <string name="video_gallery">Video Gallery</string>
 
 </resources>

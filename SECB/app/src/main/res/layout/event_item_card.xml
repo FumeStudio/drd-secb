@@ -5,7 +5,8 @@
     android:orientation="horizontal"
     android:paddingBottom="@dimen/event_card_margin"
     android:paddingTop="@dimen/event_card_margin"
-    android:weightSum="3">
+    android:weightSum="3"
+    android:background="@color/off_white">
 
     <ImageView
         android:id="@+id/imgv_eventImg"

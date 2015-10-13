@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,9 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/organizer_details_margin_small"
-                android:textSize="@dimen/event_card_h3_text_size"
+                android:text="adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad"
                 android:textColor="@color/secb_grey_text"
-                android:text="adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad" />
+                android:textSize="@dimen/event_card_h3_text_size" />
 
         </LinearLayout>
 

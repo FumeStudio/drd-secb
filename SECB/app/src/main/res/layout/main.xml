@@ -37,11 +37,13 @@
             android:layout_marginRight="@dimen/base_filter_btn_margin"
             />
         <!--filter screen-->
+        <!--android:layout_alignBottom="@+id/simple_fragment" -->
         <LinearLayout
             android:id="@+id/filter_holder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/simple_fragment"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/headerLayoutHome"
+
             android:orientation="vertical"
             >
 

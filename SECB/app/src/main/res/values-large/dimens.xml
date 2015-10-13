@@ -95,4 +95,9 @@
     <dimen name="organizer_details_margin_small">11dp</dimen> <!-- 20PX - HEIGHT -->
 
     <dimen name="item_card_height">112dp</dimen> <!-- 210PX - HEIGHT -->
+
+    <dimen name="gallery_item_text_size">14dp</dimen> <!-- 25PX - HEIGHT -->
+    <dimen name="gallery_item_text_padding">8dp</dimen> <!-- 16PX - HEIGHT -->
+    <dimen name="gallery_item_card_width">182dp</dimen> <!-- 340PX - HEIGHT -->
+    <dimen name="gallery_item_card_height">148dp</dimen> <!-- 278PX - HEIGHT -->
 </resources>

@@ -44,7 +44,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     private int mActivityLayout;                                                        // inner layout to be inflatted
 
     MenuFragment fragmentLeftMenu;                                                    // menu_layout fragment
-
+    private  boolean isMenuOpened;
     private DrawerLayout mDrawerLayout;                                            // menu_layout holder
     private HeaderLayout headerLayoutHome;                                    // header layout
 
@@ -58,6 +58,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public int FILTER_ORGANIZERS=3;
     public int FILTER_EGUIDE=4;
 
+    float filterStartX =0;
+    float filterStartY = 0;
+    boolean isFilterLayoutOpened;
     //icon when clicked , display filter view
     ImageView imgv_filter;
 
@@ -73,6 +76,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     //on click listener for the apply filters button
     View.OnClickListener applyFilterClickListener;
     private LayoutAnimator layoutAnimator;
+    private boolean isVerticalAnimation;
 
 //	private /*static*/ ImageFetcher mImageFetcher;
 
@@ -133,9 +137,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             imgv_filter.setVisibility(View.GONE);
             imgv_filter.setOnClickListener(this);
             filterLayoutHolder = (LinearLayout) findViewById(R.id.filter_holder);
-            filterLayoutHolder.setVisibility(View.VISIBLE);
-            layoutAnimator = new LayoutAnimator(filterLayoutHolder);
-//            layoutAnimator.moveDownFirst();
+//            filterLayoutHolder.setVisibility(View.VISIBLE);
+            /*layoutAnimator = new LayoutAnimator(filterLayoutHolder,isVerticalAnimation);*/
+//            layoutAnimator.hideFirst();
 
             if (mActivityLayout != -1)
                 LayoutInflater.from(this).inflate(mActivityLayout, contentLayout, true);
@@ -158,14 +162,18 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
                 @Override
                 public void onDrawerOpened(View arg0) {
+                    isMenuOpened = true;
                 }
 
                 @Override
                 public void onDrawerClosed(View arg0) {
+                    isMenuOpened = false;
                 }
             });
 
             headerLayoutHome = (HeaderLayout) findViewById(R.id.headerLayoutHome);
+
+
             headerLayoutHome.setMenuOnClickListener(this);
             handleButtonsEvents();
 
@@ -213,8 +221,13 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         applyFilterClickListener =(listener);
     }
 
-    public void setFilterLayout(LinearLayout filterLayout) {
+    public void setFilterLayout(LinearLayout filterLayout ,boolean isVerticalAnimation) {
+        filterStartX =headerLayoutHome.getX();
+        filterStartY =headerLayoutHome.getMeasuredHeight();
         this.filterLayout = filterLayout;
+        this.isVerticalAnimation = isVerticalAnimation;
+        layoutAnimator = new LayoutAnimator(filterLayoutHolder,isVerticalAnimation,filterStartX,filterStartY);
+
     }
 
     public void setFilterLayoutView(View filterLayoutView) {
@@ -240,18 +253,20 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     public void hideFilterLayout()
     {
-        if(this.filterLayoutHolder !=null)
+        if(this.filterLayoutHolder !=null && layoutAnimator!=null)
         {
 //            this.filterLayoutHolder.setVisibility(View.GONE);
+            isFilterLayoutOpened = false;
             layoutAnimator.hidePreviewPanel();
         }
     }
 
     public void showFilterLayout()
     {
-        if(this.filterLayoutHolder !=null)
+        if(this.filterLayoutHolder !=null && layoutAnimator!=null)
         {
 //            this.filterLayoutHolder.setVisibility(View.VISIBLE);
+            isFilterLayoutOpened = true;
             layoutAnimator.showPreviewPanel();
         }
     }
@@ -454,7 +469,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         backObservers.remove(fragmentBackObserver);
     }
 
-    private void callBack() {
+    private void callBack()
+    {
         if (backObservers != null)
             for (FragmentBackObserver backObserver : backObservers)
                 backObserver.onBack();
@@ -476,6 +492,15 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public boolean onBackButtonPressed()
     {
         Log.v("FragmentStackAct", "Back " + getSupportFragmentManager().getBackStackEntryCount() + "  ");
+        if(isMenuOpened)
+        {
+            closeMenuPanel();
+            return true;
+        }
+        if(isFilterLayoutOpened){
+            hideFilterLayout();
+            return true;
+        }
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             // getSupportFragmentManager().popBackStack();
@@ -567,6 +592,5 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void displayToast(String msg) {
         Toast.makeText(this, msg + "", Toast.LENGTH_SHORT).show();
     }
-
 
 }

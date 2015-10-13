@@ -14,10 +14,12 @@ import com.secb.android.model.EventItem;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
+import com.secb.android.view.fragments.AlbumFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventDetailsFragment;
 import com.secb.android.view.fragments.EventsCalendarFragment;
 import com.secb.android.view.fragments.EventsListFragment;
+import com.secb.android.view.fragments.GalleryFragment;
 import com.secb.android.view.fragments.HomeFragment;
 import com.secb.android.view.fragments.LocationsDetailsFragment;
 import com.secb.android.view.fragments.LocationsListFragment;
@@ -44,7 +46,7 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
 /*        showHeader(true);
         setHeaderTitleText(getResources().getString(R.string.home_fragment));*/
         initiViews();
-        openHomeFragment();
+        openHomeFragment(false);
 //        initMap();
 
 
@@ -62,10 +64,10 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
     }
 
 
-    private void openHomeFragment()
+    public void openHomeFragment(boolean addToBackStack)
     {
         homeFragment = HomeFragment.newInstance();
-        addFragment(homeFragment, false, FragmentTransaction.TRANSIT_EXIT_MASK, true);
+        addFragment(homeFragment, addToBackStack, FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 
     public void openNewsListFragment()
@@ -128,6 +130,19 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
     }
 
 
+    public void openGalleryFragment(int galleryType, int galleryId)
+    {
+        GalleryFragment galleryFragment = GalleryFragment.newInstance(galleryType,galleryId);
+        addFragment(galleryFragment, galleryFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+    }
+
+    public void openAlbumFragment(int galleryType, int galleryId)
+    {
+        AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType,galleryId);
+        addFragment(albumFragment, albumFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

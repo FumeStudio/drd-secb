@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.p_v.flexiblecalendar.FlexibleCalendarView;
@@ -30,6 +31,14 @@ public class EventsCalendarFragment extends SECBBaseFragment
     private TextView txtv_viewAllEvents;
     FlexibleCalendarView calendarView;
     private Locale currentLocale;
+
+
+    View event_card_container;
+    EventItem cardEventItem;
+    private ImageView imgv_eventImg;
+    private TextView txtv_eventTitle;
+    private TextView txtv_eventDescription;
+    private TextView txtv_event_timeValue;
 
     public static EventsCalendarFragment newInstance() {
         EventsCalendarFragment fragment = new EventsCalendarFragment();
@@ -108,6 +117,9 @@ public class EventsCalendarFragment extends SECBBaseFragment
             case R.id.txtv_viewAllEvents:
                 ((MainActivity)getActivity()).openEventListFragment();
                 break;
+            case R.id.event_card_container:
+                ((MainActivity) getActivity()).openEventDetailsFragment(cardEventItem);
+                break;
             default:
                 break;
         }
@@ -120,7 +132,20 @@ public class EventsCalendarFragment extends SECBBaseFragment
         monthTextView = (TextView)view.findViewById(R.id.month_text_view);
         txtv_viewAllEvents = (TextView)view.findViewById(R.id.txtv_viewAllEvents);
         txtv_viewAllEvents.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        txtv_eventTitle = (TextView) view.findViewById(R.id.txtv_eventTitle);
+        txtv_eventDescription = (TextView) view.findViewById(R.id.txtv_eventDescription);
+        txtv_event_timeValue = (TextView) view.findViewById(R.id.txtv_event_timeValue);
+        imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
+
+        event_card_container=view.findViewById(R.id.event_card_container);
+        event_card_container.setOnClickListener(this);
+
         txtv_viewAllEvents.setOnClickListener(this);
+
+        cardEventItem = DevData.getEventsList().get(0);
+        bindEventCard();
+
     }
 
     public void initCalendar(){
@@ -185,6 +210,13 @@ public class EventsCalendarFragment extends SECBBaseFragment
 
     @Override
     public void onDateClick(int year, int month, int day) {
-        ((SECBBaseActivity)getActivity()).displayToast(day+"-"+month+"-"+year);
+        ((SECBBaseActivity)getActivity()).displayToast(day + "-" + month + "-" + year);
+    }
+
+    private void bindEventCard() {
+        imgv_eventImg.setImageBitmap(cardEventItem.eventItemImage);
+        txtv_eventTitle.setText(cardEventItem.eventItemTitle);
+        txtv_eventDescription.setText(cardEventItem.eventItemDescription);
+        txtv_event_timeValue.setText(cardEventItem.eventItemTime);
     }
 }

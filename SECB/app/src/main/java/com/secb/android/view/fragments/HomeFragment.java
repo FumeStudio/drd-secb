@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.manager.DevData;
+import com.secb.android.model.EventItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
@@ -40,9 +42,14 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     RecyclerView newsRecyclerView;
     NewsItemRecyclerAdapter newsItemRecyclerAdapter;
     ArrayList<NewsItem> newsList;
-
+    EventItem eventItem;
 
     View view;
+    View event_card_container;
+    private ImageView imgv_eventImg;
+    private TextView txtv_eventTitle;
+    private TextView txtv_eventDescription;
+    private TextView txtv_event_timeValue;
 
 
     public static HomeFragment newInstance() {
@@ -113,6 +120,10 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         switch (v.getId()) {
             case R.id.txtv_viewAllNews:
                 ((MainActivity) getActivity()).openNewsListFragment();
+                break;
+            case R.id.event_card_container:
+                ((MainActivity) getActivity()).openEventDetailsFragment(eventItem);
+                break;
             default:
                 break;
         }
@@ -141,8 +152,20 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_graph_title_inbox.setText(Html.fromHtml(getString(R.string.graph_title_inbox)));
         txtv_graph_title_inProgress.setText(Html.fromHtml(getString(R.string.graph_title_inProgress)));
 
-        newsList = DevData.getNewsList();
 
+        txtv_eventTitle = (TextView) view.findViewById(R.id.txtv_eventTitle);
+        txtv_eventDescription = (TextView) view.findViewById(R.id.txtv_eventDescription);
+        txtv_event_timeValue = (TextView) view.findViewById(R.id.txtv_event_timeValue);
+        imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
+
+        event_card_container=view.findViewById(R.id.event_card_container);
+        event_card_container.setOnClickListener(this);
+
+        eventItem = DevData.getEventsList().get(0);
+        bindEventCard();
+
+
+        newsList = DevData.getNewsList();
         if (newsList != null && newsList.size() > 2) {
            /* for (int i = 2; i < locationItems.size(); i++) {
                 locationItems.remove(i);
@@ -163,6 +186,13 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         fillWheelPercentage(graphsValues[0], graphsValues[1], graphsValues[2]);
 
         txtv_viewAllNews.setOnClickListener(this);
+    }
+
+    private void bindEventCard() {
+        imgv_eventImg.setImageBitmap(eventItem.eventItemImage);
+        txtv_eventTitle.setText(eventItem.eventItemTitle);
+        txtv_eventDescription.setText(eventItem.eventItemDescription);
+        txtv_event_timeValue.setText(eventItem.eventItemTime);
     }
 
     private void fillWheelPercentage(int closedScore, int inboxScore, int inProgressScore) {

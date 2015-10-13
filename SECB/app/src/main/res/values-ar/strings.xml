@@ -12,7 +12,7 @@
 
     <!--sign up-->
     <string name="sign_up_registeration_url">http://secb.linkdev.com/ar/Pages/QuickRegistration.aspx</string>
-    <string name="lost_connection">تم قطع الارسال !</string>
+    <string name="lost_connection">The connection is lost !</string>
 
 <!--reset password-->
     <string name="resetPassword">ارسال الرابط</string>
@@ -54,14 +54,14 @@
     <string name="filter_city">المدينة: </string>
     <string name="filter_time_starts">البداية</string>
     <string name="filter_time_ends">النهاية</string>
-    <string name="event_details">Event Details</string>
-    <string name="location_eguide">Location E-Guide</string>
-    <string name="organizers_eguide">organizers_eguide</string>
-    <string name="filter_organizer_name">Organizer Name</string>
+    <string name="event_details">تفاصيل الفعاليات</string>
+    <string name="location_eguide">المواقع</string>
+    <string name="organizers_eguide">المنظمين</string>
+    <string name="filter_organizer_name">اسم المنظم:</string>
     <string name="address">العنوان:</string>
     <string name="phone">رقم التليفون:</string>
     <string name="website">الموقع الالكتروني:</string>
-    <string name="organizer_details">Organizers Details</string>
+    <string name="organizer_details">بيانات المنظم</string>
     <string name="location_capacityTitle">السعة:</string>
     <string name="location_spaceTitle">المساحة:</string>
     <string name="filter_location_name">اسم الموقع:</string>
@@ -71,7 +71,11 @@
     <string name="location_roomCapacity">سعة الغرفة:</string>
     <string name="location_roomSpace">مساحة الغرفة:</string>
     <string name="location_roomCountTitle">عدد الغرف:</string>
-    <string name="locationsList">Locations List</string>
-    <string name="location_details">Location Details</string>
-    <string name="view_all_events">View All Events</string>
+    <string name="locationsList">قائمة المواقع</string>
+    <string name="location_details">بيانات الموقع</string>
+    <string name="view_all_events">عرض كل الفعاليات</string>
+    <string name="image_gallery">معرض الصور</string>
+    <string name="image_album">البوم الصور</string>
+    <string name="video_album">البوم الافلام</string>
+    <string name="video_gallery">معرض الافلام</string>
 </resources>

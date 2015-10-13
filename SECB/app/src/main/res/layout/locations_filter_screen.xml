@@ -102,6 +102,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text=""
+                        android:maxLines="1"
                         android:textColor="@color/secb_grey_text"
                         android:textSize="@dimen/news_filter_text_size" />
                 </TableRow>
@@ -234,6 +235,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text=""
+                        android:maxLines="1"
                         android:textColor="@color/secb_grey_text"
                         android:textSize="@dimen/news_filter_text_size" />
                 </TableRow>

@@ -1,6 +1,5 @@
 package com.secb.android.view;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,27 +10,29 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.secb.android.R;
+import com.secb.android.view.components.CustomProgressDialog;
 
 public class SignUpActivity extends SECBBaseActivity {
 
    WebView webv_signUpPage;
 
     public SignUpActivity() {
-        super(R.layout.signup, false);
+        super(R.layout.signup, true);
     }
 
     @Override
     protected void doOnCreate(Bundle arg0)
     {
         initViews();
-/*        showHeader(false);
-        setHeaderTitleText(getResources().getString(R.string.login_signup));*/
+        showHeader(false);
+        setHeaderTitleText(getResources().getString(R.string.login_signup));
     }
 
     private void initViews()
     {
         webv_signUpPage = (WebView) findViewById(R.id.webv_signUpPage);
-        loadUrl(webv_signUpPage,getResources().getString(R.string.sign_up_registeration_url));
+        loadUrl(webv_signUpPage, getResources().getString(R.string.sign_up_registeration_url));
+
     }
 
     @Override
@@ -43,9 +44,12 @@ public class SignUpActivity extends SECBBaseActivity {
     }
     public void loadUrl(final WebView myWebView, String url)
     {
-        final ProgressDialog dialog = ProgressDialog.show(SignUpActivity.this, "",  getString(R.string.loading), true);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(false);
+//        final ProgressDialog dialog = ProgressDialog.show(SignUpActivity.this, "",  getString(R.string.loading), true);
+//        dialog.setCancelable(true);
+//        dialog.setCanceledOnTouchOutside(false);
+
+        final CustomProgressDialog dialog =CustomProgressDialog.getInstance(SignUpActivity.this);
+        dialog.show();
         myWebView.setVerticalScrollBarEnabled(false);
         myWebView.setHorizontalScrollBarEnabled(false);
         WebSettings webSettings = myWebView.getSettings();

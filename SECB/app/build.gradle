@@ -23,7 +23,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
     }
     buildTypes {
         release {
@@ -45,6 +45,7 @@ dependencies {
     //    compile 'org.apache.axis:axis:1.4'
     //    compile 'com.android.support:cardview-v7:22.0.+'
     compile 'com.android.support:recyclerview-v7:22.1.1'
+    compile 'com.android.support:cardview-v7:22.1.1'
     compile 'com.wefika:flowlayout:0.4.1'
     compile project (':library')
 }

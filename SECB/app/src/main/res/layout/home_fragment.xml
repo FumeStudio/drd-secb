@@ -183,7 +183,9 @@
             android:orientation="vertical">
 
             <!--Title:services requests-->
-            <include layout="@layout/event_item_card"
+            <include
+                android:id="@+id/event_card_container"
+                layout="@layout/event_item_card"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="@dimen/event_card_margin"
                 android:layout_marginRight="@dimen/event_card_margin"
@@ -215,19 +217,21 @@
             android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/home_news_recycler_height"
-            android:layout_marginTop="@dimen/home_graphs_card_padding"
             android:layout_weight="3"
-            ></android.support.v7.widget.RecyclerView>
+            >
+
+        </android.support.v7.widget.RecyclerView>
         <TextView
             android:id="@+id/txtv_viewAllNews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
+            android:gravity="top|right"
             android:text="@string/view_all_news"
             android:textSize="@dimen/event_card_h3_text_size"
             android:textColor="@color/secb_dark_text"
             android:textStyle="bold"
-            android:layout_weight="0.5"/>
+
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </LinearLayout>

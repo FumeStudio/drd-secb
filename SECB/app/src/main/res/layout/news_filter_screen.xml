@@ -51,11 +51,12 @@
                 android:textSize="@dimen/news_filter_text_size" />
 
             <!--from value-->
-            <EditText
+            <TextView
                 android:id="@+id/txtv_news_filter_time_from_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/filter_time_from"
+                android:maxLines="1"
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
 
@@ -70,11 +71,12 @@
                 android:textSize="@dimen/news_filter_text_size" />
 
             <!--to value-->
-            <EditText
+            <TextView
                 android:id="@+id/txtv_news_filter_time_to_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/filter_time_from"
+                android:text="@string/filter_time_to"
+                android:maxLines="1"
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
 

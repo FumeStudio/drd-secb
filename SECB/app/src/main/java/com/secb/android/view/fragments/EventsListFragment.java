@@ -86,7 +86,7 @@ public class EventsListFragment extends SECBBaseFragment
     public void initFilterLayout()
     {
         eventsFilterLayout= new EventsFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(eventsFilterLayout);
+        ((SECBBaseActivity) getActivity()). setFilterLayout(eventsFilterLayout,false);
         ((SECBBaseActivity) getActivity()).setFilterLayoutView(eventsFilterLayout.getLayoutView());
     }
     private void handleButtonsEvents() {

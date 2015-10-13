@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.secb.android.R;
+import com.secb.android.model.GalleryItem;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
@@ -112,6 +113,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
     {
         switch (position)
         {
+            case 0:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                ((MainActivity)getActivity()).openHomeFragment(true);
+                break;
             case 2:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 ((MainActivity)getActivity()).openNewsListFragment();
@@ -123,6 +128,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
             case 4:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 ((MainActivity)getActivity()).openEvenCalendarFragment();
+                break;
+            case 5:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,-1);
+                break;
+            case 6:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,-1);
                 break;
         }
     }

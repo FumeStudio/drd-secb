@@ -32,9 +32,10 @@
 
         <!--event card-->
         <LinearLayout
+            android:id="@+id/event_card_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/off_white"
             android:layout_margin="@dimen/event_card_margin"
             android:layout_above="@+id/txtv_viewAllEvents">
             <include layout="@layout/event_item_card"

@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/txtv_organizer_address_value"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             android:textColor="@color/secb_grey_text"
@@ -61,7 +61,7 @@
         <TextView
             android:id="@+id/txtv_organizer_phone_value"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             android:textColor="@color/secb_grey_text"
@@ -70,7 +70,7 @@
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/organizer_p_info_rows_margin"
         android:layout_weight="1">
 
@@ -93,10 +93,11 @@
         <TextView
             android:id="@+id/txtv_organizer_email_value"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text="EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL EMAIL "
             android:textColor="@color/secb_grey_text"
+
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </TableRow>
 
@@ -125,10 +126,12 @@
         <TextView
             android:id="@+id/txtv_organizer_website_value"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </TableRow>
+
+
 </LinearLayout>

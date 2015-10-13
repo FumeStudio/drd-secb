@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/home_bg"
-    android:paddingLeft="@dimen/home_graphs_card_padding"
-    android:paddingRight="@dimen/home_graphs_card_padding">
+    android:background="@color/white"
+    android:paddingLeft="@dimen/eguide_base_padding"
+    android:paddingRight="@dimen/eguide_base_padding">
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/locationsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/home_graphs_card_padding"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

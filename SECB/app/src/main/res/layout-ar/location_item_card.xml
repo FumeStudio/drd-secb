@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_card_height"
-    android:layout_marginRight="@dimen/event_card_margin"
+    android:layout_marginBottom="@dimen/eguide_base_padding"
+    android:layout_marginRight="@dimen/eguide_base_padding"
+    android:padding="@dimen/eguide_base_padding"
+    android:layout_marginTop="@dimen/event_card_margin"
     android:background="@color/off_white"
     android:orientation="horizontal"
-    android:layout_marginBottom="@dimen/event_card_margin"
-    android:layout_marginTop="@dimen/event_card_margin"
     android:weightSum="3"
 
     >
@@ -26,10 +27,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:gravity="bottom"
             android:maxLines="2"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/event_card_h1_text_size" />
+            android:textSize="@dimen/event_card_h1_text_size"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtv_locationDescription"
@@ -37,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:gravity="center_vertical"
             android:maxLines="2"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/secb_grey_text"

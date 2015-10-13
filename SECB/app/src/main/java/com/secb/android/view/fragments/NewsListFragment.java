@@ -86,7 +86,7 @@ public class NewsListFragment extends SECBBaseFragment
     public void initFilterLayout()
     {
         newsFilterLayout= new NewsFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(newsFilterLayout);
+        ((SECBBaseActivity) getActivity()).setFilterLayout(newsFilterLayout ,true);
         ((SECBBaseActivity) getActivity()).setFilterLayoutView(newsFilterLayout.getLayoutView());
     }
     private void handleButtonsEvents() {

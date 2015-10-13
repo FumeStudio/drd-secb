@@ -7,12 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class LayoutAnimator {
+    private final float startPointY;
+    private final float startPointX;
     ViewGroup layout;
     public boolean isDown;
+    public boolean isVerticalAnimation;
+    String animationDirection = "translationY";
 
-    public LayoutAnimator(ViewGroup layout) {
+    public LayoutAnimator(ViewGroup layout, boolean isVerticalAnimation, float startPointX, float startPointY)
+    {
         this.layout = layout;
-        moveDownFirst();
+        this.isVerticalAnimation = isVerticalAnimation;
+        animationDirection = isVerticalAnimation ? "translationY" : "translationX" ;
+        this.startPointX=startPointX;
+        this.startPointY=startPointY;
+        hideFirst();
     }
 
     public void hidePreviewPanel() {
@@ -41,14 +50,19 @@ public class LayoutAnimator {
             }
         };
 
-        ObjectAnimator animator;
-        animator = ObjectAnimator.ofFloat(layout, "translationY", layout.getMeasuredHeight())
+        ObjectAnimator animator=null;
+        if(isVerticalAnimation)
+            animator = ObjectAnimator.ofFloat(layout, animationDirection, layout.getMeasuredHeight())
                 .setDuration(400);
+        else
+            animator = ObjectAnimator.ofFloat(layout, animationDirection, layout.getMeasuredWidth())
+                    .setDuration(400);
+
+
         animator.addListener(listener);
         animator.start();
 
     }
-
 
     public void showPreviewPanel() {
 
@@ -82,21 +96,40 @@ public class LayoutAnimator {
 
             }
         };
-
-        ObjectAnimator animator = ObjectAnimator.ofFloat(layout, "translationY", -(0 /*layout.getMeasuredHeight()*/))
+        ObjectAnimator animator =null;
+        if(isVerticalAnimation)
+            animator = ObjectAnimator.ofFloat(layout, animationDirection, -(0 /*layout.getMeasuredHeight()*/))
                 .setDuration(850);
+        else
+            animator = ObjectAnimator.ofFloat(layout, animationDirection, -(0 /*layout.getMeasuredHeight()*/))
+                    .setDuration(850);
+
         animator.addListener(listener);
         animator.start();
 
     }
 
-    public void moveDownFirst() {
-        if (!isDown) {
+    public void hideFirst()
+    {
+        layout.setX(startPointX);
+        layout.setY(startPointY);
+        if(isVerticalAnimation){
+            if (!isDown)
+            {
+                ObjectAnimator animatorTemp =
+                        ObjectAnimator.ofFloat(layout, "translationY", layout.getMeasuredHeight())
+                                .setDuration(1);
+                animatorTemp.start();
+            }
+        }
+        else{
             ObjectAnimator animatorTemp =
-                    ObjectAnimator.ofFloat(layout, "translationY", layout.getMeasuredHeight())
+                    ObjectAnimator.ofFloat(layout, "translationX", layout.getMeasuredWidth())
                             .setDuration(1);
             animatorTemp.start();
         }
+
+
     }
 
 }

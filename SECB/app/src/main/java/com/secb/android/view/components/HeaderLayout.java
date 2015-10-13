@@ -62,7 +62,7 @@ public class HeaderLayout extends LinearLayout
 				imageViewMenuHeader.setVisibility(View.VISIBLE);
 			}
 			else {
-				imageViewMenuHeader.setVisibility(View.GONE);
+				imageViewMenuHeader.setVisibility(View.INVISIBLE);
 			}
 		}
 		
