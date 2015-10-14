@@ -1,6 +1,7 @@
 package com.secb.android.view;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -57,5 +58,11 @@ public class LoginActivity extends SECBBaseActivity {
         }
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        displayToast("language changed successfully");
+    }
 
 }

@@ -6,7 +6,7 @@
         android:startColor="#5fff"
         android:endColor="#9444"
         android:type="linear"
-        android:angle="270"> <!-- Change this value to have the correct shadow angle, must be multiple from 45 -->
+        android:angle="180"> <!-- Change this value to have the correct shadow_h angle, must be multiple from 45 -->
     </gradient>
 
 </shape>

@@ -29,21 +29,24 @@ public class LocationsFilterLayout extends LinearLayout {
     public LocationsFilterLayout(Context context) {
         super(context);
         view = LayoutInflater.from(context).inflate(R.layout.locations_filter_screen, null);
+        initViews(view);
         getFilterData();
     }
 
-    public LocationsFilterData getFilterData()
-    {
-        locationsFilterData = new LocationsFilterData();
+    private void initViews(View view) {
         txtv_location_filter_name_value = (EditText) view.findViewById(R.id.txtv_location_filter_name_value);
         txtv_location_filter_city_value = (EditText) view.findViewById(R.id.txtv_location_filter_city_value);
-        txtv_location_filter_capacity_from_value = (EditText) view.findViewById(R.id.txtv_location_filter_capacity_from_value);
+        txtv_location_filter_capacity_from_value = (EditText)  view.findViewById(R.id.txtv_location_filter_capacity_from_value);
         txtv_location_filter_capacity_to_value = (EditText) view.findViewById(R.id.txtv_location_filter_capacity_to_value);
         chkbox_type1 = (CheckBox) view.findViewById(R.id.chkbox_type1);
         chkbox_type2 = (CheckBox) view.findViewById(R.id.chkbox_type2);
         chkbox_type3 = (CheckBox) view.findViewById(R.id.chkbox_type3);
         chkbox_type4 = (CheckBox) view.findViewById(R.id.chkbox_type4);
+    }
 
+    public LocationsFilterData getFilterData()
+    {
+        locationsFilterData = new LocationsFilterData();
 
         locationsFilterData.name = txtv_location_filter_name_value.getText().toString();
         locationsFilterData.city = txtv_location_filter_city_value.getText().toString();

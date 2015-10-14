@@ -28,7 +28,7 @@
 
     <dimen name="menu_item_icon_horizontal_margin">28dp</dimen> <!-- 55PX - WIDTH -->
     <dimen name="menu_item_vertical_margin">38dp</dimen> <!-- 75PX - HEIGHT -->
-    <dimen name="menu_margin_top">50dp</dimen> <!-- 100PX - HEIGHT -->
+    <dimen name="menu_margin_top">25dp</dimen> <!-- 50PX - HEIGHT -->
     <dimen name="menu_item_text_size">14sp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="menu_width">250dp</dimen> <!-- 500PX - WIDTH -->
 

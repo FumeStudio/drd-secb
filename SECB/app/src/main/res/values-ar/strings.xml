@@ -2,7 +2,7 @@
 <resources>
 
     <string name="loading">جاري التحميل..</string>
-
+    <string name="ok">الغاء</string>
     <!--Login-->
     <string name="login_forget_pass">نسيت كلمة السر</string>
     <string name="login_login">دخول</string>
@@ -28,6 +28,8 @@
     <string name="aboutus">عنا</string>
     <string name="contactus">اتصل بنا</string>
     <string name="services_requests">الطلبات الخدمية</string>
+    <string name="language">English</string>
+    <string name="logout">الخروج</string>
     <string name="last_news">أخر الأخبار</string>
 
     <string name="graph_title_closed">
@@ -52,8 +54,9 @@
     <string name="filters_apply_filter">اجراء</string>
     <string name="news_details">تفاصيل الخبر</string>
     <string name="filter_city">المدينة: </string>
-    <string name="filter_time_starts">البداية</string>
-    <string name="filter_time_ends">النهاية</string>
+    <string name="filter_time_starts">البداية: </string>
+    <string name="filter_time_ends">النهاية: </string>
+    <string name="filter_category">الفئة</string>
     <string name="event_details">تفاصيل الفعاليات</string>
     <string name="location_eguide">المواقع</string>
     <string name="organizers_eguide">المنظمين</string>
@@ -78,4 +81,7 @@
     <string name="image_album">البوم الصور</string>
     <string name="video_album">البوم الافلام</string>
     <string name="video_gallery">معرض الافلام</string>
+    <string name="hint_date">التـــاريخ</string>
+    <string name="hint_city">المدينة</string>
+    <string name="hint_name">الاسم</string>
 </resources>

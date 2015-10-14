@@ -50,6 +50,17 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal">
+
+                    <!--from value-->
+                    <EditText
+                        android:id="@+id/txtv_location_filter_name_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
                     <!--location name-->
                     <TextView
                         android:id="@+id/txtv_location_filter_name_title"
@@ -61,17 +72,6 @@
                         android:textColor="@color/secb_dark_text"
                         android:textSize="@dimen/news_filter_text_size" />
 
-                    <!--from value-->
-                    <EditText
-                        android:id="@+id/txtv_location_filter_name_value"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="@string/hint_name"
-                        android:maxLines="1"
-                        android:text=""
-                        android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/news_filter_text_size" />
                 </TableRow>
 
                 <View
@@ -84,6 +84,18 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal">
+
+
+                    <!--to value-->
+                    <EditText
+                        android:id="@+id/txtv_location_filter_city_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:maxLines="1"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
                     <!--to-->
                     <TextView
                         android:id="@+id/txtv_location_filter_city_title"
@@ -95,18 +107,6 @@
                         android:gravity="center_vertical"
                         android:text="@string/filter_city"
                         android:textColor="@color/secb_dark_text"
-                        android:textSize="@dimen/news_filter_text_size" />
-
-                    <!--to value-->
-                    <EditText
-                        android:id="@+id/txtv_location_filter_city_value"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="@string/hint_city"
-                        android:maxLines="1"
-                        android:text=""
-                        android:textColor="@color/secb_grey_text"
                         android:textSize="@dimen/news_filter_text_size" />
                 </TableRow>
 
@@ -137,41 +137,41 @@
                     android:id="@+id/chkbox_type1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_all_types"
-                    android:textColor="@color/secb_grey_text" />
+                    android:textColor="@color/secb_grey_text"
+                    android:layout_gravity="right"
+                    android:button="@null"
+                    android:drawableRight="@drawable/check_box" />
 
                 <CheckBox
                     android:id="@+id/chkbox_type2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_economic_type"
-                    android:textColor="@color/secb_grey_text" />
+                    android:textColor="@color/secb_grey_text"
+                    android:layout_gravity="right"
+                    android:button="@null"
+                    android:drawableRight="@drawable/check_box" />
 
                 <CheckBox
                     android:id="@+id/chkbox_type3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_political_type"
-                    android:textColor="@color/secb_grey_text" />
+                    android:textColor="@color/secb_grey_text"
+                    android:layout_gravity="right"
+                    android:button="@null"
+                    android:drawableRight="@drawable/check_box" />
                 <!--android:buttonTint="@color/secb_dark_text"-->
                 <CheckBox
                     android:id="@+id/chkbox_type4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_public_type"
-                    android:textColor="@color/secb_grey_text" />
+                    android:textColor="@color/secb_grey_text"
+                    android:layout_gravity="right"
+                    android:button="@null"
+                    android:drawableRight="@drawable/check_box" />
             </LinearLayout>
             <!--total capacity title-->
             <TextView
@@ -197,6 +197,17 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal">
+
+                    <!--from value-->
+                    <EditText
+                        android:id="@+id/txtv_location_filter_capacity_from_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
                     <!--location name-->
                     <TextView
                         android:id="@+id/txtv_location_filter_capacity_from_title"
@@ -208,17 +219,6 @@
                         android:textColor="@color/secb_dark_text"
                         android:textSize="@dimen/news_filter_text_size" />
 
-                    <!--from value-->
-                    <EditText
-                        android:id="@+id/txtv_location_filter_capacity_from_value"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="@string/filter_time_from"
-                        android:maxLines="1"
-                        android:text=""
-                        android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/news_filter_text_size" />
                 </TableRow>
 
                 <View
@@ -231,6 +231,17 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal">
+
+                    <!--to value-->
+                    <EditText
+                        android:id="@+id/txtv_location_filter_capacity_to_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:maxLines="1"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
                     <!--to-->
                     <TextView
                         android:id="@+id/txtv_location_filter_capacity_to_title"
@@ -244,17 +255,6 @@
                         android:textColor="@color/secb_dark_text"
                         android:textSize="@dimen/news_filter_text_size" />
 
-                    <!--to value-->
-                    <EditText
-                        android:id="@+id/txtv_location_filter_capacity_to_value"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="@string/filter_time_to"
-                        android:maxLines="1"
-                        android:text=""
-                        android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/news_filter_text_size" />
                 </TableRow>
 
 

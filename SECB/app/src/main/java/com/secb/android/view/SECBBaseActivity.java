@@ -1,6 +1,8 @@
 package com.secb.android.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -77,6 +79,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     View.OnClickListener applyFilterClickListener;
     private LayoutAnimator layoutAnimator;
     private boolean isVerticalAnimation;
+    Bundle savedInstanceState;
 
 //	private /*static*/ ImageFetcher mImageFetcher;
 
@@ -121,6 +124,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState=savedInstanceState;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // startIncomingView();
@@ -149,7 +153,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             // fragmentLeftMenu.setLeftMenuObserver(leftMenuObserver);
 
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayoutMainDialer);
-            // set a custom shadow that overlays the main content when the drawer opens
+            // set a custom shadow_h that overlays the main content when the drawer opens
             mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
             mDrawerLayout.setDrawerListener(new DrawerListener() {
                 @Override
@@ -593,4 +597,35 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         Toast.makeText(this, msg + "", Toast.LENGTH_SHORT).show();
     }
 
+    public void changeAppLanguage(boolean changeToEnglish)
+    {
+        String languageToLoad  = "en";
+        if(!changeToEnglish)
+            languageToLoad  = "ar";
+
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+        onConfigurationChanged(config);
+    }
+
+    public void saveLanguageSetting(String languageToLoad)
+    {
+        SharedPreferences languagepref = getSharedPreferences("language",MODE_PRIVATE);
+        SharedPreferences.Editor editor = languagepref.edit();
+        editor.putString("languageToLoad",languageToLoad );
+        editor.commit();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        Intent i = new Intent(activity, SplashActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(i);
+    }
 }

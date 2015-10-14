@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,6 +14,7 @@
         android:orientation="vertical">
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/filter_container"
         android:layout_width="match_parent"
@@ -22,6 +22,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/filter_bg"
         android:orientation="vertical"
+        android:clickable="true"
         android:padding="@dimen/news_filter_padding">
 
         <!--time title-->
@@ -55,8 +56,10 @@
                 android:id="@+id/txtv_news_filter_time_from_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/filter_time_from"
+                android:drawableLeft="@drawable/date_picker_icon"
+                android:hint="@string/hint_date"
                 android:maxLines="1"
+                android:text=""
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
 
@@ -75,8 +78,10 @@
                 android:id="@+id/txtv_news_filter_time_to_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/filter_time_to"
+                android:drawableLeft="@drawable/date_picker_icon"
+                android:hint="@string/hint_date"
                 android:maxLines="1"
+                android:text=""
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
 
@@ -110,8 +115,11 @@
 
                 <RadioButton
                     android:id="@+id/radbtn_allTypes"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_all_types"
                     android:textColor="@color/secb_grey_text" />
 
@@ -119,6 +127,9 @@
                     android:id="@+id/radbtn_economicType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_economic_type"
                     android:textColor="@color/secb_grey_text" />
 
@@ -126,6 +137,9 @@
                     android:id="@+id/radbtn_politicalType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_political_type"
                     android:textColor="@color/secb_grey_text" />
                 <!--android:buttonTint="@color/secb_dark_text"-->
@@ -133,6 +147,9 @@
                     android:id="@+id/radbtn_publicType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_public_type"
                     android:textColor="@color/secb_grey_text" />
 
@@ -153,12 +170,11 @@
 
 
     </LinearLayout>
-<!--shadow-->
+    <!--shadow_h-->
     <View
         android:id="@+id/shadow"
         android:layout_width="fill_parent"
         android:layout_height="2.3dp"
         android:layout_above="@+id/filter_container"
-        android:background="@drawable/shadow">
-    </View>
+        android:background="@drawable/shadow_h"></View>
 </RelativeLayout>

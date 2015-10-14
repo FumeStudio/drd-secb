@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.model.GalleryItem;
@@ -62,11 +63,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 getResources().getString(R.string.news),getResources().getString(R.string.eguide),
                 getResources().getString(R.string.events),getResources().getString(R.string.images),
                 getResources().getString(R.string.videos),getResources().getString(R.string.aboutus),
-                getResources().getString(R.string.contactus)
+                getResources().getString(R.string.contactus),
+                getResources().getString(R.string.language),
+                getResources().getString(R.string.logout)
         };
         icons= new int[]{R.drawable.home_icon,R.drawable.eservices_icon,R.drawable.news_icon,
                 R.drawable.eguide_icon,R.drawable.events_icon,R.drawable.images_icon,
-                R.drawable.videos_icon,R.drawable.aboutus_icon,R.drawable.contactus_icon};
+                R.drawable.videos_icon,R.drawable.aboutus_icon,R.drawable.contactus_icon,
+                R.drawable.lanuage_icon,R.drawable.logout_icon};
 
         menuItemRecyclerView = (RecyclerView)view.findViewById(R.id.menuItemRecyclerView);
         menuItemRecyclerAdapter = new MenuItemRecyclerAdapter(getActivity(), getMenuItems());
@@ -131,11 +135,24 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 break;
             case 5:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
-                ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,-1);
+                ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, -1);
                 break;
             case 6:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,-1);
+                break;
+            case 9:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                TextView txv = ((TextView) v.findViewById(R.id.text_itemText) );
+                boolean changeToEnglish = true;
+                if(txv!=null)
+                {
+                    if(txv.getText().toString().equalsIgnoreCase("English") )
+                        changeToEnglish=true;
+                    else
+                        changeToEnglish=false;
+                }
+                ((SECBBaseActivity) getActivity()).changeAppLanguage(changeToEnglish);
                 break;
         }
     }

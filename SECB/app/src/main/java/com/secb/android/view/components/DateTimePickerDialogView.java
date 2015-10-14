@@ -35,7 +35,7 @@ public class DateTimePickerDialogView extends LinearLayout{
 
     private void init() {
         setGravity(Gravity.CENTER_HORIZONTAL);
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.date_time_picker_dialog_custom_view, null, false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.custom_date_time_picker_dialog, null, false);
         datePicker = (DatePicker) view.findViewById(R.id.datePickerDay);
         timePicker = (TimePicker) view.findViewById(R.id.timePickerTime);
         removeAllViews();

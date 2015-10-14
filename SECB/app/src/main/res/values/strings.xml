@@ -45,6 +45,8 @@
     <string name="videos">Videos</string>
     <string name="aboutus">About Us</string>
     <string name="contactus">Contac Us</string>
+    <string name="language">عربي</string>
+    <string name="logout">Logout</string>
     <string name="services_requests">Services Requests</string>
     <string name="last_news">Last News</string>
 
@@ -97,5 +99,8 @@
     <string name="image_album">Image Album</string>
     <string name="video_album">Videos Album</string>
     <string name="video_gallery">Video Gallery</string>
+    <string name="hint_date">The Date</string>
+    <string name="hint_city">City</string>
+    <string name="hint_name">Name</string>
 
 </resources>

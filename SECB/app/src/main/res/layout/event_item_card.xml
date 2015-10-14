@@ -6,7 +6,9 @@
     android:paddingBottom="@dimen/event_card_margin"
     android:paddingTop="@dimen/event_card_margin"
     android:weightSum="3"
-    android:background="@color/off_white">
+    android:background="@color/off_white"
+    android:layout_marginBottom="@dimen/eguide_base_padding"
+    android:layout_marginTop="@dimen/eguide_base_padding">
 
     <ImageView
         android:id="@+id/imgv_eventImg"

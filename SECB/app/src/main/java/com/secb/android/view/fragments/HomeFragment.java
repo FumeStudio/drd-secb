@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -219,6 +220,13 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
     @Override
     public void onItemLongClicked(View v, int position) {
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+//        ((MainActivity) getActivity()).displayToast("language changed successfully");
 
     }
 }

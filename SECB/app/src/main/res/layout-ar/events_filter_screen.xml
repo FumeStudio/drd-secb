@@ -41,16 +41,6 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/news_filter_padding"
             android:paddingRight="@dimen/news_filter_padding">
-            <!--city title-->
-            <TextView
-                android:id="@+id/txtv_city_filter_city_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/filter_city"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/news_filter_text_size" />
 
             <!--city value-->
             <EditText
@@ -63,6 +53,17 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
+            <!--city title-->
+            <TextView
+                android:id="@+id/txtv_city_filter_city_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/filter_city"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/news_filter_text_size" />
+
 
         </TableRow>
 
@@ -73,6 +74,20 @@
             android:background="@color/white"
             android:paddingLeft="@dimen/news_filter_padding"
             android:paddingRight="@dimen/news_filter_padding">
+
+            <!--from value-->
+            <TextView
+                android:id="@+id/txtv_news_filter_time_from_value"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text=""
+                android:hint="@string/hint_date"
+                android:textColor="@color/secb_grey_text"
+                android:drawableRight="@drawable/date_picker_icon"
+                android:textSize="@dimen/news_filter_text_size" />
             <!--from title-->
             <TextView
                 android:id="@+id/txtv_news_filter_time_from_title"
@@ -84,19 +99,6 @@
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/news_filter_text_size" />
 
-            <!--from value-->
-            <TextView
-                android:id="@+id/txtv_news_filter_time_from_value"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text=""
-                android:drawableLeft="@drawable/date_picker_icon"
-                android:hint="@string/hint_date"
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
         </TableRow>
 
         <TableRow
@@ -106,16 +108,6 @@
             android:paddingLeft="@dimen/news_filter_padding"
             android:paddingRight="@dimen/news_filter_padding">
 
-            <!--to-->
-            <TextView
-                android:id="@+id/txtv_news_filter_time_to_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/filter_time_ends"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/news_filter_text_size" />
 
             <!--to value-->
             <TextView
@@ -125,9 +117,19 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:text=""
-                android:drawableLeft="@drawable/date_picker_icon"
                 android:hint="@string/hint_date"
                 android:textColor="@color/secb_grey_text"
+                android:drawableRight="@drawable/date_picker_icon"
+                android:textSize="@dimen/news_filter_text_size" />
+            <!--to-->
+            <TextView
+                android:id="@+id/txtv_news_filter_time_to_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/filter_time_ends"
+                android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/news_filter_text_size" />
         </TableRow>
 
@@ -163,9 +165,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/news_filter_all_types"
                     android:textColor="@color/secb_grey_text"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn"/>
+                    android:drawableRight="@drawable/radio_btn" />
 
                 <RadioButton
                     android:id="@+id/radbtn_economicType"
@@ -173,9 +175,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/news_filter_economic_type"
                     android:textColor="@color/secb_grey_text"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn"/>
+                    android:drawableRight="@drawable/radio_btn" />
 
                 <RadioButton
                     android:id="@+id/radbtn_politicalType"
@@ -183,9 +185,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/news_filter_political_type"
                     android:textColor="@color/secb_grey_text"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn" />
+                    android:drawableRight="@drawable/radio_btn"/>
                 <!--android:buttonTint="@color/secb_dark_text"-->
                 <RadioButton
                     android:id="@+id/radbtn_publicType"
@@ -193,9 +195,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/news_filter_public_type"
                     android:textColor="@color/secb_grey_text"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn"/>
+                    android:drawableRight="@drawable/radio_btn" />
 
             </RadioGroup>
         </LinearLayout>
