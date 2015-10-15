@@ -39,6 +39,8 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
         holder.txtv_eventTitle.setText(currentItem.eventItemTitle);
         holder.txtv_eventDescription.setText(currentItem.eventItemDescription);
         holder.txtv_event_timeValue.setText(currentItem.eventItemTime);
+        holder.txtv_event_placeValue.setText(currentItem.eventItemLocation);
+        holder.txtv_event_categoryValue.setText(currentItem.eventItemCategory);
     }
 
     @Override

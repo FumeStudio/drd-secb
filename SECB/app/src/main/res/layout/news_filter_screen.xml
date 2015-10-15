@@ -10,166 +10,182 @@
         android:id="@+id/layout_dark_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/shadow"
         android:clickable="true"
         android:orientation="vertical">
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/filter_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/news_list_recycler_heigth"
         android:layout_alignParentBottom="true"
         android:background="@drawable/filter_bg"
-        android:orientation="vertical"
-        android:clickable="true"
-        android:padding="@dimen/news_filter_padding">
+        android:fillViewport="true">
 
-        <!--time title-->
-        <TextView
-            android:id="@+id/txtv_news_filter_time_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_time"
-            android:textColor="@color/secb_light_text"
-            android:textSize="@dimen/news_filter_btn_text_size"
-            android:textStyle="bold" />
-
-        <!--time input-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:clickable="true"
             android:orientation="vertical"
             android:padding="@dimen/news_filter_padding">
-            <!--from title-->
+
+            <!--time title-->
             <TextView
-                android:id="@+id/txtv_news_filter_time_from_title"
+                android:id="@+id/txtv_news_filter_time_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/filter_time_from"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:text="@string/filter_time"
+                android:textColor="@color/secb_light_text"
+                android:textSize="@dimen/news_filter_btn_text_size"
+                android:textStyle="bold" />
 
-            <!--from value-->
-            <TextView
-                android:id="@+id/txtv_news_filter_time_from_value"
+            <!--time input-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/date_picker_icon"
-                android:hint="@string/hint_date"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/news_filter_padding">
+                <!--from title-->
+                <TextView
+                    android:id="@+id/txtv_news_filter_time_from_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_time_from"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/news_filter_text_size"
+                    android:visibility="gone" />
 
-            <!--to-->
+                <!--from value-->
+                <TextView
+                    android:id="@+id/txtv_news_filter_time_from_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/date_picker_icon"
+                    android:hint="@string/filter_time_from"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
+
+                <!--to-->
+                <TextView
+                    android:id="@+id/txtv_news_filter_time_to_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/news_filter_padding"
+                    android:text="@string/filter_time_to"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/news_filter_text_size"
+                    android:visibility="gone" />
+
+                <!--to value-->
+                <TextView
+                    android:id="@+id/txtv_news_filter_time_to_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/date_picker_icon"
+                    android:hint="@string/filter_time_to"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
+
+
+            </LinearLayout>
+
+            <!--types title-->
             <TextView
-                android:id="@+id/txtv_news_filter_time_to_title"
+                android:id="@+id/txtv_news_filter_type_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/news_filter_padding"
-                android:text="@string/filter_time_to"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:text="@string/filter_type"
+                android:textColor="@color/secb_light_text"
+                android:textSize="@dimen/news_filter_btn_text_size"
+                android:textStyle="bold" />
 
-            <!--to value-->
-            <TextView
-                android:id="@+id/txtv_news_filter_time_to_value"
+            <!--types input-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/date_picker_icon"
-                android:hint="@string/hint_date"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/news_filter_padding">
+
+                <RadioGroup
+                    android:id="@+id/radgro_newsTypes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radbtn_allTypes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/radio_btn"
+                        android:text="@string/news_filter_all_types"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
+
+                    <RadioButton
+                        android:id="@+id/radbtn_economicType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/radio_btn"
+                        android:text="@string/news_filter_economic_type"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
+
+                    <RadioButton
+                        android:id="@+id/radbtn_politicalType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/radio_btn"
+                        android:text="@string/news_filter_political_type"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
+                    <!--android:buttonTint="@color/secb_dark_text"-->
+                    <RadioButton
+                        android:id="@+id/radbtn_publicType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/radio_btn"
+                        android:text="@string/news_filter_public_type"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/news_filter_text_size" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <!--apply button-->
+
+            <Button
+                android:id="@+id/btn_applyFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/news_filter_padding"
+                android:background="@color/secb_orange"
+                android:text="@string/filters_apply_filter"
+                android:textColor="@color/secb_light_text"
+                android:textSize="@dimen/news_filter_btn_text_size" />
 
 
         </LinearLayout>
+    </ScrollView>
 
-        <!--types title-->
-        <TextView
-            android:id="@+id/txtv_news_filter_type_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/news_filter_padding"
-            android:text="@string/filter_type"
-            android:textColor="@color/secb_light_text"
-            android:textSize="@dimen/news_filter_btn_text_size"
-            android:textStyle="bold" />
-
-        <!--types input-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/news_filter_padding">
-
-            <RadioGroup
-                android:id="@+id/radgro_newsTypes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RadioButton
-                    android:id="@+id/radbtn_allTypes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn"
-                    android:text="@string/news_filter_all_types"
-                    android:textColor="@color/secb_grey_text" />
-
-                <RadioButton
-                    android:id="@+id/radbtn_economicType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn"
-                    android:text="@string/news_filter_economic_type"
-                    android:textColor="@color/secb_grey_text" />
-
-                <RadioButton
-                    android:id="@+id/radbtn_politicalType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn"
-                    android:text="@string/news_filter_political_type"
-                    android:textColor="@color/secb_grey_text" />
-                <!--android:buttonTint="@color/secb_dark_text"-->
-                <RadioButton
-                    android:id="@+id/radbtn_publicType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/radio_btn"
-                    android:text="@string/news_filter_public_type"
-                    android:textColor="@color/secb_grey_text" />
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <!--apply button-->
-
-        <Button
-            android:id="@+id/btn_applyFilter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/news_filter_padding"
-            android:background="@color/secb_orange"
-            android:text="@string/filters_apply_filter"
-            android:textColor="@color/secb_light_text"
-            android:textSize="@dimen/news_filter_btn_text_size" />
-
-
-    </LinearLayout>
     <!--shadow_h-->
     <View
         android:id="@+id/shadow"

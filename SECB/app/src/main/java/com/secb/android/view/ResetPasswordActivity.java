@@ -19,6 +19,7 @@ public class ResetPasswordActivity extends SECBBaseActivity {
     protected void doOnCreate(Bundle arg0)
     {
         initViews();
+        applyFonts();
     }
 
     private void initViews()
@@ -38,5 +39,11 @@ public class ResetPasswordActivity extends SECBBaseActivity {
                 displayToast("" + edt_email.getText().toString());
             break;
         }
+    }
+    public void applyFonts(){
+        if(edt_email!=null)
+            UiEngine.applyCustomFont(edt_email, UiEngine.Fonts.HVAR);
+        if(btn_resetPassword!=null)
+            UiEngine.applyCustomFont(btn_resetPassword, UiEngine.Fonts.HVAR);
     }
 }

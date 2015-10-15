@@ -1,5 +1,7 @@
 package com.secb.android.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -32,7 +34,6 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
     LinearLayout fragmentContainer;
     HomeFragment homeFragment;
     GoogleMap googleMap;
-
 
     public MapFragment mapFragment ;
 
@@ -95,7 +96,7 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
         addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 
-    public void openEvenCalendarFragment() {
+    public void openEventsCalendarFragment() {
         EventsCalendarFragment eventsCalendarFragment = EventsCalendarFragment.newInstance();
         addFragment(eventsCalendarFragment, eventsCalendarFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
@@ -142,6 +143,21 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
         AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType,galleryId);
         addFragment(albumFragment, albumFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
+    }
+
+    public void openPlayerFragment(String videoUrl) {
+//        VideoPlayerFragment videoPlayerFragment = VideoPlayerFragment.newInstance(videoUrl);
+//        addFragment(videoPlayerFragment,videoPlayerFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"), "video/*");
+//        intent.setDataAndType(Uri.parse("http://www.youtube.com/watch?v=Hxy8BZGQ5Jo"), "video/*");
+
+        if (intent.resolveActivity(getPackageManager())!=null)
+            startActivity(intent);
+        else
+            displayToast("can't play this video file ");
     }
 
     @Override

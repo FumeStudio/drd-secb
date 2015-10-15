@@ -28,7 +28,7 @@ public class GalleryFragment extends SECBBaseFragment
     GridLayoutManager layoutManager;
     GalleryItemRecyclerAdapter galleryItemRecyclerAdapter;
     ArrayList<GalleryItem> galleryItemsList;
-    int galleryType;
+    public int galleryType;
     int galleryId;
     View view;
 

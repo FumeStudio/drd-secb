@@ -17,8 +17,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
 
 public class EventDetailsFragment  extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener
         ,GoogleMap.OnMarkerClickListener,OnMapReadyCallback
@@ -52,6 +52,9 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.event_details));
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+
     }
 
     @Override
@@ -59,6 +62,9 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+
     }
 
     @Override
@@ -98,7 +104,34 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
      */
     private void applyFonts()
     {
-//        UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_location_nameValue)), UiEngine.Fonts.BDCN);
+        if(txtv_event_details_eventTitle!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_details_eventTitle, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_event_details_eventDate!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_details_eventDate, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_event_details_eventPlace!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_details_eventPlace, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_event_details_eventCategory!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_details_eventCategory, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_event_details_eventDuration!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_details_eventDuration, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_event_details_eventRepeated!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_details_eventRepeated, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_event_details_eventBody!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_details_eventBody, UiEngine.Fonts.HVAR);
+        }
     }
 
     private void goBack()
@@ -118,8 +151,10 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.txtv_viewAllNews:
-                ((MainActivity) getActivity()).openNewsListFragment();
+            case R.id.imageViewBackHeader:
+                onBack();
+                break;
+
             default:
                 break;
         }

@@ -48,8 +48,9 @@ public class OrganizersListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizers_eguide));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
-//        ((SECBBaseActivity) getActivity()).setFilterIconClickListener(this);
-//        SECBBaseActivity.setMenuItemSelected(MenuItem.MENU_HOME);
+        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+
     }
 
     @Override
@@ -57,6 +58,9 @@ public class OrganizersListFragment extends SECBBaseFragment
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+
     }
 
     @Override
@@ -114,9 +118,13 @@ public class OrganizersListFragment extends SECBBaseFragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-           
+            case R.id.imageViewBackHeader:
+                onBack();
+                break;
+
             case R.id.btn_applyFilter:
                 getFilterDataObject();
+                break;
             default:
                 break;
         }

@@ -1,7 +1,6 @@
 package com.secb.android.view;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -25,12 +24,15 @@ public class LoginActivity extends SECBBaseActivity {
     protected void doOnCreate(Bundle arg0)
     {
         initViews();
+        applyFonts();
     }
 
     private void initViews()
     {
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_password = (EditText) findViewById(R.id.edt_password);
+//        edt_password.setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
         txtv_forgetPassword = (TextView) findViewById(R.id.txtv_forgetPassword);
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_signUp = (Button) findViewById(R.id.btn_signUp);
@@ -58,11 +60,17 @@ public class LoginActivity extends SECBBaseActivity {
         }
     }
 
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        displayToast("language changed successfully");
+    public void applyFonts(){
+        if(edt_email!=null)
+            UiEngine.applyCustomFont(edt_email, UiEngine.Fonts.HVAR);
+        if(edt_password!=null)
+            UiEngine.applyCustomFont(edt_password, UiEngine.Fonts.HVAR);
+        if(txtv_forgetPassword!=null)
+            UiEngine.applyCustomFont(txtv_forgetPassword, UiEngine.Fonts.HVAR);
+        if(btn_login!=null)
+            UiEngine.applyCustomFont(btn_login, UiEngine.Fonts.HVAR);
+        if(btn_signUp!=null)
+            UiEngine.applyCustomFont(btn_signUp, UiEngine.Fonts.HVAR);
     }
 
 }

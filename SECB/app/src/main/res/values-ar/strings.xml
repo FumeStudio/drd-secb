@@ -2,7 +2,8 @@
 <resources>
 
     <string name="loading">جاري التحميل..</string>
-    <string name="ok">الغاء</string>
+    <string name="ok">موافق</string>
+    <string name="cancel">الغاء</string>
     <!--Login-->
     <string name="login_forget_pass">نسيت كلمة السر</string>
     <string name="login_login">دخول</string>
@@ -84,4 +85,13 @@
     <string name="hint_date">التـــاريخ</string>
     <string name="hint_city">المدينة</string>
     <string name="hint_name">الاسم</string>
+    <string name="dialog_confirm_title">تأكيد</string>
+    <string name="switch_language_confirm">
+        <![CDATA[هل انت متاكد انك تريد <strong>تغير اللغة </strong> ؟]]>
+    </string>
+    <string name="logout_confirm">
+        <![CDATA[هل انت متاكد انك تريد <strong>الخروج </strong> ؟]]>
+    </string>
+
+
 </resources>

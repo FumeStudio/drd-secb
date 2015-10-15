@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.secb.android.R;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
@@ -41,7 +40,8 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news_details));
- //        SECBBaseActivity.setMenuItemSelected(MenuItem.MENU_HOME);
+        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -50,6 +50,8 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
     }
 
     @Override
@@ -87,9 +89,12 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
      */
     private void applyFonts()
     {
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newDate)), UiEngine.Fonts.LTCN);
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newBody)), UiEngine.Fonts.HVCN);
+        if(txtv_news_details_newTitle!=null)
+            UiEngine.applyCustomFont(txtv_news_details_newTitle, UiEngine.Fonts.HVAR);
+        if(txtv_news_details_newDate!=null)
+            UiEngine.applyCustomFont(txtv_news_details_newDate, UiEngine.Fonts.HVAR);
+        if(txtv_news_details_newBody!=null)
+            UiEngine.applyCustomFont(txtv_news_details_newDate, UiEngine.Fonts.HVAR);
     }
 
     private void goBack()
@@ -109,8 +114,10 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.txtv_viewAllNews:
-                ((MainActivity) getActivity()).openNewsListFragment();
+            case R.id.imageViewBackHeader:
+                onBack();
+                break;
+
             default:
                 break;
         }

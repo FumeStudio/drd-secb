@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
     android:background="#aa000000"
     android:orientation="horizontal"
-    android:weightSum="3"
-    android:layout_alignParentBottom="true">
+    android:weightSum="3">
 
     <LinearLayout
         android:id="@+id/layout_dark_layer"
@@ -29,8 +28,8 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:background="@drawable/filter_bg"
-        android:orientation="vertical"
         android:clickable="true"
+        android:orientation="vertical"
         android:padding="@dimen/news_filter_padding">
 
         <!--city input-->
@@ -48,9 +47,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:hint="@string/hint_city"
                 android:gravity="center_vertical"
+                android:hint="@string/hint_city"
+                android:maxLines="1"
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
             <!--city title-->
@@ -81,12 +80,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:drawableRight="@drawable/date_picker_icon"
                 android:gravity="center_vertical"
+                android:hint="@string/hint_date"
                 android:maxLines="1"
                 android:text=""
-                android:hint="@string/hint_date"
                 android:textColor="@color/secb_grey_text"
-                android:drawableRight="@drawable/date_picker_icon"
                 android:textSize="@dimen/news_filter_text_size" />
             <!--from title-->
             <TextView
@@ -115,11 +114,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableRight="@drawable/date_picker_icon"
+                android:hint="@string/hint_date"
                 android:maxLines="1"
                 android:text=""
-                android:hint="@string/hint_date"
                 android:textColor="@color/secb_grey_text"
-                android:drawableRight="@drawable/date_picker_icon"
                 android:textSize="@dimen/news_filter_text_size" />
             <!--to-->
             <TextView
@@ -163,41 +162,45 @@
                     android:id="@+id/radbtn_allTypes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/news_filter_all_types"
-                    android:textColor="@color/secb_grey_text"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn" />
+                    android:drawableRight="@drawable/radio_btn"
+                    android:text="@string/news_filter_all_types"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
 
                 <RadioButton
                     android:id="@+id/radbtn_economicType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/news_filter_economic_type"
-                    android:textColor="@color/secb_grey_text"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn" />
+                    android:drawableRight="@drawable/radio_btn"
+                    android:text="@string/news_filter_economic_type"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
 
                 <RadioButton
                     android:id="@+id/radbtn_politicalType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/news_filter_political_type"
-                    android:textColor="@color/secb_grey_text"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn"/>
+                    android:drawableRight="@drawable/radio_btn"
+                    android:text="@string/news_filter_political_type"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
                 <!--android:buttonTint="@color/secb_dark_text"-->
                 <RadioButton
                     android:id="@+id/radbtn_publicType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/news_filter_public_type"
-                    android:textColor="@color/secb_grey_text"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn" />
+                    android:drawableRight="@drawable/radio_btn"
+                    android:text="@string/news_filter_public_type"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
 
             </RadioGroup>
         </LinearLayout>

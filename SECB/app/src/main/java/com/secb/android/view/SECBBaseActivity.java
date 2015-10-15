@@ -1,8 +1,11 @@
 package com.secb.android.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,8 +30,10 @@ import android.widget.Toast;
 import com.flurry.android.FlurryAgent;
 import com.secb.android.R;
 import com.secb.android.model.Consts;
+import com.secb.android.view.components.DialogConfirmListener;
 import com.secb.android.view.components.HeaderLayout;
 import com.secb.android.view.components.LayoutAnimator;
+import com.secb.android.view.fragments.SECBBaseFragment;
 import com.secb.android.view.menu.MenuFragment;
 import com.secb.android.view.menu.MenuItem;
 
@@ -41,6 +46,7 @@ import java.util.Locale;
 public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActivity*/ implements View.OnClickListener {
     private static final String TAG = "SECBBaseActivity";
 
+    SECBBaseFragment currentDisplayedFragment;
     ArrayList<FragmentBackObserver> backObservers = null;    // observers list to hold the back of inner fragments
     private boolean mAllowSideMenu = true;                                    // to allow sliding menu_layout or not
     private int mActivityLayout;                                                        // inner layout to be inflatted
@@ -53,12 +59,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public static SECBBaseActivity activity;
     public static MenuItem menuItemSelected = null;                    // Current menu_layout item selected
 
-    public int MENU_GRAVITY=Gravity.START;
-
-    public int FILTER_NEWS=1;
-    public int FILTER_EVENTS=2;
-    public int FILTER_ORGANIZERS=3;
-    public int FILTER_EGUIDE=4;
+    public int MENU_GRAVITY=Gravity.LEFT;
 
     float filterStartX =0;
     float filterStartY = 0;
@@ -180,16 +181,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
             headerLayoutHome.setMenuOnClickListener(this);
             handleButtonsEvents();
-
+            setHeaderTitleFont(UiEngine.Fonts.HVAR);
             backObservers = new ArrayList<FragmentBackObserver>();
 
 
             //if arabic open menu_layout from right to left
             if(Utilities.getLanguage().startsWith("ar"))
-                MENU_GRAVITY =Gravity.END;
+                MENU_GRAVITY =Gravity.RIGHT;
             //else open from left to right
             else
-                MENU_GRAVITY =Gravity.START;
+                MENU_GRAVITY =Gravity.LEFT;
 
 
         }
@@ -285,6 +286,10 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void setHeaderTitleText(String title) {
         headerLayoutHome.setTitleText(title);
     }
+    // apply font to  header 'title'
+    public void setHeaderTitleFont(Typeface font) {
+        headerLayoutHome.applyFontToTitleText(font);
+    }
 
     // Enable header 'back' button
     public void enableHeaderBackButton(View.OnClickListener backOnClickListener) {
@@ -298,9 +303,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
 
     // Enable header 'menu_layout' button
-    public void enableHeaderMenuButton(View.OnClickListener menuOnClickListener) {
-        headerLayoutHome.enableMenuButton(menuOnClickListener);
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+    public void enableHeaderMenuButton() {
+        headerLayoutHome.enableMenuButton(this);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     // Disable header 'menu_layout' button
@@ -417,6 +422,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void finishFragmentOrActivity(String name)
     {
         hideFilterLayout();
+
+
         FragmentManager manager = getSupportFragmentManager();
         Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
         boolean removed = false;
@@ -429,6 +436,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
+    public SECBBaseFragment getCurrentDisplayedFragment()
+    {
+        currentDisplayedFragment = (SECBBaseFragment) getSupportFragmentManager().findFragmentById(R.id.simple_fragment);
+        return currentDisplayedFragment;
+    }
     /*
      * pop to root of fragments list
      */
@@ -597,6 +609,33 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         Toast.makeText(this, msg + "", Toast.LENGTH_SHORT).show();
     }
 
+
+    public void showConfirmDialog(final SECBBaseActivity activity , String dialogMessage, final DialogConfirmListener listener)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(true);
+        builder.setMessage(dialogMessage);
+        builder.setPositiveButton(activity.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(listener!=null)
+                    listener.onDilaogConfirmed();
+            }
+        });
+        builder.setNegativeButton(activity.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (listener != null)
+                    listener.onDilaogCancelled();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public void changeAppLanguage(boolean changeToEnglish)
     {
         String languageToLoad  = "en";
@@ -616,7 +655,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     {
         SharedPreferences languagepref = getSharedPreferences("language",MODE_PRIVATE);
         SharedPreferences.Editor editor = languagepref.edit();
-        editor.putString("languageToLoad",languageToLoad );
+        editor.putString("languageToLoad", languageToLoad);
         editor.commit();
     }
 
@@ -627,5 +666,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         Intent i = new Intent(activity, SplashActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(i);
+    }
+
+    public void logout() {
+        //clear user from manager
+
+        //go to login page
+        Intent i = new Intent(activity, LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(i);
+
+
     }
 }

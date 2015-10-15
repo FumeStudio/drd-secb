@@ -11,8 +11,10 @@ import android.widget.TextView;
 import com.secb.android.R;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
+
+import net.comptoirs.android.common.view.CTApplication;
 
 public class OrganizersDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
     OrganizerItem organizerItem;
@@ -41,7 +43,8 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizer_details));
- //        SECBBaseActivity.setMenuItemSelected(MenuItem.MENU_HOME);
+        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -50,6 +53,9 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+
     }
 
     @Override
@@ -88,6 +94,7 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     private void applyFonts()
     {
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
+        UiEngine.applyFontsForAll(CTApplication.getContext(), view, UiEngine.Fonts.HVAR);
     }
 
     private void goBack()
@@ -107,8 +114,10 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.txtv_viewAllNews:
-                ((MainActivity) getActivity()).openNewsListFragment();
+            case R.id.imageViewBackHeader:
+                onBack();
+                break;
+
             default:
                 break;
         }

@@ -1,6 +1,7 @@
 package com.secb.android.view.components;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.helper.Utilities;
 
@@ -82,6 +84,12 @@ public class HeaderLayout extends LinearLayout
 	{
 		textViewTitleHeader.setText(Utilities.isNullString(title) ? "" : title);
 		textViewTitleHeader.setVisibility(Utilities.isNullString(title) ? View.GONE : View.VISIBLE);
+	}
+
+	public void applyFontToTitleText(Typeface font)
+	{
+		if(textViewTitleHeader!=null )
+			UiEngine.applyCustomFont(textViewTitleHeader,font);
 	}
 	
 	public void enableBackButton(OnClickListener backOnClickListener)

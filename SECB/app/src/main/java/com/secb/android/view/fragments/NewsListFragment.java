@@ -46,10 +46,11 @@ public class NewsListFragment extends SECBBaseFragment
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news));
+        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
-//        ((SECBBaseActivity) getActivity()).setFilterIconClickListener(this);
-//        SECBBaseActivity.setMenuItemSelected(MenuItem.MENU_HOME);
+
     }
 
     @Override
@@ -57,6 +58,8 @@ public class NewsListFragment extends SECBBaseFragment
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
     }
 
     @Override
@@ -113,14 +116,14 @@ public class NewsListFragment extends SECBBaseFragment
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.txtv_viewAllNews:
-                ((MainActivity) getActivity()).openNewsListFragment();
-           /* case R.id.imgv_filter:
-                ((SECBBaseActivity) getActivity()).displayToast("NewsFragment + filterIconClicked");
-                */
+        switch (v.getId())
+        {
+            case R.id.imageViewBackHeader:
+                onBack();
+                break;
             case R.id.btn_applyFilter:
                 getFilterDataObject();
+                break;
             default:
                 break;
         }

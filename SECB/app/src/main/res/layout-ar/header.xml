@@ -30,7 +30,7 @@
             android:paddingLeft="@dimen/header_menu_icon_margin_start"
             android:paddingRight="@dimen/header_menu_icon_margin_end"
             android:paddingTop="@dimen/header_menu_icon_margin_start"
-            android:src="@drawable/menu_button" />
+            android:src="@drawable/header_menu_button" />
 
         <TextView
             android:id="@+id/textViewTitleHeader"
@@ -50,11 +50,11 @@
             android:id="@+id/imageViewBackHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/header_menu_icon_margin_start"
             android:paddingRight="@dimen/header_menu_icon_margin_end"
-            android:src="@drawable/header_back_btn"
+            android:src="@drawable/header_back_button_ar"
             android:visibility="visible" />
 
     </RelativeLayout>

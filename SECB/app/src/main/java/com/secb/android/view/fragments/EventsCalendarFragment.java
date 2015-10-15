@@ -17,6 +17,7 @@ import com.secb.android.model.EventItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,8 @@ public class EventsCalendarFragment extends SECBBaseFragment
     private TextView txtv_eventTitle;
     private TextView txtv_eventDescription;
     private TextView txtv_event_timeValue;
+    private TextView txtv_event_placeValue;
+    private TextView txtv_event_categoryValue;
 
     public static EventsCalendarFragment newInstance() {
         EventsCalendarFragment fragment = new EventsCalendarFragment();
@@ -83,6 +86,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
             applyFonts();
         }
         initViews(view);
+        applyFonts();
         initCalendar();
         customizeCalendarView(calendarView);
         return view;
@@ -98,6 +102,22 @@ public class EventsCalendarFragment extends SECBBaseFragment
     private void applyFonts() {
         // TODO::
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.textViewAbout)), UiEngine.Fonts.HELVETICA_NEUE_LT_STD_CN);
+
+        if(txtv_eventTitle!=null)
+            UiEngine.applyCustomFont(txtv_eventTitle, UiEngine.Fonts.HVAR);
+        if(txtv_eventDescription!=null)
+            UiEngine.applyCustomFont(txtv_eventDescription, UiEngine.Fonts.HVAR);
+        if(txtv_event_timeValue!=null)
+            UiEngine.applyCustomFont(txtv_event_timeValue, UiEngine.Fonts.HVAR);
+        if(txtv_event_placeValue!=null)
+            UiEngine.applyCustomFont(txtv_event_placeValue, UiEngine.Fonts.HVAR);
+        if(txtv_event_categoryValue!=null)
+            UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
+
+        if(monthTextView!=null)
+            UiEngine.applyCustomFont(monthTextView, UiEngine.Fonts.HVAR);
+        if(txtv_viewAllEvents!=null)
+            UiEngine.applyCustomFont(txtv_viewAllEvents, UiEngine.Fonts.HVAR);
     }
 
     private void goBack() {
@@ -136,6 +156,9 @@ public class EventsCalendarFragment extends SECBBaseFragment
         txtv_eventTitle = (TextView) view.findViewById(R.id.txtv_eventTitle);
         txtv_eventDescription = (TextView) view.findViewById(R.id.txtv_eventDescription);
         txtv_event_timeValue = (TextView) view.findViewById(R.id.txtv_event_timeValue);
+        txtv_event_placeValue = (TextView) view.findViewById(R.id.txtv_event_placeValue);
+        txtv_event_categoryValue = (TextView) view.findViewById(R.id.txtv_event_categoryValue);
+
         imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
 
         event_card_container=view.findViewById(R.id.event_card_container);
@@ -218,5 +241,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
         txtv_eventTitle.setText(cardEventItem.eventItemTitle);
         txtv_eventDescription.setText(cardEventItem.eventItemDescription);
         txtv_event_timeValue.setText(cardEventItem.eventItemTime);
+        txtv_event_placeValue.setText(cardEventItem.eventItemLocation);
+        txtv_event_categoryValue.setText(cardEventItem.eventItemCategory);
     }
 }

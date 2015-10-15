@@ -38,6 +38,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
+
             android:text="2222"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />

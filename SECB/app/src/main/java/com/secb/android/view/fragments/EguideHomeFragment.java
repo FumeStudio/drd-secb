@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.view.FragmentBackObserver;
@@ -70,9 +69,14 @@ public class EguideHomeFragment extends SECBBaseFragment implements FragmentBack
      */
     private void applyFonts()
     {
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newDate)), UiEngine.Fonts.LTCN);
-		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newBody)), UiEngine.Fonts.HVCN);
+        if(btn_locationEguid!=null)
+        {
+            UiEngine.applyCustomFont(btn_locationEguid, UiEngine.Fonts.HVAR);
+        }
+        if(btn_organizersEguide!=null)
+        {
+            UiEngine.applyCustomFont(btn_organizersEguide, UiEngine.Fonts.HVAR);
+        }
     }
 
     private void goBack()

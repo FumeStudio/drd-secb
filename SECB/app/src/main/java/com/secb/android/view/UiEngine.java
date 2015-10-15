@@ -12,10 +12,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.secb.android.controller.manager.Engine;
+
 public class UiEngine {
 	public static void initialize(Context context)
 	{
-		Fonts.TEST_FONT = null; // Typeface.createFromAsset(context.getAssets(), "fonts/test_font.otf");
+
+		Fonts.HVAR = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTArabic-Roman.otf");
 
 		Fonts.HVCN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTPro-HvCn.otf");
 		Fonts.BDCN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTStd-BdCn.otf");
@@ -43,8 +46,7 @@ public class UiEngine {
 		return 0;
 	}
 	public static class Fonts {
-		public static Typeface TEST_FONT;
-
+		public static Typeface HVAR;
 		public static Typeface HVCN;
 		public static Typeface BDCN;
 		public static Typeface CN;
@@ -98,6 +100,29 @@ public class UiEngine {
 			} else if (c instanceof ViewGroup) {
 				applyCustomFont((ViewGroup) c, typeface);
 			}
+		}
+	}
+
+	public static boolean isCurrentLanguageArabic(Context context) {
+		return Engine.getAppConfiguration().getLanguage().equalsIgnoreCase("ar");
+	}
+
+
+	public static void applyFontsForAll(final Context context, final View v, Typeface typeface) {
+		try
+		{
+			if (v instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) v;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					applyFontsForAll(context, child, typeface);
+				}
+			} else if (v instanceof TextView || v instanceof EditText || v instanceof RadioButton ||
+					v instanceof CheckBox || v instanceof TextView || v instanceof Button) {
+				applyCustomFont(v, typeface);
+			}
+		}
+		catch (Exception e) {
 		}
 	}
 }

@@ -49,7 +49,8 @@ public class AlbumFragment extends SECBBaseFragment
     {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-
+        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -57,6 +58,8 @@ public class AlbumFragment extends SECBBaseFragment
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -137,7 +140,11 @@ public class AlbumFragment extends SECBBaseFragment
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId())
+        {
+            case R.id.imageViewBackHeader:
+                onBack();
+                break;
             default:
                 break;
         }
@@ -181,6 +188,10 @@ public class AlbumFragment extends SECBBaseFragment
         if(clickedItem.galleryItemType==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||clickedItem.galleryItemType==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
         {
             ((MainActivity) getActivity()).openGalleryFragment(clickedItem.galleryItemType+1, clickedItem.imgResource);
+        }
+        else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
+        {
+            ((MainActivity)getActivity()).openPlayerFragment("");
         }
     }
 

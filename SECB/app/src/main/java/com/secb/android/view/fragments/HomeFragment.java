@@ -20,6 +20,7 @@ import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.ProgressWheel;
 import com.secb.android.view.components.news_recycler.NewsItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
@@ -51,6 +52,9 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     private TextView txtv_eventTitle;
     private TextView txtv_eventDescription;
     private TextView txtv_event_timeValue;
+    private TextView txtv_event_placeValue;
+    private TextView txtv_event_categoryValue;
+
 
 
     public static HomeFragment newInstance() {
@@ -100,9 +104,33 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     /*
      * Apply Fonts
      */
-    private void applyFonts() {
-        // TODO::
-//		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.textViewAbout)), UiEngine.Fonts.HELVETICA_NEUE_LT_STD_CN);
+
+    public void applyFonts()
+    {
+        if(txtv_graph_title_closed!=null)
+            UiEngine.applyCustomFont(txtv_graph_title_closed, UiEngine.Fonts.HVAR);
+        if(txtv_graph_value_closed!=null)
+            UiEngine.applyCustomFont(txtv_graph_value_closed, UiEngine.Fonts.HVAR);
+        if(txtv_graph_title_inbox!=null)
+            UiEngine.applyCustomFont(txtv_graph_title_inbox, UiEngine.Fonts.HVAR);
+        if(txtv_graph_value_inbox!=null)
+            UiEngine.applyCustomFont(txtv_graph_value_inbox, UiEngine.Fonts.HVAR);
+        if(txtv_graph_title_inProgress!=null)
+            UiEngine.applyCustomFont(txtv_graph_title_inProgress, UiEngine.Fonts.HVAR);
+        if(txtv_graph_value_inProgress!=null)
+            UiEngine.applyCustomFont(txtv_graph_value_inProgress, UiEngine.Fonts.HVAR);
+        if(txtv_viewAllNews!=null)
+            UiEngine.applyCustomFont(txtv_viewAllNews, UiEngine.Fonts.HVAR);
+        if(txtv_eventTitle!=null)
+            UiEngine.applyCustomFont(txtv_eventTitle, UiEngine.Fonts.HVAR);
+        if(txtv_eventDescription!=null)
+            UiEngine.applyCustomFont(txtv_eventDescription, UiEngine.Fonts.HVAR);
+        if(txtv_event_timeValue!=null)
+            UiEngine.applyCustomFont(txtv_event_timeValue, UiEngine.Fonts.HVAR);
+        if(txtv_event_placeValue!=null)
+            UiEngine.applyCustomFont(txtv_event_placeValue, UiEngine.Fonts.HVAR);
+        if(txtv_event_categoryValue!=null)
+            UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
     }
 
     private void goBack() {
@@ -157,6 +185,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_eventTitle = (TextView) view.findViewById(R.id.txtv_eventTitle);
         txtv_eventDescription = (TextView) view.findViewById(R.id.txtv_eventDescription);
         txtv_event_timeValue = (TextView) view.findViewById(R.id.txtv_event_timeValue);
+        txtv_event_placeValue = (TextView) view.findViewById(R.id.txtv_event_placeValue);
+        txtv_event_categoryValue = (TextView) view.findViewById(R.id.txtv_event_categoryValue);
         imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
 
         event_card_container=view.findViewById(R.id.event_card_container);
@@ -194,6 +224,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_eventTitle.setText(eventItem.eventItemTitle);
         txtv_eventDescription.setText(eventItem.eventItemDescription);
         txtv_event_timeValue.setText(eventItem.eventItemTime);
+        txtv_event_placeValue.setText(eventItem.eventItemLocation);
+        txtv_event_categoryValue.setText(eventItem.eventItemCategory);
     }
 
     private void fillWheelPercentage(int closedScore, int inboxScore, int inProgressScore) {

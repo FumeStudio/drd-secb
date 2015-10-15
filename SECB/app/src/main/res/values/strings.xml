@@ -102,5 +102,12 @@
     <string name="hint_date">The Date</string>
     <string name="hint_city">City</string>
     <string name="hint_name">Name</string>
+    <string name="dialog_confirm_title">Confirm</string>
+    <string name="switch_language_confirm">
+        <![CDATA[Are you sure you want to <strong>switch language</strong> ?]]>
+    </string>
+    <string name="logout_confirm">
+        <![CDATA[Are you sure you want to <strong>logout</strong> ?]]>
+    </string>
 
 </resources>

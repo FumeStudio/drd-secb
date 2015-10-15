@@ -141,7 +141,8 @@
                     android:button="@null"
                     android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_all_types"
-                    android:textColor="@color/secb_grey_text" />
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
 
                 <CheckBox
                     android:id="@+id/chkbox_type2"
@@ -151,7 +152,8 @@
                     android:button="@null"
                     android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_economic_type"
-                    android:textColor="@color/secb_grey_text" />
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
 
                 <CheckBox
                     android:id="@+id/chkbox_type3"
@@ -161,8 +163,8 @@
                     android:button="@null"
                     android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_political_type"
-                    android:textColor="@color/secb_grey_text" />
-                <!--android:buttonTint="@color/secb_dark_text"-->
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
                 <CheckBox
                     android:id="@+id/chkbox_type4"
                     android:layout_width="match_parent"
@@ -171,7 +173,8 @@
                     android:button="@null"
                     android:drawableLeft="@drawable/check_box"
                     android:text="@string/news_filter_public_type"
-                    android:textColor="@color/secb_grey_text" />
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
             </LinearLayout>
             <!--total capacity title-->
             <TextView

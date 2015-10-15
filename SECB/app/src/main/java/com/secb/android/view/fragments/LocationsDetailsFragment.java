@@ -12,12 +12,15 @@ import com.secb.android.R;
 import com.secb.android.model.LocationItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
 
 public class LocationsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
     LocationItem locationItem;
 
     ImageView imgv_locationImg;
+    TextView txtv_location_nameTitle;
     TextView txtv_location_nameValue;
+    TextView txtv_location_typeTitle;
     TextView txtv_location_typeValue;
     TextView txtv_location_description;
     TextView txtv_location_capacityValue;
@@ -46,8 +49,10 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.location_details));
- //        SECBBaseActivity.setMenuItemSelected(MenuItem.MENU_HOME);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+
     }
 
     @Override
@@ -55,6 +60,9 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+
     }
 
     @Override
@@ -93,6 +101,7 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
     private void applyFonts()
     {
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
+        UiEngine.applyFontsForAll(getActivity(),view,UiEngine.Fonts.HVAR);
     }
 
     private void goBack()
@@ -112,6 +121,9 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.imageViewBackHeader:
+                onBack();
+                break;
 
             default:
                 break;

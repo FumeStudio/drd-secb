@@ -43,7 +43,7 @@
             android:paddingRight="@dimen/news_filter_padding">
             <!--city title-->
             <TextView
-                android:id="@+id/txtv_city_filter_city_title"
+                android:id="@+id/txtv_event_filter_city_title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -75,7 +75,7 @@
             android:paddingRight="@dimen/news_filter_padding">
             <!--from title-->
             <TextView
-                android:id="@+id/txtv_news_filter_time_from_title"
+                android:id="@+id/txtv_event_filter_time_from_title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -108,7 +108,7 @@
 
             <!--to-->
             <TextView
-                android:id="@+id/txtv_news_filter_time_to_title"
+                android:id="@+id/txtv_event_filter_time_to_title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -134,7 +134,7 @@
 
         <!--types title-->
         <TextView
-            android:id="@+id/txtv_news_filter_type_title"
+            android:id="@+id/txtv_news_filter_category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/news_filter_padding"
@@ -165,6 +165,7 @@
                     android:textColor="@color/secb_grey_text"
                     android:layout_gravity="left"
                     android:button="@null"
+                    android:textSize="@dimen/news_filter_text_size"
                     android:drawableLeft="@drawable/radio_btn"/>
 
                 <RadioButton
@@ -175,6 +176,7 @@
                     android:textColor="@color/secb_grey_text"
                     android:layout_gravity="left"
                     android:button="@null"
+                    android:textSize="@dimen/news_filter_text_size"
                     android:drawableLeft="@drawable/radio_btn"/>
 
                 <RadioButton
@@ -185,6 +187,7 @@
                     android:textColor="@color/secb_grey_text"
                     android:layout_gravity="left"
                     android:button="@null"
+                    android:textSize="@dimen/news_filter_text_size"
                     android:drawableLeft="@drawable/radio_btn" />
                 <!--android:buttonTint="@color/secb_dark_text"-->
                 <RadioButton
@@ -195,6 +198,7 @@
                     android:textColor="@color/secb_grey_text"
                     android:layout_gravity="left"
                     android:button="@null"
+                    android:textSize="@dimen/news_filter_text_size"
                     android:drawableLeft="@drawable/radio_btn"/>
 
             </RadioGroup>
