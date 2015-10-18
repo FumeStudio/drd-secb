@@ -1,5 +1,15 @@
 package com.secb.android.controller.manager;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.secb.android.model.AppConfiguration;
+import com.secb.android.model.User;
+
+import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,15 +19,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import com.secb.android.model.AppConfiguration;
-
-import net.comptoirs.android.common.helper.Logger;
-import net.comptoirs.android.common.helper.Utilities;
 
 public class CachingManager {
 
@@ -145,7 +146,42 @@ public class CachingManager {
 		
 		return appConfig;
 	}
-	
+
+	/*
+         * *****************************************************************
+         * **************************  User part  **************************
+         * *****************************************************************
+         */
+	public void saveUser(User user){
+		File saveToFile = new File(Engine.DataFolder.USER_DATA, Engine.FileName.APP_USER);
+
+		try{
+			saveObject(user, saveToFile);
+
+		}catch (IOException ex){
+			ex.printStackTrace();
+			// else ignore exception
+		}
+	}
+	public User loadUser(){
+		User user = null;
+
+		try{
+			user = (User) loadOject(new File(Engine.DataFolder.USER_DATA, Engine.FileName.APP_USER));
+		}catch (Throwable t){
+			Logger.instance().v("cachingmanager", "loadAppUser - failed to load cached app user" + t.getClass().getSimpleName(), false);
+		}
+
+		return user;
+	}
+	public void deleteUser(){
+		try{
+			Engine.deleteFileRecursive(new File(Engine.DataFolder.USER_DATA, Engine.FileName.APP_USER));
+		}catch (Throwable t){
+			Logger.instance().v("cachingmanager", "loadAppUser - failed to load cached app user" + t.getClass().getSimpleName(), false);
+		}
+	}
+
 	/*
 	 * *****************************************************************
 	 * **************************  Test Part  ***************

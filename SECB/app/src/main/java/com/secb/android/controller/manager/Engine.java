@@ -1,10 +1,5 @@
 package com.secb.android.controller.manager;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.logging.Logger;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -19,7 +14,11 @@ import android.util.DisplayMetrics;
 import com.secb.android.model.AppConfiguration;
 
 import net.comptoirs.android.common.helper.Utilities;
-import net.comptoirs.android.common.view.CTApplication;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.logging.Logger;
 
 
 public class Engine {
@@ -168,6 +167,7 @@ public class Engine {
     public static void initialeDataFolders(Context appContext) {
 
         DataFolder.APP_DATA = appContext.getDir("app_data", Context.MODE_PRIVATE);
+        DataFolder.USER_DATA = appContext.getDir("user_data", Context.MODE_PRIVATE);
 
         DataFolder.IMAGE_CACHE = new File(getDiskCacheDir(appContext) + File.separator + "aopp_name_images");
         DataFolder.IMAGE_FETCHER_HTTP_CACHE = new File(getDiskCacheDir(appContext) + File.separator + "aopp_name_image_fetcher_http");
@@ -268,13 +268,15 @@ public class Engine {
     }
     // ////////////////////////////////////////////////////////////////////////////////
 
-    public static class FileName {
+    public static class FileName{
         public final static String APP_CONFIGURATION = "app_config.dat";
+        public final static String APP_USER = "app_user.dat";
     }
 
-    public static class DataFolder {
+    public static class DataFolder{
         public static File DATA_TEST_LIST;
         public static File APP_DATA;
+        public static File USER_DATA;
 
         public static File IMAGE_CACHE;
         public static File IMAGE_FETCHER_HTTP_CACHE;

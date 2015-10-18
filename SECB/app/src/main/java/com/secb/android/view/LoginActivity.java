@@ -9,10 +9,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.LoginOperation;
+import com.secb.android.model.User;
 
-public class LoginActivity extends SECBBaseActivity {
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
+
+public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 
     private static final String TAG = "LoginActivity";
+    private static final int LOGIN_REQUEST_ID = 1;
     EditText edt_email,edt_password;
     TextView txtv_forgetPassword;
     Button btn_login, btn_signUp;
@@ -53,7 +61,8 @@ public class LoginActivity extends SECBBaseActivity {
                 startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
                 break;
             case R.id.btn_login:
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                startLoginOperation();
+//                startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 break;
             case R.id.btn_signUp:
                 startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
@@ -74,4 +83,43 @@ public class LoginActivity extends SECBBaseActivity {
             UiEngine.applyCustomFont(btn_signUp, UiEngine.Fonts.HVAR);
     }
 
+
+    private void startLoginOperation()
+    {
+        User user = new User();
+        user.userName= edt_email.getText().toString();
+        user.password= edt_password.getText().toString();
+
+        boolean rememberMe=true;
+        LoginOperation operation = new LoginOperation(LOGIN_REQUEST_ID, true, LoginActivity.this, user,rememberMe);
+        operation.addRequsetObserver(this);
+        operation.execute();
+
+
+    }
+
+    @Override
+    public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        if (error == null) {
+            Logger.instance().v(TAG,"Success \n\t\t"+resultObject);
+            if((int)requestId == LOGIN_REQUEST_ID && resultObject!=null &&
+                    !Utilities.isNullString(((User)resultObject).loginCookie))
+            {
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }
+        }
+        else if (error != null && error instanceof CTHttpError) {
+            Logger.instance().v(TAG,error);
+        }
+    }
+
+    @Override
+    public void requestCanceled(Integer requestId, Throwable error) {
+
+    }
+
+    @Override
+    public void updateStatus(Integer requestId, String statusMsg) {
+
+    }
 }

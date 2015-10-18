@@ -1,8 +1,11 @@
 package net.comptoirs.android.common.controller.backend;
 
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.secb.android.view.components.dialogs.CustomProgressDialog;
 
 import net.comptoirs.android.common.controller.CTOperationResponse;
 import net.comptoirs.android.common.controller.backend.ServerConnection.ResponseType;
@@ -11,11 +14,11 @@ import org.apache.http.HttpEntity;
 import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.os.AsyncTask;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public abstract class BaseOperation<T> extends AsyncTask<Void, Object, CTOperationResponse>
+public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOperationResponse>
 {
 	
 	private static HashMap<String, BaseOperation<?>> activeOperations = new HashMap<String, BaseOperation<?>>();
@@ -29,7 +32,7 @@ public abstract class BaseOperation<T> extends AsyncTask<Void, Object, CTOperati
 
 	protected boolean isShowLoadingDialog = true;
 	protected Context context;
-    protected Dialog dialog;
+	private CustomProgressDialog dialog;
 
 	protected Object requestID = 0;
 
@@ -51,16 +54,42 @@ public abstract class BaseOperation<T> extends AsyncTask<Void, Object, CTOperati
 	 */
 	public abstract T doMain() throws Throwable;
 
-	 protected void showWaitingDialog(){
-		
-	}
+	 protected void showWaitingDialog()
+	 {
+		 if(dialog ==null)
+			 dialog =CustomProgressDialog.getInstance(context,true);
+
+		 dialog.setCanceledOnTouchOutside(false);
+		if (!dialog.isShowing())
+			dialog.show();
+
+		 dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			 @Override
+			 public void onCancel(DialogInterface dialog) {
+				 Log.v("Dialog", "Canceled ");
+				 cancelConn();
+				 // Wake observers with the result
+				 for (RequestObserver observer : observersList) {
+					 observer.requestCanceled((int)requestID, null);
+				 }
+				 BaseOperation.this.cancel(true);
+
+			 }
+		 });
+
+		 try {
+			 if (!dialog.isShowing())
+				 dialog.show();
+		 } catch (Exception e) {
+		 } // Show dialog on activity killed
+	 }
 	
 	@Override
 	protected void onPreExecute()
 	{
 		activeOperations.put(this.getClass().getName(), this);
 		if(requestID != null)
-			activeOperationsMapByRequstId.put(requestID, this);
+			activeOperationsMapByRequstId.put((int)requestID, this);
 		super.onPreExecute();
 
 		if (isShowLoadingDialog)
@@ -72,7 +101,7 @@ public abstract class BaseOperation<T> extends AsyncTask<Void, Object, CTOperati
 
 
 	@Override
-	protected CTOperationResponse doInBackground(Void... params)
+	protected CTOperationResponse doInBackground(Object... params)
 	{
 		CTOperationResponse response = new CTOperationResponse();
 		try
@@ -90,6 +119,25 @@ public abstract class BaseOperation<T> extends AsyncTask<Void, Object, CTOperati
 		
 		return response;
 	}
+
+	private void cancelConn() {
+		dismiss();
+		disconnect();
+	}
+
+	private void dismiss()
+	{
+		try {
+			if (isShowLoadingDialog && dialog.isShowing()) dialog.dismiss();
+		}
+		catch (Exception e) {
+		} // Dismiss on activity killed
+	}
+
+	public void disconnect() {
+		if (serverConnection != null) serverConnection.cancelConnection();
+	}
+
 
 	@Override
 	protected void onCancelled()
@@ -250,5 +298,10 @@ public abstract class BaseOperation<T> extends AsyncTask<Void, Object, CTOperati
 	public boolean isShowLoadingDialog()
 	{
 		return isShowLoadingDialog;
+	}
+
+	public HashMap<String, String> getAdditionalHeaders() {
+		HashMap<String, String> additionalHeaders = new HashMap<String, String>();
+		return additionalHeaders;
 	}
 }

@@ -1,6 +1,8 @@
 package com.secb.android.model;
 
-public class User
+import java.io.Serializable;
+
+public class User implements Serializable
 {
     public String userName;
     public String phoneNumber;
@@ -8,4 +10,6 @@ public class User
     public String emailAddress;
     public String jobTitle;
     public String subject;
+    public String password;
+    public String loginCookie;
 }
