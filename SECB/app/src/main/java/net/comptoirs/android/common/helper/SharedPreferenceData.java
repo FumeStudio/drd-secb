@@ -9,9 +9,9 @@ public class SharedPreferenceData
 {
 	public Context context = null;
 	String PrefName = Consts.PREF_FILE_NAME;
-	public SharedPreferenceData(Context incontext)
+	public SharedPreferenceData(Context context)
 	{
-		this.context = incontext;
+		this.context = context;
 	}
 	
 	/*

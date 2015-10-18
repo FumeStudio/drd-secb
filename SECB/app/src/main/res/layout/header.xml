@@ -59,5 +59,18 @@
             android:src="@drawable/header_menu_button"
             android:visibility="visible" />
 
+        <ImageView
+            android:id="@+id/imageViewShareHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="@dimen/header_menu_icon_margin_start"
+        android:paddingLeft="@dimen/header_menu_icon_margin_start"
+        android:paddingRight="@dimen/header_menu_icon_margin_end"
+        android:paddingTop="@dimen/header_menu_icon_margin_start"
+        android:src="@drawable/share_icon"
+            android:visibility="visible" />
+
     </RelativeLayout>
 </LinearLayout>

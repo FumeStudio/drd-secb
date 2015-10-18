@@ -183,7 +183,18 @@ public class EventsCalendarFragment extends SECBBaseFragment
     public FlexibleCalendarView customizeCalendarView(FlexibleCalendarView calendarView){
         if(calendarView!=null)
         {
-            calendarView.setStartDayOfTheWeek(Calendar.SUNDAY);
+
+            String[] customDayNames = new String[8];
+            customDayNames[0]="";
+            customDayNames[1]=getString(R.string.sunday);
+            customDayNames[2]=getString(R.string.monday);
+            customDayNames[3]=getString(R.string.tuesday);
+            customDayNames[4]=getString(R.string.wednesday);
+            customDayNames[5]=getString(R.string.thursday);
+            customDayNames[6]=getString(R.string.friday);
+            customDayNames[7]=getString(R.string.saturday);
+
+            calendarView.setStartDayOfTheWeek(Calendar.SUNDAY,customDayNames);
             calendarView.setOnMonthChangeListener(new FlexibleCalendarView.OnMonthChangeListener() {
                 @Override
                 public void onMonthChange(int year, int month, @FlexibleCalendarView.Direction int direction) {

@@ -25,7 +25,7 @@
     <dimen name="forget_pass_input_container_vertical_pad">13dp</dimen> <!-- 25PX - HEIGHT -->
 
     <dimen name="menu_item_icon_horizontal_margin">28dp</dimen> <!-- 55PX - WIDTH -->
-    <dimen name="menu_item_vertical_margin">38dp</dimen> <!-- 75PX - HEIGHT -->
+    <dimen name="menu_item_vertical_margin">11dp</dimen> <!-- 20PX - HEIGHT -->
     <dimen name="menu_margin_top">27dp</dimen> <!-- 50PX - HEIGHT -->
     <dimen name="menu_item_text_size">14sp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="menu_width">250dp</dimen> <!-- 500PX - WIDTH -->
@@ -99,5 +99,27 @@
     <dimen name="gallery_item_text_size">14dp</dimen> <!-- 25PX - HEIGHT -->
     <dimen name="gallery_item_text_padding">8dp</dimen> <!-- 16PX - HEIGHT -->
     <dimen name="gallery_item_card_width">182dp</dimen> <!-- 340PX - HEIGHT -->
-    <dimen name="gallery_item_card_height">148dp</dimen> <!-- 278PX - HEIGHT -->
+    <dimen name="gallery_item_card_height">148dp</dimen> <!-- 278PX - HEIGHT -->4
+
+    <dimen name="contact_us_base_margin">6dp</dimen> <!-- 10PX - HEIGHT -->
+    <dimen name="contact_us_padding">11dp</dimen> <!-- 20PX - HEIGHT -->
+    <dimen name="contact_us_text_us">14dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="contact_us_btn_text_us">19dp</dimen> <!-- 35PX - HEIGHT -->
+    <dimen name="contact_us_text_drwable_padding">11dp</dimen> <!-- 20PX - HEIGHT -->
+
+    <dimen name="eservice_colored_line_width">6dp</dimen> <!-- 10PX - WIDTH -->
+    <dimen name="eservice_item_padding">15dp</dimen> <!-- 28PX - HEIGHT -->
+    <dimen name="eservice_item_text_size">14dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="eservice_item_title_text_size">15dp</dimen> <!-- 28PX - HEIGHT -->
+
+
+    <dimen name="about_us_h1_text_size">18dp</dimen> <!-- 33PX - HEIGHT -->
+    <dimen name="about_us_h2_text_size">14dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="about_us_title_margin_top">22dp</dimen> <!-- 40PX - HEIGHT -->
+    <dimen name="about_us_margin">19dp</dimen> <!-- 40PX - HEIGHT -->
+    <dimen name="about_us_margin_small">11dp</dimen>
+    <dimen name="card_insets">5dp</dimen>
+    <!-- 20PX - HEIGHT -->
+
+
 </resources>

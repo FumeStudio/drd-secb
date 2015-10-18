@@ -18,6 +18,8 @@ public class EventItem implements Serializable {
     public String eventItemCategory;
     public String eventItemDuration;
     public String eventItemRepeating;
+    public double eventItemLatitude ;
+    public double eventItemLongitude ;
 
 
     private void writeObject(ObjectOutputStream oos) throws IOException{

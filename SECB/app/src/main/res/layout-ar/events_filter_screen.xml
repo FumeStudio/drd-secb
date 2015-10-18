@@ -50,6 +50,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/hint_city"
                 android:maxLines="1"
+                android:background="@color/white"
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
             <!--city title-->
@@ -164,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_all_types"
                     android:textColor="@color/secb_grey_text"
                     android:textSize="@dimen/news_filter_text_size" />
@@ -175,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_economic_type"
                     android:textColor="@color/secb_grey_text"
                     android:textSize="@dimen/news_filter_text_size" />
@@ -186,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_political_type"
                     android:textColor="@color/secb_grey_text"
                     android:textSize="@dimen/news_filter_text_size" />
@@ -197,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:button="@null"
-                    android:drawableRight="@drawable/radio_btn"
+                    android:drawableLeft="@drawable/radio_btn"
                     android:text="@string/news_filter_public_type"
                     android:textColor="@color/secb_grey_text"
                     android:textSize="@dimen/news_filter_text_size" />

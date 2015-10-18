@@ -14,9 +14,9 @@ import com.secb.android.model.GalleryItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
-import com.secb.android.view.components.gallery_recycler.GalleryItemRecyclerAdapter;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.recycler_gallery.GalleryItemRecyclerAdapter;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 
 import java.util.ArrayList;
 
@@ -157,7 +157,9 @@ public class GalleryFragment extends SECBBaseFragment
         galleryRecyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getActivity(),2);
         galleryRecyclerView.setLayoutManager(layoutManager);
-
+//        galleryRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+//        galleryRecyclerView.addItemDecoration(new GridDividerDecoration(getActivity()));
+        galleryRecyclerView.setHasFixedSize(true);
         galleryRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), galleryRecyclerView, this));
     }
 

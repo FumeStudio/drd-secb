@@ -21,10 +21,10 @@ import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
-import com.secb.android.view.components.ProgressWheel;
-import com.secb.android.view.components.news_recycler.NewsItemRecyclerAdapter;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.dialogs.ProgressWheel;
+import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 import com.secb.android.view.menu.MenuItem;
 
 import java.util.ArrayList;
@@ -35,9 +35,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
 
     int[] graphsValues;
-    TextView txtv_graph_title_closed, txtv_graph_value_closed,
-            txtv_graph_title_inbox, txtv_graph_value_inbox,
-            txtv_graph_title_inProgress, txtv_graph_value_inProgress;
+    TextView txtv_graph_title_closed, txtv_graph_title_inProgress,txtv_graph_title_inbox,
+            txtv_graph_value_inbox, txtv_graph_value_closed, txtv_graph_value_inProgress;
 
     TextView txtv_viewAllNews;
 
@@ -49,6 +48,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     View view;
     View event_card_container;
     private ImageView imgv_eventImg;
+    private TextView textViewTitleHeader;
+    private TextView txtv_home_last_news_title;
     private TextView txtv_eventTitle;
     private TextView txtv_eventDescription;
     private TextView txtv_event_timeValue;
@@ -92,9 +93,10 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
             view = LayoutInflater.from(getActivity()).inflate(R.layout.home_fragment, container, false);
 
             handleButtonsEvents();
-            applyFonts();
+
         }
         initViews(view);
+        applyFonts();
         return view;
     }
 
@@ -107,6 +109,15 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
     public void applyFonts()
     {
+        if(textViewTitleHeader!=null)
+        {
+            UiEngine.applyCustomFont(textViewTitleHeader, UiEngine.Fonts.HVAR);
+        }
+
+        if(txtv_home_last_news_title!=null)
+            UiEngine.applyCustomFont(txtv_home_last_news_title, UiEngine.Fonts.HVAR);
+
+
         if(txtv_graph_title_closed!=null)
             UiEngine.applyCustomFont(txtv_graph_title_closed, UiEngine.Fonts.HVAR);
         if(txtv_graph_value_closed!=null)
@@ -163,6 +174,9 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         progressWheelClosed = (ProgressWheel) view.findViewById(R.id.progressWheelClosed);
         progressWheelInbox = (ProgressWheel) view.findViewById(R.id.progressWheelInbox);
         progressWheelInProgress = (ProgressWheel) view.findViewById(R.id.progressWheelProgress);
+
+        textViewTitleHeader = (TextView) view.findViewById(R.id.textViewTitleHeader);
+        txtv_home_last_news_title = (TextView) view.findViewById(R.id.txtv_home_last_news_title);
 
 
         txtv_graph_title_closed = (TextView) view.findViewById(R.id.txtv_graph_title_closed);

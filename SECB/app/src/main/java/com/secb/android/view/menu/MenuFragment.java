@@ -16,9 +16,11 @@ import com.secb.android.model.GalleryItem;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
-import com.secb.android.view.components.DialogConfirmListener;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.dialogs.DialogConfirmListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.fragments.AboutUsFragment;
+import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventsCalendarFragment;
 import com.secb.android.view.fragments.GalleryFragment;
@@ -144,6 +146,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                     ((MainActivity)getActivity()).openHomeFragment(true);
                 }
                 break;
+            case 1:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                if ( !(currentDisplayedFragment instanceof E_ServicesListFragment))
+                {
+                    ((MainActivity)getActivity()).openE_ServicesFragment();
+                }
+                break;
             case 2:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof NewsListFragment))
@@ -197,6 +206,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                     ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, -1);
                 }
                 break;
+            case 7:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                if ( !(currentDisplayedFragment instanceof AboutUsFragment))
+                {
+                    ((MainActivity)getActivity()).openAboutUsFragment();
+                }
+                break;
+            case 8:
+                ((SECBBaseActivity)getActivity()).closeMenuPanel();
+                ((MainActivity)getActivity()).openContactUsFragment();
+                break;
             case 9:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 confirmAbout=CONFIRM_LANGUAGE;
@@ -224,12 +244,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
     public void onDilaogConfirmed() {
         if(confirmAbout==CONFIRM_LANGUAGE)
         {
-            boolean changeToEnglish = UiEngine.isCurrentLanguageArabic(getActivity());
+            boolean changeToEnglish ;
+            changeToEnglish = UiEngine.isDeviceLanguageArabic(getActivity());
             ((SECBBaseActivity) getActivity()).changeAppLanguage(changeToEnglish);
         }
         else if(confirmAbout==CONFIRM_LOGOUT)
         {
-            boolean changeToEnglish = UiEngine.isCurrentLanguageArabic(getActivity());
             ((SECBBaseActivity) getActivity()).logout();
         }
 

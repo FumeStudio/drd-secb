@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.secb.android.R;
-import com.secb.android.view.components.CustomProgressDialog;
+import com.secb.android.view.components.dialogs.CustomProgressDialog;
 
 public class SignUpActivity extends SECBBaseActivity {
 
@@ -48,7 +48,7 @@ public class SignUpActivity extends SECBBaseActivity {
 //        dialog.setCancelable(true);
 //        dialog.setCanceledOnTouchOutside(false);
 
-        final CustomProgressDialog dialog =CustomProgressDialog.getInstance(SignUpActivity.this);
+        final CustomProgressDialog dialog =CustomProgressDialog.getInstance(SignUpActivity.this ,true);
         dialog.show();
         myWebView.setVerticalScrollBarEnabled(false);
         myWebView.setHorizontalScrollBarEnabled(false);

@@ -17,13 +17,7 @@
 
         <!--1-->
 
-        <ImageView
-            android:id="@+id/imgv_locationImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_weight="1"
-            android:src="@drawable/news_img_sample" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +26,13 @@
             android:background="@color/off_white"
             android:orientation="vertical"
             android:padding="@dimen/organizer_details_margin">
-
+            <ImageView
+                android:id="@+id/imgv_locationImg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_weight="1"
+                android:src="@drawable/news_img_sample" />
             <include layout="@layout/location_name_info" />
 
             <TextView

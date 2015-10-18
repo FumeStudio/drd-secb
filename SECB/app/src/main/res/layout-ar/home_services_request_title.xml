@@ -24,7 +24,7 @@
         android:textColor="@color/secb_dark_text"
         android:text="@string/services_requests"
         android:textSize="@dimen/header_title_text_size"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:visibility="visible"
         android:gravity="right"/>
 

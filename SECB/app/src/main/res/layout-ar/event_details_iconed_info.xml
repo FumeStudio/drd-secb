@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/txtv_event_timeValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/event_card_time_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="right"
+            android:text="2:30 PM"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_card_h3_text_size" />
+
+
+        <TextView
+            android:id="@+id/txtv_event_placeValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/event_card_place_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="right"
+            android:text="Jaddah"
+            android:textColor="@color/secb_dark_text"
+            android:layout_marginLeft="@dimen/event_card_margin"
+            android:textSize="@dimen/event_card_h3_text_size" />
+
+
+        <TextView
+            android:id="@+id/txtv_event_categoryValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/event_card_filter_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="right"
+            android:text="Organization"
+            android:layout_marginLeft="@dimen/event_card_margin"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_card_h3_text_size" />
+    </TableRow>
+
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginTop="@dimen/event_details_iconed_info__space_height"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+
+        <TextView
+            android:id="@+id/txtv_event_durationValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/event_all_day_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="right"
+            android:text="All Day Event"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_details_text_size" />
+
+        <View
+            android:layout_width="@dimen/event_details_iconed_info_space_width"
+            android:layout_height="1dp" />
+
+
+        <TextView
+            android:id="@+id/txtv_event_repeatedValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="right"
+            android:drawableRight="@drawable/event_repeated_icon"
+            android:text="Repeated Event"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_details_text_size" />
+    </TableRow>
+
+</LinearLayout>

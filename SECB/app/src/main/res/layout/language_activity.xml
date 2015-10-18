@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/login_page_horizontal_pad"
+    android:paddingRight="@dimen/login_page_horizontal_pad">
+
+    <LinearLayout
+
+        android:layout_width="@dimen/login_container_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <!--logo-->
+        <ImageView
+            android:layout_width="@dimen/login_logo_img_width"
+            android:layout_height="@dimen/login_logo_img_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/login_logo_margin_bottom"
+            android:scaleType="centerCrop"
+            android:src="@drawable/login_logo"
+            android:visibility="visible" />
+
+        <TableRow
+            android:id="@+id/tablerow_languageButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--english-->
+            <Button
+                android:id="@+id/btn_english"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_button_height"
+                android:layout_marginRight="@dimen/login_button_signup_margin_top"
+                android:background="@color/secb_orange"
+                android:text="@string/language_english"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/login_button_text_size" />
+
+            <!--arabic-->
+            <Button
+                android:id="@+id/btn_arabic"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_button_height"
+                android:background="@color/secb_orange"
+                android:text="@string/language_arabic"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/login_button_text_size"  />
+
+
+        </TableRow>
+    </LinearLayout>
+</LinearLayout>

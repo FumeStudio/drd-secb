@@ -20,10 +20,14 @@ public class HeaderLayout extends LinearLayout
 	RelativeLayout layoutContainerHeader;
 	ImageView imageViewMenuHeader;
 	ImageView imageViewBackHeader;
+	ImageView imageViewShareHeader;
+
 	TextView textViewTitleHeader;
 	
 	OnClickListener menuOnClickListener;
 	OnClickListener backOnClickListener;
+	OnClickListener shareOnClickListener;
+
 	public HeaderLayout(Context context)
   {
 	  this(context, null);
@@ -40,6 +44,7 @@ public class HeaderLayout extends LinearLayout
 	  layoutContainerHeader = (RelativeLayout) view.findViewById(R.id.layoutContainerHeader);
 	  imageViewMenuHeader = (ImageView) view.findViewById(R.id.imageViewMenuHeader);
 	  imageViewBackHeader = (ImageView) view.findViewById(R.id.imageViewBackHeader);
+	  imageViewShareHeader = (ImageView) view.findViewById(R.id.imageViewShareHeader);
 	  textViewTitleHeader = (TextView) view.findViewById(R.id.textViewTitleHeader);
 	  layoutContainerHeader.setMinimumHeight(120);// (int)getResources().getDimension(R.dimen.header_height)
 	  
@@ -78,6 +83,16 @@ public class HeaderLayout extends LinearLayout
 			else
 				imageViewBackHeader.setVisibility(View.GONE);
 		}
+		if(imageViewShareHeader != null)
+		{
+			if(shareOnClickListener != null)
+			{
+				imageViewShareHeader.setOnClickListener(shareOnClickListener);
+				imageViewShareHeader.setVisibility(View.VISIBLE);
+			}
+			else
+				imageViewShareHeader.setVisibility(View.GONE);
+		}
 	}
 	
 	public void setTitleText(String title)
@@ -101,6 +116,7 @@ public class HeaderLayout extends LinearLayout
 	{
 		enableBackButton(null);
 	}
+
 	public void enableMenuButton(OnClickListener menuOnClickListener)
 	{
 		this.menuOnClickListener = menuOnClickListener;
@@ -110,6 +126,18 @@ public class HeaderLayout extends LinearLayout
 	{
 		enableMenuButton(null);
 	}
+
+
+	public void enableShareButton(OnClickListener shareOnClickListener)
+	{
+		this.shareOnClickListener = shareOnClickListener;
+		handleButtonsEvents();
+	}
+	public void disableShareButton()
+	{
+		enableShareButton(null);
+	}
+
 	
 	public void setHeaderBGColor(int color) {
 		layoutContainerHeader.setBackgroundColor(color);

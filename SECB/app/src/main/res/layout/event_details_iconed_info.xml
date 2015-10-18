@@ -4,10 +4,11 @@
     android:orientation="vertical">
 
     <TableRow
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <ImageView
             android:id="@+id/imgv_event_timeIcon"
@@ -15,24 +16,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/event_details_iconed_info_icon_margin"
-
-            android:src="@drawable/event_card_time_icon" />
+            android:src="@drawable/event_card_time_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtv_event_timeValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:maxLines="1"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:drawableLeft="@drawable/event_card_time_icon"
+            android:maxLines="1"
             android:text="2:30 PM"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
 
         <View
             android:layout_width="@dimen/event_details_iconed_info_space_width"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/imgv_event_placeIcon"
@@ -40,16 +43,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/event_details_iconed_info_icon_margin"
-            android:src="@drawable/event_card_place_icon" />
+            android:src="@drawable/event_card_place_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtv_event_placeValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:maxLines="1"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:drawableLeft="@drawable/event_card_place_icon"
             android:text="Jaddah"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
@@ -57,7 +62,8 @@
 
         <View
             android:layout_width="@dimen/event_details_iconed_info_space_width"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/imgv_event_categoryIcon"
@@ -65,16 +71,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/event_details_iconed_info_icon_margin"
-            android:src="@drawable/event_card_filter_icon" />
+            android:src="@drawable/event_card_filter_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtv_event_categoryValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:maxLines="1"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:drawableLeft="@drawable/event_card_filter_icon"
+            android:maxLines="1"
             android:text="Organization"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
@@ -93,16 +101,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/event_details_iconed_info_icon_margin"
-            android:src="@drawable/event_all_day_icon" />
+            android:src="@drawable/event_all_day_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtv_event_durationValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:maxLines="1"
             android:layout_weight="1"
+            android:drawableLeft="@drawable/event_all_day_icon"
             android:ellipsize="end"
+            android:maxLines="1"
             android:text="All Day Event"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
@@ -117,16 +127,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/event_details_iconed_info_icon_margin"
-            android:src="@drawable/event_repeated_icon" />
+            android:src="@drawable/event_repeated_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtv_event_repeatedValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:maxLines="1"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:drawableLeft="@drawable/event_repeated_icon"
             android:text="Repeated Event"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />

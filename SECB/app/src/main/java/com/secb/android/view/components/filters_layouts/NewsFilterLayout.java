@@ -15,7 +15,7 @@ import com.secb.android.R;
 import com.secb.android.model.Consts;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.view.UiEngine;
-import com.secb.android.view.components.DateTimePickerDialogView;
+import com.secb.android.view.components.dialogs.DateTimePickerDialogView;
 
 import java.util.Date;
 

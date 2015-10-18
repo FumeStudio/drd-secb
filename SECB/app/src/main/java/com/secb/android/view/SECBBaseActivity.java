@@ -1,9 +1,11 @@
 package com.secb.android.view;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -30,14 +32,15 @@ import android.widget.Toast;
 import com.flurry.android.FlurryAgent;
 import com.secb.android.R;
 import com.secb.android.model.Consts;
-import com.secb.android.view.components.DialogConfirmListener;
 import com.secb.android.view.components.HeaderLayout;
 import com.secb.android.view.components.LayoutAnimator;
+import com.secb.android.view.components.dialogs.DialogConfirmListener;
 import com.secb.android.view.fragments.SECBBaseFragment;
 import com.secb.android.view.menu.MenuFragment;
 import com.secb.android.view.menu.MenuItem;
 
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.SharedPreferenceData;
 import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
@@ -82,9 +85,13 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     private boolean isVerticalAnimation;
     Bundle savedInstanceState;
 
+    IntentFilter languageIntentFiler = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
+
 //	private /*static*/ ImageFetcher mImageFetcher;
 
     // abstract method to be called in activities that extend this one instead of oncreate().
+
+
     protected abstract void doOnCreate(Bundle arg0);
 
     /*
@@ -95,31 +102,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         this.mAllowSideMenu = allowMenu;
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (Consts.IS_FLURRY_ENABLED) FlurryAgent.onStartSession(this, Consts.FLURRY_API_KEY);
-
-//		if(mImageFetcher != null){
-//			mImageFetcher.initDiskCache(Engine.DataFolder.IMAGE_FETCHER_HTTP_CACHE);
-//		}
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (Consts.IS_FLURRY_ENABLED) FlurryAgent.onEndSession(this);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+    /*
+     * *****************************************************************************
+     * *********************** Activity LifeCycle **********************************
+     * *****************************************************************************
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -188,7 +175,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             //if arabic open menu_layout from right to left
             if(Utilities.getLanguage().startsWith("ar"))
                 MENU_GRAVITY =Gravity.RIGHT;
-            //else open from left to right
+                //else open from left to right
             else
                 MENU_GRAVITY =Gravity.LEFT;
 
@@ -207,6 +194,41 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //					Engine.getCacheParams());
 //		}
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (Consts.IS_FLURRY_ENABLED) FlurryAgent.onStartSession(this, Consts.FLURRY_API_KEY);
+
+//		if(mImageFetcher != null){
+//			mImageFetcher.initDiskCache(Engine.DataFolder.IMAGE_FETCHER_HTTP_CACHE);
+//		}
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        registerLanguageBroadcastReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        unRegisterLanguageBroadcastReceiver();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (Consts.IS_FLURRY_ENABLED) FlurryAgent.onEndSession(this);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
 
 
     private void handleButtonsEvents() {
@@ -312,6 +334,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void disableHeaderMenuButton() {
         headerLayoutHome.disableMenuButton();
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    // Enable header 'share' button
+    public void enableHeaderShareButton() {
+        headerLayoutHome.enableShareButton(this);
+    }
+
+    // Disable header 'share' button
+    public void disableHeaderShareButton() {
+        headerLayoutHome.disableShareButton();
     }
 
 
@@ -589,6 +621,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             case R.id.layout_dark_layer:
                 hideFilterLayout();
                 break;
+            case R.id.imageViewShareHeader:
+                displayToast("share !");
+                break;
             case R.id.imgv_filter:
                 prepareFilerLayout();
                 break;
@@ -619,7 +654,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(listener!=null)
+                if (listener != null)
                     listener.onDilaogConfirmed();
             }
         });
@@ -646,22 +681,31 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
+        saveLanguageSetting(languageToLoad);
+        myOnConfigurationChanged(config);
+
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
-        onConfigurationChanged(config);
+//        CTApplication.getApplication().onConfigurationChanged(config);
+
+
     }
 
     public void saveLanguageSetting(String languageToLoad)
     {
-        SharedPreferences languagepref = getSharedPreferences("language",MODE_PRIVATE);
-        SharedPreferences.Editor editor = languagepref.edit();
-        editor.putString("languageToLoad", languageToLoad);
-        editor.commit();
+        SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(this);
+        sharedPreferenceData.save("language", languageToLoad);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+
+    public String getSavedLanguageSetting()
+    {
+        SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(this);
+        return (String)sharedPreferenceData.get( "language",String.class);
+    }
+
+    public void myOnConfigurationChanged(Configuration newConfig) {
+        Logger.instance().v(TAG + " myOnConfigurationChanged - Language changed", newConfig.locale.getDisplayLanguage() + "");
 
         Intent i = new Intent(activity, SplashActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -678,4 +722,29 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
 
     }
+
+
+    public void registerLanguageBroadcastReceiver(){
+        registerReceiver(languageChangedBroadcastReceiver, languageIntentFiler);
+    }
+
+    public void unRegisterLanguageBroadcastReceiver(){
+        try {
+            unregisterReceiver(languageChangedBroadcastReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//if the device language is changed save the new language in preferences
+    private final BroadcastReceiver languageChangedBroadcastReceiver = new BroadcastReceiver()
+    {
+        public void onReceive(Context paramAnonymousContext, Intent paramAnonymousIntent)
+        {
+            String language=""+UiEngine.getCurrentDeviceLanguage(SECBBaseActivity.this);
+            Logger.instance().v(TAG + " - Language changed", "Broadcast - onReceive - saveLanguage "+getResources().getConfiguration().locale.getLanguage());
+            saveLanguageSetting(language);
+        }
+    };
+
 }

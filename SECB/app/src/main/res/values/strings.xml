@@ -44,7 +44,7 @@
     <string name="images">Images</string>
     <string name="videos">Videos</string>
     <string name="aboutus">About Us</string>
-    <string name="contactus">Contac Us</string>
+    <string name="contactus">Contact Us</string>
     <string name="language">عربي</string>
     <string name="logout">Logout</string>
     <string name="services_requests">Services Requests</string>
@@ -109,5 +109,41 @@
     <string name="logout_confirm">
         <![CDATA[Are you sure you want to <strong>logout</strong> ?]]>
     </string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">عربي</string>
+    <string name="contact_us_form_title">Wish to book an appointment with SECB representatives? \nplease complete the form below:</string>
+    <string name="hint_mobile">Mobile Number</string>
+    <string name="hint_organization">Organization</string>
+    <string name="hint_job_title">Job Title</string>
+    <string name="hint_subject">Subject</string>
+    <string name="send">Send</string>
+    <string name="secb_location_address">Temporary SECB headquarters: Riyadh, behind Al Mashreq Boutique Hotel, building #6.</string>
+    <string name="secb_email_address">secb-info@scta.gov.sa</string>
+    <string name="secb_phone_number">0112834707</string>
+    <string name="secb_fax_number">0112834707</string>
+    <string name="secb_facebook">http://www.facebook.com</string>
+    <string name="secb_twitter">https://twitter.com</string>
+    <string name="secb_google">https://plus.google.com</string>
+    <string name="secb_linkedIn">https://www.linkedin.com</string>
+    <string name="date">Date : </string>
+    <string name="status">Status : </string>
+    <string name="number">Number :</string>
+    <string name="type">Type :</string>
 
+    <string name="sunday">S</string>
+    <string name="monday">M</string>
+    <string name="tuesday">T</string>
+    <string name="wednesday">W</string>
+    <string name="thursday">T</string>
+    <string name="friday">F</string>
+    <string name="saturday">S</string>
+    <string name="filter_location_type">Location Type</string>
+    <string name="vision_title">SECB Vision</string>
+    <string name="vision_value">The Saudi Exhibition and Convention Bureau will be a national pilot program which develops the exhibition and convention sector through increased efficiency and effectiveness with the aim of supporting the country’s economy.</string>
+    <string name="mission_title">SECB Mission</string>
+    <string name="mission_value">The Saudi Exhibition and Convention Bureau will apply sector best practices in overseeing the Saudi exhibition and convention sector, and in developing the related internal and external environments to accomplish positive economic, cultural/social, environmental and political outcomes.</string>
+
+    <string name="dev_name"> Name Name Name Name Name Name Name </string>
+    <string name="dev_desc"> Description Description Description Description Description Description </string>
+    <string name="dev_address" >Address Address Address Address Address Address Address Address </string>
 </resources>

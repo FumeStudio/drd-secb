@@ -112,7 +112,7 @@ public class VideoPlayerFragment extends SECBBaseFragment
 
 
     private void initViews(View view) {
-        videoView = (VideoView) view.findViewById(R.id.video_view);
+        videoView = (VideoView) view.findViewById(R.id.vidv_videoAlbum);
         if(videoView!=null){
             doPlayerSetting();
             startPlayer();
@@ -128,7 +128,7 @@ public class VideoPlayerFragment extends SECBBaseFragment
 
     private void startPlayer() {
         videoUrl = "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";
-        videoUrl = "https://youtu.be/Mbs0PTyZfxA";
+        videoUrl = "https://www.youtube.com/watch?v=weGC-A551B4";
         videoUrl = "http://www.sample-videos.com/video/mp4/360/big_buck_bunny_360p_50mb.mp4";
         videoView.setVideoURI(Uri.parse(videoUrl));
         videoView.start();

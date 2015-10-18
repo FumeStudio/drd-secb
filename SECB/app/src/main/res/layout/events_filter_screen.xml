@@ -60,6 +60,7 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:hint="@string/hint_city"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
@@ -166,7 +167,7 @@
                     android:layout_gravity="left"
                     android:button="@null"
                     android:textSize="@dimen/news_filter_text_size"
-                    android:drawableLeft="@drawable/radio_btn"/>
+                    android:drawableRight="@drawable/radio_btn"/>
 
                 <RadioButton
                     android:id="@+id/radbtn_economicType"
@@ -177,7 +178,7 @@
                     android:layout_gravity="left"
                     android:button="@null"
                     android:textSize="@dimen/news_filter_text_size"
-                    android:drawableLeft="@drawable/radio_btn"/>
+                    android:drawableRight="@drawable/radio_btn"/>
 
                 <RadioButton
                     android:id="@+id/radbtn_politicalType"
@@ -188,7 +189,7 @@
                     android:layout_gravity="left"
                     android:button="@null"
                     android:textSize="@dimen/news_filter_text_size"
-                    android:drawableLeft="@drawable/radio_btn" />
+                    android:drawableRight="@drawable/radio_btn" />
                 <!--android:buttonTint="@color/secb_dark_text"-->
                 <RadioButton
                     android:id="@+id/radbtn_publicType"
@@ -199,7 +200,7 @@
                     android:layout_gravity="left"
                     android:button="@null"
                     android:textSize="@dimen/news_filter_text_size"
-                    android:drawableLeft="@drawable/radio_btn"/>
+                    android:drawableRight="@drawable/radio_btn"/>
 
             </RadioGroup>
         </LinearLayout>

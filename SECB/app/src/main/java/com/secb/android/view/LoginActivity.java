@@ -12,6 +12,7 @@ import com.secb.android.R;
 
 public class LoginActivity extends SECBBaseActivity {
 
+    private static final String TAG = "LoginActivity";
     EditText edt_email,edt_password;
     TextView txtv_forgetPassword;
     Button btn_login, btn_signUp;

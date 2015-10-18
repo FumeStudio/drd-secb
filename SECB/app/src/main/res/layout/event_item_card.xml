@@ -24,7 +24,7 @@
         android:layout_marginRight="@dimen/event_card_margin"
         android:layout_weight="2"
         android:orientation="vertical"
-        android:weightSum="2.5">
+        android:weightSum="3">
 
         <TextView
             android:id="@+id/txtv_eventTitle"
@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:textStyle="bold"
             android:text="Saudi Arabia has enhanced the development of exhibitions."
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h1_text_size" />
@@ -41,14 +42,14 @@
             android:id="@+id/txtv_eventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Saudi Arabia has enhanced the development of exhibitions."
             android:textColor="@color/secb_grey_text"
-            android:textSize="@dimen/event_card_h2_text_size" />
+            android:textSize="@dimen/event_card_h3_text_size" />
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -113,6 +114,56 @@
                 android:text="Organization"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
-        </LinearLayout>
+        </LinearLayout>-->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/txtv_event_timeValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/event_card_time_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="2:30 PM"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/event_card_h3_text_size" />
+
+
+            <TextView
+                android:id="@+id/txtv_event_placeValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/event_card_place_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Jaddah"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/event_card_h3_text_size" />
+
+
+            <TextView
+                android:id="@+id/txtv_event_categoryValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/event_card_filter_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Organization"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/event_card_h3_text_size" />
+        </TableRow>
+
     </LinearLayout>
 </LinearLayout>

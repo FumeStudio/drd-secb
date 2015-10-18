@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/contact_us_base_margin">
+
+
+    <LinearLayout
+        android:id="@+id/layout_txt_map_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/contact_us_padding">
+
+        <TextView
+            android:id="@+id/txtv_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/event_card_place_icon"
+            android:textSize="@dimen/contact_us_text_us"
+            android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+            android:textColor="@color/secb_dark_text"
+            android:text="@string/secb_location_address"/>
+
+        <TextView
+            android:id="@+id/txtv_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/email_icon"
+            android:textSize="@dimen/contact_us_text_us"
+            android:layout_marginTop="@dimen/contact_us_text_drwable_padding"
+            android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+            android:textColor="@color/secb_dark_text"
+            android:text="@string/secb_email_address"/>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contact_us_text_drwable_padding"
+            android:layout_marginBottom="@dimen/contact_us_text_drwable_padding"
+            android:gravity="center_vertical">
+
+
+            <TextView
+                android:id="@+id/txtv_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/contactus_icon_3"
+                android:textSize="@dimen/contact_us_text_us"
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:textColor="@color/secb_dark_text"
+                android:text="@string/secb_phone_number"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/txtv_fax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/fax_icon"
+                android:textSize="@dimen/contact_us_text_us"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:textColor="@color/secb_dark_text"
+                android:text="@string/secb_fax_number"/>
+
+        </TableRow>
+
+        <TableRow
+            android:weightSum="8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/contact_us_text_drwable_padding"
+            >
+
+
+            <ImageView
+                android:id="@+id/imgv_facebook"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fb_icon"
+
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/imgv_twitter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tw"
+
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/imgv_google"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gp"
+
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/imgv_linkedin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/in_icon"
+
+                android:layout_weight="1"/>
+
+
+        </TableRow>
+        <!--map-->
+        <LinearLayout
+            android:id="@+id/map_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/event_details_map_height"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/contact_us_base_margin" >
+
+            <FrameLayout
+                android:id="@+id/mapFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"/>
+
+            <include layout="@layout/map_fragment"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txtv_formTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_details_iconed_info_layout"
+            android:layout_marginBottom="@dimen/event_details_iconed_info_margin"
+            android:layout_marginLeft="@dimen/event_details_iconed_info_margin"
+            android:layout_marginRight="@dimen/event_details_iconed_info_margin"
+            android:text="@string/contact_us_form_title"
+            android:layout_marginTop="@dimen/contact_us_text_drwable_padding"
+            android:textColor="@color/secb_dark_text"
+            android:padding="@dimen/contact_us_base_margin"
+            android:textSize="@dimen/contact_us_text_us"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginBottom="@dimen/contact_us_padding"
+            android:layout_marginLeft="@dimen/contact_us_padding"
+            android:layout_marginRight="@dimen/contact_us_padding"
+            android:padding="@dimen/contact_us_padding">
+
+            <EditText
+                android:id="@+id/edtxt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/user_shape_icon"
+                android:textSize="@dimen/contact_us_text_us"
+                android:hint="@string/hint_name"
+
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:textColor="@color/secb_dark_text"
+                android:layout_weight="1"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000"
+                android:layout_margin="@dimen/contact_us_text_drwable_padding"/>
+            <EditText
+                android:id="@+id/edtxt_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/mobile_icon"
+                android:textSize="@dimen/contact_us_text_us"
+                android:hint="@string/hint_mobile"
+                android:textColor="@color/secb_dark_text"
+
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000"
+                android:layout_margin="@dimen/contact_us_text_drwable_padding"/>
+            <EditText
+                android:id="@+id/edtxt_organization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/organization_icon"
+                android:textSize="@dimen/contact_us_text_us"
+
+                android:hint="@string/hint_organization"
+                android:textColor="@color/secb_dark_text"
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000"
+                android:layout_margin="@dimen/contact_us_text_drwable_padding"/>
+            <EditText
+                android:id="@+id/edtxt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/email_icon"
+                android:textSize="@dimen/contact_us_text_us"
+                android:hint="@string/email_address"
+
+                android:textColor="@color/secb_dark_text"
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000"
+                android:layout_margin="@dimen/contact_us_text_drwable_padding"/>
+            <EditText
+                android:id="@+id/edtxt_job"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/job_icon"
+                android:textSize="@dimen/contact_us_text_us"
+
+                android:hint="@string/hint_job_title"
+                android:textColor="@color/secb_dark_text"
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000"
+                android:layout_margin="@dimen/contact_us_text_drwable_padding"/>
+            <EditText
+                android:id="@+id/edtxt_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/subject_icon"
+                android:textSize="@dimen/contact_us_text_us"
+
+                android:hint="@string/hint_subject"
+                android:textColor="@color/secb_dark_text"
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/contact_us_btn_text_us"
+            android:text="@string/send"
+            android:textColor="@color/secb_dark_text"
+            android:background="@color/secb_orange"
+            android:layout_margin="@dimen/contact_us_padding"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+</ScrollView>

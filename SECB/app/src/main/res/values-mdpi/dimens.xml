@@ -26,7 +26,7 @@
     <dimen name="forget_pass_input_container_vertical_pad">8dp</dimen> <!-- 25PX - HEIGHT -->
 
     <dimen name="menu_item_icon_horizontal_margin">24dp</dimen> <!-- 55PX - WIDTH -->
-    <dimen name="menu_item_vertical_margin">26dp</dimen> <!-- 75PX - HEIGHT -->
+    <dimen name="menu_item_vertical_margin">7dp</dimen> <!-- 20PX - HEIGHT -->
     <dimen name="menu_margin_top">17dp</dimen> <!-- 50PX - HEIGHT -->
     <dimen name="menu_item_text_size">9sp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="menu_width">222dp</dimen> <!-- 500PX - WIDTH -->
@@ -101,6 +101,27 @@
     <dimen name="gallery_item_text_padding">5dp</dimen> <!-- 16PX - HEIGHT -->
     <dimen name="gallery_item_card_width">120dp</dimen> <!-- 340PX - HEIGHT -->
     <dimen name="gallery_item_card_height">98dp</dimen> <!-- 278PX - HEIGHT -->
+
+    <dimen name="contact_us_base_margin">3dp</dimen> <!-- 10PX - HEIGHT -->
+    <dimen name="contact_us_padding">7dp</dimen> <!-- 20PX - HEIGHT -->
+    <dimen name="contact_us_text_us">9dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="contact_us_btn_text_us">12dp</dimen> <!-- 35PX - HEIGHT -->
+
+
+    <dimen name="eservice_colored_line_width">4dp</dimen> <!-- 10PX - WIDTH -->
+
+    <dimen name="eservice_item_padding">9dp</dimen> <!-- 28PX - HEIGHT -->
+    <dimen name="eservice_item_text_size">9dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="eservice_item_title_text_size">9dp</dimen> <!-- 28PX - HEIGHT -->
+
+
+    <dimen name="about_us_h1_text_size">11dp</dimen> <!-- 33PX - HEIGHT -->
+    <dimen name="about_us_h2_text_size">9dp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="about_us_title_margin_top">14dp</dimen> <!-- 40PX - HEIGHT -->
+    <dimen name="about_us_margin">12dp</dimen> <!-- 35PX - HEIGHT -->
+    <dimen name="about_us_margin_small">7dp</dimen>    <!-- 20PX - HEIGHT -->
+    <dimen name="card_insets">5dp</dimen>
+
 
 
 </resources>

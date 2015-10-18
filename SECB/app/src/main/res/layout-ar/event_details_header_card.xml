@@ -23,6 +23,7 @@
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size"
             android:gravity="center_vertical"
+            android:layout_gravity="right"
             />
 
     </LinearLayout>

@@ -8,24 +8,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.p_v.flexiblecalendar.view.BaseCellView;
-import com.p_v.flexiblecalendar.view.ICellViewDrawer;
 import com.p_v.flexiblecalendar.view.IWeekCellViewDrawer;
 import com.p_v.fliexiblecalendar.R;
 
 import java.text.DateFormatSymbols;
-import java.util.Calendar;
 
 /**
  * @author p-v
  */
 public class WeekdayNameDisplayAdapter extends ArrayAdapter<WeekdayNameDisplayAdapter.WeekDay>{
 
+    private final Context context  ;
     private IWeekCellViewDrawer cellViewDrawer;
     private WeekDay[] weekDayArray;
+    private String[] customDayNames;
 
     public WeekdayNameDisplayAdapter(Context context, int textViewResourceId, int startDayOfTheWeek) {
         super(context, textViewResourceId);
-        initializeWeekDays(startDayOfTheWeek);
+        initializeWeekDays(startDayOfTheWeek, customDayNames);
+        this.context = context;
     }
 
     @Override
@@ -51,12 +52,19 @@ public class WeekdayNameDisplayAdapter extends ArrayAdapter<WeekdayNameDisplayAd
             weekdayName = weekDay.displayValue;
         }
         cellView.setText(weekdayName);
+//        cellView.setText(weekdayName.charAt(0)+"");
         return cellView;
     }
 
-    private void initializeWeekDays(int startDayOfTheWeek){
+    private void initializeWeekDays(int startDayOfTheWeek, String[] customDayNames){
         DateFormatSymbols symbols = new DateFormatSymbols(FlexibleCalendarHelper.getLocale(getContext()));
-        String[] weekDayList = symbols.getShortWeekdays(); // weekday list has 8 elements
+        String[] weekDayList ;
+        if(customDayNames ==null || customDayNames.length<8 )
+            weekDayList = symbols.getShortWeekdays(); // weekday list has 8 elements
+        else
+            weekDayList= customDayNames;
+
+
         weekDayArray = new WeekDay[7];
         //reordering array based on the start day of the week
         for(int i = 1; i<weekDayList.length; i++){
@@ -67,6 +75,7 @@ public class WeekdayNameDisplayAdapter extends ArrayAdapter<WeekdayNameDisplayAd
             weekDayArray[tempVal <0 ? 7 + tempVal : tempVal] = weekDay;
         }
     }
+
 
     public class WeekDay{
         int index;
@@ -86,8 +95,10 @@ public class WeekdayNameDisplayAdapter extends ArrayAdapter<WeekdayNameDisplayAd
         return cellViewDrawer;
     }
 
-    public void setStartDayOfTheWeek(int startDayOfTheWeek){
-        initializeWeekDays(startDayOfTheWeek);
+    public void setStartDayOfTheWeek(int startDayOfTheWeek ,String[] customDayNames)
+    {
+        this.customDayNames = customDayNames;
+        initializeWeekDays(startDayOfTheWeek , customDayNames);
         this.notifyDataSetChanged();
     }
 

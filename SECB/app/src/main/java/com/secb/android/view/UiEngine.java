@@ -12,13 +12,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.secb.android.controller.manager.Engine;
+import net.comptoirs.android.common.helper.SharedPreferenceData;
 
 public class UiEngine {
 	public static void initialize(Context context)
 	{
 
-		Fonts.HVAR = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTArabic-Roman.otf");
+		Fonts.HVAR = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTArabic-Roman.ttf");
+		Fonts.HVAR_BOLD = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTArabic-Bold.ttf");
 
 		Fonts.HVCN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTPro-HvCn.otf");
 		Fonts.BDCN = Typeface.createFromAsset(context.getAssets(), "fonts/HelveticaNeueLTStd-BdCn.otf");
@@ -46,7 +47,10 @@ public class UiEngine {
 		return 0;
 	}
 	public static class Fonts {
+		public static Typeface HVAR_BOLD ;
 		public static Typeface HVAR;
+
+
 		public static Typeface HVCN;
 		public static Typeface BDCN;
 		public static Typeface CN;
@@ -103,8 +107,22 @@ public class UiEngine {
 		}
 	}
 
-	public static boolean isCurrentLanguageArabic(Context context) {
-		return Engine.getAppConfiguration().getLanguage().equalsIgnoreCase("ar");
+	public static boolean isAppLanguageArabic(Context context) {
+		return getCurrentAppLanguage(context).equalsIgnoreCase("ar");
+	}
+
+	public static String getCurrentAppLanguage(Context context) {
+		SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(context);
+		return (String)sharedPreferenceData.get("language",String.class);
+	}
+
+
+	public static boolean isDeviceLanguageArabic(Context context) {
+		return getCurrentDeviceLanguage(context).equalsIgnoreCase("ar");
+	}
+
+	public static String getCurrentDeviceLanguage(Context context) {
+		return context.getResources().getConfiguration().locale.getLanguage();
 	}
 
 

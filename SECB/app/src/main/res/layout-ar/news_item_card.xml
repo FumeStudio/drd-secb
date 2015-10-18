@@ -45,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="top">
 
             <TextView
                 android:id="@+id/txtv_newTime"
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:ellipsize="end"
-                android:gravity="left"
+                android:gravity="left|top"
                 android:maxLines="1"
                 android:text="2:30 PM"
                 android:textColor="@color/darkgrey_color"

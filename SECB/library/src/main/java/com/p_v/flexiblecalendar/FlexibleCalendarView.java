@@ -38,6 +38,8 @@ public class FlexibleCalendarView extends LinearLayout implements
         FlexibleCalendarGridAdapter.OnDateCellItemClickListener,
         FlexibleCalendarGridAdapter.MonthEventFetcher {
 
+    private  String[] customWeekDayNames;
+
     /**
      * Customize Calendar using this interface
      */
@@ -686,7 +688,7 @@ public class FlexibleCalendarView extends LinearLayout implements
      */
     public void setShowDatesOutsideMonth(boolean showDatesOutsideMonth){
         this.showDatesOutsideMonth = showDatesOutsideMonth;
-        monthViewPager.setNumOfRows(showDatesOutsideMonth? 6 : FlexibleCalendarHelper.getNumOfRowsForTheMonth(displayYear, displayMonth, startDayOfTheWeek));
+        monthViewPager.setNumOfRows(showDatesOutsideMonth ? 6 : FlexibleCalendarHelper.getNumOfRowsForTheMonth(displayYear, displayMonth, startDayOfTheWeek));
         monthViewPager.invalidate();
         monthViewPagerAdapter.setShowDatesOutsideMonth(showDatesOutsideMonth);
     }
@@ -719,20 +721,24 @@ public class FlexibleCalendarView extends LinearLayout implements
      *
      * @param startDayOfTheWeek Add values between 1 to 7. Defaults to 1 if entered outside boundary
      */
-    public void setStartDayOfTheWeek(int startDayOfTheWeek){
+    public void setStartDayOfTheWeek(int startDayOfTheWeek,String[] customDayNames){
         this.startDayOfTheWeek = startDayOfTheWeek;
         if(startDayOfTheWeek<1 || startDayOfTheWeek > 7){
             startDayOfTheWeek = 1;
         }
         monthViewPagerAdapter.setStartDayOfTheWeek(startDayOfTheWeek);
-        weekdayDisplayAdapter.setStartDayOfTheWeek(startDayOfTheWeek);
+        weekdayDisplayAdapter.setStartDayOfTheWeek(startDayOfTheWeek,customDayNames);
     }
-
     /**
      * @return start day of the week
      */
     public int getStartDayOfTheWeek(){
         return startDayOfTheWeek;
+    }
+
+
+    public String[] getCustomWeekDayNames() {
+        return customWeekDayNames;
     }
 
     /**

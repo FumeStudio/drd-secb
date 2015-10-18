@@ -3,12 +3,15 @@ package com.secb.android.controller.manager;
 import android.graphics.BitmapFactory;
 
 import com.secb.android.R;
+import com.secb.android.model.E_ServiceItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.SECBApplication;
+
+import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.ArrayList;
 
@@ -21,24 +24,27 @@ public class DevData
         ArrayList<NewsItem> newsList =new ArrayList<>();
         NewsItem newsItem = new NewsItem();
 
-        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news_img_sample));
+        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news1));
         newsItem.newsItemTitle = "Saudi Exhibition and Convention";
         newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
         newsItem.newsItemDate = "2 days ago";
 
         newsList.add(newsItem);
 
+        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news2));
         newsItem.newsItemTitle = "Saudi Exhibition and Convention";
         newsItem.newsItemDescription = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
         newsItem.newsItemDate = "2 days ago";
 
         newsList.add(newsItem);
 
+        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
         newsItem.newsItemTitle = "Saudi Exhibition and Convention";
         newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
         newsItem.newsItemDate = "2 days ago";
         newsList.add(newsItem);
 
+        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news4));
         newsItem.newsItemTitle = "Saudi Exhibition and Convention";
         newsItem.newsItemDescription = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
         newsItem.newsItemDate = "2 days ago";
@@ -80,19 +86,21 @@ public class DevData
         return  newsList;
     }
 
-
     public static ArrayList<EventItem> getEventsList() {
         ArrayList<EventItem> eventsList =new ArrayList<>();
         EventItem eventItem= new EventItem();
 
         eventItem.eventItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.event_card_img));
-        eventItem.eventItemTitle = "event Saudi Exhibition and Convention";
-        eventItem.eventItemDescription = "event لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
-        eventItem.eventItemTime = "event 2 days ago";
-        eventItem.eventItemCategory = "categoryyyyyyy";
+        eventItem.eventItemTitle = CTApplication.getContext().getString(R.string.dev_name);
+        eventItem.eventItemDescription = CTApplication.getContext().getString(R.string.dev_desc);
+        eventItem.eventItemTime = "2 days ago";
+        eventItem.eventItemCategory = "org";
         eventItem.eventItemDuration = "halfday";
         eventItem.eventItemRepeating = "rep";
-        eventItem.eventItemLocation = "catroooo";
+        eventItem.eventItemLocation = "jadda";
+        eventItem.eventItemLatitude=30.0882739;
+        eventItem.eventItemLongitude=31.3146007;
+
 
         eventsList.add(eventItem);
         eventsList.add(eventItem);
@@ -109,10 +117,10 @@ public class DevData
         OrganizerItem organizerItem = new OrganizerItem();
 
         organizerItem.OraganizerItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news_img_sample));
-        organizerItem.OraganizerItemTitle ="Name Name Name";
-        organizerItem.OraganizerItemAddress="Address Address Address Address ";
-        organizerItem.OraganizerItemDescription="Description Description Description Description Description ";
-        organizerItem.OraganizerItemEmail="Email Email Email Email Email Email ";
+        organizerItem.OraganizerItemTitle = CTApplication.getContext().getString(R.string.dev_name);
+        organizerItem.OraganizerItemAddress= CTApplication.getContext().getString(R.string.dev_address);
+        organizerItem.OraganizerItemDescription= CTApplication.getContext().getString(R.string.dev_desc);
+        organizerItem.OraganizerItemEmail="email@gmail.com";
         organizerItem.OraganizerItemPhone="012222233555-012258554555";
         organizerItem.OraganizerItemWebsite="www.linkedin/namename.com";
 
@@ -128,10 +136,10 @@ public class DevData
         ArrayList<LocationItem> locationItems= new ArrayList<>();
         LocationItem locationItem = new LocationItem();
 
-        locationItem.LoccationItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news_img_sample));
-        locationItem.LoccationItemTitle ="Name Name Name";
-        locationItem.LoccationItemAddress="Address Address Address Address ";
-        locationItem.LoccationItemDescription="Description Description Description Description Description ";
+        locationItem.LoccationItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
+        locationItem.LoccationItemTitle = CTApplication.getContext().getString(R.string.dev_name);
+        locationItem.LoccationItemAddress= CTApplication.getContext().getString(R.string.dev_address);
+        locationItem.LoccationItemDescription=CTApplication.getContext().getString(R.string.dev_desc);
         locationItem.LoccationItemEmail="Email Email Email Email Email Email ";
         locationItem.LoccationItemPhone="012222233555-012258554555";
 
@@ -217,5 +225,26 @@ public class DevData
         listViewItems.add(galleryItem);
 
         return listViewItems;
+    }
+
+    public static ArrayList<E_ServiceItem> getE_ServicesList() {
+        ArrayList<E_ServiceItem> e_serviceItems = new ArrayList<>();
+        E_ServiceItem item = new E_ServiceItem();
+
+        item.title = "Nine Firms Warned for Committing Violations.";
+        item.date = "20 Oct 2015";
+        item.status = "In progress";
+        item.number = "21-360406-85769";
+        item.type = "Organization Service Request";
+
+        e_serviceItems.add(item);
+        e_serviceItems.add(item);
+        e_serviceItems.add(item);
+        e_serviceItems.add(item);
+        e_serviceItems.add(item);
+        e_serviceItems.add(item);
+        e_serviceItems.add(item);
+
+        return e_serviceItems;
     }
 }

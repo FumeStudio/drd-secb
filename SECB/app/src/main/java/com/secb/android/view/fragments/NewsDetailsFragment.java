@@ -42,6 +42,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news_details));
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderShareButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -52,6 +53,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+        ((SECBBaseActivity) getActivity()).disableHeaderShareButton();
     }
 
     @Override

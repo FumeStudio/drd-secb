@@ -69,7 +69,7 @@
     <string name="location_capacityTitle">السعة:</string>
     <string name="location_spaceTitle">المساحة:</string>
     <string name="filter_location_name">اسم الموقع:</string>
-    <string name="filter_total_capacity">اجمالي السعة:</string>
+    <string name="filter_total_capacity">اجمالي السعة</string>
     <string name="location_nameTitle">الاسم:</string>
     <string name="location_roomType">نوع الغرفة:</string>
     <string name="location_roomCapacity">سعة الغرفة:</string>
@@ -92,6 +92,45 @@
     <string name="logout_confirm">
         <![CDATA[هل انت متاكد انك تريد <strong>الخروج </strong> ؟]]>
     </string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">عربي</string>
+
+    <string name="contact_us_form_title">هل تريد ان يقابلك احد ممثلي البرنامج الوطني للمعارض و المؤتمرات ؟ \n برجاء ادخال البيانات التالية</string>
+    <string name="hint_mobile">رقم الجوال</string>
+    <string name="hint_organization">المنظمة</string>
+    <string name="hint_job_title">اللقب الوظيفي</string>
+    <string name="hint_subject">الموضوع</string>
+    <string name="send">ارسال</string>
+    <string name="secb_location_address">المبني 6 خلف متجر المشرق - الرياض</string>
+    <string name="secb_email_address">secb-info@scta.gov.sa</string>
+    <string name="secb_phone_number">0112834707</string>
+    <string name="secb_fax_number">0112834707</string>
+    <string name="secb_facebook">http://www.facebook.com</string>
+    <string name="secb_twitter">https://twitter.com</string>
+    <string name="secb_google">https://plus.google.com</string>
+    <string name="secb_linkedIn">https://www.linkedin.com</string>
+    <string name="date">التاريخ : </string>
+    <string name="status">حالة الطلب :</string>
+    <string name="number">رقم الطلب : </string>
+    <string name="type">نوع الطلب : </string>
 
 
+
+    <string name="sunday">ح</string>
+    <string name="monday">ن</string>
+    <string name="tuesday">ث</string>
+    <string name="wednesday">ر</string>
+    <string name="thursday">خ</string>
+    <string name="friday">ج</string>
+    <string name="saturday">س</string>
+    <string name="filter_location_type">نوع الموقع </string>
+    <string name="vision_title">SECB Vision</string>
+    <string name="vision_value">The Saudi Exhibition and Convention Bureau will be a national pilot program which develops the exhibition and convention sector through increased efficiency and effectiveness with the aim of supporting the country’s economy.</string>
+    <string name="mission_title">SECB Mission</string>
+    <string name="mission_value">The Saudi Exhibition and Convention Bureau will apply sector best practices in overseeing the Saudi exhibition and convention sector, and in developing the related internal and external environments to accomplish positive economic, cultural/social, environmental and political outcomes.</string>
+
+
+    <string name="dev_name">الاسم الاسم الاسم الاسم الاسم الاسم الاسم </string>
+    <string name="dev_desc"> مزيد من التفاصيل مزيد من التفاصيل مزيد من التفاصيل مزيد من التفاصيل مزيد من التفاصيل</string>
+    <string name="dev_address">العنوان العنوان العنوان العنوان العنوان العنوان العنوان العنوان العنوان </string>
 </resources>

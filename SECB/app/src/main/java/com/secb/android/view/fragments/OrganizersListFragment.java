@@ -16,9 +16,9 @@ import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.filters_layouts.OrganizersFilterLayout;
-import com.secb.android.view.components.organizers_recycler.OrganizerItemRecyclerAdapter;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.recycler_organizers.OrganizerItemRecyclerAdapter;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 
 import java.util.ArrayList;
 

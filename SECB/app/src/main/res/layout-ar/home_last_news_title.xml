@@ -16,7 +16,7 @@
         android:src="@drawable/news_icon_2" />
 
     <TextView
-        android:id="@+id/textViewTitleHeader"
+        android:id="@+id/txtv_home_last_news_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -24,7 +24,6 @@
         android:textColor="@color/secb_dark_text"
         android:text="@string/last_news"
         android:textSize="@dimen/header_title_text_size"
-        android:textStyle="bold"
         android:visibility="visible"
         android:gravity="right"/>
 

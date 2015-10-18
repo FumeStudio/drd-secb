@@ -17,8 +17,9 @@
             android:value="AIzaSyCtGCSEbrYh9L3mdyqjBOVwZgPf-g-9Das" />
 
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".view.LanguageActivity"
             android:label="@string/app_name"
+
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,21 +28,38 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".view.SplashActivity"
+            android:label="@string/app_name"
+
+            android:screenOrientation="portrait">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
             android:name=".view.LoginActivity"
             android:label="@string/app_name"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.SignUpActivity"
             android:label="@string/app_name"
+            android:configChanges="locale"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.ResetPasswordActivity"
             android:label="@string/app_name"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
     </application>
 
 </manifest>

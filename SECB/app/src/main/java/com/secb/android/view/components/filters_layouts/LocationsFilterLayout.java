@@ -36,7 +36,7 @@ public class LocationsFilterLayout extends LinearLayout {
         super(context);
         view = LayoutInflater.from(context).inflate(R.layout.locations_filter_screen, null);
         initViews(view);
-        applyFonts();
+        applyFonts(view);
         getFilterData();
     }
 
@@ -54,9 +54,14 @@ public class LocationsFilterLayout extends LinearLayout {
         chkbox_type3 = (CheckBox) view.findViewById(R.id.chkbox_type3);
         chkbox_type4 = (CheckBox) view.findViewById(R.id.chkbox_type4);
         btn_applyFilter = (Button) view.findViewById(R.id.btn_applyFilter);
+
+
     }
 
-    private void applyFonts() {
+    private void applyFonts(View view)
+    {
+        UiEngine.applyCustomFont(view, UiEngine.Fonts.HVAR);
+        /*
         if (txtv_location_filter_name_title != null) {
             UiEngine.applyCustomFont(txtv_location_filter_name_title, UiEngine.Fonts.HVAR);
         }
@@ -95,7 +100,7 @@ public class LocationsFilterLayout extends LinearLayout {
         }
         if (btn_applyFilter != null) {
             UiEngine.applyCustomFont(btn_applyFilter, UiEngine.Fonts.HVAR);
-        }
+        }*/
     }
 
     public LocationsFilterData getFilterData() {

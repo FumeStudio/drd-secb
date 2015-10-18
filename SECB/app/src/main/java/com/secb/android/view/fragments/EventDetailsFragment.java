@@ -1,7 +1,8 @@
 package com.secb.android.view.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+
+import net.comptoirs.android.common.helper.MapsHelper;
 
 public class EventDetailsFragment  extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener
         ,GoogleMap.OnMarkerClickListener,OnMapReadyCallback
@@ -34,14 +37,15 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     private TextView txtv_event_details_eventDuration;
     private TextView txtv_event_details_eventRepeated;
     private TextView txtv_event_details_eventBody;
-    private MapFragment mapFragment;
+
     private GoogleMap googleMap;
+    private SupportMapFragment supportMapFragment;
 
     public static EventDetailsFragment newInstance(EventItem eventItem)
     {
         EventDetailsFragment fragment = new EventDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("eventsItem",eventItem);
+        bundle.putSerializable("eventsItem", eventItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -64,6 +68,8 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+        if(supportMapFragment!=null)
+            getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
 
     }
 
@@ -91,6 +97,7 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
             eventItem = (EventItem)bundle.getSerializable("eventsItem");
         }
         initViews(view);
+        initMap();
         bindViews();
         return view;
     }
@@ -171,20 +178,29 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         txtv_event_details_eventRepeated = (TextView) view.findViewById(R.id.txtv_event_repeatedValue);
         txtv_event_details_eventBody = (TextView) view.findViewById(R.id.event_details_body);
 
-        FragmentManager fm = getChildFragmentManager();
+/*        FragmentManager fm = getChildFragmentManager();
         SupportMapFragment fragment = (SupportMapFragment) fm.findFragmentById(R.id.mapFrame);
         if (fragment == null)
         {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.mapFrame, fragment).commit();
-        }
-
-//        SupportMapFragment fm1 = (SupportMapFragment) ((SECBBaseActivity)getActivity()).getSupportFragmentManager().findFragmentById(R.id.map);
-        /*mapFragment =(getActivity()).getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);*/
-
+        }*/
 
     }
+
+    public boolean initMap()
+    {
+        if (googleMap == null)
+        {
+            supportMapFragment = ((SupportMapFragment) getFragmentManager()
+                    .findFragmentById(R.id.map));
+
+            if(supportMapFragment!=null)
+                supportMapFragment.getMapAsync(this);
+        }
+        return (googleMap != null);
+    }
+
 
     private void bindViews()
     {
@@ -203,10 +219,31 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         }
     }
 
+
     @Override
-    public void onMapReady(GoogleMap _googleMap) {
-        googleMap = _googleMap;
-        ((SECBBaseActivity)getActivity()).displayToast("map ready");
+    public void onDestroy() {
+        super.onDestroy();
+//        if(supportMapFragment!=null)
+//            getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap=googleMap;
+        putEventOnMap();
+    }
+
+    private void putEventOnMap()
+    {
+        if(this.eventItem !=null&& googleMap!=null)
+        {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.event_card_place_icon);
+            LatLng locationOnMap = new LatLng(this.eventItem.eventItemLatitude,this.eventItem.eventItemLongitude);
+            Marker marker = MapsHelper.addMarker(googleMap,locationOnMap, bitmap);
+            MapsHelper.setMapCenter(true,googleMap,locationOnMap);
+
+        }
     }
 
     @Override

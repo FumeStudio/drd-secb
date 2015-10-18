@@ -10,7 +10,7 @@
     <!--SECB colors-->
     <color name="sceb_dark_blue">#122d53</color>
     <color name="secb_orange">#e5952f</color>
-    <color name="sceb_grey">#6e6f79</color>
+    <color name="secb_grey">#6e6f79</color>
     <color name="sceb_blue">#0f305d</color>
 
     <color name="colorAccent">#006699</color>

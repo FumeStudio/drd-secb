@@ -24,6 +24,7 @@
         android:padding="@dimen/login_input_text_pad"
         android:singleLine="true"
         android:text=""
+        android:background="@color/white"
         android:textColor="@color/secb_dark_text"
         android:gravity="right"
         android:textSize="@dimen/login_input_text_size" />

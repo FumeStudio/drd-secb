@@ -16,9 +16,9 @@ import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
-import com.secb.android.view.components.news_recycler.NewsItemRecyclerAdapter;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 
 import java.util.ArrayList;
 

@@ -4,19 +4,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.MapsInitializer;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
+import com.secb.android.view.fragments.AboutUsFragment;
 import com.secb.android.view.fragments.AlbumFragment;
+import com.secb.android.view.fragments.ContactUsFragment;
+import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventDetailsFragment;
 import com.secb.android.view.fragments.EventsCalendarFragment;
@@ -30,7 +31,8 @@ import com.secb.android.view.fragments.NewsListFragment;
 import com.secb.android.view.fragments.OrganizersDetailsFragment;
 import com.secb.android.view.fragments.OrganizersListFragment;
 
-public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback {
+public class MainActivity extends SECBBaseActivity {
+    private static final String TAG = "MainActivity";
     LinearLayout fragmentContainer;
     HomeFragment homeFragment;
     GoogleMap googleMap;
@@ -50,13 +52,14 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
         openHomeFragment(false);
 //        initMap();
 
+        try {
+            MapsInitializer.initialize(getApplicationContext());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-    }
 
-    private void initMap() {
-        View view = LayoutInflater.from(this).inflate(R.layout.map_fragment, null);
-        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
     private void initiViews()
@@ -142,8 +145,23 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
     {
         AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType,galleryId);
         addFragment(albumFragment, albumFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-
     }
+
+    public void openContactUsFragment(){
+        ContactUsFragment contactUsFragment = ContactUsFragment.newInstance();
+        addFragment(contactUsFragment, contactUsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+    }
+
+    public void openE_ServicesFragment(){
+        E_ServicesListFragment fragment = E_ServicesListFragment.newInstance();
+        addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+    }
+
+    public void openAboutUsFragment(){
+        AboutUsFragment fragment = AboutUsFragment.newInstance();
+        addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+    }
+
 
     public void openPlayerFragment(String videoUrl) {
 //        VideoPlayerFragment videoPlayerFragment = VideoPlayerFragment.newInstance(videoUrl);
@@ -160,17 +178,5 @@ public class MainActivity extends SECBBaseActivity implements OnMapReadyCallback
             displayToast("can't play this video file ");
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-    }
-
-    public MapFragment getMapFragment() {
-        return mapFragment;
-    }
-
-    public GoogleMap getGoogleMap() {
-        return googleMap;
-    }
 
 }

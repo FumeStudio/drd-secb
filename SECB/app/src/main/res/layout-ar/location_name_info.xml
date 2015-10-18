@@ -77,7 +77,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="5000"
+            android:text="@string/dev_name"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </RelativeLayout>

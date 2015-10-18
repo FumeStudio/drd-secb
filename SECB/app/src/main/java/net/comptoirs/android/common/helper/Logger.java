@@ -56,6 +56,10 @@ public class Logger
 		return currentTime;
 	}
 
+	public void v(String tag, Object msg)
+	{
+		v( tag,  msg, false);
+	}
 	public void v(String tag, Object msg, boolean writeToFile)
 	{
 		Log.v(tag, msg + "");

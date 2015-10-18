@@ -55,9 +55,10 @@ public class EguideHomeFragment extends SECBBaseFragment implements FragmentBack
         } else {
             view = LayoutInflater.from(getActivity()).inflate(R.layout.eguide_home, container, false);
             handleButtonsEvents();
-            applyFonts();
+
         }
         initViews(view);
+        applyFonts();
         return view;
     }
 

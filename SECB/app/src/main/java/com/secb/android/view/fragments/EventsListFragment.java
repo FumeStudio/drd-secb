@@ -15,10 +15,10 @@ import com.secb.android.model.EventsFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
-import com.secb.android.view.components.events_recycler.EventItemRecyclerAdapter;
+import com.secb.android.view.components.recycler_events.EventItemRecyclerAdapter;
 import com.secb.android.view.components.filters_layouts.EventsFilterLayout;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomClickListener;
-import com.secb.android.view.components.recycler_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 
 import java.util.ArrayList;
 
