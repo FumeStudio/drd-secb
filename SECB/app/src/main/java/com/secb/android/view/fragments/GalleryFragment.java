@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.secb.android.R;
-import com.secb.android.controller.manager.DevData;
+import com.secb.android.controller.backend.PhotoGalleryOperation;
 import com.secb.android.model.GalleryItem;
+import com.secb.android.model.PhotoGallery;
+import com.secb.android.model.User;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
@@ -18,12 +20,20 @@ import com.secb.android.view.components.recycler_gallery.GalleryItemRecyclerAdap
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class GalleryFragment extends SECBBaseFragment
-        implements FragmentBackObserver, View.OnClickListener , RecyclerCustomClickListener
+        implements FragmentBackObserver, View.OnClickListener , RecyclerCustomClickListener, RequestObserver
 
 {
+    private static final int PHOTO_GALLERY_REQUEST_ID = 1;
+    private static final String TAG = "GalleryFragment";
     RecyclerView galleryRecyclerView;
     GridLayoutManager layoutManager;
     GalleryItemRecyclerAdapter galleryItemRecyclerAdapter;
@@ -168,11 +178,11 @@ public class GalleryFragment extends SECBBaseFragment
 
         if(galleryType==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||galleryType==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY )
         {
-            galleryItemsList = DevData.getGalleryList(galleryType);
-        }
-        else
-        {
-            galleryItemsList = DevData.getAlbumList(galleryType, galleryId);
+//            galleryItemsList = DevData.getGalleryList(galleryType);
+
+            PhotoGalleryOperation operation = new PhotoGalleryOperation(PHOTO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
+            operation.addRequsetObserver(this);
+            operation.execute();
         }
     }
 
@@ -189,6 +199,36 @@ public class GalleryFragment extends SECBBaseFragment
     @Override
     public void onItemLongClicked(View v, int position)
     {
+
+    }
+
+    @Override
+    public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        if (error == null)
+        {
+            Logger.instance().v(TAG,"Success \n\t\t"+resultObject);
+            if((int)requestId == PHOTO_GALLERY_REQUEST_ID && resultObject!=null &&
+                    !Utilities.isNullString(((User) resultObject).loginCookie))
+            {
+                List<PhotoGallery>photoAlbums = (List<PhotoGallery>) resultObject;
+                Logger.instance().v(TAG,"photoAlbums size = "+photoAlbums.size());
+                Logger.instance().v(TAG,"photoAlbums.get(0)= "+photoAlbums.get(0).PhotoGalleryImageUrl);
+                Logger.instance().v(TAG,"photoAlbums.get(0)= "+photoAlbums.get(0).Title);
+
+            }
+        }
+        else if (error != null && error instanceof CTHttpError) {
+            Logger.instance().v(TAG,error);
+        }
+    }
+
+    @Override
+    public void requestCanceled(Integer requestId, Throwable error) {
+
+    }
+
+    @Override
+    public void updateStatus(Integer requestId, String statusMsg) {
 
     }
 }

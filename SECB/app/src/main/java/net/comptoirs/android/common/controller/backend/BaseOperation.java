@@ -203,19 +203,19 @@ public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOpera
 	 * @return the CTHttpResponse object
 	 */
 	public CTHttpResponse doRequest(String requestUrl, String methodType, final String contentType,
-	  final HashMap<String, String> additionalHeaders, final HttpEntity bodyEntity, final ResponseType responseType)
+	  final HashMap<String, String> additionalHeaders,  final HashMap<String, String> cookies, final HttpEntity bodyEntity, final ResponseType responseType)
 	{
 		CTHttpResponse response = serverConnection.sendRequestToServer(requestUrl, methodType, contentType,
-		  additionalHeaders, null, bodyEntity, responseType);
+		  additionalHeaders, cookies,null, bodyEntity, responseType);
 
 		ensureHTTPRequestSucceeded(response);
 		return response;
 	}
 	public CTHttpResponse doRequest(String requestUrl, String methodType, final String contentType,
-									final HashMap<String, String> additionalHeaders, HttpParams params, final HttpEntity bodyEntity, final ResponseType responseType)
+									final HashMap<String, String> additionalHeaders,final HashMap<String, String> cookies, HttpParams params, final HttpEntity bodyEntity, final ResponseType responseType)
 	{
 		CTHttpResponse response = serverConnection.sendRequestToServer(requestUrl, methodType, contentType,
-				additionalHeaders, params, bodyEntity, responseType);
+				additionalHeaders,cookies ,params, bodyEntity, responseType);
 
 		if(params == null || response.statusCode != 302)ensureHTTPRequestSucceeded(response);
 		return response;
@@ -300,8 +300,10 @@ public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOpera
 		return isShowLoadingDialog;
 	}
 
-	public HashMap<String, String> getAdditionalHeaders() {
+	public HashMap<String, String> getAdditionalHeaders()
+	{
 		HashMap<String, String> additionalHeaders = new HashMap<String, String>();
+
 		return additionalHeaders;
 	}
 }

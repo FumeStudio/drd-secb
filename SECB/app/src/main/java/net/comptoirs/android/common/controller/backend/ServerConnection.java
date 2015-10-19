@@ -11,20 +11,25 @@ import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 
@@ -59,6 +64,7 @@ public class ServerConnection {
     String serverUrl = "";
     DefaultHttpClient httpClient = null;
 
+    HttpContext localContext;
 
     // Default Constructor
     public ServerConnection() {
@@ -80,7 +86,7 @@ public class ServerConnection {
      * Send Request to the server with the headers
      */
     public CTHttpResponse sendRequestToServer(String url, String methodType, final String contentType,
-                                              final HashMap<String, String> additionalHeaders, final HttpParams params, final HttpEntity bodyEntity, final ResponseType responseType) {
+                                              final HashMap<String, String> additionalHeaders, final HashMap<String, String> cookies, final HttpParams params, final HttpEntity bodyEntity, final ResponseType responseType) {
         Logger.instance()
                 .v(
                         "sendRequestToServer",
@@ -94,6 +100,7 @@ public class ServerConnection {
         HttpResponse httpResponse = null;
         try {
             httpClient = getNewHttpClient();
+            localContext = new BasicHttpContext();
             httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
                 @Override
                 public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
@@ -111,6 +118,22 @@ public class ServerConnection {
                             request.setHeader(key, additionalHeaders.get(key));
                         }
                     }
+
+                    if (cookies != null) {
+                        Iterator<String> headersKeys = cookies.keySet().iterator();
+                        while (headersKeys.hasNext()) {
+                            String key = headersKeys.next();
+//                            request.addHeader(key, cookies.get(key));
+//                            httpClient.getCookieStore().addCookie(new BasicClientCookie(key, cookies.get(key)));
+                            CookieStore cookieStore = new BasicCookieStore();
+                            BasicClientCookie cookie = new BasicClientCookie(key, cookies.get(key));
+//                            cookie.setPath("/");
+                            cookieStore.addCookie(cookie);
+//                            httpClient.setCookieStore(cookieStore);
+                            localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
+
+                        }
+                    }
                 }
             });
 
@@ -124,10 +147,10 @@ public class ServerConnection {
 
             } else if (methodType.compareToIgnoreCase(HttpGet.METHOD_NAME) == 0) {
                 HttpGet httpGet = new HttpGet(url);
-                if(params != null)
+                if (params != null)
                     httpGet.setParams(params);
 
-                httpResponse = httpClient.execute(httpGet);
+                httpResponse = httpClient.execute(httpGet, localContext);
 
             } else if (methodType.compareToIgnoreCase(HttpPut.METHOD_NAME) == 0) {
                 HttpPut httpPut = new HttpPut(url);
@@ -159,7 +182,7 @@ public class ServerConnection {
                 // When Succeeded
                 if (serverResponse.statusCode == HttpStatus.SC_OK ||
                         serverResponse.statusCode == HttpStatus.SC_CREATED ||
-                        ( serverResponse.statusCode == 302 && params != null)) {
+                        (serverResponse.statusCode == 302 && params != null)) {
                     // Scanner scan1 = new Scanner(con.getInputStream());
 
                     // String line = IOUtils.toString(httpResponse.getEntity().getContent());

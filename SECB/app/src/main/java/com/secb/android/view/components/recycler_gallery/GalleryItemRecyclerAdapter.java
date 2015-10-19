@@ -58,7 +58,9 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
 
     @Override
     public int getItemCount() {
-        return itemsList.size();
+        if(itemsList!=null)
+            return itemsList.size();
+        return 0;
     }
 
     public void deleteItem(int position){

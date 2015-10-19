@@ -40,7 +40,9 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
     {
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_password = (EditText) findViewById(R.id.edt_password);
-//        edt_password.setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        edt_email.setText("secb01");
+        edt_password.setText("Secb01");
 
         txtv_forgetPassword = (TextView) findViewById(R.id.txtv_forgetPassword);
         btn_login = (Button) findViewById(R.id.btn_login);

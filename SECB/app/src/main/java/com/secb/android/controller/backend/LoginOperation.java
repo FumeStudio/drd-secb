@@ -40,7 +40,7 @@ public class LoginOperation extends BaseOperation {
         LoginXmlGenerator loginXmlGenerator = new LoginXmlGenerator(userToLogin);
         loginXml = loginXmlGenerator.getLoginXml();
 
-        String requestUrl = ServerKeys.URL_SERVER;
+        String requestUrl = ServerKeys.LOGIN_URL;
         HashMap<String, String> additionalHeaders = getAdditionalHeaders();
         additionalHeaders.put("content-type","text/xml; charset=utf-8");
         additionalHeaders.put("SOAPAction", "http://schemas.microsoft.com/sharepoint/soap/Login");
@@ -48,7 +48,7 @@ public class LoginOperation extends BaseOperation {
         StringEntity bodyEntity = new StringEntity(loginXml);
         bodyEntity.setContentType("text/xml");
 
-        CTHttpResponse response = doRequest(requestUrl, HttpPost.METHOD_NAME, null, additionalHeaders, bodyEntity, ServerConnection.ResponseType.RESP_TYPE_STRING);
+        CTHttpResponse response = doRequest(requestUrl, HttpPost.METHOD_NAME, null, additionalHeaders,null, bodyEntity, ServerConnection.ResponseType.RESP_TYPE_STRING);
         Logger.instance().v(TAG,response.response);
 
         //get cookie
