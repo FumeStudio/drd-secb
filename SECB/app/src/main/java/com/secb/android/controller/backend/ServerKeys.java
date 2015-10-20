@@ -4,6 +4,7 @@ public class ServerKeys
 {
 	public static final String STATUS_CODE = "statusCode";
 	public static final String STATUS_MESSAGE = "statusMessage";
+	public static final String ALLOWED_URI_CHARS = "@#&=*+-_.,:!?()/~'%";
 
 	/*Login*/
 	public static final String LOGIN_URL = "http://secb.linkdev.com/_vti_bin/authentication.asmx";
@@ -17,5 +18,7 @@ public class ServerKeys
 
 	/*Photo Gallery*/
 	public static final String PHOTO_URL ="http://secb.linkdev.com/webapi/api/photos/getphotos" ;
-//			"?lang=ar&pageSize=100&pageIndex=0";
+
+	/*Video Gallery*/
+	public static final String VIDEO_URL = "http://secb.linkdev.com/webapi/api/Videos/GetVideos";
 }

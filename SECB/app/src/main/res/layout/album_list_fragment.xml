@@ -56,4 +56,15 @@
             android:src="@drawable/news_img_sample"
             android:cropToPadding="true"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtv_noData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:textColor="@color/secb_dark_text"
+        android:textSize="@dimen/gallery_item_text_size"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="@string/album_no_files"/>
 </RelativeLayout>

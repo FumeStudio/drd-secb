@@ -133,4 +133,7 @@
     <string name="dev_name">الاسم الاسم الاسم الاسم الاسم الاسم الاسم </string>
     <string name="dev_desc"> مزيد من التفاصيل مزيد من التفاصيل مزيد من التفاصيل مزيد من التفاصيل مزيد من التفاصيل</string>
     <string name="dev_address">العنوان العنوان العنوان العنوان العنوان العنوان العنوان العنوان العنوان </string>
+    <string name="gallery_no_albums">لاتوجد البومات.</string>
+    <string name="album_no_files">لا توجد ملفات.</string>
+    <string name="login_failed">برجاء مراجعة اسم المستخدم و كلمة المرور.</string>
 </resources>

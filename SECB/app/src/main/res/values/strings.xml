@@ -146,4 +146,7 @@
     <string name="dev_name"> Name Name Name Name Name Name Name </string>
     <string name="dev_desc"> Description Description Description Description Description Description </string>
     <string name="dev_address" >Address Address Address Address Address Address Address Address </string>
+    <string name="gallery_no_albums">There are no albums.</string>
+    <string name="album_no_files">There are no files</string>
+    <string name="login_failed">Login failed . Please check the user name and the password</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.secb.android.controller.manager.GalleryManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.view.UiEngine;
@@ -19,15 +20,17 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
-public class PhotoGalleryOperation extends BaseOperation {
+public class GalleryOperation extends BaseOperation {
     private static final String TAG ="LoginOperation" ;
     Context context;
     int pageSize , pageIndex;
+    int galleryType;
 
-    public PhotoGalleryOperation(int requestID, boolean isShowLoadingDialog,
-                                 Context context, int pageSize , int pageIndex)
+    public GalleryOperation(int galleryType, int requestID, boolean isShowLoadingDialog,
+                            Context context, int pageSize, int pageIndex)
     {
         super(requestID, isShowLoadingDialog, context);
+        this.galleryType = galleryType;
         this.context = context;
         this.pageSize = pageSize;
         this.pageIndex = pageIndex;
@@ -39,9 +42,20 @@ public class PhotoGalleryOperation extends BaseOperation {
     public Object doMain() throws Exception
     {
 
+        if(galleryType!= GalleryItem.GALLERY_TYPE_IMAGE_GALLERY && galleryType!= GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
+        {
+            return null;
+        }
+
+
         String language = UiEngine.getCurrentAppLanguage(context);
 
-        StringBuilder stringBuilder = new StringBuilder(ServerKeys.PHOTO_URL);
+        StringBuilder stringBuilder ;
+        if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY )
+            stringBuilder= new StringBuilder(ServerKeys.PHOTO_URL);
+        else /*if (galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)*/
+            stringBuilder= new StringBuilder(ServerKeys.VIDEO_URL);
+
         stringBuilder.append("?lang=" + language + "&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
         String requestUrl=stringBuilder.toString();
 
@@ -53,11 +67,26 @@ public class PhotoGalleryOperation extends BaseOperation {
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<GalleryItem>>(){}.getType();
-        List<GalleryItem> photoAlbums = (List<GalleryItem>) gson.fromJson(response.response.toString(), listType);
+        List<GalleryItem> galleryItems = gson.fromJson(response.response.toString(), listType);
 
-        return photoAlbums;
+        updateGalleryManager(galleryType , galleryItems);
+        return galleryItems;
     }
 
+    private void updateGalleryManager(int galleryType, List<GalleryItem> galleryItems)
+    {
+        if(galleryItems==null ||galleryItems.size()==0)
+            return;
+
+        if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
+        {
+            GalleryManager.getInstance().setImageGalleryList(galleryItems);
+        }
+        else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
+        {
+            GalleryManager.getInstance().setVideoGalleryList(galleryItems);
+        }
+    }
 
 
 }

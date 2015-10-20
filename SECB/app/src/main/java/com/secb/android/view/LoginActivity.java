@@ -13,7 +13,9 @@ import com.secb.android.controller.backend.LoginOperation;
 import com.secb.android.model.User;
 
 import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 
@@ -109,8 +111,25 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
             {
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
             }
+            else
+            {
+                ErrorDialog.showMessageDialog(null, getString(R.string.login_failed), LoginActivity.this);
+            }
         }
-        else if (error != null && error instanceof CTHttpError) {
+        else if (error != null && error instanceof CTHttpError)
+        {
+            int statusCode = ((CTHttpError) error).getStatusCode();
+            String errorMsg = ((CTHttpError) error).getErrorMsg();
+            if (RequestHandler.isRequestTimedOut(statusCode))
+            {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), LoginActivity.this);
+            }
+            else if (statusCode == -1)
+            {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+                        LoginActivity.this);
+            }
+
             Logger.instance().v(TAG,error);
         }
     }

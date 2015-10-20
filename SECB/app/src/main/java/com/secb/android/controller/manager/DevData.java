@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import com.secb.android.R;
 import com.secb.android.model.E_ServiceItem;
 import com.secb.android.model.EventItem;
-import com.secb.android.model.GalleryItem;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
@@ -164,68 +163,6 @@ public class DevData
 
 
 
-    public static ArrayList<GalleryItem> getAlbumList(int galleryType, int id)
-    {
-        ArrayList<GalleryItem> listViewItems = new ArrayList<>();
-        GalleryItem galleryItem ;
-        if (id > 0) {
-            galleryItem = new GalleryItem(galleryType);
-            galleryItem.imgResource = id;
-            for (int i = 0; i < 12; i++) {
-                listViewItems.add(galleryItem);
-            }
-        }
-        return listViewItems;
-    }
-
-
-    public static ArrayList<GalleryItem> getGalleryList(int galaryType)
-    {
-        ArrayList<GalleryItem> listViewItems = new ArrayList<>();
-
-
-        GalleryItem galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.one;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.two;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.three;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.four;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.five;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.six;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.seven;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        galleryItem = new GalleryItem(galaryType);
-        galleryItem.imgResource =  R.drawable.eight;
-        galleryItem.galleryItemTitle = "Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title Album Title ";
-        listViewItems.add(galleryItem);
-
-        return listViewItems;
-    }
 
     public static ArrayList<E_ServiceItem> getE_ServicesList() {
         ArrayList<E_ServiceItem> e_serviceItems = new ArrayList<>();

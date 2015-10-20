@@ -141,9 +141,9 @@ public class MainActivity extends SECBBaseActivity {
 
     }
 
-    public void openAlbumFragment(int galleryType, int galleryId)
+    public void openAlbumFragment(int galleryType, String folderPath , String albumId)
     {
-        AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType,galleryId);
+        AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType,folderPath , albumId);
         addFragment(albumFragment, albumFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 

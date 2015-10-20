@@ -51,7 +51,6 @@
         android:background="@color/secb_dark_text"
         android:ellipsize="end"
         android:gravity="center_horizontal"
-        android:lines="2"
         android:maxLines="2"
         android:padding="@dimen/gallery_item_text_padding"
         android:text="@string/hello_world"

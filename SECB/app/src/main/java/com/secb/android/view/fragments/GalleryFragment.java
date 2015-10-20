@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.TextView;
 
 import com.secb.android.R;
-import com.secb.android.controller.backend.PhotoGalleryOperation;
+import com.secb.android.controller.backend.GalleryOperation;
+import com.secb.android.controller.manager.GalleryManager;
 import com.secb.android.model.GalleryItem;
-import com.secb.android.model.PhotoGallery;
-import com.secb.android.model.User;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
@@ -21,26 +21,27 @@ import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCus
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 
 import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
-import net.comptoirs.android.common.helper.Utilities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GalleryFragment extends SECBBaseFragment
         implements FragmentBackObserver, View.OnClickListener , RecyclerCustomClickListener, RequestObserver
 
 {
-    private static final int PHOTO_GALLERY_REQUEST_ID = 1;
     private static final String TAG = "GalleryFragment";
+    private static final int PHOTO_GALLERY_REQUEST_ID = 1;
+    private static final int VIDEO_GALLERY_REQUEST_ID = 2;
     RecyclerView galleryRecyclerView;
     GridLayoutManager layoutManager;
     GalleryItemRecyclerAdapter galleryItemRecyclerAdapter;
-    ArrayList<GalleryItem> galleryItemsList;
     public int galleryType;
-    int galleryId;
     View view;
+    private List galleryItemList;
+    TextView txtv_noData;
 
 
     public static GalleryFragment newInstance(int galleryType , int galleryId)
@@ -48,7 +49,6 @@ public class GalleryFragment extends SECBBaseFragment
         GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("galleryType", galleryType);
-        bundle.putInt("galleryId", galleryId);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -59,7 +59,6 @@ public class GalleryFragment extends SECBBaseFragment
     {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -67,7 +66,6 @@ public class GalleryFragment extends SECBBaseFragment
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
     @Override
@@ -96,27 +94,33 @@ public class GalleryFragment extends SECBBaseFragment
         if(bundle!=null)
         {
             galleryType = bundle.getInt("galleryType");
-            galleryId = bundle.getInt("galleryId");
         }
         setHeaderTitle();
         initViews(view);
+        getData();
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        galleryRecyclerView.setAdapter(null);
+    }
+
     private void setHeaderTitle() {
-        if(galleryType==GalleryItem.GALLERY_TYPE_IMAGE_ALBUM)
+        if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_ALBUM)
         {
             ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.image_album));
         }
-        else if(galleryType==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
+        else if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
         {
             ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.image_gallery));
         }
-        else if(galleryType==GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
+        else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
         {
             ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.video_album));
         }
-        else if(galleryType==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
+        else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
         {
             ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.video_gallery));
         }
@@ -154,45 +158,75 @@ public class GalleryFragment extends SECBBaseFragment
     }
 
 
-
-
     private void initViews(View view)
     {
-
-        getData();
-
         galleryRecyclerView = (RecyclerView) view.findViewById(R.id.galleryRecyclerView);
-        galleryItemRecyclerAdapter = new GalleryItemRecyclerAdapter(getActivity(), galleryItemsList);
-        galleryRecyclerView.setAdapter(galleryItemRecyclerAdapter);
         galleryRecyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getActivity(),2);
         galleryRecyclerView.setLayoutManager(layoutManager);
-//        galleryRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-//        galleryRecyclerView.addItemDecoration(new GridDividerDecoration(getActivity()));
-        galleryRecyclerView.setHasFixedSize(true);
+        txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
         galleryRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), galleryRecyclerView, this));
+    }
+
+    private void bindViews(){
+        if(galleryItemList.size()>0)
+        {
+            galleryRecyclerView.setVisibility(View.VISIBLE);
+            txtv_noData.setVisibility(View.GONE);
+            galleryItemRecyclerAdapter = new GalleryItemRecyclerAdapter(getActivity(), galleryItemList);
+            galleryRecyclerView.setAdapter(galleryItemRecyclerAdapter);
+        }
+        else {
+
+            galleryRecyclerView.setVisibility(View.GONE);
+            txtv_noData.setVisibility(View.VISIBLE);
+        }
     }
 
     private void getData()
     {
+        //checked whether list is existing in GalleryManager or not
+        //if it exists get it from the manager
+        //if it's not exist get it from server
 
-        if(galleryType==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||galleryType==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY )
+        //get PhotoGallery
+        if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY )
         {
-//            galleryItemsList = DevData.getGalleryList(galleryType);
+            galleryItemList = GalleryManager.getInstance().getImageGalleryList();
+            if(galleryItemList == null || galleryItemList.size()==0)
+            {
+                GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
+                operation.addRequsetObserver(this);
+                operation.execute();
+            }
+            else{
+                handleRequestFinished(PHOTO_GALLERY_REQUEST_ID , null,galleryItemList);
+            }
+        }
 
-            PhotoGalleryOperation operation = new PhotoGalleryOperation(PHOTO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
-            operation.addRequsetObserver(this);
-            operation.execute();
+        //get VideoGallery
+        else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY )
+        {
+            galleryItemList = GalleryManager.getInstance().getVideoGalleryList();
+            if(galleryItemList == null || galleryItemList.size()==0)
+            {
+                GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,VIDEO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
+                operation.addRequsetObserver(this);
+                operation.execute();
+            }
+            else{
+                handleRequestFinished(VIDEO_GALLERY_REQUEST_ID , null,galleryItemList);
+            }
         }
     }
 
     @Override
     public void onItemClicked(View v, int position)
     {
-        GalleryItem clickedItem = galleryItemsList.get(position);
-        if(clickedItem.galleryItemType==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||clickedItem.galleryItemType==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
+        GalleryItem clickedItem = (GalleryItem) galleryItemList.get(position);
+        if(clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
         {
-            ((MainActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.imgResource);
+            ((MainActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id);
         }
     }
 
@@ -207,18 +241,42 @@ public class GalleryFragment extends SECBBaseFragment
         if (error == null)
         {
             Logger.instance().v(TAG,"Success \n\t\t"+resultObject);
-            if((int)requestId == PHOTO_GALLERY_REQUEST_ID && resultObject!=null &&
-                    !Utilities.isNullString(((User) resultObject).loginCookie))
+
+            //photoGallery
+            if((int)requestId == PHOTO_GALLERY_REQUEST_ID && resultObject!=null)
             {
-                List<PhotoGallery>photoAlbums = (List<PhotoGallery>) resultObject;
-                Logger.instance().v(TAG,"photoAlbums size = "+photoAlbums.size());
-                Logger.instance().v(TAG,"photoAlbums.get(0)= "+photoAlbums.get(0).PhotoGalleryImageUrl);
-                Logger.instance().v(TAG,"photoAlbums.get(0)= "+photoAlbums.get(0).Title);
+                galleryItemList = (List) resultObject;
+                for(Object iterator : galleryItemList){
+                    ((GalleryItem)iterator).galleryItemType= GalleryItem.GALLERY_TYPE_IMAGE_GALLERY;
+                }
+                bindViews();
+
+            }
+            //videoGallery
+            else if((int)requestId == VIDEO_GALLERY_REQUEST_ID && resultObject!=null)
+            {
+                galleryItemList = (List) resultObject;
+                for(Object iterator : galleryItemList){
+                    ((GalleryItem)iterator).galleryItemType= GalleryItem.GALLERY_TYPE_VIDEO_GALLERY;
+                }
+                bindViews();
 
             }
         }
-        else if (error != null && error instanceof CTHttpError) {
+        else if (error != null && error instanceof CTHttpError)
+        {
             Logger.instance().v(TAG,error);
+            int statusCode = ((CTHttpError) error).getStatusCode();
+            String errorMsg = ((CTHttpError) error).getErrorMsg();
+            if (RequestHandler.isRequestTimedOut(statusCode))
+            {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
+            }
+            else if (statusCode == -1)
+            {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+                        getActivity());
+            }
         }
     }
 
