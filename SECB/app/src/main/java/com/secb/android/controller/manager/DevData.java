@@ -24,62 +24,62 @@ public class DevData
         NewsItem newsItem = new NewsItem();
 
         newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news1));
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "Saudi Arabia has greatly enhanced";
+        newsItem.CreationDate = "2 days ago";
 
         newsList.add(newsItem);
 
         newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news2));
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
+        newsItem.CreationDate = "2 days ago";
 
         newsList.add(newsItem);
 
         newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "Saudi Arabia has greatly enhanced";
+        newsItem.CreationDate = "2 days ago";
         newsList.add(newsItem);
 
         newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news4));
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
+        newsItem.CreationDate = "2 days ago";
 
         newsList.add(newsItem);
 
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "Saudi Arabia has greatly enhanced";
+        newsItem.CreationDate = "2 days ago";
         newsList.add(newsItem);
 
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
-        newsItem.newsItemDate = "2 days ago";
-
-        newsList.add(newsItem);
-
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
-        newsItem.newsItemDate = "2 days ago";
-        newsList.add(newsItem);
-
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
+        newsItem.CreationDate = "2 days ago";
 
         newsList.add(newsItem);
 
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "Saudi Arabia has greatly enhanced";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "Saudi Arabia has greatly enhanced";
+        newsItem.CreationDate = "2 days ago";
         newsList.add(newsItem);
 
-        newsItem.newsItemTitle = "Saudi Exhibition and Convention";
-        newsItem.newsItemDescription = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
-        newsItem.newsItemDate = "2 days ago";
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
+        newsItem.CreationDate = "2 days ago";
+
+        newsList.add(newsItem);
+
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "Saudi Arabia has greatly enhanced";
+        newsItem.CreationDate = "2 days ago";
+        newsList.add(newsItem);
+
+        newsItem.Title = "Saudi Exhibition and Convention";
+        newsItem.NewsBody = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
+        newsItem.CreationDate = "2 days ago";
 
         newsList.add(newsItem);
         return  newsList;

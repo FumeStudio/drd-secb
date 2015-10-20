@@ -57,7 +57,8 @@
     <dimen name="home_news_recycler_height">155dp</dimen> <!-- 310PX - HEIGHT -->
     <dimen name="home_news_recycler_items_margin">13dp</dimen> <!-- 25PX - HEIGHT -->
     <dimen name="news_item_card_height">70dp</dimen> <!-- 140PX - HEIGHT -->
-    <dimen name="news_list_recycler_heigth">453dp</dimen> <!-- 905PX - HEIGHT -->
+    <dimen name="news_filter_screen_height">453dp</dimen> <!-- 905PX - HEIGHT -->
+    <dimen name="news_filter_screen_recycler_height">135dp</dimen> <!-- 270PX - HEIGHT -->
 
     <dimen name="news_filter_padding">15dp</dimen> <!-- 30PX - WIDTH -->
     <dimen name="news_filter_text_size">12dp</dimen> <!-- 24PX - HEIGHT -->

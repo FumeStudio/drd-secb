@@ -22,16 +22,20 @@ import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.ProgressWheel;
-import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
 import com.secb.android.view.menu.MenuItem;
+
+import net.comptoirs.android.common.controller.backend.RequestObserver;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener {
+public class HomeFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener, RequestObserver {
 
-    ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
+	private static final String TAG = "HomeFragment";
+	private static final int NEWS_LIST_REQUEST_ID = 4;
+	ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
 
     int[] graphsValues;
@@ -95,6 +99,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
             handleButtonsEvents();
 
         }
+	    ((MainActivity)getActivity()).setNewsRequstObserver(this);
         initViews(view);
         applyFonts();
         return view;
@@ -170,7 +175,9 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     }
 
 
-    private void initViews(View view) {
+    private void initViews(View view)
+    {
+    //Service Requests
         progressWheelClosed = (ProgressWheel) view.findViewById(R.id.progressWheelClosed);
         progressWheelInbox = (ProgressWheel) view.findViewById(R.id.progressWheelInbox);
         progressWheelInProgress = (ProgressWheel) view.findViewById(R.id.progressWheelProgress);
@@ -188,41 +195,31 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_graph_title_inProgress = (TextView) view.findViewById(R.id.txtv_graph_title_inProgress);
         txtv_graph_value_inProgress = (TextView) view.findViewById(R.id.txtv_graph_value_inProgress);
 
-        txtv_viewAllNews = (TextView) view.findViewById(R.id.txtv_viewAllNews);
-        txtv_viewAllNews.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
         txtv_graph_title_closed.setText(Html.fromHtml(getString(R.string.graph_title_closed)));
         txtv_graph_title_inbox.setText(Html.fromHtml(getString(R.string.graph_title_inbox)));
         txtv_graph_title_inProgress.setText(Html.fromHtml(getString(R.string.graph_title_inProgress)));
 
-
+//Event Card
         txtv_eventTitle = (TextView) view.findViewById(R.id.txtv_eventTitle);
         txtv_eventDescription = (TextView) view.findViewById(R.id.txtv_eventDescription);
         txtv_event_timeValue = (TextView) view.findViewById(R.id.txtv_event_timeValue);
         txtv_event_placeValue = (TextView) view.findViewById(R.id.txtv_event_placeValue);
         txtv_event_categoryValue = (TextView) view.findViewById(R.id.txtv_event_categoryValue);
         imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
-
         event_card_container=view.findViewById(R.id.event_card_container);
         event_card_container.setOnClickListener(this);
 
-        eventItem = DevData.getEventsList().get(0);
-        bindEventCard();
+	    eventItem = DevData.getEventsList().get(0);
+	    bindEventCard();
+
+//News Recycler
+	    txtv_viewAllNews = (TextView) view.findViewById(R.id.txtv_viewAllNews);
+	    txtv_viewAllNews.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+/*        newsList = DevData.getNewsList();*/
 
 
-        newsList = DevData.getNewsList();
-        if (newsList != null && newsList.size() > 2) {
-           /* for (int i = 2; i < locationItems.size(); i++) {
-                locationItems.remove(i);
-            }*/
-            while(newsList.size()>2)
-            {
-                newsList.remove(newsList.size()-1);
-            }
-        }
-        newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
-        newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
-        newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
+	    newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
 //        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
@@ -242,6 +239,21 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_event_categoryValue.setText(eventItem.eventItemCategory);
     }
 
+	private void bindNewsRecycler(){
+//		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList();
+		ArrayList<NewsItem>homeNewsList = new ArrayList<>();
+		if (newsList != null && newsList.size() > 2)
+		{
+			homeNewsList.add(newsList.get(0));
+			homeNewsList.add(newsList.get(1));
+			/*while(newsList.size()>2)
+			{
+				newsList.remove(newsList.size()-1);
+			}*/
+		}
+		newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), homeNewsList);
+		newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
+	}
     private void fillWheelPercentage(int closedScore, int inboxScore, int inProgressScore) {
 
         int largeRadius = (int) getResources().getDimension(R.dimen.home_graphs_wheel_size);
@@ -275,4 +287,26 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 //        ((MainActivity) getActivity()).displayToast("language changed successfully");
 
     }
+
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		if (error == null)
+		{
+			if((int)requestId == NEWS_LIST_REQUEST_ID && resultObject!=null)
+			{
+				newsList= (ArrayList<NewsItem>) resultObject;
+				bindNewsRecycler();
+			}
+		}
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
+	}
 }

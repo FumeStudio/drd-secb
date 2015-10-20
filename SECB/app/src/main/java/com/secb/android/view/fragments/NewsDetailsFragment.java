@@ -1,36 +1,56 @@
 package com.secb.android.view.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.NewsDetailsOperation;
+import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
+import com.squareup.picasso.Picasso;
 
-public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
-    NewsItem newsItem;
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
+import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
+
+import java.util.ArrayList;
+
+public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RequestObserver {
+	private static final int NEWS_DETAILS_REQUEST_ID = 1;
+	private static final String TAG = "NewsDetailsFragment";
+	NewsItem newsItem;
     ImageView imgv_news_details_img;
     TextView txtv_news_details_newTitle;
     TextView txtv_news_details_newDate;
     TextView txtv_news_details_newBody;
     View view;
+	RelativeLayout layout_detailsContainer;
+	TextView txtv_noData;
 
     private NewsFilterLayout newsFilterLayout = null;
+	private ArrayList<NewsItem> newsList;
 
 
-    public static NewsDetailsFragment newInstance(NewsItem newsItem)
+	public static NewsDetailsFragment newInstance(NewsItem newsItem)
     {
         NewsDetailsFragment fragment = new NewsDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("locationItem",newsItem);
+        bundle.putSerializable("newsItem",newsItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -76,14 +96,24 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         Bundle bundle = getArguments();
         if(bundle!=null)
         {
-            newsItem = (NewsItem)bundle.getSerializable("locationItem");
+            newsItem = (NewsItem)bundle.getSerializable("newsItem");
         }
         initViews(view);
-        bindViews();
+	    getData();
         return view;
     }
 
-    private void handleButtonsEvents() {
+	private void getData()
+	{
+		NewsFilterData newsFilterData = new NewsFilterData();
+		newsFilterData.newsID= this.newsItem.ID;
+		newsFilterData.newsCategory="All";
+		NewsDetailsOperation operation = new NewsDetailsOperation(NEWS_DETAILS_REQUEST_ID,true,getActivity(),newsFilterData,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+	private void handleButtonsEvents() {
     }
 
     /*
@@ -132,17 +162,80 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         txtv_news_details_newTitle = (TextView) view.findViewById(R.id.txtv_news_details_newTitle);
         txtv_news_details_newDate = (TextView) view.findViewById(R.id.txtv_news_details_newDate);
         txtv_news_details_newBody = (TextView) view.findViewById(R.id.txtv_news_details_newBody);
+	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
+	    layout_detailsContainer = (RelativeLayout) view.findViewById(R.id.layout_detailsContainer);
+
     }
 
     private void bindViews()
     {
-        if(this.newsItem!=null){
-            txtv_news_details_newTitle.setText(newsItem.newsItemTitle);
-            txtv_news_details_newDate.setText(newsItem.newsItemDate);
-            txtv_news_details_newBody.setText(newsItem.newsItemDescription);
-            imgv_news_details_img.setImageBitmap(newsItem.newsItemImage);
+        if(this.newsItem!=null)
+        {
+	        layout_detailsContainer.setVisibility(View.VISIBLE);
+	        txtv_noData.setVisibility(View.GONE);
+
+	        txtv_news_details_newTitle.setText(newsItem.Title);
+            txtv_news_details_newDate.setText(newsItem.CreationDate);
+	        String decodedBody = Uri.decode(newsItem.NewsBody);
+	        txtv_news_details_newBody.setText(Html.fromHtml(decodedBody));
+
+	        if(!Utilities.isNullString(newsItem.ImageUrl))
+	        {
+		        Picasso.with(getActivity())
+				        .load(newsItem.ImageUrl)
+				        .placeholder(R.drawable.news_image_place_holder)
+				        .into(imgv_news_details_img);
+	        }
+	        else
+	            imgv_news_details_img.setImageResource(R.drawable.news_image_place_holder);
+        }
+	    else
+        {
+	        layout_detailsContainer.setVisibility(View.GONE);
+	        txtv_noData.setText(getResources().getString(R.string.details_no_details));
+	        txtv_noData.setVisibility(View.VISIBLE);
         }
     }
 
 
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		if (error == null)
+		{
+			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
+			if((int)requestId == NEWS_DETAILS_REQUEST_ID && resultObject!=null){
+				newsList= (ArrayList<NewsItem>) resultObject;
+				if (newsList!=null&&newsList.size()>0)
+				{
+					newsItem=newsList.get(0);
+					bindViews();
+				}
+			}
+
+		}
+		else if (error != null && error instanceof CTHttpError)
+		{
+			Logger.instance().v(TAG,error);
+			int statusCode = ((CTHttpError) error).getStatusCode();
+			if (RequestHandler.isRequestTimedOut(statusCode))
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
+			}
+			else if (statusCode == -1)
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+						getActivity());
+			}
+		}
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
+	}
 }

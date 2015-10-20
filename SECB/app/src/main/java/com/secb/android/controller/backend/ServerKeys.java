@@ -21,4 +21,10 @@ public class ServerKeys
 
 	/*Video Gallery*/
 	public static final String VIDEO_URL = "http://secb.linkdev.com/webapi/api/Videos/GetVideos";
+
+	/*News Categories*/
+	public static final String NEWS_CATEGORIES_URL = "http://secb.linkdev.com/webapi/api/News/GetNewsCategories";
+
+	/*News List*/
+	public static final String NEWS_URL = "http://secb.linkdev.com/webapi/api/News/GetNews";
 }

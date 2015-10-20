@@ -136,4 +136,6 @@
     <string name="gallery_no_albums">لاتوجد البومات.</string>
     <string name="album_no_files">لا توجد ملفات.</string>
     <string name="login_failed">برجاء مراجعة اسم المستخدم و كلمة المرور.</string>
+    <string name="news_no_news">لا توجد اخبار.</string>
+    <string name="details_no_details">لا توجد تفاصيل .</string>
 </resources>

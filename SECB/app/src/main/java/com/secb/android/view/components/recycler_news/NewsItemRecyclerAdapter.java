@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.secb.android.R;
 import com.secb.android.model.NewsItem;
+import com.squareup.picasso.Picasso;
+
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +25,12 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
         this.inflater = LayoutInflater.from(context);
         this.itemsList = itemsList;
         this.context=context;
+
     }
 
-    @Override
+
+
+	@Override
     public NewsItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.news_item_card, parent, false);
 
@@ -33,17 +39,31 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     }
 
     @Override
-    public void onBindViewHolder(NewsItemRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(NewsItemRecyclerViewHolder holder, int position)
+    {
         NewsItem currentItem = itemsList.get(position);
-        holder.imgv_newImg.setImageBitmap(currentItem.newsItemImage);
-        holder.txtv_newTitle.setText(currentItem.newsItemTitle);
-        holder.txtv_newDescription.setText(currentItem.newsItemDescription);
-        holder.txtv_newTime.setText(currentItem.newsItemDate);
+	    holder.imgv_newImg.setImageBitmap(currentItem.newsItemImage);
+	    if(!Utilities.isNullString(currentItem.ImageUrl))
+	    {
+		    Picasso.with(context)
+				    .load(currentItem.ImageUrl)
+				    .placeholder(R.drawable.news_image_place_holder)
+		            .into(holder.imgv_newImg)
+		            ;
+	    }
+	    else
+		    holder.imgv_newImg.setImageResource(R.drawable.news_image_place_holder);
+
+        holder.txtv_newTitle.setText(currentItem.Title);
+        holder.txtv_newDescription.setText(currentItem.NewsBrief);
+        holder.txtv_newTime.setText(currentItem.CreationDate);
     }
 
     @Override
     public int getItemCount() {
-        return itemsList.size();
+	    if(itemsList!=null)
+	        return itemsList.size();
+	    return 0;
     }
 
     public void deleteItem(int position){

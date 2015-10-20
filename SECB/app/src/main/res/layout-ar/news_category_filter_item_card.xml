@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioButton
+        android:id="@+id/radbtn_categoryItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:button="@null"
+        android:drawableRight="@drawable/radio_btn"
+        android:text="@string/news_filter_all_types"
+        android:textColor="@color/secb_grey_text"
+        android:textSize="@dimen/news_filter_text_size" />
+</LinearLayout>

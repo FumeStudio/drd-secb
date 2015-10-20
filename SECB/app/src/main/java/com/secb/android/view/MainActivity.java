@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapsInitializer;
 import com.secb.android.R;
+import com.secb.android.controller.backend.NewsCategoryOperation;
+import com.secb.android.controller.backend.NewsListOperation;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.LocationItem;
+import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.fragments.AboutUsFragment;
@@ -31,15 +31,20 @@ import com.secb.android.view.fragments.NewsListFragment;
 import com.secb.android.view.fragments.OrganizersDetailsFragment;
 import com.secb.android.view.fragments.OrganizersListFragment;
 
-public class MainActivity extends SECBBaseActivity {
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+
+public class MainActivity extends SECBBaseActivity implements RequestObserver {
     private static final String TAG = "MainActivity";
-    LinearLayout fragmentContainer;
+
+	private static final int NEWS_CATEGORY_REQUEST_ID = 3;
+	private static final int NEWS_LIST_REQUEST_ID = 4;
+	LinearLayout fragmentContainer;
     HomeFragment homeFragment;
-    GoogleMap googleMap;
 
-    public MapFragment mapFragment ;
+	private RequestObserver newsRequstObserver;
+	public boolean isNewsLoadingFinished;
 
-    public MainActivity() {
+	public MainActivity() {
         super(-1, true);
     }
 
@@ -50,14 +55,18 @@ public class MainActivity extends SECBBaseActivity {
         setHeaderTitleText(getResources().getString(R.string.home_fragment));*/
         initiViews();
         openHomeFragment(false);
-//        initMap();
 
+	    //get server side data
+	    startSync();
+
+/*
+	    //Initializes the Google Maps Android API so that its classes are ready for use
         try {
             MapsInitializer.initialize(getApplicationContext());
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+*/
 
 
     }
@@ -67,6 +76,7 @@ public class MainActivity extends SECBBaseActivity {
         fragmentContainer = (LinearLayout) findViewById(R.id.simple_fragment);
     }
 
+//==================================================================================================
 
     public void openHomeFragment(boolean addToBackStack)
     {
@@ -177,6 +187,77 @@ public class MainActivity extends SECBBaseActivity {
         else
             displayToast("can't play this video file ");
     }
+//==================================================================================================
+
+	/*background tasks to
+	* get the data (news list , events list , ...)
+	* and to update managers */
+	public void startSync()
+	{
+	/*News Categories*/
+		getNewsCategories();
+
+	/*News UnFiltered List*/
+		getNewsList();
+	}
+
+	public void setNewsRequstObserver(RequestObserver newsRequstObserver)
+	{
+		this.newsRequstObserver = newsRequstObserver;
+	}
+	public void getNewsCategories()
+	{
+		NewsCategoryOperation operation = new NewsCategoryOperation(NEWS_CATEGORY_REQUEST_ID ,false,this);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+	private void getNewsList()
+	{
+		NewsFilterData newsFilterData = new NewsFilterData();
+		newsFilterData.newsCategory="All";
+		newsFilterData.newsID="All";
+		NewsListOperation operation = new NewsListOperation(NEWS_LIST_REQUEST_ID,false,this,newsFilterData,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
 
+
+
+
+
+
+
+
+
+
+/*let fragment handle requestFinished*/
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject)
+	{
+		if((int)requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null)
+		{
+			isNewsLoadingFinished = true;
+			newsRequstObserver.handleRequestFinished(requestId,error,resulObject);
+		}
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error)
+	{
+		if(requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null)
+		{
+			newsRequstObserver.requestCanceled(requestId, error);
+		}
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg)
+	{
+		if(requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null)
+		{
+			newsRequstObserver.updateStatus(requestId, statusMsg);
+		}
+	}
 }

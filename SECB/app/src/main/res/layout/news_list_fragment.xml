@@ -13,4 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/home_graphs_card_padding"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/txtv_noData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:textColor="@color/secb_dark_text"
+        android:textSize="@dimen/gallery_item_text_size"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="@string/news_no_news"/>
 </LinearLayout>

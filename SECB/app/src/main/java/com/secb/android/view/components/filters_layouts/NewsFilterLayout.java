@@ -3,6 +3,8 @@ package com.secb.android.view.components.filters_layouts;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +14,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.Consts;
+import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.DateTimePickerDialogView;
+import com.secb.android.view.components.recycler_news.NewsCategoryFilterRecyclerAdapter;
 
 import java.util.Date;
+import java.util.List;
 
 public class NewsFilterLayout extends LinearLayout implements View.OnClickListener {
     private final View view;
@@ -25,6 +31,9 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
     private NewsFilterData newsFilterData;
     private TextView txtv_timeFrom, txtv_timeTo;
     private TextView txtv_news_filter_time_title, txtv_news_filter_type_title;
+	private RecyclerView newsCategoriesRecyclerView;
+	private NewsCategoryFilterRecyclerAdapter newsCategoryFilterRecyclerAdapter;
+
     private RadioGroup radgro_newsTypes;
     private RadioButton radbtn_allTypes;
     private RadioButton radbtn_economicType;
@@ -66,7 +75,12 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         radbtn_publicType = (RadioButton) view.findViewById(R.id.radbtn_publicType);
         btn_applyFilter = (Button) view.findViewById(R.id.btn_applyFilter);
 
-        txtv_timeFrom.setOnClickListener(this);
+	    newsCategoriesRecyclerView = (RecyclerView) view.findViewById(R.id.newsCategoriesRecyclerView);
+	    newsCategoriesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+	    List<NewsCategoryItem> categoriesList= NewsManager.getInstance().getNewsCategoryList();
+	    newsCategoryFilterRecyclerAdapter = new NewsCategoryFilterRecyclerAdapter(context,categoriesList);
+	    newsCategoriesRecyclerView.setAdapter(newsCategoryFilterRecyclerAdapter);
+	    txtv_timeFrom.setOnClickListener(this);
         txtv_timeTo.setOnClickListener(this);
     }
 
@@ -111,10 +125,21 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 
     }
     public NewsFilterData getFilterData() {
+	    newsFilterData.newsID="All";
         newsFilterData.timeFrom = txtv_timeFrom.getText().toString();
         newsFilterData.timeTo = txtv_timeTo.getText().toString();
 
-        switch (radgro_newsTypes.getCheckedRadioButtonId()) {
+	    NewsCategoryItem selectedCategory = NewsManager.getInstance().getSelectedCategory();
+
+	    if( selectedCategory!=null)
+	    {
+		    newsFilterData.newsCategory = (UiEngine.isAppLanguageArabic(context)?
+	        selectedCategory.CategoryArabic:selectedCategory.CategoryEnglish);
+		    newsFilterData.selectedCategoryId = selectedCategory.ID;
+
+	    }
+
+        /*switch (radgro_newsTypes.getCheckedRadioButtonId()) {
             case R.id.radbtn_allTypes:
                 newsFilterData.type = NewsFilterData.TYPE_ALL;
                 break;
@@ -127,7 +152,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
             case R.id.radbtn_publicType:
                 newsFilterData.type = NewsFilterData.TYPE_PUBLIC;
                 break;
-        }
+        }*/
         return newsFilterData;
     }
 
@@ -164,4 +189,10 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         });
         builder.show();
     }
+
+	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		newsCategoriesRecyclerView.setAdapter(null);
+	}
 }

@@ -12,9 +12,18 @@ import java.io.Serializable;
 public class NewsItem implements Serializable
 {
     public transient Bitmap newsItemImage;
-    public String newsItemTitle;
-    public String newsItemDescription;
-    public String newsItemDate;
+
+    public String Title;
+	public String CreationDate;
+    public String ID;
+    public String ImageUrl;
+    public String NewsCategory;
+    public String NewsBrief;
+    public String NewsBody;
+
+
+
+
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
         // This will serialize all fields that you did not mark with 'transient'

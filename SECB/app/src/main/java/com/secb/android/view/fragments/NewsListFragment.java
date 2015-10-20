@@ -7,33 +7,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.NewsListOperation;
 import com.secb.android.controller.manager.DevData;
+import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
-import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
+import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
+
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
+import net.comptoirs.android.common.helper.Logger;
 
 import java.util.ArrayList;
 
 public class NewsListFragment extends SECBBaseFragment
-        implements FragmentBackObserver, View.OnClickListener ,RecyclerCustomClickListener
+        implements FragmentBackObserver, View.OnClickListener ,RecyclerCustomClickListener, RequestObserver
 
 {
-    RecyclerView newsRecyclerView;
+	private static final String TAG = "NewsListFragment";
+	private static final int NEWS_LIST_REQUEST_ID = 4;
+	RecyclerView newsRecyclerView;
     NewsItemRecyclerAdapter newsItemRecyclerAdapter;
     ArrayList<NewsItem> newsList;
     NewsFilterData newsFilterData;
 
     View view;
+	TextView txtv_noData;
     private NewsFilterLayout newsFilterLayout=null;
-
+	private CustomProgressDialog progressDialog;
 
     public static NewsListFragment newInstance() {
         NewsListFragment fragment = new NewsListFragment();
@@ -81,10 +94,18 @@ public class NewsListFragment extends SECBBaseFragment
             handleButtonsEvents();
             applyFonts();
         }
+	    ((MainActivity)getActivity()).setNewsRequstObserver(this);
         initViews(view);
         initFilterLayout();
+	    getData();
         return view;
     }
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		newsRecyclerView.setAdapter(null);
+	}
 
     public void initFilterLayout()
     {
@@ -122,44 +143,151 @@ public class NewsListFragment extends SECBBaseFragment
                 onBack();
                 break;
             case R.id.btn_applyFilter:
-                getFilterDataObject();
+                applyFilters();
                 break;
             default:
                 break;
         }
     }
 
-    private void getFilterDataObject() {
+    private void applyFilters()
+    {
         newsFilterData =this.newsFilterLayout.getFilterData();
+	    startNewsListOperation(newsFilterData,true);
+	    ((SECBBaseActivity)getActivity()).hideFilterLayout();
+
         if(newsFilterData !=null){
-            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n Time From: "+ newsFilterData.timeFrom+"\n" +
+          /*  ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n Time From: "+ newsFilterData.timeFrom+"\n" +
                     " Time To: "+ newsFilterData.timeTo+" \n" +
-                    " Type: "+ newsFilterData.type);
+                    " Type: "+ newsFilterData.selectedCategoryId+
+                    " Selected Category: "+ newsFilterData.newsCategory);*/
+	        startNewsListOperation(newsFilterData,true);
         }
+
+
     }
 
 
     private void initViews(View view)
     {
+	    progressDialog = new CustomProgressDialog(getActivity());
         newsList = DevData.getNewsList();
         newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
-        newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
-        newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
+	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 //        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
     }
 
-    @Override
-    public void onItemClicked(View v, int position)
-    {
-        ((MainActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
-    }
+	public void bindViews(){
 
-    @Override
+		if(newsList.size()>0)
+		{
+			newsRecyclerView.setVisibility(View.VISIBLE);
+			txtv_noData.setVisibility(View.GONE);
+			newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
+			newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
+		}
+		else {
+			newsRecyclerView.setVisibility(View.GONE);
+			txtv_noData.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void getData()
+	{
+		//if news list is loaded in the manager get it and bind
+		//if not and the main activity is still loading the news list
+			// wait for it and it will notify handleRequestFinished in this fragment.
+		//if the main activity finished loading news list and the manager is still empty
+			//start operation here.
+
+
+		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList();
+		if(newsList!= null && newsList.size()>0){
+			handleRequestFinished(NEWS_LIST_REQUEST_ID, null, newsList);
+		}
+		else {
+			if (((MainActivity) getActivity()).isNewsLoadingFinished == false) {
+				startWaiting();
+			}
+			else{
+				startNewsListOperation(new NewsFilterData(),false);
+			}
+		}
+
+	}
+
+
+	private void startWaiting() {
+		if(progressDialog!=null&& !progressDialog.isShowing())
+		{
+			progressDialog.show();
+		}
+	}
+
+	private void stopWaiting() {
+		if(progressDialog!=null&& progressDialog.isShowing())
+		{
+			progressDialog.dismiss();
+		}
+	}
+	private void startNewsListOperation(NewsFilterData newsFilterData ,boolean showDialog)
+	{
+		NewsListOperation operation = new NewsListOperation(NEWS_LIST_REQUEST_ID,showDialog,getActivity(),newsFilterData,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+	@Override
+	public void onItemClicked(View v, int position)
+	{
+		((MainActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
+	}
+
+	@Override
     public void onItemLongClicked(View v, int position)
     {
 
     }
+
+
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject)
+	{
+		stopWaiting();
+		if (error == null)
+		{
+			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
+			if((int)requestId == NEWS_LIST_REQUEST_ID && resultObject!=null){
+				newsList= (ArrayList<NewsItem>) resultObject;
+				bindViews();
+			}
+
+		}
+		else if (error != null && error instanceof CTHttpError)
+		{
+			Logger.instance().v(TAG,error);
+			int statusCode = ((CTHttpError) error).getStatusCode();
+			if (RequestHandler.isRequestTimedOut(statusCode))
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
+			}
+			else if (statusCode == -1)
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+						getActivity());
+			}
+		}
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
+	}
 }

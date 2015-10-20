@@ -149,4 +149,6 @@
     <string name="gallery_no_albums">There are no albums.</string>
     <string name="album_no_files">There are no files</string>
     <string name="login_failed">Login failed . Please check the user name and the password</string>
+    <string name="news_no_news">There are  no news</string>
+    <string name="details_no_details">There are no details</string>
 </resources>
