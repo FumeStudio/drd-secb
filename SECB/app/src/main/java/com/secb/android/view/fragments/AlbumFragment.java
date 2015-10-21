@@ -223,7 +223,7 @@ public class AlbumFragment extends SECBBaseFragment
         //get ImageAlbum
         if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_ALBUM )
         {
-            galleryItemList = GalleryManager.getInstance().getImageAlbumList(albumId);
+            galleryItemList = GalleryManager.getInstance().getImageAlbumList(getActivity(),albumId);
             if(galleryItemList == null || galleryItemList.size()==0)
             {
                 AlbumOperation operation = new AlbumOperation(GalleryItem.GALLERY_TYPE_IMAGE_ALBUM,PHOTO_ALBUM_REQUEST_ID ,

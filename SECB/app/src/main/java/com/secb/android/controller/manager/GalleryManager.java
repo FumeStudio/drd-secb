@@ -1,7 +1,10 @@
 package com.secb.android.controller.manager;
 
+import android.content.Context;
+
 import com.secb.android.model.GalleryItem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,17 +27,40 @@ public class GalleryManager {
     List<GalleryItem> videoGalleryList= null;
 
     //image album list. Map<AlbumId , List of Images>
-    HashMap<String,List<GalleryItem> > imageAlbumList=new HashMap<>();
+    HashMap<String,List<GalleryItem> > imageAlbumListMap =new HashMap<>();
 
     //video album list. Map<AlbumId , List of Videos>
     HashMap<String,List<GalleryItem> > videoAlbumList=new HashMap<>();
 
-    public List<GalleryItem> getImageGalleryList() {
-        return imageGalleryList;
+    public List<GalleryItem> getImageGalleryList(Context appContext)
+    {
+	    List<GalleryItem> temp = CachingManager.getInstance().loadImageGallery(appContext);
+        return temp/*imageGalleryList*/;
     }
 
-    public void setImageGalleryList(List<GalleryItem> imageGalleryList) {
+    public void setImageGalleryList(List<GalleryItem> imageGalleryList ,Context appContext) {
         this.imageGalleryList = imageGalleryList;
+	    CachingManager.getInstance().saveImageGallery((ArrayList<GalleryItem>) imageGalleryList, appContext);
+
+
+
+/*
+	    //cache list inside sd using caching manager
+	    private void cacheAlbum(int galleryType, List<GalleryItem> galleryItems)
+	    {
+		    if(galleryItems==null ||galleryItems.size()==0)
+			    return;
+		    if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_ALBUM)
+		    {
+			    CachingManager.getInstance().saveImageGallery(albumId,galleryItems);
+		    }
+		    else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
+		    {
+			    GalleryManager.getInstance().addVideoAlbumList(albumId,galleryItems);
+		    }
+	    }
+*/
+
     }
 
     public List<GalleryItem> getVideoGalleryList() {
@@ -46,15 +72,20 @@ public class GalleryManager {
     }
 
     //add list of images in an album with id = albumId
-    public void addImageAlbumList(String albumId , List<GalleryItem> imageGalleryList ){
-        imageAlbumList.put(albumId,imageGalleryList);
+    public void addImageAlbumList(String albumId , List<GalleryItem> imageAlbumList,Context appContext){
+        imageAlbumListMap.put(albumId, imageAlbumList);
+	    CachingManager.getInstance().saveImageAlbum(albumId,
+			    (ArrayList<GalleryItem>) imageAlbumList,appContext);
     }
 
     //get list of images from album whose id = albumId
-    public List<GalleryItem> getImageAlbumList(String albumId ){
-        if(imageAlbumList.size()==0 || !imageAlbumList.containsKey(albumId))
+    public List<GalleryItem> getImageAlbumList(Context appContext,String albumId )
+    {
+	    List<GalleryItem> temp = CachingManager.getInstance().loadImageAlbum(appContext, albumId);
+        /*if(imageAlbumListMap.size()==0 || !imageAlbumListMap.containsKey(albumId))
             return null;
-        return imageAlbumList.get(albumId);
+        return imageAlbumListMap.get(albumId);*/
+	    return temp;
     }
 
 
@@ -69,5 +100,8 @@ public class GalleryManager {
             return null;
         return videoAlbumList.get(albumId);
     }
+
+
+
 
 }

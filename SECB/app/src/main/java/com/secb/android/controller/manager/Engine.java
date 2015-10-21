@@ -26,7 +26,7 @@ public class Engine {
     private static final String TAG = "Engine";
     private static AppConfiguration appConfig;
 
-    public final static Logger LOGGER = Logger.getLogger("gba14_log");
+    public final static Logger LOGGER = Logger.getLogger("SECB_LOGGER");
 
     public static boolean isLanguangeFromApp = false;  // this to modify if the language from application or the settings
 
@@ -164,27 +164,6 @@ public class Engine {
         return cachePath;
     }
 
-    public static void initialeDataFolders(Context appContext) {
-
-        DataFolder.APP_DATA = appContext.getDir("app_data", Context.MODE_PRIVATE);
-        DataFolder.USER_DATA = appContext.getDir("user_data", Context.MODE_PRIVATE);
-
-        DataFolder.IMAGE_CACHE = new File(getDiskCacheDir(appContext) + File.separator + "aopp_name_images");
-        DataFolder.IMAGE_FETCHER_HTTP_CACHE = new File(getDiskCacheDir(appContext) + File.separator + "aopp_name_image_fetcher_http");
-
-        DataFolder.DATA_TEST_LIST = getTestDir(appContext);
-
-        File[] folders = {DataFolder.APP_DATA, DataFolder.IMAGE_CACHE, DataFolder.IMAGE_FETCHER_HTTP_CACHE};
-        for (File file : folders) {
-            if (!file.exists()) {
-                boolean created = file.mkdirs();
-                if (!created) {
-                    net.comptoirs.android.common.helper.Logger.instance().v(TAG, "failed to create folder[" + file.getAbsolutePath() + "]", false);
-                }
-            }
-        }
-
-    }
 
     public static boolean hasGingerbread() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
@@ -205,6 +184,33 @@ public class Engine {
 //		cacheParams.setDiskCacheDir(DataFolder.IMAGE_CACHE);
     }
 
+	public static void initialeDataFolders(Context appContext) {
+
+		DataFolder.APP_DATA = appContext.getDir("app_data", Context.MODE_PRIVATE);
+		DataFolder.USER_DATA = appContext.getDir("user_data", Context.MODE_PRIVATE);
+
+
+	    /*getDiskCacheDir(appContext) return folder called cache on sd card*/
+		DataFolder.IMAGE_CACHE = new File(getDiskCacheDir(appContext) + File.separator + "aopp_name_images");
+		DataFolder.IMAGE_FETCHER_HTTP_CACHE = new File(getDiskCacheDir(appContext) + File.separator + "aopp_name_image_fetcher_http");
+
+		DataFolder.DATA_TEST_LIST = getTestDir(appContext);
+
+		File[] folders = {DataFolder.APP_DATA, DataFolder.IMAGE_CACHE, DataFolder.IMAGE_FETCHER_HTTP_CACHE};
+		for (File file : folders) {
+			if (!file.exists()) {
+				boolean created = file.mkdirs();
+				if (!created) {
+					net.comptoirs.android.common.helper.Logger.instance().v(TAG, "failed to create folder[" + file.getAbsolutePath() + "]", false);
+				}
+			}
+		}
+
+
+		//initialize image folder
+		DataFolder.USER_IMAGES = getCacheDir(appContext,"images");
+
+	}
 
     public static void switchAppLanguage(ContextWrapper context) {
 
@@ -266,11 +272,33 @@ public class Engine {
         File file = new File(DataFolder.DATA_TEST_LIST + File.separator + "TEST_" + id + ".dat");
         return file;
     }
+
+
+/**************************************************/
+	//create folder named "DirName" inside the "Cache" folder
+	public static File getCacheDir(Context appContext ,String DirName)
+	{
+		File file = new File(getDiskCacheDir(appContext) + File.separator + DirName);
+		if (!file.exists())
+			file.mkdirs();
+		return file;
+	}
+
+	//create file called "fileName" inside the "parent" File
+	public static File getCacheFile(File parent ,String fileName, Context appContext) {
+		File file = new File(parent + File.separator + fileName + "");
+		return file;
+	}
+
+
     // ////////////////////////////////////////////////////////////////////////////////
 
     public static class FileName{
         public final static String APP_CONFIGURATION = "app_config.dat";
         public final static String APP_USER = "app_user.dat";
+
+	    //image gallery
+	    public final static String APP_IMG_GALLERY = "app_img_gallery.dat";
     }
 
     public static class DataFolder{
@@ -278,13 +306,13 @@ public class Engine {
         public static File APP_DATA;
         public static File USER_DATA;
 
+
         public static File IMAGE_CACHE;
         public static File IMAGE_FETCHER_HTTP_CACHE;
-    }
 
-	/*public static class DataFile{
-		public static File USER_IMAGE_BIG;
-	}*/
+	    //images folder for image_gallery file and image_albums files
+	    public static File USER_IMAGES;
+    }
 
     /**
      * Expiry for each object types in hours

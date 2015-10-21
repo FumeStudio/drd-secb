@@ -74,16 +74,18 @@ public class AlbumOperation extends BaseOperation {
         Type listType = new TypeToken<List<GalleryItem>>() {}.getType();
         List<GalleryItem> galleryItems = gson.fromJson(response.response.toString(), listType);
 
-        //for testing use this fake data
+/*        //for testing use this fake data
         if(galleryItems==null ||galleryItems.size()==0)
-            galleryItems = generateFakeData();
+            galleryItems = generateFakeData();*/
 
 
         updateGalleryManager(galleryType, galleryItems);
+
         return galleryItems;
     }
 
-    private List<GalleryItem> generateFakeData()
+
+	private List<GalleryItem> generateFakeData()
     {
         List<GalleryItem> galleryItems = new ArrayList<>();
         GalleryItem item=null;
@@ -108,13 +110,12 @@ public class AlbumOperation extends BaseOperation {
             return;
         if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_ALBUM)
         {
-            GalleryManager.getInstance().addImageAlbumList(albumId,galleryItems);
+            GalleryManager.getInstance().addImageAlbumList(albumId,galleryItems,context);
         }
         else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
         {
             GalleryManager.getInstance().addVideoAlbumList(albumId,galleryItems);
         }
     }
-
 
 }

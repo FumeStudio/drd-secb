@@ -192,7 +192,7 @@ public class GalleryFragment extends SECBBaseFragment
         //get PhotoGallery
         if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY )
         {
-            galleryItemList = GalleryManager.getInstance().getImageGalleryList();
+            galleryItemList = GalleryManager.getInstance().getImageGalleryList(getActivity());
             if(galleryItemList == null || galleryItemList.size()==0)
             {
                 GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
