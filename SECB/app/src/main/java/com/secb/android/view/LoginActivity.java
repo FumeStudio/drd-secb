@@ -43,8 +43,8 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_password = (EditText) findViewById(R.id.edt_password);
 
-        edt_email.setText("secb01");
-        edt_password.setText("Secb01");
+/*        edt_email.setText("secbadmin");
+        edt_password.setText("SecbAdmin159");*/
 
         txtv_forgetPassword = (TextView) findViewById(R.id.txtv_forgetPassword);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -65,7 +65,11 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
                 startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
                 break;
             case R.id.btn_login:
-                startLoginOperation();
+//	            if(validateInputFields())
+	            {
+//		            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+		            startLoginOperation();
+	            }
 //                startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 break;
             case R.id.btn_signUp:
@@ -74,7 +78,18 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
         }
     }
 
-    public void applyFonts(){
+	private boolean validateInputFields()
+	{
+		boolean isEmailValid = Utilities.isValidEmail(edt_email.getText().toString());
+		boolean isPasswordValid = !Utilities.isNullString(edt_password.getText().toString());
+		if(!isEmailValid)
+			edt_email.setError(getString(R.string.error_empty_email));
+		if(!isPasswordValid )
+			edt_password.setError(getString(R.string.error_empty_email));
+		return isEmailValid&isPasswordValid;
+	}
+
+	public void applyFonts(){
         if(edt_email!=null)
             UiEngine.applyCustomFont(edt_email, UiEngine.Fonts.HVAR);
         if(edt_password!=null)

@@ -20,6 +20,7 @@
         android:layout_height="@dimen/news_filter_screen_height"
         android:layout_alignParentBottom="true"
         android:background="@drawable/filter_bg"
+        android:clickable="true"
         android:fillViewport="true">
 
         <LinearLayout
@@ -115,8 +116,20 @@
                 android:orientation="vertical"
                 android:padding="@dimen/news_filter_padding">
 
+                <TextView
+                    android:id="@+id/txtv_noData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/gallery_item_text_size"
+                    android:visibility="visible"
+                    android:gravity="center"
+                    android:text="@string/loading"/>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/newsCategoriesRecyclerView"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/news_filter_screen_recycler_height">
 
@@ -198,6 +211,7 @@
         android:id="@+id/shadow"
         android:layout_width="fill_parent"
         android:layout_height="2.3dp"
+        android:clickable="true"
         android:layout_above="@+id/filter_container"
         android:background="@drawable/shadow_h"></View>
 </RelativeLayout>

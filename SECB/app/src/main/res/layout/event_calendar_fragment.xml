@@ -26,16 +26,16 @@
         />
     <!--event card-->
     <RelativeLayout
-        android:id="@+id/event_card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_margin="@dimen/event_card_margin"
         android:layout_above="@+id/txtv_viewAllEvents">
 
         <!--@dimen/home_event_card_height-->
-        <include layout="@layout/event_item_card"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/event_card_container"
+            layout="@layout/event_item_card"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/event_card_margin"
             android:layout_marginLeft="@dimen/event_card_margin"
             android:layout_marginRight="@dimen/event_card_margin"
             android:layout_height="@dimen/home_event_card_height"
@@ -44,7 +44,7 @@
         <!--view all events-->
         <TextView
             android:id="@+id/txtv_viewAllEvents"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:gravity="center_vertical|right"
             android:layout_gravity="right"
             android:layout_height="wrap_content"

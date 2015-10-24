@@ -11,6 +11,7 @@ import com.secb.android.model.NewsItem;
 import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.helper.Utilities;
+import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,16 +23,29 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     Context context;
 
     public NewsItemRecyclerAdapter(Context context, List<NewsItem> itemsList) {
-        this.inflater = LayoutInflater.from(context);
-        this.itemsList = itemsList;
-        this.context=context;
 
+        this.itemsList = itemsList;
+	    this.context=context;
+	    inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    if(context == null)
+	    {
+		    this.context= CTApplication.getContext();
+	    }
+	    try {
+		    this.inflater = LayoutInflater.from(context);
+	    } catch (Exception e) {
+		    e.printStackTrace();
+	    }
     }
 
 
 
 	@Override
-    public NewsItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+	{
+		if(inflater==null && context!=null)
+			this.inflater = LayoutInflater.from(context);
+
         View view = inflater.inflate(R.layout.news_item_card, parent, false);
 
         NewsItemRecyclerViewHolder vh = new NewsItemRecyclerViewHolder(view);
@@ -42,7 +56,6 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     public void onBindViewHolder(NewsItemRecyclerViewHolder holder, int position)
     {
         NewsItem currentItem = itemsList.get(position);
-	    holder.imgv_newImg.setImageBitmap(currentItem.newsItemImage);
 	    if(!Utilities.isNullString(currentItem.ImageUrl))
 	    {
 		    Picasso.with(context)
@@ -56,6 +69,7 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 
         holder.txtv_newTitle.setText(currentItem.Title);
         holder.txtv_newDescription.setText(currentItem.NewsBrief);
+//	    String newdateStr = MainActivity.reFormatDate(currentItem.CreationDate, MainActivity.sdf_Date);
         holder.txtv_newTime.setText(currentItem.CreationDate);
     }
 

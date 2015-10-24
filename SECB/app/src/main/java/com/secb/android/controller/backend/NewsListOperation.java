@@ -87,10 +87,10 @@ public class NewsListOperation extends BaseOperation {
 		for (NewsItem currentItem : newsItems) {
 			if (Utilities.isNullString(currentItem.Title) ||
 					Utilities.isNullString(currentItem.NewsBrief) ||
-					Utilities.isNullString(currentItem.CreationDate) )
-			{
+					Utilities.isNullString(currentItem.CreationDate) ) {
 				newsItems.remove(currentItem);
 			}
+
 		}
 	}
 
@@ -98,7 +98,7 @@ public class NewsListOperation extends BaseOperation {
 		if (newsItems == null || newsItems.size() == 0)
 			return;
 
-		NewsManager.getInstance().setNewsUnFilteredList(newsItems);
+		NewsManager.getInstance().setNewsUnFilteredList(newsItems,context);
 
 	}
 

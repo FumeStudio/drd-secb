@@ -280,7 +280,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     public void hideFilterLayout()
     {
-        if(this.filterLayoutHolder !=null && layoutAnimator!=null)
+        if(this.filterLayoutHolder !=null && layoutAnimator!=null&&isFilterLayoutOpened)
         {
 //            this.filterLayoutHolder.setVisibility(View.GONE);
             isFilterLayoutOpened = false;

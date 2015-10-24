@@ -11,6 +11,7 @@ import com.secb.android.model.GalleryItem;
 import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.helper.Utilities;
+import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +23,13 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
     Context context;
 
     public GalleryItemRecyclerAdapter(Context context, List<GalleryItem> itemsList) {
-        this.inflater = LayoutInflater.from(context);
-        this.itemsList = itemsList;
-        this.context=context;
+	    this.context=context;
+	    if(context == null)
+		    this.context= CTApplication.getContext();
+
+
+	    this.itemsList = itemsList;
+	    this.inflater = LayoutInflater.from(this.context);
     }
 
     @Override

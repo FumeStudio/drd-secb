@@ -18,6 +18,7 @@
     </LinearLayout>
     <View
         android:id="@+id/shadow"
+        android:clickable="true"
         android:layout_width="2.3dp"
         android:layout_height="match_parent"
         android:layout_above="@+id/filter_container"

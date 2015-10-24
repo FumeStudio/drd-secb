@@ -177,14 +177,14 @@ public class Engine {
 
     public static void initialize(Context appContext) {
 
-        initialeDataFolders(appContext);
+        initializeDataFolders(appContext);
 
 //		cacheParams = new ImageCacheParams();
 //		cacheParams.setMemCacheSizePercent(0.1f); // Set memory cache to 25% of app memory
 //		cacheParams.setDiskCacheDir(DataFolder.IMAGE_CACHE);
     }
 
-	public static void initialeDataFolders(Context appContext) {
+	public static void initializeDataFolders(Context appContext) {
 
 		DataFolder.APP_DATA = appContext.getDir("app_data", Context.MODE_PRIVATE);
 		DataFolder.USER_DATA = appContext.getDir("user_data", Context.MODE_PRIVATE);
@@ -209,6 +209,15 @@ public class Engine {
 
 		//initialize image folder
 		DataFolder.USER_IMAGES = getCacheDir(appContext,"images");
+
+		//initialize videos folder
+		DataFolder.USER_VIDEOS = getCacheDir(appContext,"videos");
+
+		//initialize news folder
+		DataFolder.USER_NEWS= getCacheDir(appContext,"news");
+
+		//initialize events folder
+		DataFolder.USER_EVENTS= getCacheDir(appContext,"events");
 
 	}
 
@@ -297,21 +306,41 @@ public class Engine {
         public final static String APP_CONFIGURATION = "app_config.dat";
         public final static String APP_USER = "app_user.dat";
 
-	    //image gallery
+	    //image gallery list
 	    public final static String APP_IMG_GALLERY = "app_img_gallery.dat";
+	    //video gallery list
+	    public static final String APP_VIDEO_GALLERY = "app_video_gallery.dat";
+
+	    //news categories list
+	    public static final String APP_NEWS_CATEGORIES = "app_news_categories.dat";
+		//news  list
+	    public static final String APP_NEWS_LIST = "app_news_list.dat";
+
+	    //events cities list
+	    public static final String APP_EVENTS_CITIES= "app_events_cities.dat";
+	    //events categories list
+	    public static final String APP_EVENTS_CATEGORIES = "app_events_categories.dat";
+	    //events  list
+	    public static final String APP_EVENTS_LIST = "app_events_list.dat";
+
     }
 
     public static class DataFolder{
-        public static File DATA_TEST_LIST;
+	    public static File DATA_TEST_LIST;
         public static File APP_DATA;
         public static File USER_DATA;
-
 
         public static File IMAGE_CACHE;
         public static File IMAGE_FETCHER_HTTP_CACHE;
 
 	    //images folder for image_gallery file and image_albums files
 	    public static File USER_IMAGES;
+	    //videos folder for video_gallery file and image_albums files
+	    public static File USER_VIDEOS ;
+	    //News folder for newsList file , newsCategories file , newsDetails files .
+	    public static File USER_NEWS ;
+	    //News folder for eventsList file , eventsCities file, eventsCategories file , eventsDetails files .
+	    public static File USER_EVENTS ;
     }
 
     /**

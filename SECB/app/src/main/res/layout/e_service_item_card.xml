@@ -10,7 +10,7 @@
         android:id="@+id/layout_eservice_colored_line"
         android:layout_width="@dimen/eservice_colored_line_width"
         android:layout_height="match_parent"
-        android:background="@color/blue_color"
+        android:background="@color/e_services_blue"
         android:orientation="vertical">
 
     </LinearLayout>

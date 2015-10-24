@@ -51,7 +51,7 @@
     <dimen name="event_card_h1_text_size">14dp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="event_card_h2_text_size">13dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="event_card_h3_text_size">11dp</dimen> <!-- 22PX - HEIGHT -->
-
+    <dimen name="evet_card_img_size">88dp</dimen> <!-- 175PX - HEIGHT -->
     <dimen name="home_event_card_height">100dp</dimen> <!-- 200PX - HEIGHT -->
 
     <dimen name="home_news_recycler_height">155dp</dimen> <!-- 310PX - HEIGHT -->
@@ -65,6 +65,7 @@
     <dimen name="news_filter_btn_text_size">15dp</dimen> <!-- 30PX - HEIGHT -->
     <dimen name="news_details_padding">17dp</dimen> <!-- 33PX - HEIGHT -->
     <dimen name="news_details_img_height">235dp</dimen> <!-- 470PX - HEIGHT -->
+    <dimen name="news_details_img_width">330dp</dimen> <!-- 660PX - WIDTH -->
     <dimen name="news_details_newTitle_text_size">14dp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="news_details_newDate_text_size">13dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="news_details_newBody_text_size">14dp</dimen> <!-- 27PX - HEIGHT -->
@@ -121,9 +122,12 @@
     <dimen name="about_us_h2_text_size">13dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="about_us_title_margin_top">20dp</dimen> <!-- 40PX - HEIGHT -->
     <dimen name="about_us_margin">18dp</dimen> <!-- 35PX - HEIGHT -->
-    <dimen name="about_us_margin_small">10dp</dimen>
-    <dimen name="card_insets">5dp</dimen>
-    <!-- 20PX - HEIGHT -->
+    <dimen name="about_us_margin_small">10dp</dimen> <!-- 20PX - HEIGHT -->
+
+    <dimen name="gallery_img_width">170dp</dimen> <!-- 340PX - WIDTH -->
+    <dimen name="gallery_img_height">95dp</dimen> <!-- 190PX - HEIGHT -->
+    <dimen name="card_insets">3dp</dimen> <!-- 6PX - HEIGHT -->
+
 
 
 </resources>

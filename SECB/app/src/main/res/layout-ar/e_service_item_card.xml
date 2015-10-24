@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/eservice_item_padding"
+          android:gravity="right"
     android:background="@drawable/eservives_item_bg"
     android:orientation="horizontal">
-    <!--colored line-->
-    <LinearLayout
-        android:id="@+id/layout_eservice_colored_line"
-        android:layout_width="@dimen/eservice_colored_line_width"
-        android:layout_height="match_parent"
-        android:background="@color/blue_color"
-        android:orientation="vertical">
-
-    </LinearLayout>
 
     <!--item data-->
     <LinearLayout
@@ -168,4 +160,14 @@
         </TableRow>
 
     </LinearLayout>
-</LinearLayout>
+    <!--colored line-->
+    <LinearLayout
+        android:id="@+id/layout_eservice_colored_line"
+        android:layout_width="@dimen/eservice_colored_line_width"
+        android:layout_height="match_parent"
+        android:background="@color/e_services_blue"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</TableRow>

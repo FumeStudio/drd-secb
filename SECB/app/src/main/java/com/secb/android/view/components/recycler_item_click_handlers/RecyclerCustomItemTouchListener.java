@@ -53,6 +53,7 @@ public class RecyclerCustomItemTouchListener implements RecyclerView.OnItemTouch
         if (recyclerCustomClickListener != null && child != null && b)
         {
             recyclerCustomClickListener.onItemClicked(child, rv.getChildAdapterPosition(child));
+	        return true;
         }
         return false;
     }

@@ -14,8 +14,8 @@
         android:gravity="center_horizontal">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/eguide_img"
+            android:layout_height="@dimen/news_details_img_height"
+            android:background="@drawable/eguide_img"
             android:layout_gravity="center_horizontal|top"/>
     </LinearLayout>
 

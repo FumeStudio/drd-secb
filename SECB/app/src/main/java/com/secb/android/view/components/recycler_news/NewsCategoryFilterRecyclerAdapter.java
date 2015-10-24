@@ -11,6 +11,8 @@ import com.secb.android.R;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.view.UiEngine;
 
+import net.comptoirs.android.common.view.CTApplication;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -21,9 +23,16 @@ public class NewsCategoryFilterRecyclerAdapter extends RecyclerView.Adapter<News
     Context context;
 
     public NewsCategoryFilterRecyclerAdapter(Context context, List<NewsCategoryItem> itemsList) {
-        this.inflater = LayoutInflater.from(context);
+	    this.context=context;
+	    if(context == null)
+		    this.context= CTApplication.getContext();
+
         this.itemsList = itemsList;
-        this.context=context;
+	    try {
+		    this.inflater = LayoutInflater.from(context);
+	    } catch (Exception e) {
+		    e.printStackTrace();
+	    }
 
     }
 
@@ -31,7 +40,11 @@ public class NewsCategoryFilterRecyclerAdapter extends RecyclerView.Adapter<News
 
 	@Override
     public NewsCategoryFilterRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.news_category_filter_item_card, parent, false);
+
+		if(inflater==null && context!=null)
+			this.inflater = LayoutInflater.from(context);
+
+		View view = inflater.inflate(R.layout.news_category_filter_item_card, parent, false);
 
 		NewsCategoryFilterRecyclerViewHolder vh = new NewsCategoryFilterRecyclerViewHolder(view);
         return vh;

@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +12,13 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.NewsListOperation;
-import com.secb.android.controller.manager.DevData;
 import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -120,7 +121,11 @@ public class NewsListFragment extends SECBBaseFragment
      * Apply Fonts
      */
     private void applyFonts() {
-        // TODO::
+
+	    if(txtv_noData!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+	    }
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.textViewAbout)), UiEngine.Fonts.HELVETICA_NEUE_LT_STD_CN);
     }
 
@@ -153,9 +158,7 @@ public class NewsListFragment extends SECBBaseFragment
     private void applyFilters()
     {
         newsFilterData =this.newsFilterLayout.getFilterData();
-	    startNewsListOperation(newsFilterData,true);
 	    ((SECBBaseActivity)getActivity()).hideFilterLayout();
-
         if(newsFilterData !=null){
           /*  ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n Time From: "+ newsFilterData.timeFrom+"\n" +
                     " Time To: "+ newsFilterData.timeTo+" \n" +
@@ -170,8 +173,14 @@ public class NewsListFragment extends SECBBaseFragment
 
     private void initViews(View view)
     {
+//        newsList = DevData.getNewsList();
 	    progressDialog = new CustomProgressDialog(getActivity());
-        newsList = DevData.getNewsList();
+	    progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+		    @Override
+		    public void onCancel(DialogInterface dialog) {
+			    bindViews();
+		    }
+	    });
         newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
 	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 //        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -179,9 +188,9 @@ public class NewsListFragment extends SECBBaseFragment
         newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
     }
 
-	public void bindViews(){
-
-		if(newsList.size()>0)
+	public void bindViews()
+	{
+		if(newsList!=null && newsList.size()>0)
 		{
 			newsRecyclerView.setVisibility(View.VISIBLE);
 			txtv_noData.setVisibility(View.GONE);
@@ -191,6 +200,7 @@ public class NewsListFragment extends SECBBaseFragment
 		else {
 			newsRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
+			txtv_noData.setText(getString(R.string.news_no_news));
 		}
 	}
 
@@ -203,7 +213,7 @@ public class NewsListFragment extends SECBBaseFragment
 			//start operation here.
 
 
-		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList();
+		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList(getActivity());
 		if(newsList!= null && newsList.size()>0){
 			handleRequestFinished(NEWS_LIST_REQUEST_ID, null, newsList);
 		}
@@ -212,7 +222,7 @@ public class NewsListFragment extends SECBBaseFragment
 				startWaiting();
 			}
 			else{
-				startNewsListOperation(new NewsFilterData(),false);
+				startNewsListOperation(new NewsFilterData(),true);
 			}
 		}
 

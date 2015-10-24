@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import com.secb.android.R;
 
+import net.comptoirs.android.common.helper.Utilities;
+
 public class ResetPasswordActivity extends SECBBaseActivity {
 
     EditText edt_email;
@@ -36,14 +38,30 @@ public class ResetPasswordActivity extends SECBBaseActivity {
         switch (v.getId())
         {
             case R.id.btn_resetPassword:
-                displayToast("" + edt_email.getText().toString());
+	            if(validateInputFields())
+		            sendResetEmail();
             break;
         }
     }
-    public void applyFonts(){
+
+	private void sendResetEmail()
+	{
+		displayToast(getString(R.string.password_reset_done) +"\n"+ edt_email.getText().toString());
+	}
+
+	public void applyFonts(){
         if(edt_email!=null)
             UiEngine.applyCustomFont(edt_email, UiEngine.Fonts.HVAR);
         if(btn_resetPassword!=null)
             UiEngine.applyCustomFont(btn_resetPassword, UiEngine.Fonts.HVAR);
     }
+	private boolean validateInputFields()
+	{
+		boolean isEmailValid = Utilities.isValidEmail(edt_email.getText().toString());
+
+		if(!isEmailValid)
+			edt_email.setError(getString(R.string.error_empty_email));
+
+		return isEmailValid;
+	}
 }

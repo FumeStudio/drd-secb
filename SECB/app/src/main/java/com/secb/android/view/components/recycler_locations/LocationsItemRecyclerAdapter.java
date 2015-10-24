@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import com.secb.android.R;
 import com.secb.android.model.LocationItem;
 
+import net.comptoirs.android.common.view.CTApplication;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -19,14 +21,25 @@ public class LocationsItemRecyclerAdapter extends RecyclerView.Adapter<Locations
     Context context;
 
     public LocationsItemRecyclerAdapter(Context context, List<LocationItem> itemsList) {
-        this.inflater = LayoutInflater.from(context);
-        this.itemsList = itemsList;
-        this.context=context;
+	    this.context=context;
+	    if(context == null)
+		    this.context= CTApplication.getContext();
+
+	    this.itemsList = itemsList;
+	    try {
+		    this.inflater = LayoutInflater.from(context);
+	    } catch (Exception e) {
+		    e.printStackTrace();
+	    }
+
     }
 
     @Override
     public LocationsItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.location_item_card, parent, false);
+
+	    if(inflater==null && context!=null)
+		    this.inflater = LayoutInflater.from(context);
+	    View view = inflater.inflate(R.layout.location_item_card, parent, false);
 
         LocationsItemRecyclerViewHolder vh = new LocationsItemRecyclerViewHolder(view);
         return vh;

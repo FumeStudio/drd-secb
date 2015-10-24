@@ -46,7 +46,7 @@
             <include
                 android:id="@+id/event_card_container"
                 layout="@layout/event_item_card"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_marginLeft="@dimen/event_card_margin"
                 android:layout_marginRight="@dimen/event_card_margin"
                 android:layout_height="wrap_content"/> <!--@dimen/home_event_card_height-->
@@ -72,12 +72,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/home_graphs_card_padding"
             android:layout_weight="0.5"/>
+        <TextView
+            android:id="@+id/txtv_noData"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/home_news_recycler_height"
+            android:layout_gravity="center"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/gallery_item_text_size"
+            android:visibility="visible"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/loading"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/home_news_recycler_height"
             android:layout_weight="3"
+            android:visibility="gone"
             >
 
         </android.support.v7.widget.RecyclerView>

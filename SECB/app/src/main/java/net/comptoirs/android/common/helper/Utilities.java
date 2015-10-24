@@ -28,6 +28,7 @@ import android.os.Build;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.Display;
 import android.view.Gravity;
@@ -40,6 +41,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.secb.android.R;
 
 import net.comptoirs.android.common.view.CTApplication;
@@ -796,5 +798,43 @@ public class Utilities {
 
     }
 
+	public static LatLng getLatLngFromString(String latlngStr)
+	{
+		LatLng latLngObj=null ;
+		if(!isNullString(latlngStr))
+		{
+			String[] latlngArr =  latlngStr.split(",");
+			try
+			{
+				double latitude = Double.parseDouble(latlngArr[0]);
+				double longitude = Double.parseDouble(latlngArr[1]);
+				latLngObj = new LatLng(latitude,longitude);
+			}
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
+		return latLngObj;
+	}
+/*Compare 2 days without comparing their time*/
+	public static  boolean isSameDay(Date date1, Date date2) {
+		Calendar calendar1 = Calendar.getInstance();
+		calendar1.setTime(date1);
+		Calendar calendar2 = Calendar.getInstance();
+		calendar2.setTime(date2);
+		boolean sameYear = calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
+		boolean sameMonth = calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH);
+		boolean sameDay = calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH);
+		return (sameDay && sameMonth && sameYear);
+	}
 
+/* * email address validation */
+	public final static boolean isValidEmail(CharSequence target) {
+		if (TextUtils.isEmpty(target)) {
+			return false;
+		}
+		else {
+			return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+		}
+	}
 }

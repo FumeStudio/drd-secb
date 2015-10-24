@@ -46,6 +46,7 @@ public class OrganizersFilterLayout extends LinearLayout {
     public OrganizersFilterData getFilterData()
     {
 
+	    UiEngine.applyFontsForAll(context,view, UiEngine.Fonts.HVAR);
         organizersFilterData.name=txtv_name.getText().toString();
         organizersFilterData.city=txtv_city.getText().toString();
 

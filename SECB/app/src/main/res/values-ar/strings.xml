@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="error_invalid_email">عنوان البريد الالكتروني غير صحيح</string>
+    <string name="error_invalid_password">كلمة المرور غير صحيحة</string>
+    <string name="error_empty_email">يجب ادخال عنوان البريد الالكتروني بشكل صحيح</string>
+    <string name="error_empty_password">يجب ادخال كلمة المرور بشكل صحيح</string>
+    <string name="password_reset_done">يرجي مراجعة صندوق البريد الالكتروني</string>
     <string name="loading">جاري التحميل..</string>
     <string name="ok">موافق</string>
     <string name="cancel">الغاء</string>
@@ -138,4 +142,10 @@
     <string name="login_failed">برجاء مراجعة اسم المستخدم و كلمة المرور.</string>
     <string name="news_no_news">لا توجد اخبار.</string>
     <string name="details_no_details">لا توجد تفاصيل .</string>
+    <string name="news_no_categories">لا توجد فئات.</string>
+    <string name="events_no_events">لا توجد فعاليات</string>
+    <string name="event_all_day">طوال اليوم</string>
+    <string name="event_repeated">متكرر</string>
+
+
 </resources>

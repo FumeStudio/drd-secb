@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import com.secb.android.model.GalleryItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
+import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.recycler_gallery.GalleryItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
@@ -41,7 +44,10 @@ public class GalleryFragment extends SECBBaseFragment
     public int galleryType;
     View view;
     private List galleryItemList;
+    private List photoGalleryItemList;
+    private List videoGalleryItemList;
     TextView txtv_noData;
+	private CustomProgressDialog progressDialog;
 
 
     public static GalleryFragment newInstance(int galleryType , int galleryId)
@@ -95,6 +101,7 @@ public class GalleryFragment extends SECBBaseFragment
         {
             galleryType = bundle.getInt("galleryType");
         }
+	    ((MainActivity)getActivity()).setGalleryRequstObserver(this);
         setHeaderTitle();
         initViews(view);
         getData();
@@ -134,7 +141,10 @@ public class GalleryFragment extends SECBBaseFragment
      * Apply Fonts
      */
     private void applyFonts() {
-        // TODO::
+	    if(txtv_noData!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+	    }
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.textViewAbout)), UiEngine.Fonts.HELVETICA_NEUE_LT_STD_CN);
     }
 
@@ -160,6 +170,13 @@ public class GalleryFragment extends SECBBaseFragment
 
     private void initViews(View view)
     {
+	    progressDialog = new CustomProgressDialog(getActivity());
+	    progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+		    @Override
+		    public void onCancel(DialogInterface dialog) {
+			    bindViews();
+		    }
+	    });
         galleryRecyclerView = (RecyclerView) view.findViewById(R.id.galleryRecyclerView);
         galleryRecyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getActivity(),2);
@@ -168,16 +185,24 @@ public class GalleryFragment extends SECBBaseFragment
         galleryRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), galleryRecyclerView, this));
     }
 
-    private void bindViews(){
-        if(galleryItemList.size()>0)
+    private void bindViews()
+    {
+	    if (galleryType==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY){
+		    galleryItemList=photoGalleryItemList;
+	    }
+	    else if (galleryType==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY){
+		    galleryItemList=videoGalleryItemList;
+	    }
+
+        if(this.galleryItemList !=null && this.galleryItemList.size()>0)
         {
             galleryRecyclerView.setVisibility(View.VISIBLE);
             txtv_noData.setVisibility(View.GONE);
-            galleryItemRecyclerAdapter = new GalleryItemRecyclerAdapter(getActivity(), galleryItemList);
+            galleryItemRecyclerAdapter = new GalleryItemRecyclerAdapter(getActivity(), this.galleryItemList);
             galleryRecyclerView.setAdapter(galleryItemRecyclerAdapter);
         }
         else {
-
+	        txtv_noData.setText(getString(R.string.gallery_no_albums));
             galleryRecyclerView.setVisibility(View.GONE);
             txtv_noData.setVisibility(View.VISIBLE);
         }
@@ -185,42 +210,81 @@ public class GalleryFragment extends SECBBaseFragment
 
     private void getData()
     {
-        //checked whether list is existing in GalleryManager or not
-        //if it exists get it from the manager
-        //if it's not exist get it from server
+	    //if gallery list is loaded in the manager get it and bind
+	    //if not and the main activity is still loading the news list
+	        // wait for it and it will notify handleRequestFinished in this fragment.
+	    //if the main activity finished loading gallery list and the manager is still empty
+	        //start operation here.
 
         //get PhotoGallery
         if(galleryType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY )
         {
-            galleryItemList = GalleryManager.getInstance().getImageGalleryList(getActivity());
-            if(galleryItemList == null || galleryItemList.size()==0)
-            {
-                GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
-                operation.addRequsetObserver(this);
-                operation.execute();
-            }
-            else{
-                handleRequestFinished(PHOTO_GALLERY_REQUEST_ID , null,galleryItemList);
-            }
+            photoGalleryItemList = GalleryManager.getInstance().getImageGalleryList(getActivity());
+
+	        if(photoGalleryItemList != null && photoGalleryItemList.size()>0){
+		        handleRequestFinished(PHOTO_GALLERY_REQUEST_ID , null,photoGalleryItemList);
+	        }
+	        else
+	        {
+		        if (((MainActivity) getActivity()).isPhotoGalleryLoadingFinished== false) {
+			        startWaiting();
+		        }
+		        else{
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true);
+		        }
+	        }
         }
 
         //get VideoGallery
         else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY )
         {
-            galleryItemList = GalleryManager.getInstance().getVideoGalleryList();
-            if(galleryItemList == null || galleryItemList.size()==0)
-            {
-                GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,VIDEO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
-                operation.addRequsetObserver(this);
-                operation.execute();
-            }
-            else{
-                handleRequestFinished(VIDEO_GALLERY_REQUEST_ID , null,galleryItemList);
-            }
+	        photoGalleryItemList = GalleryManager.getInstance().getVideoGalleryList(getActivity());
+	        if(photoGalleryItemList != null && photoGalleryItemList.size()>0){
+		        handleRequestFinished(VIDEO_GALLERY_REQUEST_ID , null,photoGalleryItemList);
+	        }
+	        else
+	        {
+		        if (((MainActivity) getActivity()).isVideoGalleryLoadingFinished == false) {
+			        startWaiting();
+		        }
+		        else{
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, false);
+		        }
+	        }
         }
     }
 
-    @Override
+	private void startGalleryListOperation(int galleryTypeVideoGallery, boolean showDialog)
+	{
+		GalleryOperation operation=null ;
+		if(galleryTypeVideoGallery ==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
+			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
+
+		else if(galleryTypeVideoGallery ==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
+			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,VIDEO_GALLERY_REQUEST_ID, showDialog,getActivity(), 100,0);
+
+		if(operation!=null)
+		{
+			operation.addRequsetObserver(this);
+			operation.execute();
+		}
+	}
+
+	private void startWaiting() {
+		if(progressDialog!=null&& !progressDialog.isShowing())
+		{
+			progressDialog.show();
+		}
+	}
+
+	private void stopWaiting() {
+		if(progressDialog!=null&& progressDialog.isShowing())
+		{
+			progressDialog.dismiss();
+		}
+	}
+
+	@Override
     public void onItemClicked(View v, int position)
     {
         GalleryItem clickedItem = (GalleryItem) galleryItemList.get(position);
@@ -238,15 +302,16 @@ public class GalleryFragment extends SECBBaseFragment
 
     @Override
     public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
-        if (error == null)
+	    stopWaiting();
+	    if (error == null)
         {
             Logger.instance().v(TAG,"Success \n\t\t"+resultObject);
 
             //photoGallery
             if((int)requestId == PHOTO_GALLERY_REQUEST_ID && resultObject!=null)
             {
-                galleryItemList = (List) resultObject;
-                for(Object iterator : galleryItemList){
+                photoGalleryItemList = (List) resultObject;
+                for(Object iterator : photoGalleryItemList){
                     ((GalleryItem)iterator).galleryItemType= GalleryItem.GALLERY_TYPE_IMAGE_GALLERY;
                 }
                 bindViews();
@@ -255,8 +320,8 @@ public class GalleryFragment extends SECBBaseFragment
             //videoGallery
             else if((int)requestId == VIDEO_GALLERY_REQUEST_ID && resultObject!=null)
             {
-                galleryItemList = (List) resultObject;
-                for(Object iterator : galleryItemList){
+                videoGalleryItemList = (List) resultObject;
+                for(Object iterator : videoGalleryItemList){
                     ((GalleryItem)iterator).galleryItemType= GalleryItem.GALLERY_TYPE_VIDEO_GALLERY;
                 }
                 bindViews();
@@ -277,6 +342,7 @@ public class GalleryFragment extends SECBBaseFragment
                 ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
                         getActivity());
             }
+	        bindViews();
         }
     }
 

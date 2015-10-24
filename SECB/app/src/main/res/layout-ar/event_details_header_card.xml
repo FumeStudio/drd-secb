@@ -19,7 +19,6 @@
             android:id="@+id/txtv_eventTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size"
             android:gravity="center_vertical"
@@ -36,6 +35,6 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"
-        android:src="@drawable/event_card_img"/>
+        android:src="@drawable/events_image_place_holder"/>
 
 </LinearLayout>

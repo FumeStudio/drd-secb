@@ -42,8 +42,8 @@
             android:paddingRight="@dimen/news_filter_padding">
 
             <!--city value-->
-            <EditText
-                android:id="@+id/txtv_city_filter_city_value"
+            <Spinner
+                android:id="@+id/spn_city_filter_city_value"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -153,13 +153,35 @@
             android:orientation="vertical"
             android:padding="@dimen/news_filter_padding">
 
+
+            <TextView
+                android:id="@+id/txtv_noData"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/gallery_item_text_size"
+                android:visibility="visible"
+                android:gravity="center"
+                android:text="@string/loading"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/eventsCategoriesRecyclerView"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/news_filter_screen_recycler_height">
+
+            </android.support.v7.widget.RecyclerView>
+
+
             <RadioGroup
                 android:id="@+id/radgro_newsTypes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <RadioButton
+            <RadioButton
                     android:id="@+id/radbtn_allTypes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

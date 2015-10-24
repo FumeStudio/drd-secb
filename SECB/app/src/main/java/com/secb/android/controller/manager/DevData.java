@@ -23,27 +23,27 @@ public class DevData
         ArrayList<NewsItem> newsList =new ArrayList<>();
         NewsItem newsItem = new NewsItem();
 
-        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news1));
+//        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news1));
         newsItem.Title = "Saudi Exhibition and Convention";
         newsItem.NewsBody = "Saudi Arabia has greatly enhanced";
         newsItem.CreationDate = "2 days ago";
 
         newsList.add(newsItem);
 
-        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news2));
+//        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news2));
         newsItem.Title = "Saudi Exhibition and Convention";
         newsItem.NewsBody = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
         newsItem.CreationDate = "2 days ago";
 
         newsList.add(newsItem);
 
-        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
+//        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
         newsItem.Title = "Saudi Exhibition and Convention";
         newsItem.NewsBody = "Saudi Arabia has greatly enhanced";
         newsItem.CreationDate = "2 days ago";
         newsList.add(newsItem);
 
-        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news4));
+//        newsItem.newsItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news4));
         newsItem.Title = "Saudi Exhibition and Convention";
         newsItem.NewsBody = "لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.";
         newsItem.CreationDate = "2 days ago";
@@ -89,14 +89,14 @@ public class DevData
         ArrayList<EventItem> eventsList =new ArrayList<>();
         EventItem eventItem= new EventItem();
 
-        eventItem.eventItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.event_card_img));
-        eventItem.eventItemTitle = CTApplication.getContext().getString(R.string.dev_name);
-        eventItem.eventItemDescription = CTApplication.getContext().getString(R.string.dev_desc);
-        eventItem.eventItemTime = "2 days ago";
-        eventItem.eventItemCategory = "org";
-        eventItem.eventItemDuration = "halfday";
-        eventItem.eventItemRepeating = "rep";
-        eventItem.eventItemLocation = "jadda";
+//        eventItem.eventItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.event_card_img));
+        eventItem.Title = CTApplication.getContext().getString(R.string.dev_name);
+        eventItem.Description = CTApplication.getContext().getString(R.string.dev_desc);
+        eventItem.EventDate = "2 days ago";
+        eventItem.EventCategory = "org";
+        eventItem.IsAllDayEvent = "true";
+        eventItem.IsRecurrence = "false";
+        eventItem.EventSiteCity = "jadda";
         eventItem.eventItemLatitude=30.0882739;
         eventItem.eventItemLongitude=31.3146007;
 

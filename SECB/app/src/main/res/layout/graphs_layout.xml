@@ -39,7 +39,7 @@
         </RelativeLayout>
 
         <TextView
-            android:gravity="center_horizontal"
+            android:gravity="center_horizontal|center_vertical"
             android:id="@+id/txtv_graph_title_closed"
             android:layout_below="@+id/progressWheelClosed"
             android:layout_height="wrap_content"
@@ -47,6 +47,7 @@
             android:text="@string/graph_title_closed"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/home_graphs_title_text_size"
+            android:lines="2"
             android:textStyle="normal" />
     </LinearLayout>
 
@@ -83,7 +84,7 @@
         </RelativeLayout>
 
         <TextView
-            android:gravity="center_horizontal"
+            android:gravity="center_horizontal|center_vertical"
             android:id="@+id/txtv_graph_title_inbox"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/progressWheelInbox"
@@ -92,6 +93,7 @@
             android:text="@string/graph_title_inbox"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/home_graphs_title_text_size"
+            android:lines="2"
             android:textStyle="normal" />
 
     </LinearLayout>
@@ -127,7 +129,7 @@
         </RelativeLayout>
 
         <TextView
-            android:gravity="center_horizontal"
+            android:gravity="center_horizontal|center_vertical"
             android:id="@+id/txtv_graph_title_inProgress"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/progressWheelProgress"
@@ -136,6 +138,7 @@
             android:text="@string/graph_title_inProgress"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/home_graphs_title_text_size"
+            android:lines="2"
             android:textStyle="normal" />
     </LinearLayout>
 

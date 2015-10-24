@@ -16,6 +16,7 @@ import com.secb.android.controller.manager.DevData;
 import com.secb.android.model.E_ServiceItem;
 import com.secb.android.model.EventsFilterData;
 import com.secb.android.view.FragmentBackObserver;
+import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.ProgressWheel;
@@ -148,7 +149,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
                     " city: " + eventsFilterData.city + "\n" +
                     " Time From: " + eventsFilterData.timeFrom + "\n" +
                     " Time To: " + eventsFilterData.timeTo + " \n" +
-                    " Type: " + eventsFilterData.type);
+                    " Type: " + eventsFilterData.selectedCategoryId);
         }
     }
 
@@ -206,7 +207,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
     @Override
     public void onItemClicked(View v, int position) {
-//        ((MainActivity) getActivity()).openEventDetailsFragment(eServicesList.get(position));
+        ((MainActivity) getActivity()).openE_ServiceDetailsFragment(eServicesList.get(position));
     }
 
     @Override

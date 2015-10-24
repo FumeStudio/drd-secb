@@ -84,7 +84,7 @@ public class GalleryOperation extends BaseOperation {
         }
         else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
         {
-            GalleryManager.getInstance().setVideoGalleryList(galleryItems);
+            GalleryManager.getInstance().setVideoGalleryList(galleryItems,context);
         }
     }
 

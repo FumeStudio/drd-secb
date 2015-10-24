@@ -27,4 +27,14 @@ public class ServerKeys
 
 	/*News List*/
 	public static final String NEWS_URL = "http://secb.linkdev.com/webapi/api/News/GetNews";
+
+	/*Events Categories*/
+	public static final String EVENTS_CATEGORIES_URL = "http://secb.linkdev.com/webapi/api/events/GetEventsCategories";
+
+	/*Events List*/
+	public static final String EVENTS_URL = "http://secb.linkdev.com/webapi/api/events/GetEvents";
+
+	/*Events Cities*/
+	public static final String EVENTS_CITIES_URL = "http://secb.linkdev.com/webapi/api/events/GetCities";
+
 }

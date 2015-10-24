@@ -133,20 +133,20 @@ public class LocationsListFragment extends SECBBaseFragment
     }
 
     private void getFilterDataObject() {
+	    ((MainActivity)getActivity()).hideFilterLayout();
         locationsFilterData =this.locationsFilterLayout.getFilterData();
-        if(locationsFilterData !=null){
-            StringBuilder types = new StringBuilder();
-            for(int i : locationsFilterData.types){
-                types.append(i+" , ");
-            }
-
-            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
-                    " name: "+ locationsFilterData.city +"\n" +
-                    " city: "+ locationsFilterData.city +"\n" +
-                    " Capacity From: "+ locationsFilterData.totalCapacityFrom+"\n" +
-                    " Capacity To: "+ locationsFilterData.totalCapacityTo+" \n" +
-                    " Types : "+ types.toString());
-        }
+//        if(locationsFilterData !=null){
+//            StringBuilder types = new StringBuilder();
+//            for(int i : locationsFilterData.types){
+//                types.append(i+" , ");
+//            }
+//            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
+//                    " name: "+ locationsFilterData.city +"\n" +
+//                    " city: "+ locationsFilterData.city +"\n" +
+//                    " Capacity From: "+ locationsFilterData.totalCapacityFrom+"\n" +
+//                    " Capacity To: "+ locationsFilterData.totalCapacityTo+" \n" +
+//                    " Types : "+ types.toString());
+//        }
     }
 
 

@@ -1,5 +1,7 @@
 package com.secb.android.controller.manager;
 
+import android.content.Context;
+
 import com.secb.android.R;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsItem;
@@ -13,13 +15,13 @@ import java.util.List;
 public class NewsManager {
     private static NewsManager instance;
 	private List<NewsItem> newsUnFilteredList   ;
+	private NewsItem newDetails ;
 	//news Categories List
 	List<NewsCategoryItem> newsCategoryList= null;
-	List<String> newsEnglishCategoryList= null;
-	List<String> newsArabichCategoryList= null;
 
 	//map contains <Category , List on news in this category>
 	HashMap<String,List<NewsItem>> newsInCategory = new HashMap<>();
+
 
 	private NewsManager() {
     }
@@ -29,11 +31,17 @@ public class NewsManager {
         }
         return instance;
     }
-	public List<NewsCategoryItem> getNewsCategoryList() {
+
+
+
+
+/** Categories*/
+	public List<NewsCategoryItem> getNewsCategoryList(Context context) {
+		newsCategoryList=CachingManager.getInstance().loadNewsCategories(context);
 		return newsCategoryList;
 	}
 
-	public void setNewsCategoryList(List<NewsCategoryItem> newsCategoryList)
+	public void setNewsCategoryList(List<NewsCategoryItem> newsCategoryList ,Context context)
 	{
 		//add category called All to get all categories
 		this.newsCategoryList =new ArrayList<>();
@@ -41,9 +49,11 @@ public class NewsManager {
 		newsCategoryItem.ID = "All";
 		newsCategoryItem.CategoryArabic = CTApplication.getContext().getResources().getString(R.string.news_filter_all_types);
 		newsCategoryItem.CategoryEnglish = CTApplication.getContext().getResources().getString(R.string.news_filter_all_types);
+		newsCategoryItem.isSelected =true;
 		this.newsCategoryList.add(newsCategoryItem);
 
 		this.newsCategoryList.addAll(newsCategoryList);
+		CachingManager.getInstance().saveNewsCategories((ArrayList<NewsCategoryItem>) this.newsCategoryList,context);
 
 		/*//for testing add more items
 		for (int i = 0 ; i < 10 ; i++){
@@ -54,34 +64,6 @@ public class NewsManager {
  			this.newsCategoryList.add(newsCategoryItem);
 		}*/
 	}
-
-	public List<String> getNewsEnglishCategoryList() {
-		return newsEnglishCategoryList;
-	}
-
-	public void setNewsEnglishCategoryList(List<String> newsEnglishCategoryList) {
-		this.newsEnglishCategoryList = newsEnglishCategoryList;
-	}
-
-	public List<String> getNewsArabichCategoryList() {
-		return newsArabichCategoryList;
-	}
-
-	public void setNewsArabichCategoryList(List<String> newsArabichCategoryList) {
-		this.newsArabichCategoryList = newsArabichCategoryList;
-	}
-
-	public void addNewsListToCategory(String newsCategory, List<NewsItem> newsItems) {
-		newsInCategory.put(newsCategory,newsItems);
-	}
-
-	public List<NewsItem> getNewsListFromCategory(String newsCategory)
-	{
-		if(newsInCategory.size()==0 || !newsInCategory.containsKey(newsCategory))
-			return null;
-		return newsInCategory.get(newsCategory);
-	}
-
 
 	public NewsCategoryItem getSelectedCategory() {
 		if (newsCategoryList != null && newsCategoryList.size()>0){
@@ -94,12 +76,42 @@ public class NewsManager {
 		return null;
 	}
 
-	public List<NewsItem> getNewsUnFilteredList() {
+/** List*/
+	public List<NewsItem> getNewsUnFilteredList( Context context) {
+		newsUnFilteredList = CachingManager.getInstance().loadNewsList(context);
 		return newsUnFilteredList;
 	}
 
-	public void setNewsUnFilteredList(List<NewsItem> newsItems) {
+	public void setNewsUnFilteredList(List<NewsItem> newsItems , Context context) {
 		this.newsUnFilteredList = newsItems;
+		CachingManager.getInstance().saveNewsList((ArrayList<NewsItem>) newsUnFilteredList, context);
+
+	}
+
+
+/** Details*/
+	public  NewsItem getNewDetails(String newId,Context context) {
+		newDetails = CachingManager.getInstance().loadNewsDetais(newId,context);
+		return newDetails;
+	}
+
+	public void setNewDetails(NewsItem newsItem , Context context) {
+		this.newDetails = newsItem;
+		CachingManager.getInstance().saveNewDetails(this.newDetails, context);
+
+	}
+
+
+
+	/** Not Used */
+	public List<NewsItem> getNewsListFromCategory(String newsCategory)
+	{
+		if(newsInCategory.size()==0 || !newsInCategory.containsKey(newsCategory))
+			return null;
+		return newsInCategory.get(newsCategory);
+	}
+	public void addNewsListToCategory(String newsCategory, List<NewsItem> newsItems) {
+		newsInCategory.put(newsCategory,newsItems);
 	}
 
 }

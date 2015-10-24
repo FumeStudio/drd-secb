@@ -15,22 +15,26 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.manager.NewsManager;
-import com.secb.android.model.Consts;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsFilterData;
+import com.secb.android.view.MainActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.DateTimePickerDialogView;
 import com.secb.android.view.components.recycler_news.NewsCategoryFilterRecyclerAdapter;
 
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+
 import java.util.Date;
 import java.util.List;
 
-public class NewsFilterLayout extends LinearLayout implements View.OnClickListener {
-    private final View view;
+public class NewsFilterLayout extends LinearLayout implements View.OnClickListener, RequestObserver {
+	private static final int NEWS_CATEGORIES_REQUEST_ID = 3;
+	private final View view;
 
     private NewsFilterData newsFilterData;
     private TextView txtv_timeFrom, txtv_timeTo;
     private TextView txtv_news_filter_time_title, txtv_news_filter_type_title;
+    private TextView txtv_noData;
 	private RecyclerView newsCategoriesRecyclerView;
 	private NewsCategoryFilterRecyclerAdapter newsCategoryFilterRecyclerAdapter;
 
@@ -42,9 +46,10 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
     private Button btn_applyFilter;
 
     private Context context;
+	private List<NewsCategoryItem> categoriesList;
 
 
-    public View getLayoutView() {
+	public View getLayoutView() {
         return view;
     }
 
@@ -53,6 +58,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         this.context=context;
         view = LayoutInflater.from(context).inflate(R.layout.news_filter_screen, null);
         initViews(view);
+	    ((MainActivity)context).setNewsRequstObserver(this);
         applyFonts();
         getFilterData();
     }
@@ -75,18 +81,36 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         radbtn_publicType = (RadioButton) view.findViewById(R.id.radbtn_publicType);
         btn_applyFilter = (Button) view.findViewById(R.id.btn_applyFilter);
 
+	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 	    newsCategoriesRecyclerView = (RecyclerView) view.findViewById(R.id.newsCategoriesRecyclerView);
 	    newsCategoriesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-	    List<NewsCategoryItem> categoriesList= NewsManager.getInstance().getNewsCategoryList();
-	    newsCategoryFilterRecyclerAdapter = new NewsCategoryFilterRecyclerAdapter(context,categoriesList);
-	    newsCategoriesRecyclerView.setAdapter(newsCategoryFilterRecyclerAdapter);
+	    categoriesList= NewsManager.getInstance().getNewsCategoryList(context);
+	    bindCategoriesRecycler();
+
 	    txtv_timeFrom.setOnClickListener(this);
         txtv_timeTo.setOnClickListener(this);
     }
 
-    private void applyFonts()
-    {
-        if(txtv_timeFrom!=null)
+
+	private void bindCategoriesRecycler() {
+		if (categoriesList != null && categoriesList.size() > 0)
+		{
+			newsCategoriesRecyclerView.setVisibility(View.VISIBLE);
+			txtv_noData.setVisibility(View.GONE);
+			newsCategoryFilterRecyclerAdapter = new NewsCategoryFilterRecyclerAdapter(context,categoriesList);
+			newsCategoriesRecyclerView.setAdapter(newsCategoryFilterRecyclerAdapter);
+		}
+		else
+		{
+			newsCategoriesRecyclerView.setVisibility(View.GONE);
+			txtv_noData.setVisibility(View.VISIBLE);
+			txtv_noData.setText(context.getString(R.string.news_no_categories));
+		}
+	}
+    private void applyFonts() {
+
+	    UiEngine.applyFontsForAll(context,view, UiEngine.Fonts.HVAR);
+        /*if(txtv_timeFrom!=null)
         {
             UiEngine.applyCustomFont(txtv_timeFrom, UiEngine.Fonts.HVAR);
         }
@@ -122,6 +146,10 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         {
             UiEngine.applyCustomFont(btn_applyFilter, UiEngine.Fonts.HVAR);
         }
+        if(txtv_noData!=null)
+        {
+            UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+        }*/
 
     }
     public NewsFilterData getFilterData() {
@@ -176,16 +204,17 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(dialogView.getSelectedDateTime().getTimeInMillis()));
-                textView.setText(time);
+//                CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(dialogView.getSelectedDateTime().getTimeInMillis()));
+                String time = MainActivity.sdf_Date.format(new Date(dialogView.getSelectedDateTime().getTimeInMillis()));
+	            textView.setText(time);
                 dialog.dismiss();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+		        dialog.dismiss();
+	        }
         });
         builder.show();
     }
@@ -194,5 +223,27 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 		newsCategoriesRecyclerView.setAdapter(null);
+	}
+
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		if (error == null)
+		{
+			if((int)requestId == NEWS_CATEGORIES_REQUEST_ID && resultObject!=null)
+			{
+				categoriesList= NewsManager.getInstance().getNewsCategoryList(context);
+				bindCategoriesRecycler();
+			}
+		}
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
 	}
 }

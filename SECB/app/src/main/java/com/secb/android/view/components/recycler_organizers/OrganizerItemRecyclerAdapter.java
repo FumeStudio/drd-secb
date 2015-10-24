@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import com.secb.android.R;
 import com.secb.android.model.OrganizerItem;
 
+import net.comptoirs.android.common.view.CTApplication;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -19,14 +21,21 @@ public class OrganizerItemRecyclerAdapter extends RecyclerView.Adapter<Organizer
     Context context;
 
     public OrganizerItemRecyclerAdapter(Context context, List<OrganizerItem> itemsList) {
-        this.inflater = LayoutInflater.from(context);
+	    this.context=context;
+	    if(context == null)
+		    this.context= CTApplication.getContext();
+
         this.itemsList = itemsList;
-        this.context=context;
+	    this.inflater = LayoutInflater.from(context);
     }
 
     @Override
     public OrganizerItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.organizer_item_card, parent, false);
+
+	    if(inflater==null && context!=null)
+		    this.inflater = LayoutInflater.from(context);
+
+	    View view = inflater.inflate(R.layout.organizer_item_card, parent, false);
 
         OrganizerItemRecyclerViewHolder vh = new OrganizerItemRecyclerViewHolder(view);
         return vh;

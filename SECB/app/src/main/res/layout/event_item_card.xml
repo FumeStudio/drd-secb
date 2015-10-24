@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--    android:paddingBottom="@dimen/event_card_margin"
+    android:paddingTop="@dimen/event_card_margin"-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_card_height"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/event_card_margin"
-    android:paddingTop="@dimen/event_card_margin"
+    android:padding="@dimen/event_card_margin"
     android:weightSum="3"
     android:background="@color/off_white"
     android:layout_marginBottom="@dimen/eguide_base_padding"
@@ -12,17 +13,18 @@
 
     <ImageView
         android:id="@+id/imgv_eventImg"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/evet_card_img_size"
+        android:layout_height="@dimen/evet_card_img_size"
         android:layout_marginRight="@dimen/event_card_margin"
-        android:layout_weight="1"
-        android:src="@drawable/event_card_img" />
 
+        android:src="@drawable/events_image_place_holder" />
+
+    <!--android:layout_marginRight="@dimen/event_card_margin"-->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/event_card_margin"
-        android:layout_weight="2"
+
+        android:layout_weight="3"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -34,7 +36,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textStyle="bold"
-            android:text="Saudi Arabia has enhanced the development of exhibitions."
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h1_text_size" />
 
@@ -45,7 +46,6 @@
             android:layout_weight="1.5"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Saudi Arabia has enhanced the development of exhibitions."
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="2:30 PM"
+                "2:30 PM"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -91,7 +91,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Jaddah"
+                "Jaddah"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -111,7 +111,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Organization"
+                "Organization"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
         </LinearLayout>-->
@@ -132,7 +132,6 @@
                 android:drawableLeft="@drawable/event_card_time_icon"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="2:30 PM"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -146,7 +145,6 @@
                 android:drawableLeft="@drawable/event_card_place_icon"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Jaddah"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -160,7 +158,6 @@
                 android:drawableLeft="@drawable/event_card_filter_icon"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Organization"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
         </TableRow>

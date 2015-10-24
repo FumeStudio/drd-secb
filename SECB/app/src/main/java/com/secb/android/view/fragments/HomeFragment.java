@@ -14,7 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secb.android.R;
-import com.secb.android.controller.manager.DevData;
+import com.secb.android.controller.manager.EventsManager;
+import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
@@ -26,15 +27,19 @@ import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCus
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
 import com.secb.android.view.menu.MenuItem;
+import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener, RequestObserver {
 
 	private static final String TAG = "HomeFragment";
 	private static final int NEWS_LIST_REQUEST_ID = 4;
+	private static final int EVENTS_LIST_REQUEST_ID = 6;
 	ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
 
@@ -44,6 +49,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
     TextView txtv_viewAllNews;
 
+    TextView txtv_noData;
     RecyclerView newsRecyclerView;
     NewsItemRecyclerAdapter newsItemRecyclerAdapter;
     ArrayList<NewsItem> newsList;
@@ -100,12 +106,47 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
         }
 	    ((MainActivity)getActivity()).setNewsRequstObserver(this);
+	    ((MainActivity)getActivity()).setEventsRequstObserver(this);
         initViews(view);
+	    getData();
         applyFonts();
         return view;
     }
 
-    private void handleButtonsEvents() {
+	private void getData()
+	{
+	/**News */
+		//if news list is loaded in the manager get it and bind
+		//if not and the main activity is still loading the news list
+		// wait for it and it will notify handleRequestFinished in this fragment.
+		//if the main activity finished loading news list and the manager is still empty
+		//start operation here.
+
+		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList(getActivity());
+		if(newsList!= null && newsList.size()>0){
+			handleRequestFinished(NEWS_LIST_REQUEST_ID, null, newsList);
+		}
+		else {
+			//retry
+			if (((MainActivity) getActivity()).isNewsLoadingFinished==false) {
+				((MainActivity) getActivity()).getNewsList(); /* (new NewsFilterData(),false);*/
+			}
+		}
+
+	/**Event */
+		List<EventItem> eventList = EventsManager.getInstance().getEventsUnFilteredList(getActivity());
+		if(eventList!=null && eventList.size()>0){
+			handleRequestFinished(EVENTS_LIST_REQUEST_ID, null, eventList);
+		}
+		else{
+			//retry
+			if (((MainActivity) getActivity()).isEventsLoadingFinished==false) {
+				((MainActivity) getActivity()).getEventsList();/*startEventsListOperation(new NewsFilterData(),false);*/
+			}
+		}
+	}
+
+	private void handleButtonsEvents() {
     }
 
     /*
@@ -147,6 +188,10 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
             UiEngine.applyCustomFont(txtv_event_placeValue, UiEngine.Fonts.HVAR);
         if(txtv_event_categoryValue!=null)
             UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
+	    if(txtv_noData!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+	    }
     }
 
     private void goBack() {
@@ -207,18 +252,19 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_event_categoryValue = (TextView) view.findViewById(R.id.txtv_event_categoryValue);
         imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
         event_card_container=view.findViewById(R.id.event_card_container);
+	    event_card_container.setVisibility(View.GONE);
         event_card_container.setOnClickListener(this);
 
-	    eventItem = DevData.getEventsList().get(0);
-	    bindEventCard();
+//	    eventItem = DevData.getEventsList().get(0);
+//	    eventItem = (EventsManager.getInstance().getEventsUnFilteredList())!=null ?
+//			    EventsManager.getInstance().getEventsUnFilteredList().get(0):null;
+//	    bindEventCard();
 
 //News Recycler
 	    txtv_viewAllNews = (TextView) view.findViewById(R.id.txtv_viewAllNews);
 	    txtv_viewAllNews.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
+	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 /*        newsList = DevData.getNewsList();*/
-
-
 	    newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
 //        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -230,29 +276,57 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_viewAllNews.setOnClickListener(this);
     }
 
-    private void bindEventCard() {
-        imgv_eventImg.setImageBitmap(eventItem.eventItemImage);
-        txtv_eventTitle.setText(eventItem.eventItemTitle);
-        txtv_eventDescription.setText(eventItem.eventItemDescription);
-        txtv_event_timeValue.setText(eventItem.eventItemTime);
-        txtv_event_placeValue.setText(eventItem.eventItemLocation);
-        txtv_event_categoryValue.setText(eventItem.eventItemCategory);
+    private void bindEventCard()
+    {
+	    if(eventItem==null){
+		    event_card_container.setVisibility(View.GONE);
+		    return;
+	    }
+
+	    event_card_container.setVisibility(View.VISIBLE);
+	    if(!Utilities.isNullString(eventItem.ImageUrl))
+	    {
+		    Picasso.with(getActivity())
+				    .load(eventItem.ImageUrl)
+				    .placeholder(R.drawable.events_image_place_holder)
+				    .into(imgv_eventImg)
+		    ;
+	    }
+	    else
+		    imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
+
+        txtv_eventTitle.setText(eventItem.Title);
+        txtv_eventDescription.setText(eventItem.Description);
+	    String evdateStr = MainActivity.reFormatDate(eventItem.EventDate, MainActivity.sdf_Date);
+        txtv_event_timeValue.setText(evdateStr);
+        txtv_event_placeValue.setText(eventItem.EventSiteCity);
+        txtv_event_categoryValue.setText(eventItem.EventCategory);
     }
 
 	private void bindNewsRecycler(){
 //		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList();
 		ArrayList<NewsItem>homeNewsList = new ArrayList<>();
-		if (newsList != null && newsList.size() > 2)
-		{
+		//for testing set newsList = null;
+//		newsList = null;
+		if (newsList != null && newsList.size() > 2) {
 			homeNewsList.add(newsList.get(0));
 			homeNewsList.add(newsList.get(1));
 			/*while(newsList.size()>2)
 			{
 				newsList.remove(newsList.size()-1);
 			}*/
+			newsRecyclerView.setVisibility(View.VISIBLE);
+			txtv_noData.setVisibility(View.GONE);
+			newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), homeNewsList);
+			newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
 		}
-		newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), homeNewsList);
-		newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
+		else
+		{
+			newsRecyclerView.setVisibility(View.GONE);
+			txtv_noData.setVisibility(View.VISIBLE);
+			txtv_noData.setText(getString(R.string.news_no_news));
+		}
+
 	}
     private void fillWheelPercentage(int closedScore, int inboxScore, int inProgressScore) {
 
@@ -296,6 +370,14 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 			{
 				newsList= (ArrayList<NewsItem>) resultObject;
 				bindNewsRecycler();
+			}
+			else if((int)requestId == EVENTS_LIST_REQUEST_ID && resultObject!=null)
+			{
+				ArrayList<EventItem> temp = (ArrayList<EventItem>) resultObject;
+				if (temp!=null  &&temp.size()>0){
+					eventItem=	temp.get(0);
+					bindEventCard();
+				}
 			}
 		}
 	}

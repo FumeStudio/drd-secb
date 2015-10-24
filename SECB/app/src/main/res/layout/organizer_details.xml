@@ -34,6 +34,8 @@
             android:background="@color/off_white"
             android:orientation="vertical">
 
+            <!--
+                android:layout_marginTop="@dimen/organizer_details_margin"-->
             <TextView
                 android:id="@+id/txtv_organizerName"
                 android:layout_width="match_parent"
@@ -41,7 +43,6 @@
                 android:layout_marginBottom="@dimen/organizer_details_margin_small"
                 android:layout_marginLeft="@dimen/organizer_details_margin"
                 android:layout_marginRight="@dimen/organizer_details_margin"
-                android:layout_marginTop="@dimen/organizer_details_margin"
                 android:text="@string/email_address"
                 android:textColor="@color/secb_dark_text" />
 

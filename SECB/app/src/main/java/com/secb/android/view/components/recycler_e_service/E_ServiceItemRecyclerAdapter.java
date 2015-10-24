@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import com.secb.android.R;
 import com.secb.android.model.E_ServiceItem;
 
+import net.comptoirs.android.common.view.CTApplication;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -19,14 +21,26 @@ public class E_ServiceItemRecyclerAdapter extends RecyclerView.Adapter<E_Service
     Context context;
 
     public E_ServiceItemRecyclerAdapter(Context context, List<E_ServiceItem> itemsList) {
-        this.inflater = LayoutInflater.from(context);
-        this.itemsList = itemsList;
-        this.context=context;
+
+	    this.context=context;
+	    if(context == null)
+		    this.context= CTApplication.getContext();
+
+	    this.itemsList = itemsList;
+	    try {
+		    this.inflater = LayoutInflater.from(context);
+	    } catch (Exception e) {
+		    e.printStackTrace();
+	    }
     }
 
     @Override
     public E_ServiceItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.e_service_item_card, parent, false);
+
+	    if(inflater==null && context!=null)
+		    this.inflater = LayoutInflater.from(context);
+
+	    View view = inflater.inflate(R.layout.e_service_item_card, parent, false);
 
         E_ServiceItemRecyclerViewHolder vh = new E_ServiceItemRecyclerViewHolder(view);
         return vh;

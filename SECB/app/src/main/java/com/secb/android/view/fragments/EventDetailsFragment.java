@@ -18,16 +18,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
 import com.secb.android.view.FragmentBackObserver;
+import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.helper.MapsHelper;
+import net.comptoirs.android.common.helper.Utilities;
 
 public class EventDetailsFragment  extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener
         ,GoogleMap.OnMarkerClickListener,OnMapReadyCallback
 {
 
-    private View view;
+    private static View view;
     private EventItem eventItem;
     private ImageView imgv_event_details_img;
     private TextView txtv_event_details_eventTitle;
@@ -73,7 +75,9 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
 
     }
 
-    @Override
+
+
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -86,7 +90,8 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
             if (oldParent != container && oldParent != null) {
                 ((ViewGroup) oldParent).removeView(view);
             }
-        } else {
+        } else
+        {
             view = LayoutInflater.from(getActivity()).inflate(R.layout.event_details, container, false);
             handleButtonsEvents();
             applyFonts();
@@ -111,6 +116,7 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
      */
     private void applyFonts()
     {
+	    UiEngine.applyFontsForAll(getActivity(),view, UiEngine.Fonts.HVAR);
         if(txtv_event_details_eventTitle!=null)
         {
             UiEngine.applyCustomFont(txtv_event_details_eventTitle, UiEngine.Fonts.HVAR);
@@ -178,22 +184,26 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         txtv_event_details_eventRepeated = (TextView) view.findViewById(R.id.txtv_event_repeatedValue);
         txtv_event_details_eventBody = (TextView) view.findViewById(R.id.event_details_body);
 
-/*        FragmentManager fm = getChildFragmentManager();
-        SupportMapFragment fragment = (SupportMapFragment) fm.findFragmentById(R.id.mapFrame);
-        if (fragment == null)
-        {
-            fragment = SupportMapFragment.newInstance();
-            fm.beginTransaction().replace(R.id.mapFrame, fragment).commit();
-        }*/
 
     }
 
     public boolean initMap()
     {
-        if (googleMap == null)
+
+	   /* FragmentManager fm = getChildFragmentManager();
+	    supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.mapFrame);
+	    if (supportMapFragment == null)
+	    {
+		    supportMapFragment = SupportMapFragment.newInstance();
+		    fm.beginTransaction().replace(R.id.mapFrame, supportMapFragment).commit();
+		    supportMapFragment.getMapAsync(this);
+	    }*/
+
+
+	    if (googleMap == null)
         {
             supportMapFragment = ((SupportMapFragment) getFragmentManager()
-                    .findFragmentById(R.id.map));
+                    .findFragmentById(R.id.events_map));
 
             if(supportMapFragment!=null)
                 supportMapFragment.getMapAsync(this);
@@ -206,16 +216,34 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     {
         if(this.eventItem !=null)
         {
-            imgv_event_details_img.setImageBitmap(eventItem.eventItemImage);
-            txtv_event_details_eventTitle.setText(eventItem.eventItemTitle);
-            txtv_event_details_eventDate.setText(eventItem.eventItemTime);
-            txtv_event_details_eventPlace.setText(eventItem.eventItemLocation);
-            txtv_event_details_eventCategory.setText(eventItem.eventItemCategory);
-            txtv_event_details_eventDuration.setText(eventItem.eventItemDuration);
-            txtv_event_details_eventRepeated.setText(eventItem.eventItemRepeating);
-            txtv_event_details_eventBody.setText(eventItem.eventItemDescription);
+            imgv_event_details_img.setImageResource(R.drawable.events_image_place_holder);
+            txtv_event_details_eventTitle.setText(eventItem.Title);
 
+	        String evdateStr = MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_DateTime);
+	        txtv_event_details_eventDate.setText(evdateStr);
+            txtv_event_details_eventPlace.setText(eventItem.EventSiteCity);
+            txtv_event_details_eventCategory.setText(eventItem.EventCategory);
+	        if(Boolean.valueOf(eventItem.IsAllDayEvent))
+	        {
+		        txtv_event_details_eventDuration.setText(getResources().getString(R.string.event_all_day));
+		        txtv_event_details_eventDuration.setVisibility(View.VISIBLE);
+	        }
+	        else
+	        {
+		        txtv_event_details_eventDuration.setVisibility(View.GONE);
+	        }
 
+	        if(Boolean.valueOf(eventItem.IsRecurrence))
+	        {
+		        txtv_event_details_eventRepeated.setText(getResources().getString(R.string.event_repeated));
+		        txtv_event_details_eventRepeated.setVisibility(View.VISIBLE);
+	        }
+	        else
+	        {
+		        txtv_event_details_eventRepeated.setVisibility(View.GONE);
+	        }
+
+            txtv_event_details_eventBody.setText(eventItem.Description);
         }
     }
 
@@ -238,11 +266,16 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     {
         if(this.eventItem !=null&& googleMap!=null)
         {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.event_card_place_icon);
+/*	        eventItem.eventItemLatitude=30.0882739;
+	        eventItem.eventItemLongitude=31.3146007;
             LatLng locationOnMap = new LatLng(this.eventItem.eventItemLatitude,this.eventItem.eventItemLongitude);
-            Marker marker = MapsHelper.addMarker(googleMap,locationOnMap, bitmap);
-            MapsHelper.setMapCenter(true,googleMap,locationOnMap);
-
+*/
+	        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.event_card_place_icon);
+	        LatLng locationOnMap = Utilities.getLatLngFromString(eventItem.SiteonMap);
+	        if(locationOnMap!=null){
+		        Marker marker = MapsHelper.addMarker(googleMap,locationOnMap, bitmap);
+		        MapsHelper.setMapCenter(true,googleMap,locationOnMap);
+	        }
         }
     }
 

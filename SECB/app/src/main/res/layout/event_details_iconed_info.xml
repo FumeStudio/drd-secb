@@ -28,7 +28,7 @@
             android:ellipsize="end"
             android:drawableLeft="@drawable/event_card_time_icon"
             android:maxLines="1"
-            android:text="2:30 PM"
+
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
 
@@ -55,7 +55,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:drawableLeft="@drawable/event_card_place_icon"
-            android:text="Jaddah"
+
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
 
@@ -83,7 +83,7 @@
             android:ellipsize="end"
             android:drawableLeft="@drawable/event_card_filter_icon"
             android:maxLines="1"
-            android:text="Organization"
+
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
     </TableRow>
@@ -113,7 +113,7 @@
             android:drawableLeft="@drawable/event_all_day_icon"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="All Day Event"
+
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
 
@@ -139,7 +139,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:drawableLeft="@drawable/event_repeated_icon"
-            android:text="Repeated Event"
+
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />
     </TableRow>

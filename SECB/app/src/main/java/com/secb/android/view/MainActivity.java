@@ -7,9 +7,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.LinearLayout;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.EventsCategoryOperation;
+import com.secb.android.controller.backend.EventsCityOperation;
+import com.secb.android.controller.backend.EventsListOperation;
+import com.secb.android.controller.backend.GalleryOperation;
 import com.secb.android.controller.backend.NewsCategoryOperation;
 import com.secb.android.controller.backend.NewsListOperation;
+import com.secb.android.model.E_ServiceItem;
 import com.secb.android.model.EventItem;
+import com.secb.android.model.EventsFilterData;
+import com.secb.android.model.GalleryItem;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
@@ -17,6 +24,7 @@ import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.fragments.AboutUsFragment;
 import com.secb.android.view.fragments.AlbumFragment;
 import com.secb.android.view.fragments.ContactUsFragment;
+import com.secb.android.view.fragments.E_ServiceDetailsFragment;
 import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventDetailsFragment;
@@ -33,16 +41,44 @@ import com.secb.android.view.fragments.OrganizersListFragment;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 public class MainActivity extends SECBBaseActivity implements RequestObserver {
     private static final String TAG = "MainActivity";
 
+	private static final int PHOTO_GALLERY_REQUEST_ID = 1;
+	private static final int VIDEO_GALLERY_REQUEST_ID = 2;
 	private static final int NEWS_CATEGORY_REQUEST_ID = 3;
 	private static final int NEWS_LIST_REQUEST_ID = 4;
+	private static final int EVENTS_CATEGORY_REQUEST_ID = 5;
+	private static final int EVENTS_LIST_REQUEST_ID = 6;
+	private static final int EVENTS_CITY_REQUEST_ID = 7;
+
 	LinearLayout fragmentContainer;
     HomeFragment homeFragment;
 
+	ArrayList<RequestObserver> galleryRequstObserverList;
+	ArrayList<RequestObserver> newsRequstObserverList;
+	ArrayList<RequestObserver> eventsRequstObserverList;
+
 	private RequestObserver newsRequstObserver;
 	public boolean isNewsLoadingFinished;
+	private RequestObserver eventsRequstObserver;
+	public boolean isEventsLoadingFinished;
+	private RequestObserver galleryRequstObserver ;
+	public boolean isPhotoGalleryLoadingFinished;
+	public boolean isVideoGalleryLoadingFinished;
+
+	public static SimpleDateFormat sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_Time = new SimpleDateFormat("kk:mm a", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm",  UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ",  UiEngine.getCurrentAppLocale());
+
+
+
 
 	public MainActivity() {
         super(-1, true);
@@ -53,6 +89,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
     {
 /*        showHeader(true);
         setHeaderTitleText(getResources().getString(R.string.home_fragment));*/
+	    initObservers();
         initiViews();
         openHomeFragment(false);
 
@@ -71,7 +108,13 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
     }
 
-    private void initiViews()
+	private void initObservers() {
+		galleryRequstObserverList = new ArrayList<>();
+		newsRequstObserverList= new ArrayList<>();
+		eventsRequstObserverList= new ArrayList<>();
+	}
+
+	private void initiViews()
     {
         fragmentContainer = (LinearLayout) findViewById(R.id.simple_fragment);
     }
@@ -167,6 +210,11 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
         addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 
+	public void openE_ServiceDetailsFragment(E_ServiceItem e_serviceItem) {
+		E_ServiceDetailsFragment fragment = E_ServiceDetailsFragment.newInstance(e_serviceItem);
+		addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
+
     public void openAboutUsFragment(){
         AboutUsFragment fragment = AboutUsFragment.newInstance();
         addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
@@ -194,25 +242,89 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	* and to update managers */
 	public void startSync()
 	{
+	/*Photo Gallery*/
+		getPhotoGallery();
+
+	/*Vidoe Gallery*/
+		getVideoGallery();
+
 	/*News Categories*/
 		getNewsCategories();
 
-	/*News UnFiltered List*/
+	/*News UnFiltered News List*/
 		getNewsList();
+
+	/*Events Categories*/
+		getEventsCategories();
+
+	/*Events UnFiltered  List*/
+		getEventsList();
+
+	/*Events Cities List*/
+		getEventsCities();
 	}
 
+
+
+	/**
+	 * observers
+	 */
+//gallery
+	public void setGalleryRequstObserver(RequestObserver galleryRequstObserver)
+	{
+		this.galleryRequstObserver = galleryRequstObserver;
+		galleryRequstObserverList.add(galleryRequstObserver);
+	}
+//news
 	public void setNewsRequstObserver(RequestObserver newsRequstObserver)
 	{
 		this.newsRequstObserver = newsRequstObserver;
+		newsRequstObserverList.add(newsRequstObserver);
 	}
-	public void getNewsCategories()
+//events
+	public void setEventsRequstObserver(RequestObserver newsRequstObserver)
 	{
-		NewsCategoryOperation operation = new NewsCategoryOperation(NEWS_CATEGORY_REQUEST_ID ,false,this);
+		this.eventsRequstObserver = newsRequstObserver;
+		eventsRequstObserverList.add(newsRequstObserver);
+	}
+
+
+	/**
+	 * Operations
+	 */
+//photo gallery
+	private void getPhotoGallery()
+	{
+		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, false,this, 100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(10000);
+//					operation.execute();
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
+	}
+//video gallery
+	private void getVideoGallery() {
+		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,VIDEO_GALLERY_REQUEST_ID, false,this, 100,0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
-
-	private void getNewsList()
+//news categories
+	public void getNewsCategories()
+	{
+		NewsCategoryOperation operation = new NewsCategoryOperation(NEWS_CATEGORY_REQUEST_ID, false,this);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+//news list
+public void getNewsList()
 	{
 		NewsFilterData newsFilterData = new NewsFilterData();
 		newsFilterData.newsCategory="All";
@@ -221,6 +333,28 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
+//events cities
+	public void getEventsCities()
+	{
+		EventsCityOperation operation = new EventsCityOperation(EVENTS_CITY_REQUEST_ID ,false,this);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+	//events categories
+	public void getEventsCategories()
+	{
+		EventsCategoryOperation operation = new EventsCategoryOperation(EVENTS_CATEGORY_REQUEST_ID ,false,this);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+//events list
+public void getEventsList()
+	{
+		EventsFilterData eventsFilterData = new EventsFilterData();
+		final EventsListOperation operation = new EventsListOperation(EVENTS_LIST_REQUEST_ID,false,this,eventsFilterData,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
 
 
@@ -232,32 +366,104 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 
 
-/*let fragment handle requestFinished*/
+
+	/*let fragment handle requestFinished*/
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject)
 	{
-		if((int)requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null)
+//gallery
+		if( ((int)requestId == PHOTO_GALLERY_REQUEST_ID ||
+				(int)requestId == VIDEO_GALLERY_REQUEST_ID) &&
+				/*galleryRequstObserver!=null  && */galleryRequstObserverList.size()>0)
 		{
-			isNewsLoadingFinished = true;
-			newsRequstObserver.handleRequestFinished(requestId,error,resulObject);
+			if( (int)requestId == PHOTO_GALLERY_REQUEST_ID)
+				isPhotoGalleryLoadingFinished = true;
+			else if( (int)requestId == VIDEO_GALLERY_REQUEST_ID)
+				isVideoGalleryLoadingFinished = true;
+
+			for(RequestObserver iterator:galleryRequstObserverList)
+				iterator.handleRequestFinished(requestId,error,resulObject);
+		}
+//news
+		else if( ((int)requestId == NEWS_LIST_REQUEST_ID ||
+				(int)requestId == NEWS_CATEGORY_REQUEST_ID)/* &&
+				newsRequstObserver!=null*/ && newsRequstObserverList.size()>0)
+		{
+			if( (int)requestId == NEWS_LIST_REQUEST_ID)
+				isNewsLoadingFinished = true;
+			for(RequestObserver iterator:newsRequstObserverList)
+				iterator.handleRequestFinished(requestId,error,resulObject);
+		}
+//events
+		else if( (  (int)requestId == EVENTS_LIST_REQUEST_ID ||
+					(int)requestId == EVENTS_CATEGORY_REQUEST_ID ||
+					(int)requestId == EVENTS_CITY_REQUEST_ID
+				 )
+				/*&& eventsRequstObserver!=null*/
+				&& eventsRequstObserverList.size()>0)
+		{
+			if( (int)requestId == EVENTS_LIST_REQUEST_ID)
+				isEventsLoadingFinished = true;
+			for(RequestObserver iterator:eventsRequstObserverList)
+				iterator.handleRequestFinished(requestId,error,resulObject);
 		}
 	}
 
 	@Override
 	public void requestCanceled(Integer requestId, Throwable error)
 	{
-		if(requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null)
+//gallery
+		if( (requestId == PHOTO_GALLERY_REQUEST_ID ||
+				requestId == VIDEO_GALLERY_REQUEST_ID) &&
+				galleryRequstObserver!=null)
+		{
+			galleryRequstObserver.requestCanceled(requestId, error);
+		}
+//news
+		else if(requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null && newsRequstObserver!=null)
 		{
 			newsRequstObserver.requestCanceled(requestId, error);
+		}
+//events
+		else if(requestId == EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
+		{
+			eventsRequstObserver.requestCanceled(requestId, error);
 		}
 	}
 
 	@Override
 	public void updateStatus(Integer requestId, String statusMsg)
 	{
-		if(requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null)
+//gallery
+		if( (requestId == PHOTO_GALLERY_REQUEST_ID ||
+				requestId == VIDEO_GALLERY_REQUEST_ID) &&
+				galleryRequstObserver!=null)
+		{
+			galleryRequstObserver.updateStatus(requestId, statusMsg);
+		}
+//news
+		else if(requestId == NEWS_LIST_REQUEST_ID && eventsRequstObserver!=null)
 		{
 			newsRequstObserver.updateStatus(requestId, statusMsg);
 		}
+//events
+		else if(requestId == EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
+		{
+			eventsRequstObserver.updateStatus(requestId, statusMsg);
+		}
+	}
+
+	public static String reFormatDate(String oldDate,SimpleDateFormat sdf){
+		String newString = null;
+		try
+		{
+			Date date  = sdf_Source.parse(oldDate);
+			newString = sdf.format(date);
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return newString;
 	}
 }

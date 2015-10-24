@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.NewsDetailsOperation;
+import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
@@ -50,7 +51,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     {
         NewsDetailsFragment fragment = new NewsDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("newsItem",newsItem);
+        bundle.putSerializable("newsItem", newsItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -105,12 +106,21 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 
 	private void getData()
 	{
-		NewsFilterData newsFilterData = new NewsFilterData();
-		newsFilterData.newsID= this.newsItem.ID;
-		newsFilterData.newsCategory="All";
-		NewsDetailsOperation operation = new NewsDetailsOperation(NEWS_DETAILS_REQUEST_ID,true,getActivity(),newsFilterData,100,0);
-		operation.addRequsetObserver(this);
-		operation.execute();
+		NewsItem item = NewsManager.getInstance().getNewDetails(this.newsItem.ID,getActivity());
+		if(item!=null){
+			newsList = new ArrayList<>();
+			newsList.add(item);
+			handleRequestFinished(NEWS_DETAILS_REQUEST_ID,null,newsList);
+		}
+		else
+		{
+			NewsFilterData newsFilterData = new NewsFilterData();
+			newsFilterData.newsID = this.newsItem.ID;
+			newsFilterData.newsCategory = "All";
+			NewsDetailsOperation operation = new NewsDetailsOperation(NEWS_DETAILS_REQUEST_ID, true, getActivity(), newsFilterData, 100, 0);
+			operation.addRequsetObserver(this);
+			operation.execute();
+		}
 	}
 
 	private void handleButtonsEvents() {
@@ -121,12 +131,18 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
      */
     private void applyFonts()
     {
+
+	    UiEngine.applyFontsForAll(getActivity(),view, UiEngine.Fonts.HVAR);
         if(txtv_news_details_newTitle!=null)
             UiEngine.applyCustomFont(txtv_news_details_newTitle, UiEngine.Fonts.HVAR);
         if(txtv_news_details_newDate!=null)
             UiEngine.applyCustomFont(txtv_news_details_newDate, UiEngine.Fonts.HVAR);
         if(txtv_news_details_newBody!=null)
             UiEngine.applyCustomFont(txtv_news_details_newDate, UiEngine.Fonts.HVAR);
+	    if(txtv_noData!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+	    }
     }
 
     private void goBack()
@@ -184,6 +200,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 		        Picasso.with(getActivity())
 				        .load(newsItem.ImageUrl)
 				        .placeholder(R.drawable.news_image_place_holder)
+				        .resizeDimen(R.dimen.news_details_img_width,R.dimen.news_details_img_height)
 				        .into(imgv_news_details_img);
 	        }
 	        else

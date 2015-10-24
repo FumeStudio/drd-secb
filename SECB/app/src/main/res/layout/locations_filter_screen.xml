@@ -17,6 +17,7 @@
     <View
         android:id="@+id/shadow"
         android:layout_width="2.3dp"
+        android:clickable="true"
         android:layout_height="match_parent"
         android:layout_above="@+id/filter_container"
         android:background="@drawable/shadow_v"></View>

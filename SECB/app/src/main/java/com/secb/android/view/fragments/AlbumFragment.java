@@ -24,6 +24,7 @@ import com.secb.android.model.GalleryItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.recycler_gallery.GalleryItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -150,7 +151,10 @@ public class AlbumFragment extends SECBBaseFragment
      * Apply Fonts
      */
     private void applyFonts() {
-        // TODO::
+	    if(txtv_noData!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+	    }
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.textViewAbout)), UiEngine.Fonts.HELVETICA_NEUE_LT_STD_CN);
     }
 
@@ -209,7 +213,7 @@ public class AlbumFragment extends SECBBaseFragment
             galleryRecyclerView.setAdapter(galleryItemRecyclerAdapter);
         }
         else {
-
+	        txtv_noData.setText(getString(R.string.album_no_files));
             galleryRecyclerView.setVisibility(View.GONE);
             txtv_noData.setVisibility(View.VISIBLE);
         }
@@ -239,7 +243,7 @@ public class AlbumFragment extends SECBBaseFragment
         //get VideoAlbum
         else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
         {
-            galleryItemList = GalleryManager.getInstance().getVideosAlbumList(albumId);
+            galleryItemList = GalleryManager.getInstance().getVideosAlbumList(albumId,getActivity());
             if(galleryItemList == null || galleryItemList.size()==0)
             {
                 AlbumOperation operation = new AlbumOperation(GalleryItem.GALLERY_TYPE_VIDEO_ALBUM,VIDEO_ALBUM_REQUEST_ID ,

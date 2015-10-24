@@ -131,12 +131,13 @@ public class OrganizersListFragment extends SECBBaseFragment
     }
 
     private void getFilterDataObject() {
+	    ((MainActivity)getActivity()).hideFilterLayout();
         organizerFilterData =this.organizersFilterLayout.getFilterData();
-        if(organizerFilterData !=null){
-            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
-                    "Name : "+ organizerFilterData.name+"\n" +
-                    "City : "+ organizerFilterData.city+" \n" );
-        }
+//        if(organizerFilterData !=null){
+//            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
+//                    "Name : "+ organizerFilterData.name+"\n" +
+//                    "City : "+ organizerFilterData.city+" \n" );
+//        }
     }
 
 

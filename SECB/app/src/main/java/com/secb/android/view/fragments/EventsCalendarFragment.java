@@ -13,20 +13,28 @@ import com.p_v.flexiblecalendar.FlexibleCalendarView;
 import com.p_v.flexiblecalendar.view.BaseCellView;
 import com.secb.android.R;
 import com.secb.android.controller.manager.DevData;
+import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.squareup.picasso.Picasso;
+
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class EventsCalendarFragment extends SECBBaseFragment
-        implements FragmentBackObserver, View.OnClickListener ,FlexibleCalendarView.OnDateClickListener
-{
-    ArrayList<EventItem> eventsList;
+        implements FragmentBackObserver, View.OnClickListener ,FlexibleCalendarView.OnDateClickListener, RequestObserver {
+	private static final int EVENTS_LIST_REQUEST_ID = 6;
+	private static final String TAG = "EventsCalendarFragment";
+	ArrayList<EventItem> eventsList;
     View view;
     private TextView monthTextView;
     private TextView txtv_viewAllEvents;
@@ -43,8 +51,10 @@ public class EventsCalendarFragment extends SECBBaseFragment
     private TextView txtv_event_placeValue;
     private TextView txtv_event_categoryValue;
 
+	public static Date lastSelectedDate;
     public static EventsCalendarFragment newInstance() {
         EventsCalendarFragment fragment = new EventsCalendarFragment();
+	    lastSelectedDate=new Date();
         return fragment;
     }
 
@@ -85,10 +95,11 @@ public class EventsCalendarFragment extends SECBBaseFragment
             handleButtonsEvents();
             applyFonts();
         }
-        initViews(view);
-        applyFonts();
-        initCalendar();
-        customizeCalendarView(calendarView);
+	    ((MainActivity)getActivity()).setEventsRequstObserver(this);
+	    initViews(view);
+	    initCalendar();
+	    customizeCalendarView(calendarView);
+	    applyFonts();
         return view;
     }
 
@@ -115,7 +126,9 @@ public class EventsCalendarFragment extends SECBBaseFragment
             UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
 
         if(monthTextView!=null)
-            UiEngine.applyCustomFont(monthTextView, UiEngine.Fonts.HVAR);
+        {
+	        UiEngine.applyCustomFont(monthTextView, UiEngine.Fonts.HVAR_BOLD);
+        }
         if(txtv_viewAllEvents!=null)
             UiEngine.applyCustomFont(txtv_viewAllEvents, UiEngine.Fonts.HVAR);
     }
@@ -166,8 +179,8 @@ public class EventsCalendarFragment extends SECBBaseFragment
 
         txtv_viewAllEvents.setOnClickListener(this);
 
-        cardEventItem = DevData.getEventsList().get(0);
-        bindEventCard();
+
+	    bindEventCard(lastSelectedDate);
 
     }
 
@@ -243,16 +256,81 @@ public class EventsCalendarFragment extends SECBBaseFragment
     }
 
     @Override
-    public void onDateClick(int year, int month, int day) {
-        ((SECBBaseActivity)getActivity()).displayToast(day + "-" + month + "-" + year);
+    public void onDateClick(int year, int month, int day)
+    {
+    //parse selected date
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.set(year, month, day);
+
+	    lastSelectedDate = calendar.getTime();
+	    bindEventCard(lastSelectedDate);
     }
 
-    private void bindEventCard() {
-        imgv_eventImg.setImageBitmap(cardEventItem.eventItemImage);
-        txtv_eventTitle.setText(cardEventItem.eventItemTitle);
-        txtv_eventDescription.setText(cardEventItem.eventItemDescription);
-        txtv_event_timeValue.setText(cardEventItem.eventItemTime);
-        txtv_event_placeValue.setText(cardEventItem.eventItemLocation);
-        txtv_event_categoryValue.setText(cardEventItem.eventItemCategory);
+    private void bindEventCard(Date selectedDate)
+    {
+    //get event on this day and set it to cardEventItem
+	    getDayEvent(selectedDate);
+
+	    if(cardEventItem == null)
+	    {
+		    event_card_container.setVisibility(View.GONE);
+		    return;
+	    }
+	    else
+	    {
+		    event_card_container.setVisibility(View.VISIBLE);
+		    if(!Utilities.isNullString(cardEventItem.ImageUrl))
+		    {
+			    Picasso.with(getActivity())
+					    .load(cardEventItem.ImageUrl)
+					    .placeholder(R.drawable.events_image_place_holder)
+					    .into(imgv_eventImg)
+			    ;
+		    }
+		    else
+			    imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
+
+		    txtv_eventTitle.setText(cardEventItem.Title);
+		    txtv_eventDescription.setText(cardEventItem.Description);
+		    String evdateStr = MainActivity.reFormatDate(cardEventItem.EventDate, MainActivity.sdf_Date);
+		    txtv_event_timeValue.setText(evdateStr);
+		    txtv_event_placeValue.setText(cardEventItem.EventSiteCity);
+		    txtv_event_categoryValue.setText(cardEventItem.EventCategory);
+	    }
+
     }
+
+	private void getDayEvent(Date selectedDate) {
+		if(selectedDate == null)
+		{
+			return;
+		}
+		cardEventItem = EventsManager.getInstance().getEventOnDate(selectedDate);
+
+	}
+
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		if (error == null)
+		{
+			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
+			if((int)requestId == EVENTS_LIST_REQUEST_ID && resultObject!=null){
+				eventsList= (ArrayList<EventItem>) resultObject;
+				bindEventCard(lastSelectedDate);
+			}
+
+		}
+		else
+			bindEventCard(null);
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
+	}
 }

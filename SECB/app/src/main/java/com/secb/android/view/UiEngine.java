@@ -13,6 +13,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import net.comptoirs.android.common.helper.SharedPreferenceData;
+import net.comptoirs.android.common.view.CTApplication;
+
+import java.util.Locale;
 
 public class UiEngine {
 	public static void initialize(Context context)
@@ -46,6 +49,14 @@ public class UiEngine {
 
 		return 0;
 	}
+
+	public static Locale getCurrentAppLocale()
+	{
+		Context context = CTApplication.getContext();
+		Locale locale = context.getResources().getConfiguration().locale;
+		return locale;
+	}
+
 	public static class Fonts {
 		public static Typeface HVAR_BOLD ;
 		public static Typeface HVAR;

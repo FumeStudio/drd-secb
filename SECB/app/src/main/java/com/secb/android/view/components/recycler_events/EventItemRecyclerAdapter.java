@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
+import com.secb.android.view.MainActivity;
+import com.squareup.picasso.Picasso;
+
+import net.comptoirs.android.common.helper.Utilities;
+import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,28 +24,56 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
     Context context;
 
     public EventItemRecyclerAdapter(Context context, List<EventItem> itemsList) {
-        this.inflater = LayoutInflater.from(context);
+	    this.context=context;
+	    if(context == null)
+		    this.context= CTApplication.getContext();
+
         this.itemsList = itemsList;
-        this.context=context;
+	    try {
+		    this.inflater = LayoutInflater.from(context);
+	    } catch (Exception e) {
+		    e.printStackTrace();
+	    }
+
     }
 
     @Override
     public EventItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.event_item_card, parent, false);
+
+	    if(inflater==null && context!=null)
+		    this.inflater = LayoutInflater.from(context);
+
+	    View view = inflater.inflate(R.layout.event_item_card, parent, false);
 
         EventItemRecyclerViewHolder vh = new EventItemRecyclerViewHolder(view);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(EventItemRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(EventItemRecyclerViewHolder holder, int position)
+    {
         EventItem currentItem = itemsList.get(position);
-        holder.imgv_eventImg.setImageBitmap(currentItem.eventItemImage);
-        holder.txtv_eventTitle.setText(currentItem.eventItemTitle);
-        holder.txtv_eventDescription.setText(currentItem.eventItemDescription);
-        holder.txtv_event_timeValue.setText(currentItem.eventItemTime);
-        holder.txtv_event_placeValue.setText(currentItem.eventItemLocation);
-        holder.txtv_event_categoryValue.setText(currentItem.eventItemCategory);
+	    if(!Utilities.isNullString(currentItem.ImageUrl))
+	    {
+		    Picasso.with(context)
+				    .load(currentItem.ImageUrl)
+				    .placeholder(R.drawable.events_image_place_holder)
+				    .into(holder.imgv_eventImg)
+		    ;
+	    }
+	    else
+		    holder.imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
+
+
+
+	    holder.txtv_eventTitle.setText(currentItem.Title);
+        holder.txtv_eventDescription.setText(currentItem.Description);
+
+	    String evdateStr = MainActivity.reFormatDate(currentItem.EventDate, MainActivity.sdf_Date);
+
+        holder.txtv_event_timeValue.setText(evdateStr);
+        holder.txtv_event_placeValue.setText(currentItem.EventSiteCity);
+        holder.txtv_event_categoryValue.setText(currentItem.EventCategory);
     }
 
     @Override

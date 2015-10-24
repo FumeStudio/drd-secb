@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
@@ -63,9 +64,15 @@ public class NewsDetailsOperation extends BaseOperation {
 		Type listType = new TypeToken<List<NewsItem>>() {}.getType();
 		List<NewsItem> newsItems = gson.fromJson(response.response.toString(), listType);
 
+		updateNewsManager(newsItems);
 		return newsItems;
 	}
 
+	private void updateNewsManager(List<NewsItem> newsItems) {
+		if(newsItems!=null && newsItems.size()>0){
+			NewsManager.getInstance().setNewDetails(newsItems.get(0),context);
+		}
+	}
 
 
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    android:layout_marginTop="@dimen/event_card_margin"-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/news_item_card_height"
     android:layout_marginBottom="@dimen/event_card_margin"
-    android:layout_marginTop="@dimen/event_card_margin"
     android:background="@color/white"
     android:orientation="horizontal"
     android:weightSum="5">
@@ -22,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="bottom"
+            android:gravity="bottom|right"
+
             android:maxLines="1"
-            android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/sceb_dark_blue"
             android:textSize="@dimen/event_card_h1_text_size"
             android:textStyle="bold" />
@@ -35,9 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:maxLines="1"
-            android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/darkgrey_color"
             android:textSize="@dimen/event_card_h2_text_size" />
 
@@ -56,7 +56,6 @@
                 android:ellipsize="end"
                 android:gravity="left|top"
                 android:maxLines="1"
-                android:text="2:30 PM"
                 android:textColor="@color/darkgrey_color"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -70,6 +69,6 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"
         android:layout_weight="1"
-        android:src="@drawable/event_card_img" />
+        android:src="@drawable/news_image_place_holder" />
 
 </LinearLayout>

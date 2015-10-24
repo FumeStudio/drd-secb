@@ -17,8 +17,9 @@ import java.util.ArrayList;
 
 public class LocationsFilterLayout extends LinearLayout {
     private final View view;
+	private final Context context;
 
-    private LocationsFilterData locationsFilterData;
+	private LocationsFilterData locationsFilterData;
     private TextView txtv_location_filter_name_title, txtv_location_filter_city_title,
             txtv_location_filter_capacity_from_title, txtv_location_filter_capacity_to_title;
     private EditText txtv_location_filter_name_value,
@@ -34,6 +35,7 @@ public class LocationsFilterLayout extends LinearLayout {
 
     public LocationsFilterLayout(Context context) {
         super(context);
+	    this.context=context;
         view = LayoutInflater.from(context).inflate(R.layout.locations_filter_screen, null);
         initViews(view);
         applyFonts(view);
@@ -60,7 +62,7 @@ public class LocationsFilterLayout extends LinearLayout {
 
     private void applyFonts(View view)
     {
-        UiEngine.applyCustomFont(view, UiEngine.Fonts.HVAR);
+        UiEngine.applyFontsForAll(context,view, UiEngine.Fonts.HVAR);
         /*
         if (txtv_location_filter_name_title != null) {
             UiEngine.applyCustomFont(txtv_location_filter_name_title, UiEngine.Fonts.HVAR);

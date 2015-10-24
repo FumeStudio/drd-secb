@@ -15,7 +15,7 @@
     android:layout_weight="1"
     android:layout_height="match_parent"
     android:layout_marginRight="@dimen/event_card_margin"
-    android:src="@drawable/event_card_img"/>
+    android:src="@drawable/events_image_place_holder"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -28,7 +28,7 @@
             android:id="@+id/txtv_eventTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:text=""
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size"
             android:gravity="center_vertical"/>

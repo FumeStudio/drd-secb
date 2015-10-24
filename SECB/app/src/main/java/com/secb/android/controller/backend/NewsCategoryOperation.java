@@ -16,7 +16,6 @@ import net.comptoirs.android.common.helper.Logger;
 import org.apache.http.client.methods.HttpGet;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,26 +57,9 @@ public class NewsCategoryOperation extends BaseOperation {
     {
         if(newsCategoryItems==null ||newsCategoryItems.size()==0)
             return;
-
         //all news categories
-	    NewsManager.getInstance().setNewsCategoryList(newsCategoryItems);
-	    List<String> temp = new ArrayList<>();
+	    NewsManager.getInstance().setNewsCategoryList(newsCategoryItems,context);
 
-	    //english news categories
-	    temp.clear();
-	    for(NewsCategoryItem iterator:newsCategoryItems){
-		    temp.add(iterator.CategoryEnglish);
-	    }
-	    NewsManager.getInstance().setNewsEnglishCategoryList(temp);
-
-	    //arabic news categories
-	    temp.clear();
-	    for(NewsCategoryItem iterator:newsCategoryItems){
-		    temp.add(iterator.CategoryArabic);
-	    }
-	    NewsManager.getInstance().setNewsEnglishCategoryList(temp);
-
-	    temp=null;
     }
 
 

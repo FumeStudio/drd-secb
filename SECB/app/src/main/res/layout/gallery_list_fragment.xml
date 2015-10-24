@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?><!--last news card-->
+<!--
+    android:paddingTop="@dimen/home_graphs_card_padding"
+    android:paddingBottom="@dimen/home_graphs_card_padding"
+    android:paddingLeft="@dimen/home_graphs_card_padding"
+    android:paddingRight="@dimen/home_graphs_card_padding"-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/home_bg"
-    android:paddingTop="@dimen/home_graphs_card_padding"
-    android:paddingBottom="@dimen/home_graphs_card_padding"
-    android:paddingLeft="@dimen/home_graphs_card_padding"
-    android:paddingRight="@dimen/home_graphs_card_padding">
+    android:background="@drawable/home_bg">
 
 
+   <!-- android:layout_marginBottom="@dimen/home_graphs_card_padding"
+    android:layout_marginTop="@dimen/home_graphs_card_padding"-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/galleryRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/home_graphs_card_padding"
-        android:layout_marginTop="@dimen/home_graphs_card_padding"></android.support.v7.widget.RecyclerView>
+        android:visibility="gone"></android.support.v7.widget.RecyclerView>
     <TextView
         android:id="@+id/txtv_noData"
         android:layout_width="match_parent"
@@ -23,7 +25,6 @@
         android:layout_centerInParent="true"
         android:textColor="@color/secb_dark_text"
         android:textSize="@dimen/gallery_item_text_size"
-        android:visibility="gone"
         android:gravity="center"
-        android:text="@string/gallery_no_albums"/>
+        android:text="@string/loading"/>
 </RelativeLayout>

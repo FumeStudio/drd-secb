@@ -114,7 +114,7 @@ public class AlbumOperation extends BaseOperation {
         }
         else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
         {
-            GalleryManager.getInstance().addVideoAlbumList(albumId,galleryItems);
+            GalleryManager.getInstance().addVideoAlbumList(albumId,galleryItems,context);
         }
     }
 
