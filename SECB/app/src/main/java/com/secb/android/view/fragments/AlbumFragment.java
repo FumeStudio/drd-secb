@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -61,7 +62,7 @@ public class AlbumFragment extends SECBBaseFragment
     ImageView imgv_imageAlbum;
     TextView txtv_noData;
     private MediaController mediaController;
-    private CustomProgressDialog dialog;
+    private ProgressDialog dialog;
     private String albumId;
 
 
@@ -310,7 +311,7 @@ public class AlbumFragment extends SECBBaseFragment
         }
         vidv_videoAlbum.setVideoURI(Uri.parse(videoUrl));
         if(dialog ==null)
-            dialog =CustomProgressDialog.getInstance(getActivity(),false);
+            dialog = CustomProgressDialog.getInstance(getActivity(),false);
 
         dialog.show();
 

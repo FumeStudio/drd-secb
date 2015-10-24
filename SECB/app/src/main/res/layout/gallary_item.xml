@@ -25,6 +25,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
         <ImageView
             android:id="@+id/imgv_gallary_img"
             android:layout_width="match_parent"
@@ -54,7 +56,6 @@
         android:gravity="center_horizontal"
         android:maxLines="2"
         android:padding="@dimen/gallery_item_text_padding"
-        android:text="English Folderrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeee"
         android:textColor="@color/secb_light_text"
         android:textSize="@dimen/gallery_item_text_size" />
 

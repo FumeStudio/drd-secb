@@ -13,7 +13,8 @@ import com.secb.android.R;
 
 public class CustomProgressDialog  extends ProgressDialog
 {
-    private AnimationDrawable animation;
+	private static ProgressDialog dialog;
+	private AnimationDrawable animation;
     RotateAnimation rotateAnimation ;
     ImageView imgv_loadingCircle;
 
@@ -22,11 +23,18 @@ public class CustomProgressDialog  extends ProgressDialog
         super(context);
     }
 
-    public static CustomProgressDialog getInstance(Context context,boolean isCancelable)
+    public static ProgressDialog getInstance(Context context,boolean isCancelable)
     {
-        CustomProgressDialog dialog = new CustomProgressDialog(context);
+/*		dialog = new CustomProgressDialog(context);
         dialog.setIndeterminate(true);
-        dialog.setCancelable(isCancelable);
+        dialog.setCancelable(isCancelable);*/
+
+	    dialog = new ProgressDialog(context);
+	    dialog.setMessage(context.getString(R.string.loading));
+	    dialog.setIndeterminate(true);
+	    dialog.setCancelable(isCancelable);
+	    dialog.setCanceledOnTouchOutside(false);
+
         return dialog;
 
     }

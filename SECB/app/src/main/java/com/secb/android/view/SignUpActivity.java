@@ -1,5 +1,6 @@
 package com.secb.android.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class SignUpActivity extends SECBBaseActivity {
 //        dialog.setCancelable(true);
 //        dialog.setCanceledOnTouchOutside(false);
 
-        final CustomProgressDialog dialog =CustomProgressDialog.getInstance(SignUpActivity.this ,true);
+        final ProgressDialog dialog =  CustomProgressDialog.getInstance(SignUpActivity.this ,true);
         dialog.show();
         myWebView.setVerticalScrollBarEnabled(false);
         myWebView.setHorizontalScrollBarEnabled(false);

@@ -16,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.secb.android.R;
+import com.secb.android.model.CompanyProfile;
 import com.secb.android.model.EventItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
@@ -24,6 +25,9 @@ import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.helper.MapsHelper;
 import net.comptoirs.android.common.helper.Utilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventDetailsFragment  extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener
         ,GoogleMap.OnMarkerClickListener,OnMapReadyCallback
@@ -40,8 +44,13 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     private TextView txtv_event_details_eventRepeated;
     private TextView txtv_event_details_eventBody;
 
-    private GoogleMap googleMap;
-    private SupportMapFragment supportMapFragment;
+//    private GoogleMap googleMap;
+//    private SupportMapFragment supportMapFragment;
+
+
+	CompanyProfile companyProfile;
+	private GoogleMap googleMap;
+	private SupportMapFragment supportMapFragment;
 
     public static EventDetailsFragment newInstance(EventItem eventItem)
     {
@@ -70,11 +79,41 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
-        if(supportMapFragment!=null)
-            getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+//        if(supportMapFragment!=null)
+//            getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+
+	    if (supportMapFragment != null)
+		    getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
 
     }
 
+	public CompanyProfile getCompanyProfile() {
+
+		companyProfile = new CompanyProfile();
+		companyProfile.location = getResources().getString(R.string.secb_location_address);
+		companyProfile.email = getResources().getString(R.string.secb_email_address);
+		companyProfile.phone = getResources().getString(R.string.secb_phone_number);
+		companyProfile.fax = getResources().getString(R.string.secb_fax_number);
+		companyProfile.facebook = getResources().getString(R.string.secb_facebook);
+		companyProfile.twitter = getResources().getString(R.string.secb_twitter);
+		companyProfile.google = getResources().getString(R.string.secb_google);
+		companyProfile.linkedin = getResources().getString(R.string.secb_linkedIn);
+		companyProfile.locationOnMap = new LatLng(30.0882739, 31.3146007);
+
+		return companyProfile;
+	}
+	public void putCompanyOnMap() {
+		if (companyProfile != null && companyProfile.locationOnMap != null && googleMap != null) {
+			List<LatLng> list = new ArrayList<>();
+			list.add(companyProfile.locationOnMap);
+
+			Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.secb_map_marker);
+			Marker marker = MapsHelper.addMarker(googleMap, companyProfile.locationOnMap, bitmap);
+			MapsHelper.setMapCenter(true, googleMap, companyProfile.locationOnMap);
+//                MapsHelper.zoomToAllMarkers(list, googleMap, 5, 15);
+		}
+
+	}
 
 
 	@Override
@@ -101,8 +140,9 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         {
             eventItem = (EventItem)bundle.getSerializable("eventsItem");
         }
+	    getCompanyProfile();
         initViews(view);
-        initMap();
+//        initMap();
         bindViews();
         return view;
     }
@@ -184,6 +224,7 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         txtv_event_details_eventRepeated = (TextView) view.findViewById(R.id.txtv_event_repeatedValue);
         txtv_event_details_eventBody = (TextView) view.findViewById(R.id.event_details_body);
 
+	    initMap();
 
     }
 
@@ -200,15 +241,25 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
 	    }*/
 
 
-	    if (googleMap == null)
-        {
-            supportMapFragment = ((SupportMapFragment) getFragmentManager()
-                    .findFragmentById(R.id.events_map));
+//	    if (googleMap == null)
+//        {
+//            supportMapFragment = ((SupportMapFragment) getFragmentManager()
+//                    .findFragmentById(R.id.events_map));
+//
+//            if(supportMapFragment!=null)
+//                supportMapFragment.getMapAsync(this);
+//        }
+//        return (googleMap != null);
 
-            if(supportMapFragment!=null)
-                supportMapFragment.getMapAsync(this);
-        }
-        return (googleMap != null);
+
+	    if (googleMap == null) {
+		    supportMapFragment = ((SupportMapFragment) getFragmentManager()
+				    .findFragmentById(R.id.map));
+
+		    if (supportMapFragment != null)
+			    supportMapFragment.getMapAsync(this);
+	    }
+	    return (googleMap != null);
     }
 
 
@@ -258,8 +309,11 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        this.googleMap=googleMap;
-        putEventOnMap();
+//        this.googleMap=googleMap;
+//        putEventOnMap();
+
+	    this.googleMap = googleMap;
+	    putCompanyOnMap();
     }
 
     private void putEventOnMap()

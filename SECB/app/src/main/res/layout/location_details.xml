@@ -34,6 +34,7 @@
                 android:layout_height="@dimen/news_details_img_height"
                 android:layout_gravity="center_horizontal|top"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 android:src="@drawable/news_img_sample" />
             <include
                 android:layout_height="wrap_content"

@@ -315,7 +315,7 @@ public class CachingManager {
 	public ArrayList<GalleryItem> loadVideoGallery(Context appContext)
 	{
 //get file called "app_img_gallery.dat" from "videos" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_IMAGES, Engine.FileName.APP_VIDEO_GALLERY, appContext);
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_VIDEOS, Engine.FileName.APP_VIDEO_GALLERY, appContext);
 		ArrayList<GalleryItem> itemsList = null;
 		try
 		{

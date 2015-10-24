@@ -1,5 +1,6 @@
 package net.comptoirs.android.common.controller.backend;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -32,7 +33,8 @@ public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOpera
 
 	protected boolean isShowLoadingDialog = true;
 	protected Context context;
-	private CustomProgressDialog dialog;
+//	private CustomProgressDialog dialog;
+	private ProgressDialog dialog;
 
 	protected Object requestID = 0;
 

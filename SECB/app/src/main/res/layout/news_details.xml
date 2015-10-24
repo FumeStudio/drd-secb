@@ -31,9 +31,11 @@
             android:padding="@dimen/news_details_padding"
             android:visibility="gone">
 
+
             <ImageView
                 android:id="@+id/imgv_news_details_img"
                 android:layout_width="match_parent"
+                android:scaleType="centerCrop"
                 android:layout_height="@dimen/news_details_img_height" />
 
             <LinearLayout

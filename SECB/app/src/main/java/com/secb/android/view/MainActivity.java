@@ -150,6 +150,10 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
     public void openEventDetailsFragment(EventItem eventItem) {
         EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(eventItem);
         addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+
+//	    ContactUsFragmentTst contactUsFragment = ContactUsFragmentTst.newInstance(eventItem);
+//	    addFragment(contactUsFragment, contactUsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 
     public void openEventsCalendarFragment() {
@@ -382,7 +386,13 @@ public void getEventsList()
 				isVideoGalleryLoadingFinished = true;
 
 			for(RequestObserver iterator:galleryRequstObserverList)
-				iterator.handleRequestFinished(requestId,error,resulObject);
+				try
+				{
+					iterator.handleRequestFinished(requestId,error,resulObject);
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
 		}
 //news
 		else if( ((int)requestId == NEWS_LIST_REQUEST_ID ||

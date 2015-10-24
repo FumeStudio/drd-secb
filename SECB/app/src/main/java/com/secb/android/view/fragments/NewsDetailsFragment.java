@@ -200,7 +200,6 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 		        Picasso.with(getActivity())
 				        .load(newsItem.ImageUrl)
 				        .placeholder(R.drawable.news_image_place_holder)
-				        .resizeDimen(R.dimen.news_details_img_width,R.dimen.news_details_img_height)
 				        .into(imgv_news_details_img);
 	        }
 	        else

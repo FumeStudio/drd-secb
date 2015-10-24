@@ -5,6 +5,8 @@
     <string name="error_empty_email">يجب ادخال عنوان البريد الالكتروني بشكل صحيح</string>
     <string name="error_empty_password">يجب ادخال كلمة المرور بشكل صحيح</string>
     <string name="password_reset_done">يرجي مراجعة صندوق البريد الالكتروني</string>
+    <string name="attention">انتباه</string>
+    <string name="conn_error">خطأ ف الاتصال!</string>
     <string name="loading">جاري التحميل..</string>
     <string name="ok">موافق</string>
     <string name="cancel">الغاء</string>

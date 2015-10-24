@@ -26,12 +26,12 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 
         this.itemsList = itemsList;
 	    this.context=context;
-	    inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    if(context == null)
 	    {
 		    this.context= CTApplication.getContext();
 	    }
-	    try {
+	    try
+	    {
 		    this.inflater = LayoutInflater.from(context);
 	    } catch (Exception e) {
 		    e.printStackTrace();

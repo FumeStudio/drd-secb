@@ -89,8 +89,6 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
                 Picasso.with(context)
                         .load(currentItem.PhotoGalleryAlbumThumbnail)
                         .placeholder(R.drawable.image_place_holder)
-                        .error(R.drawable.image_place_holder_failed)
-                        /*.resize(100,50)*/
                         .into(holder.imgv_galleryImg);
             }
             else
@@ -105,7 +103,6 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
                 Picasso.with(context)
                         .load(currentItem.VideosGalleryAlbumThumbnail)
                         .placeholder(R.drawable.video_place_holder)
-                        .error(R.drawable.video_place_holder_failed)
                         .into(holder.imgv_galleryImg);
             }
             else
@@ -120,7 +117,6 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
                 Picasso.with(context)
                         .load(currentItem.PhotoGalleryImageUrl)
                         .placeholder(R.drawable.image_place_holder)
-                        .error(R.drawable.image_place_holder_failed)
                         .into(holder.imgv_galleryImg);
             }
             else
@@ -136,7 +132,6 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
                 Picasso.with(context)
                         .load(currentItem.VideosGalleryAlbumThumbnail)
                         .placeholder(R.drawable.video_place_holder)
-                        .error(R.drawable.video_place_holder_failed)
                         .into(holder.imgv_galleryImg);
             }
             else

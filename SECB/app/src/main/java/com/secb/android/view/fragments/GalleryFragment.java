@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -47,7 +48,7 @@ public class GalleryFragment extends SECBBaseFragment
     private List photoGalleryItemList;
     private List videoGalleryItemList;
     TextView txtv_noData;
-	private CustomProgressDialog progressDialog;
+	private ProgressDialog progressDialog;
 
 
     public static GalleryFragment newInstance(int galleryType , int galleryId)
@@ -170,7 +171,7 @@ public class GalleryFragment extends SECBBaseFragment
 
     private void initViews(View view)
     {
-	    progressDialog = new CustomProgressDialog(getActivity());
+	    progressDialog =  CustomProgressDialog.getInstance(getActivity(),true);
 	    progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 		    @Override
 		    public void onCancel(DialogInterface dialog) {
@@ -230,7 +231,7 @@ public class GalleryFragment extends SECBBaseFragment
 			        startWaiting();
 		        }
 		        else{
-			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true);
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, false);
 		        }
 	        }
         }
@@ -238,9 +239,9 @@ public class GalleryFragment extends SECBBaseFragment
         //get VideoGallery
         else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY )
         {
-	        photoGalleryItemList = GalleryManager.getInstance().getVideoGalleryList(getActivity());
-	        if(photoGalleryItemList != null && photoGalleryItemList.size()>0){
-		        handleRequestFinished(VIDEO_GALLERY_REQUEST_ID , null,photoGalleryItemList);
+	        videoGalleryItemList = GalleryManager.getInstance().getVideoGalleryList(getActivity());
+	        if(videoGalleryItemList != null && videoGalleryItemList.size()>0){
+		        handleRequestFinished(VIDEO_GALLERY_REQUEST_ID , null,videoGalleryItemList);
 	        }
 	        else
 	        {
@@ -258,7 +259,7 @@ public class GalleryFragment extends SECBBaseFragment
 	{
 		GalleryOperation operation=null ;
 		if(galleryTypeVideoGallery ==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
-			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, true,getActivity(), 100,0);
+			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, showDialog,getActivity(), 100,0);
 
 		else if(galleryTypeVideoGallery ==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
 			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,VIDEO_GALLERY_REQUEST_ID, showDialog,getActivity(), 100,0);

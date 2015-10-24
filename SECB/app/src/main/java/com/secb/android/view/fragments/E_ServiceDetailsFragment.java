@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -127,7 +128,7 @@ public class E_ServiceDetailsFragment extends SECBBaseFragment implements Fragme
 //        dialog.setCancelable(true);
 //        dialog.setCanceledOnTouchOutside(false);
 
-		final CustomProgressDialog dialog =CustomProgressDialog.getInstance(getActivity() ,true);
+		final ProgressDialog dialog =  CustomProgressDialog.getInstance(getActivity() ,true);
 		dialog.show();
 		myWebView.setVerticalScrollBarEnabled(false);
 		myWebView.setHorizontalScrollBarEnabled(false);

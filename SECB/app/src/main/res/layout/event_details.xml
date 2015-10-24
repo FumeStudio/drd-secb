@@ -32,25 +32,6 @@
             android:layout_alignParentTop="true"
             android:layout_margin="@dimen/event_details_iconed_info_margin"/>
 
-
-        <LinearLayout
-            android:id="@+id/map_container"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_height="@dimen/event_details_map_height">
-
-            <FrameLayout
-                android:id="@+id/mapFrame"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:visibility="gone"/>
-
-            <include layout="@layout/events_map_fragment"/>
-
-        </LinearLayout>
-
         <ScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -72,5 +53,22 @@
                 android:textSize="@dimen/event_details_text_size" />
         </ScrollView>
 
+        <LinearLayout
+            android:id="@+id/map_container"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="@dimen/event_details_map_height">
+
+            <FrameLayout
+                android:id="@+id/mapFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"/>
+
+            <include layout="@layout/map_fragment"/>
+
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

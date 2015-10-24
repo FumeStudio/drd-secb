@@ -1,5 +1,6 @@
 package com.secb.android.view.fragments;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,7 +48,7 @@ public class EventsListFragment extends SECBBaseFragment
     View view;
 	TextView txtv_noData;
     private EventsFilterLayout eventsFilterLayout=null;
-	private CustomProgressDialog progressDialog;
+	private ProgressDialog progressDialog;
 
     public static EventsListFragment newInstance() {
         EventsListFragment fragment = new EventsListFragment();
@@ -175,7 +176,7 @@ public class EventsListFragment extends SECBBaseFragment
     private void initViews(View view)
     {
 //        eventsList = DevData.getEventsList();
-	    progressDialog = new CustomProgressDialog(getActivity());
+	    progressDialog = CustomProgressDialog.getInstance(getActivity(),true);
 	    progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 		    @Override
 		    public void onCancel(DialogInterface dialog) {

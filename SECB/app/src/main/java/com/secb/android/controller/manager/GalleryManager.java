@@ -81,8 +81,8 @@ public class GalleryManager {
 
 //video gallery list
     public List<GalleryItem> getVideoGalleryList(Context appContext) {
-	    List<GalleryItem> temp = CachingManager.getInstance().loadVideoGallery(appContext);
-        return temp/*videoGalleryList*/;
+	    this.videoGalleryList = CachingManager.getInstance().loadVideoGallery(appContext);
+        return videoGalleryList/*videoGalleryList*/;
     }
     public void setVideoGalleryList(List<GalleryItem> videoGalleryList , Context appContext)
     {
