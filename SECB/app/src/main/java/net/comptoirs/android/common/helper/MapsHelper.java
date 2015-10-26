@@ -266,4 +266,21 @@ public class MapsHelper
             e.printStackTrace();
         }
     }
+
+    public static void zoomToSingleMarker(LatLng markerLocation ,final GoogleMap  map,int zoom ,boolean isAnimated)
+    {
+        CameraUpdate camUpdate = CameraUpdateFactory.newLatLngZoom(markerLocation, zoom);
+        try
+        {
+	        if(isAnimated)
+		        map.animateCamera(camUpdate);
+	        else
+		        map.moveCamera(camUpdate);
+//	        setMapCenter(isAnimated, map, markerLocation);
+        }
+	        catch (Exception e) {
+            // Map size can't be 0
+            e.printStackTrace();
+        }
+    }
 }

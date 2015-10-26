@@ -11,13 +11,11 @@
         android:orientation="vertical"
         android:layout_margin="@dimen/contact_us_base_margin" >
 
-        <FrameLayout
-            android:id="@+id/mapFrame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone"/>
-
         <include layout="@layout/map_fragment"/>
+
     </LinearLayout>
+
+    <!--youtube player-->
+
+    <include layout="@layout/youtube_player_fragment"/>
 </LinearLayout>

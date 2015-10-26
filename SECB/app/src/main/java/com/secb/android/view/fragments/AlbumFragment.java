@@ -5,19 +5,23 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.secb.android.R;
 import com.secb.android.controller.backend.AlbumOperation;
 import com.secb.android.controller.manager.GalleryManager;
@@ -37,6 +41,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.List;
 
@@ -56,7 +61,7 @@ public class AlbumFragment extends SECBBaseFragment
     View view;
     private List<GalleryItem> galleryItemList;
 
-    FrameLayout layout_videoPlayerContainer;
+    LinearLayout layout_videoPlayerContainer;
     LinearLayout layout_imagePlayerContainer;
     VideoView vidv_videoAlbum ;
     ImageView imgv_imageAlbum;
@@ -65,8 +70,14 @@ public class AlbumFragment extends SECBBaseFragment
     private ProgressDialog dialog;
     private String albumId;
 
+//youtube components
+	YouTubePlayerSupportFragment youTubePlayerSupportFragment;
+	public static final String YOUTUBE_API_KEY = "AIzaSyBYpLwG4bwNDTpqX5uzAJLFvXfXiE9BW-U";
+	public YouTubePlayer youTubePlayer  ;
+	private boolean isPlayerReadey;
 
-    public static AlbumFragment newInstance(int galleryType, String folderPath , String albumId) {
+
+	public static AlbumFragment newInstance(int galleryType, String folderPath , String albumId) {
         AlbumFragment fragment = new AlbumFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("galleryType", galleryType);
@@ -176,7 +187,7 @@ public class AlbumFragment extends SECBBaseFragment
             case R.id.imageViewBackHeader:
                 onBack();
                 break;
-//            case R.id.layout_videoPlayerContainer:
+            case R.id.layout_videoPlayerContainer:
             case R.id.layout_imagePlayerContainer:
                 hidePlayers();
                 break;
@@ -193,10 +204,10 @@ public class AlbumFragment extends SECBBaseFragment
         layoutManager = new GridLayoutManager(getActivity(), 2);
         galleryRecyclerView.setLayoutManager(layoutManager);
 
-//        layout_videoPlayerContainer = (FrameLayout) view.findViewById(R.id.layout_videoPlayerContainer);
+        layout_videoPlayerContainer = (LinearLayout) view.findViewById(R.id.layout_videoPlayerContainer);
         layout_imagePlayerContainer = (LinearLayout) view.findViewById(R.id.layout_imagePlayerContainer);
 
-//        layout_videoPlayerContainer.setOnClickListener(this);
+        layout_videoPlayerContainer.setOnClickListener(this);
         layout_imagePlayerContainer.setOnClickListener(this);
 
 //        vidv_videoAlbum = (VideoView) view.findViewById(R.id.vidv_videoAlbum);
@@ -278,12 +289,12 @@ public class AlbumFragment extends SECBBaseFragment
 
 
     private void hidePlayers() {
-//        if(layout_videoPlayerContainer!=null)
-//        {
-//            layout_videoPlayerContainer.setVisibility(View.GONE);
+        if(layout_videoPlayerContainer!=null)
+        {
+            layout_videoPlayerContainer.setVisibility(View.GONE);
 //            vidv_videoAlbum.stopPlayback();
-//
-//        }
+
+        }
 
         if(layout_imagePlayerContainer !=null)
         {
@@ -345,7 +356,8 @@ public class AlbumFragment extends SECBBaseFragment
             }
         });
     }
-    private void playVideo(String videoUrlvideoUrl) {
+    private void playVideo(String videoUrlvideoUrl)
+    {
         /*if(vidv_videoAlbum!=null &&layout_videoPlayerContainer !=null)
         {
             layout_videoPlayerContainer.setVisibility(View.VISIBLE);
@@ -353,6 +365,18 @@ public class AlbumFragment extends SECBBaseFragment
             vidv_videoAlbum.start();
         }*/
 
+	    if(!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube"))
+	    {
+			String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
+		    if(!Utilities.isNullString(videoId)/*&&youTubePlayer!=null*/)
+		    {
+//			    layout_videoPlayerContainer.setVisibility(View.VISIBLE);
+//			    youTubePlayer.cueVideo(videoId);
+			    initYoutubePlayer(videoId);
+		    }
+	    }
+	    else
+	    {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.parse(videoUrlvideoUrl), "video/*");
@@ -361,6 +385,7 @@ public class AlbumFragment extends SECBBaseFragment
             startActivity(choserIntent);
         else
             ((MainActivity)getActivity()).displayToast("can't play this video file ");
+	    }
     }
 
     private void playImage(String imageUrl)
@@ -377,6 +402,34 @@ public class AlbumFragment extends SECBBaseFragment
         }
     }
 
+	//youtube player
+
+	/** Youtube api*/
+	private void initYoutubePlayer(final String videoId) {
+		youTubePlayerSupportFragment= new YouTubePlayerSupportFragment();
+		youTubePlayerSupportFragment.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+
+			@Override
+			public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+				if(!wasRestored){
+					AlbumFragment.this.youTubePlayer = youTubePlayer;
+					AlbumFragment.this.isPlayerReadey= true;
+					layout_videoPlayerContainer.setVisibility(View.VISIBLE);
+					youTubePlayer.cueVideo(videoId);
+				}
+			}
+
+			@Override
+			public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+			}
+		});
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.replace(R.id.fragment_youtube_player, youTubePlayerSupportFragment);
+		fragmentTransaction.commit();
+	}
 
     @Override
     public void onItemLongClicked(View v, int position) {

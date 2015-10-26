@@ -837,4 +837,15 @@ public class Utilities {
 			return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
 		}
 	}
+
+	public static boolean isGooglePlayServicesInstalled(Context context){
+		PackageInfo pi =null;
+		try
+		{
+			pi = context.getPackageManager().getPackageInfo("com.google.android.gms", 0);
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return pi!=null;
+	}
 }

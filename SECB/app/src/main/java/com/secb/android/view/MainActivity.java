@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.secb.android.R;
 import com.secb.android.controller.backend.EventsCategoryOperation;
 import com.secb.android.controller.backend.EventsCityOperation;
@@ -38,6 +39,7 @@ import com.secb.android.view.fragments.NewsDetailsFragment;
 import com.secb.android.view.fragments.NewsListFragment;
 import com.secb.android.view.fragments.OrganizersDetailsFragment;
 import com.secb.android.view.fragments.OrganizersListFragment;
+import com.secb.android.view.fragments.TestFragment;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 
@@ -45,6 +47,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends SECBBaseActivity implements RequestObserver {
     private static final String TAG = "MainActivity";
@@ -149,11 +153,8 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
     public void openEventDetailsFragment(EventItem eventItem) {
         EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(eventItem);
-        addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-
-
-//	    ContactUsFragmentTst contactUsFragment = ContactUsFragmentTst.newInstance(eventItem);
-//	    addFragment(contactUsFragment, contactUsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+        addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+//	    openTestFragment(eventItem);
     }
 
     public void openEventsCalendarFragment() {
@@ -211,12 +212,14 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
     public void openE_ServicesFragment(){
         E_ServicesListFragment fragment = E_ServicesListFragment.newInstance();
-        addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+        addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
     }
 
 	public void openE_ServiceDetailsFragment(E_ServiceItem e_serviceItem) {
 		E_ServiceDetailsFragment fragment = E_ServiceDetailsFragment.newInstance(e_serviceItem);
 		addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+//		openTestFragment(null);
 	}
 
     public void openAboutUsFragment(){
@@ -239,6 +242,14 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
         else
             displayToast("can't play this video file ");
     }
+
+
+	public void openTestFragment(Object item)
+	{
+		TestFragment contactUsFragment = TestFragment.newInstance((EventItem)item);
+		addFragment(contactUsFragment, contactUsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+	}
 //==================================================================================================
 
 	/*background tasks to
@@ -475,5 +486,37 @@ public void getEventsList()
 			e.printStackTrace();
 		}
 		return newString;
+	}
+
+
+	public static String getYoutubeVideoId(String youtubeUrl)
+	{
+		String video_id="";
+		if (youtubeUrl != null && youtubeUrl.trim().length() > 0 && youtubeUrl.startsWith("http"))
+		{
+
+			String expression = "^.*((youtu.be"+ "\\/)" + "|(v\\/)|(\\/u\\/w\\/)|(embed\\/)|(watch\\?))\\??v?=?([^#\\&\\?]*).*"; // var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+			CharSequence input = youtubeUrl;
+			Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(input);
+			if (matcher.matches())
+			{
+				String groupIndex1 = matcher.group(7);
+				if(groupIndex1!=null && groupIndex1.length()==11)
+					video_id = groupIndex1;
+			}
+		}
+		return video_id;
+	}
+
+
+	public GoogleMap customizeMap(GoogleMap googleMap) {
+		if(googleMap==null)
+			return null;
+
+		googleMap.setBuildingsEnabled(true);
+
+
+		return googleMap;
 	}
 }

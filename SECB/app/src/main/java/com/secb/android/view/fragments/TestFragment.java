@@ -3,6 +3,8 @@ package com.secb.android.view.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.secb.android.R;
 import com.secb.android.model.CompanyProfile;
 import com.secb.android.model.EventItem;
+import com.secb.android.model.GalleryItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
@@ -25,22 +32,35 @@ import net.comptoirs.android.common.helper.MapsHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactUsFragmentTst extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, OnMapReadyCallback {
-
+public class TestFragment extends SECBBaseFragment implements FragmentBackObserver,
+		View.OnClickListener, OnMapReadyCallback,
+		YouTubePlayer.OnInitializedListener
+{
 
     View view;
-	CompanyProfile companyProfile;
+
     private GoogleMap googleMap;
     private SupportMapFragment supportMapFragment;
-	private EventItem eventItem;
+
+	CompanyProfile companyProfile;
+	private Object item;
+
+	//youtube api
+	public static final String YOUTUBE_API_KEY = "882171455859-s31pe3njdtvt3hrhjd7306hf11bbsiea.apps.googleusercontent.com";
+	private YouTubePlayerView youTubePlayerView;
+	private YouTubePlayer youTubePlayer;
+	private YouTubePlayerSupportFragment youTubePlayerFragment;
+	private java.lang.String videoId="oHGZdVY_7y0";
 
 
-	public static ContactUsFragmentTst newInstance(EventItem eventItem) {
-        ContactUsFragmentTst fragment = new ContactUsFragmentTst();
+	public static TestFragment newInstance(Object item) {
+        TestFragment fragment = new TestFragment();
 	    Bundle bundle = new Bundle();
-	    bundle.putSerializable("eventsItem", eventItem);
-	    fragment.setArguments(bundle);
-
+		if(item instanceof  EventItem)
+		{
+			bundle.putSerializable("item", (EventItem) item);
+	        fragment.setArguments(bundle);
+		}
         return fragment;
     }
 
@@ -48,7 +68,7 @@ public class ContactUsFragmentTst extends SECBBaseFragment implements FragmentBa
     public void onResume() {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.contactus));
+        ((SECBBaseActivity) getActivity()).setHeaderTitleText("Test");
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
@@ -80,17 +100,19 @@ public class ContactUsFragmentTst extends SECBBaseFragment implements FragmentBa
                 ((ViewGroup) oldParent).removeView(view);
             }
         } else {
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.maptest, container, false);
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.test_fragment, container, false);
             handleButtonsEvents();
             applyFonts(view);
         }
 
-
 	    Bundle bundle = getArguments();
 	    if(bundle!=null)
 	    {
-		    eventItem = (EventItem)bundle.getSerializable("eventsItem");
+		    item = bundle.getSerializable("item");
 	    }
+
+	    //using frame layout
+//	    fragmentYoutubeView= inflater.inflate(R.layout.youtube_player_fragment, container, false);
 
         initViews(view);
         getCompanyProfile();
@@ -106,7 +128,7 @@ public class ContactUsFragmentTst extends SECBBaseFragment implements FragmentBa
      * Apply Fonts
      */
     private void applyFonts(View view) {
-        UiEngine.applyFontsForAll(getActivity(), view, UiEngine.Fonts.HVAR);
+	    UiEngine.applyFontsForAll(getActivity(), view, UiEngine.Fonts.HVAR);
     }
 
     private void goBack() {
@@ -135,9 +157,14 @@ public class ContactUsFragmentTst extends SECBBaseFragment implements FragmentBa
 
     private void initViews(View view) {
 	    initMap();
+	    if(item !=null && item instanceof GalleryItem)
+	    {
+		    initYoutubePlayer();
+	    }
     }
 
-    public boolean initMap() {
+
+	public boolean initMap() {
         if (googleMap == null) {
             supportMapFragment = ((SupportMapFragment) getFragmentManager()
                     .findFragmentById(R.id.map));
@@ -196,4 +223,35 @@ public class ContactUsFragmentTst extends SECBBaseFragment implements FragmentBa
         putCompanyOnMap();
     }
 
+	/** Youtube api*/
+	private void initYoutubePlayer() {
+		youTubePlayerFragment= new YouTubePlayerSupportFragment();
+		youTubePlayerFragment.initialize(YOUTUBE_API_KEY, this);
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.replace(R.id.fragment_youtube_player, youTubePlayerFragment);
+		fragmentTransaction.commit();
+	}
+
+	@Override
+	public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
+		if(!wasRestored){
+			youTubePlayer=player;
+
+//			videoId="sCOzL5bmxm0";
+			player.cueVideo(videoId);
+//			player.cuePlaylist("RDrKDStyxjj0g");
+		}
+	}
+
+	@Override
+	public void onInitializationFailure(YouTubePlayer.Provider provider,
+	                                    YouTubeInitializationResult result) {
+		if (result.isUserRecoverableError()) {
+			result.getErrorDialog(this.getActivity(),1).show();
+		} else
+		{
+			((SECBBaseActivity)getActivity()).displayToast("YouTubePlayer.onInitializationFailure(): " + result.toString());
+		}
+	}
 }
