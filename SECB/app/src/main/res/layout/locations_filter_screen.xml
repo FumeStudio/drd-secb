@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#aa000000"
-    android:orientation="horizontal"
-    android:weightSum="3">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#aa000000"
+              android:orientation="horizontal"
+              android:weightSum="3">
 
     <LinearLayout
         android:id="@+id/layout_dark_layer"
@@ -17,10 +17,10 @@
     <View
         android:id="@+id/shadow"
         android:layout_width="2.3dp"
-        android:clickable="true"
         android:layout_height="match_parent"
         android:layout_above="@+id/filter_container"
-        android:background="@drawable/shadow_v"></View>
+        android:background="@drawable/shadow_v"
+        android:clickable="true"></View>
 
     <LinearLayout
         android:id="@+id/filter_container"
@@ -28,8 +28,8 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:background="@drawable/filter_bg"
-        android:orientation="vertical"
         android:clickable="true"
+        android:orientation="vertical"
         android:padding="@dimen/news_filter_padding">
 
 
@@ -56,7 +56,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/filter_location_name"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"/>
 
                 <!--from value-->
                 <EditText
@@ -68,20 +68,20 @@
                     android:maxLines="1"
                     android:text=""
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"/>
             </TableRow>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_grey" />
+                android:background="@color/light_grey"/>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal">
-                <!--to-->
+                <!--Location name-->
                 <TextView
                     android:id="@+id/txtv_location_filter_city_title"
                     android:layout_width="0dp"
@@ -91,19 +91,18 @@
                     android:gravity="center_vertical"
                     android:text="@string/filter_city"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"/>
 
-                <!--to value-->
-                <EditText
-                    android:id="@+id/txtv_location_filter_city_value"
+                <!--city value-->
+                <Spinner
+                    android:id="@+id/spn_city_filter_city_value"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_city"
-                    android:maxLines="1"
-                    android:text=""
+                    android:gravity="center_vertical"
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"
+                    android:visibility="visible"/>
             </TableRow>
 
 
@@ -114,12 +113,12 @@
             android:id="@+id/txtv_location_filter_type_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/news_filter_padding"
             android:layout_marginLeft="@dimen/news_filter_padding"
+            android:layout_marginTop="@dimen/news_filter_padding"
             android:text="@string/filter_location_type"
             android:textColor="@color/secb_light_text"
             android:textSize="@dimen/news_filter_btn_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <!--types input-->
         <LinearLayout
@@ -129,6 +128,24 @@
             android:orientation="vertical"
             android:padding="@dimen/news_filter_padding">
 
+            <TextView
+                android:id="@+id/txtv_noData"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/gallery_item_text_size"
+                android:visibility="visible"
+                android:gravity="center"
+                android:text="@string/loading"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/locationTypesRecyclerView"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/news_filter_screen_recycler_height">
+
+            </android.support.v7.widget.RecyclerView>
 
             <CheckBox
                 android:id="@+id/chkbox_type1"
@@ -139,7 +156,9 @@
                 android:drawableLeft="@drawable/check_box"
                 android:text="@string/news_filter_all_types"
                 android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:textSize="@dimen/news_filter_text_size"
+                android:visibility="gone"
+                />
 
             <CheckBox
                 android:id="@+id/chkbox_type2"
@@ -150,7 +169,8 @@
                 android:drawableLeft="@drawable/check_box"
                 android:text="@string/news_filter_economic_type"
                 android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:textSize="@dimen/news_filter_text_size"
+                android:visibility="gone"/>
 
             <CheckBox
                 android:id="@+id/chkbox_type3"
@@ -161,7 +181,9 @@
                 android:drawableLeft="@drawable/check_box"
                 android:text="@string/news_filter_political_type"
                 android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:textSize="@dimen/news_filter_text_size"
+                android:visibility="gone"/>
+
             <CheckBox
                 android:id="@+id/chkbox_type4"
                 android:layout_width="match_parent"
@@ -171,19 +193,20 @@
                 android:drawableLeft="@drawable/check_box"
                 android:text="@string/news_filter_public_type"
                 android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:textSize="@dimen/news_filter_text_size"
+                android:visibility="gone"/>
         </LinearLayout>
         <!--total capacity title-->
         <TextView
             android:id="@+id/txtv_news_filter_time_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/news_filter_padding"
             android:layout_marginLeft="@dimen/news_filter_padding"
+            android:layout_marginTop="@dimen/news_filter_padding"
             android:text="@string/filter_total_capacity"
             android:textColor="@color/secb_light_text"
             android:textSize="@dimen/news_filter_btn_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -207,7 +230,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/filter_time_from"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"/>
 
                 <!--from value-->
                 <EditText
@@ -219,13 +242,13 @@
                     android:maxLines="1"
                     android:text=""
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"/>
             </TableRow>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/light_grey" />
+                android:background="@color/light_grey"/>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -242,7 +265,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/filter_time_to"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"/>
 
                 <!--to value-->
                 <EditText
@@ -254,7 +277,7 @@
                     android:maxLines="1"
                     android:text=""
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/news_filter_text_size" />
+                    android:textSize="@dimen/news_filter_text_size"/>
             </TableRow>
 
 
@@ -270,19 +293,19 @@
             android:background="@color/secb_orange"
             android:text="@string/filters_apply_filter"
             android:textColor="@color/secb_light_text"
-            android:textSize="@dimen/news_filter_btn_text_size" />
+            android:textSize="@dimen/news_filter_btn_text_size"/>
 
 
     </LinearLayout>
 
 
 </LinearLayout>
-<!--
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    <!--
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
 
 
-</ScrollView>-->
+    </ScrollView>-->

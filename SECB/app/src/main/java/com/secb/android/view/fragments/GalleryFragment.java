@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.GalleryOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.GalleryManager;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.view.FragmentBackObserver;
@@ -37,8 +38,6 @@ public class GalleryFragment extends SECBBaseFragment
 
 {
     private static final String TAG = "GalleryFragment";
-    private static final int PHOTO_GALLERY_REQUEST_ID = 1;
-    private static final int VIDEO_GALLERY_REQUEST_ID = 2;
     RecyclerView galleryRecyclerView;
     GridLayoutManager layoutManager;
     GalleryItemRecyclerAdapter galleryItemRecyclerAdapter;
@@ -223,7 +222,7 @@ public class GalleryFragment extends SECBBaseFragment
             photoGalleryItemList = GalleryManager.getInstance().getImageGalleryList(getActivity());
 
 	        if(photoGalleryItemList != null && photoGalleryItemList.size()>0){
-		        handleRequestFinished(PHOTO_GALLERY_REQUEST_ID , null,photoGalleryItemList);
+		        handleRequestFinished(RequestIds.PHOTO_GALLERY_REQUEST_ID , null,photoGalleryItemList);
 	        }
 	        else
 	        {
@@ -241,7 +240,7 @@ public class GalleryFragment extends SECBBaseFragment
         {
 	        videoGalleryItemList = GalleryManager.getInstance().getVideoGalleryList(getActivity());
 	        if(videoGalleryItemList != null && videoGalleryItemList.size()>0){
-		        handleRequestFinished(VIDEO_GALLERY_REQUEST_ID , null,videoGalleryItemList);
+		        handleRequestFinished(RequestIds.VIDEO_GALLERY_REQUEST_ID , null,videoGalleryItemList);
 	        }
 	        else
 	        {
@@ -259,10 +258,10 @@ public class GalleryFragment extends SECBBaseFragment
 	{
 		GalleryOperation operation=null ;
 		if(galleryTypeVideoGallery ==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
-			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, showDialog,getActivity(), 100,0);
+			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,RequestIds.PHOTO_GALLERY_REQUEST_ID, showDialog,getActivity(), 100,0);
 
 		else if(galleryTypeVideoGallery ==GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
-			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,VIDEO_GALLERY_REQUEST_ID, showDialog,getActivity(), 100,0);
+			operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,RequestIds.VIDEO_GALLERY_REQUEST_ID, showDialog,getActivity(), 100,0);
 
 		if(operation!=null)
 		{
@@ -309,7 +308,7 @@ public class GalleryFragment extends SECBBaseFragment
             Logger.instance().v(TAG,"Success \n\t\t"+resultObject);
 
             //photoGallery
-            if((int)requestId == PHOTO_GALLERY_REQUEST_ID && resultObject!=null)
+            if((int)requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID && resultObject!=null)
             {
                 photoGalleryItemList = (List) resultObject;
                 for(Object iterator : photoGalleryItemList){
@@ -319,7 +318,7 @@ public class GalleryFragment extends SECBBaseFragment
 
             }
             //videoGallery
-            else if((int)requestId == VIDEO_GALLERY_REQUEST_ID && resultObject!=null)
+            else if((int)requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID && resultObject!=null)
             {
                 videoGalleryItemList = (List) resultObject;
                 for(Object iterator : videoGalleryItemList){

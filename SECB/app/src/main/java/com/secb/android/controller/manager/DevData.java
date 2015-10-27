@@ -136,16 +136,16 @@ public class DevData
         LocationItem locationItem = new LocationItem();
 
         locationItem.LoccationItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
-        locationItem.LoccationItemTitle = CTApplication.getContext().getString(R.string.dev_name);
-        locationItem.LoccationItemAddress= CTApplication.getContext().getString(R.string.dev_address);
-        locationItem.LoccationItemDescription=CTApplication.getContext().getString(R.string.dev_desc);
-        locationItem.LoccationItemEmail="Email Email Email Email Email Email ";
-        locationItem.LoccationItemPhone="012222233555-012258554555";
+        locationItem.SiteName = CTApplication.getContext().getString(R.string.dev_name);
+        locationItem.SiteAddressDescription = CTApplication.getContext().getString(R.string.dev_address);
+        locationItem.SiteDescription =CTApplication.getContext().getString(R.string.dev_desc);
+        locationItem.SiteEmail ="Email Email Email Email Email Email ";
+        locationItem.SitePhone ="012222233555-012258554555";
 
 
-        locationItem.LoccationItemType="Type 1 ";
-        locationItem.LoccationItemCapacity= 120;
-        locationItem.LoccationItemSpace=2250;
+        locationItem.SiteType ="Type 1 ";
+        locationItem.SiteCapacity = 120+"";
+        locationItem.SiteArea =2250+"";
         locationItem.LoccationItemRoomType="room 1 ";
         locationItem.LoccationItemRoomCapacity = 50;
         locationItem.LoccationItemRoomSpace = 500;

@@ -57,7 +57,8 @@ public class LoginOperation extends BaseOperation {
          cookieValue = (response.responseHeaders.get("Set-Cookie"));
         if(!Utilities.isNullString(cookieValue))
             userToLogin.loginCookie = cookieValue;
-        UserManager.getInstance().saveUser((User) userToLogin);
+
+        UserManager.getInstance().saveUser(userToLogin);
         Logger.instance().v(TAG,"cookieName = "+cookieValue);
         return userToLogin;
     }

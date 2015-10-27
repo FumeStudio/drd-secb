@@ -13,6 +13,9 @@ import com.secb.android.model.LocationItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.squareup.picasso.Picasso;
+
+import net.comptoirs.android.common.helper.Utilities;
 
 public class LocationsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
     LocationItem locationItem;
@@ -153,19 +156,31 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
     {
         if(this.locationItem !=null)
         {
-            imgv_locationImg.setImageBitmap(locationItem.LoccationItemImage);
-            txtv_location_nameValue.setText(locationItem.LoccationItemTitle);
-            txtv_location_typeValue.setText(locationItem.LoccationItemType);
-            txtv_location_description.setText(locationItem.LoccationItemDescription);
-            txtv_location_capacityValue.setText(locationItem.LoccationItemCapacity+"");
-            txtv_location_spaceValue.setText(locationItem.LoccationItemSpace+"");
+//            imgv_locationImg.setImageBitmap(locationItem.LoccationItemImage);
+
+	        if(!Utilities.isNullString(locationItem.SiteImage))
+	        {
+		        Picasso.with(getActivity())
+				        .load(locationItem.SiteImage)
+				        .placeholder(R.drawable.location_image_place_holder)
+				        .into(imgv_locationImg)
+		        ;
+	        }
+	        else
+		        imgv_locationImg.setImageResource(R.drawable.location_image_place_holder);
+
+	        txtv_location_nameValue.setText(locationItem.SiteName);
+            txtv_location_typeValue.setText(locationItem.SiteType);
+            txtv_location_description.setText(locationItem.SiteDescription);
+            txtv_location_capacityValue.setText(locationItem.SiteCapacity +"");
+            txtv_location_spaceValue.setText(locationItem.SiteArea +"");
             txtv_location_roomTypeValue.setText(locationItem.LoccationItemRoomType+"");
             txtv_location_roomCapacityValue.setText(locationItem.LoccationItemRoomCapacity+"");
             txtv_location_roomSpaceValue.setText(locationItem.LoccationItemRoomSpace+"");
             txtv_location_roomCountValue.setText(locationItem.LoccationItemNumberOrRooms+"");
-            txtv_location_address_value.setText(locationItem.LoccationItemAddress);
-            txtv_location_phone_value.setText(locationItem.LoccationItemPhone);
-            txtv_location_email_value.setText(locationItem.LoccationItemEmail);
+            txtv_location_address_value.setText(locationItem.SiteAddressDescription);
+            txtv_location_phone_value.setText(locationItem.SitePhone);
+            txtv_location_email_value.setText(locationItem.SiteEmail);
         }
     }
 

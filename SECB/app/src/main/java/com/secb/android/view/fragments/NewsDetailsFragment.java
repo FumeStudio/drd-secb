@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.NewsDetailsOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
@@ -32,7 +33,7 @@ import net.comptoirs.android.common.helper.Utilities;
 import java.util.ArrayList;
 
 public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RequestObserver {
-	private static final int NEWS_DETAILS_REQUEST_ID = 1;
+
 	private static final String TAG = "NewsDetailsFragment";
 	NewsItem newsItem;
     ImageView imgv_news_details_img;
@@ -110,14 +111,14 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 		if(item!=null){
 			newsList = new ArrayList<>();
 			newsList.add(item);
-			handleRequestFinished(NEWS_DETAILS_REQUEST_ID,null,newsList);
+			handleRequestFinished(RequestIds.NEWS_DETAILS_REQUEST_ID,null,newsList);
 		}
 		else
 		{
 			NewsFilterData newsFilterData = new NewsFilterData();
 			newsFilterData.newsID = this.newsItem.ID;
 			newsFilterData.newsCategory = "All";
-			NewsDetailsOperation operation = new NewsDetailsOperation(NEWS_DETAILS_REQUEST_ID, true, getActivity(), newsFilterData, 100, 0);
+			NewsDetailsOperation operation = new NewsDetailsOperation(RequestIds.NEWS_DETAILS_REQUEST_ID, true, getActivity(), newsFilterData, 100, 0);
 			operation.addRequsetObserver(this);
 			operation.execute();
 		}
@@ -219,7 +220,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 		if (error == null)
 		{
 			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
-			if((int)requestId == NEWS_DETAILS_REQUEST_ID && resultObject!=null){
+			if((int)requestId == RequestIds.NEWS_DETAILS_REQUEST_ID && resultObject!=null){
 				newsList= (ArrayList<NewsItem>) resultObject;
 				if (newsList!=null&&newsList.size()>0)
 				{

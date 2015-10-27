@@ -8,17 +8,21 @@ import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.secb.android.R;
+import com.secb.android.controller.backend.E_GuideLocationListOperation;
+import com.secb.android.controller.backend.E_GuideLocationTypesOperation;
 import com.secb.android.controller.backend.EventsCategoryOperation;
 import com.secb.android.controller.backend.EventsCityOperation;
 import com.secb.android.controller.backend.EventsListOperation;
 import com.secb.android.controller.backend.GalleryOperation;
 import com.secb.android.controller.backend.NewsCategoryOperation;
 import com.secb.android.controller.backend.NewsListOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.model.E_ServiceItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.model.LocationItem;
+import com.secb.android.model.LocationsFilterData;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
@@ -53,13 +57,7 @@ import java.util.regex.Pattern;
 public class MainActivity extends SECBBaseActivity implements RequestObserver {
     private static final String TAG = "MainActivity";
 
-	private static final int PHOTO_GALLERY_REQUEST_ID = 1;
-	private static final int VIDEO_GALLERY_REQUEST_ID = 2;
-	private static final int NEWS_CATEGORY_REQUEST_ID = 3;
-	private static final int NEWS_LIST_REQUEST_ID = 4;
-	private static final int EVENTS_CATEGORY_REQUEST_ID = 5;
-	private static final int EVENTS_LIST_REQUEST_ID = 6;
-	private static final int EVENTS_CITY_REQUEST_ID = 7;
+
 
 	LinearLayout fragmentContainer;
     HomeFragment homeFragment;
@@ -67,6 +65,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	ArrayList<RequestObserver> galleryRequstObserverList;
 	ArrayList<RequestObserver> newsRequstObserverList;
 	ArrayList<RequestObserver> eventsRequstObserverList;
+	ArrayList<RequestObserver> locationRequstObserverList;
 
 	private RequestObserver newsRequstObserver;
 	public boolean isNewsLoadingFinished;
@@ -75,12 +74,14 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	private RequestObserver galleryRequstObserver ;
 	public boolean isPhotoGalleryLoadingFinished;
 	public boolean isVideoGalleryLoadingFinished;
+	private RequestObserver locationRequstObserver ;
+	public boolean isLocationLoadingFinished;
+
 
 	public static SimpleDateFormat sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Time = new SimpleDateFormat("kk:mm a", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm",  UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ",  UiEngine.getCurrentAppLocale());
-
 
 
 
@@ -116,6 +117,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		galleryRequstObserverList = new ArrayList<>();
 		newsRequstObserverList= new ArrayList<>();
 		eventsRequstObserverList= new ArrayList<>();
+		locationRequstObserverList= new ArrayList<>();
 	}
 
 	private void initiViews()
@@ -277,8 +279,13 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	/*Events Cities List*/
 		getEventsCities();
-	}
 
+	/*E-Guide Location Types List*/
+		getEguideLocationTypes();
+
+	/*E-Guide Location List*/
+		getEguideLocationList();
+	}
 
 
 	/**
@@ -303,6 +310,13 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		eventsRequstObserverList.add(newsRequstObserver);
 	}
 
+//eventse-guide Location
+	public void setLocationRequstObserver(RequestObserver locationRequstObserver)
+	{
+		this.locationRequstObserver = locationRequstObserver;
+		locationRequstObserverList.add(locationRequstObserver);
+	}
+
 
 	/**
 	 * Operations
@@ -310,7 +324,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 //photo gallery
 	private void getPhotoGallery()
 	{
-		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,PHOTO_GALLERY_REQUEST_ID, false,this, 100,0);
+		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,RequestIds.PHOTO_GALLERY_REQUEST_ID, false,this, 100,0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 //		new Thread(new Runnable() {
@@ -327,14 +341,14 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	}
 //video gallery
 	private void getVideoGallery() {
-		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,VIDEO_GALLERY_REQUEST_ID, false,this, 100,0);
+		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,RequestIds.VIDEO_GALLERY_REQUEST_ID, false,this, 100,0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
 //news categories
 	public void getNewsCategories()
 	{
-		NewsCategoryOperation operation = new NewsCategoryOperation(NEWS_CATEGORY_REQUEST_ID, false,this);
+		NewsCategoryOperation operation = new NewsCategoryOperation(RequestIds.NEWS_CATEGORY_REQUEST_ID, false,this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -344,21 +358,21 @@ public void getNewsList()
 		NewsFilterData newsFilterData = new NewsFilterData();
 		newsFilterData.newsCategory="All";
 		newsFilterData.newsID="All";
-		NewsListOperation operation = new NewsListOperation(NEWS_LIST_REQUEST_ID,false,this,newsFilterData,100,0);
+		NewsListOperation operation = new NewsListOperation(RequestIds.NEWS_LIST_REQUEST_ID,false,this,newsFilterData,100,0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
 //events cities
 	public void getEventsCities()
 	{
-		EventsCityOperation operation = new EventsCityOperation(EVENTS_CITY_REQUEST_ID ,false,this);
+		EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID ,false,this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
-	//events categories
+//events categories
 	public void getEventsCategories()
 	{
-		EventsCategoryOperation operation = new EventsCategoryOperation(EVENTS_CATEGORY_REQUEST_ID ,false,this);
+		EventsCategoryOperation operation = new EventsCategoryOperation(RequestIds.EVENTS_CATEGORY_REQUEST_ID ,false,this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -366,13 +380,26 @@ public void getNewsList()
 public void getEventsList()
 	{
 		EventsFilterData eventsFilterData = new EventsFilterData();
-		final EventsListOperation operation = new EventsListOperation(EVENTS_LIST_REQUEST_ID,false,this,eventsFilterData,100,0);
+		final EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_REQUEST_ID,false,this,eventsFilterData,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+//E-Guide Location Types List
+	private void getEguideLocationTypes()
+	{
+		final E_GuideLocationTypesOperation operation = new E_GuideLocationTypesOperation(RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID ,false,this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
 
 
-
+//E-Guide Location List
+	private void getEguideLocationList() {
+		E_GuideLocationListOperation operation = new E_GuideLocationListOperation(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID,false,this,new LocationsFilterData(),100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
 
 
@@ -387,13 +414,13 @@ public void getEventsList()
 	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject)
 	{
 //gallery
-		if( ((int)requestId == PHOTO_GALLERY_REQUEST_ID ||
-				(int)requestId == VIDEO_GALLERY_REQUEST_ID) &&
+		if( ((int)requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
+				(int)requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
 				/*galleryRequstObserver!=null  && */galleryRequstObserverList.size()>0)
 		{
-			if( (int)requestId == PHOTO_GALLERY_REQUEST_ID)
+			if( (int)requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID)
 				isPhotoGalleryLoadingFinished = true;
-			else if( (int)requestId == VIDEO_GALLERY_REQUEST_ID)
+			else if( (int)requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID)
 				isVideoGalleryLoadingFinished = true;
 
 			for(RequestObserver iterator:galleryRequstObserverList)
@@ -406,26 +433,43 @@ public void getEventsList()
 				}
 		}
 //news
-		else if( ((int)requestId == NEWS_LIST_REQUEST_ID ||
-				(int)requestId == NEWS_CATEGORY_REQUEST_ID)/* &&
+		else if( ((int)requestId == RequestIds.NEWS_LIST_REQUEST_ID ||
+				(int)requestId == RequestIds.NEWS_CATEGORY_REQUEST_ID)/* &&
 				newsRequstObserver!=null*/ && newsRequstObserverList.size()>0)
 		{
-			if( (int)requestId == NEWS_LIST_REQUEST_ID)
+			if( (int)requestId == RequestIds.NEWS_LIST_REQUEST_ID)
 				isNewsLoadingFinished = true;
 			for(RequestObserver iterator:newsRequstObserverList)
 				iterator.handleRequestFinished(requestId,error,resulObject);
 		}
 //events
-		else if( (  (int)requestId == EVENTS_LIST_REQUEST_ID ||
-					(int)requestId == EVENTS_CATEGORY_REQUEST_ID ||
-					(int)requestId == EVENTS_CITY_REQUEST_ID
+		else if( (  (int)requestId == RequestIds.EVENTS_LIST_REQUEST_ID ||
+					(int)requestId == RequestIds.EVENTS_CATEGORY_REQUEST_ID ||
+					(int)requestId == RequestIds.EVENTS_CITY_REQUEST_ID
 				 )
 				/*&& eventsRequstObserver!=null*/
 				&& eventsRequstObserverList.size()>0)
 		{
-			if( (int)requestId == EVENTS_LIST_REQUEST_ID)
+			if( (int)requestId == RequestIds.EVENTS_LIST_REQUEST_ID)
 				isEventsLoadingFinished = true;
 			for(RequestObserver iterator:eventsRequstObserverList)
+				iterator.handleRequestFinished(requestId,error,resulObject);
+
+			//because location use same city api used by events
+			//let location observer listen finishing loading event
+			if((int)requestId == RequestIds.EVENTS_CITY_REQUEST_ID && locationRequstObserverList.size()>0){
+				for(RequestObserver iterator:locationRequstObserverList)
+					iterator.handleRequestFinished(requestId,error,resulObject);
+			}
+		}
+//Eguide Locations
+		else if( (  (int)requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID ||
+					(int)requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID    )
+				&& locationRequstObserverList.size()>0)
+		{
+			if( (int)requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID)
+				isLocationLoadingFinished = true;
+			for(RequestObserver iterator:locationRequstObserverList)
 				iterator.handleRequestFinished(requestId,error,resulObject);
 		}
 	}
@@ -434,19 +478,19 @@ public void getEventsList()
 	public void requestCanceled(Integer requestId, Throwable error)
 	{
 //gallery
-		if( (requestId == PHOTO_GALLERY_REQUEST_ID ||
-				requestId == VIDEO_GALLERY_REQUEST_ID) &&
+		if( (requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
+				requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
 				galleryRequstObserver!=null)
 		{
 			galleryRequstObserver.requestCanceled(requestId, error);
 		}
 //news
-		else if(requestId == NEWS_LIST_REQUEST_ID && newsRequstObserver!=null && newsRequstObserver!=null)
+		else if(requestId == RequestIds.NEWS_LIST_REQUEST_ID && newsRequstObserver!=null && newsRequstObserver!=null)
 		{
 			newsRequstObserver.requestCanceled(requestId, error);
 		}
 //events
-		else if(requestId == EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
+		else if(requestId == RequestIds.EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
 		{
 			eventsRequstObserver.requestCanceled(requestId, error);
 		}
@@ -456,19 +500,19 @@ public void getEventsList()
 	public void updateStatus(Integer requestId, String statusMsg)
 	{
 //gallery
-		if( (requestId == PHOTO_GALLERY_REQUEST_ID ||
-				requestId == VIDEO_GALLERY_REQUEST_ID) &&
+		if( (requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
+				requestId ==RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
 				galleryRequstObserver!=null)
 		{
 			galleryRequstObserver.updateStatus(requestId, statusMsg);
 		}
 //news
-		else if(requestId == NEWS_LIST_REQUEST_ID && eventsRequstObserver!=null)
+		else if(requestId == RequestIds.NEWS_LIST_REQUEST_ID && eventsRequstObserver!=null)
 		{
 			newsRequstObserver.updateStatus(requestId, statusMsg);
 		}
 //events
-		else if(requestId == EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
+		else if(requestId == RequestIds.EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
 		{
 			eventsRequstObserver.updateStatus(requestId, statusMsg);
 		}

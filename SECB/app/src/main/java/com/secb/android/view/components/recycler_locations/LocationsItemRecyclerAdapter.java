@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.secb.android.R;
 import com.secb.android.model.LocationItem;
+import com.squareup.picasso.Picasso;
 
+import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.Collections;
@@ -48,11 +50,23 @@ public class LocationsItemRecyclerAdapter extends RecyclerView.Adapter<Locations
     @Override
     public void onBindViewHolder(LocationsItemRecyclerViewHolder holder, int position) {
         LocationItem currentItem = itemsList.get(position);
-        holder.imgv_locationImg.setImageBitmap(currentItem.LoccationItemImage);
-        holder.txtv_locationTitle.setText(currentItem.LoccationItemTitle);
-        holder.txtv_locationDescription.setText(currentItem.LoccationItemDescription);
-        holder.txtv_location_capacityValue.setText(currentItem.LoccationItemCapacity+"");
-        holder.txtv_location_spaceValue.setText(currentItem.LoccationItemSpace+"");
+//        holder.imgv_locationImg.setImageBitmap(currentItem.LoccationItemImage);
+
+	    if(!Utilities.isNullString(currentItem.SiteImage))
+	    {
+		    Picasso.with(context)
+				    .load(currentItem.SiteImage)
+				    .placeholder(R.drawable.location_image_place_holder)
+				    .into(holder.imgv_locationImg)
+		    ;
+	    }
+	    else
+		    holder.imgv_locationImg.setImageResource(R.drawable.location_image_place_holder);
+
+        holder.txtv_locationTitle.setText(currentItem.SiteName);
+        holder.txtv_locationDescription.setText(currentItem.SiteDescription);
+        holder.txtv_location_capacityValue.setText(currentItem.SiteCapacity +"");
+        holder.txtv_location_spaceValue.setText(currentItem.SiteArea +"");
 
         holder.txtv_location_capacityValue.setTextColor(context.getResources().getColor(R.color.secb_dark_text));
         holder.txtv_location_spaceValue.setTextColor(context.getResources().getColor(R.color.secb_dark_text));

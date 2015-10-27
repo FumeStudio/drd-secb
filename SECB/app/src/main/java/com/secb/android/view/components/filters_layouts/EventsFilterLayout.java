@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.Consts;
 import com.secb.android.model.EventsCategoryItem;
@@ -33,8 +34,7 @@ import java.util.Date;
 import java.util.List;
 
 public class EventsFilterLayout extends LinearLayout implements View.OnClickListener, RequestObserver {
-	private static final int EVENTS_CATEGORIES_REQUEST_ID = 5;
-	private static final int EVENTS_CITIES_REQUEST_ID = 7;
+
 	private final View view;
 
     private EventsFilterData eventsFilterData;
@@ -120,9 +120,10 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
 		{
 			eventsCategoriesRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(context.getString(R.string.news_no_categories));
+			txtv_noData.setText(context.getString(R.string.news_no_types));
 		}
 	}
+
 	private void bindCitiesSpinner()
 	{
 		if(citiesList!=null && citiesList.size()>0){
@@ -200,7 +201,7 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
     {
         eventsFilterData = new EventsFilterData();
 
-        eventsFilterData.city = ((EventsCityItem)spn_city.getSelectedItem()).CityArabic.toString();
+//        eventsFilterData.city = ((EventsCityItem)spn_city.getSelectedItem()).CityArabic.toString();
 
 	    EventsCityItem selectedItem = ((EventsCityItem) spn_city.getSelectedItem());
 	    eventsFilterData.city=selectedItem.ID;
@@ -275,12 +276,12 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
 		if (error == null)
 		{
-			if((int)requestId == EVENTS_CATEGORIES_REQUEST_ID && resultObject!=null)
+			if((int)requestId == RequestIds.EVENTS_CATEGORY_REQUEST_ID && resultObject!=null)
 			{
 				categoriesList= EventsManager.getInstance().getEventsCategoryList(context);
 				bindCategoriesRecycler();
 			}
-			else if ((int) requestId == EVENTS_CITIES_REQUEST_ID && resultObject != null) {
+			else if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID && resultObject != null) {
 				citiesList = EventsManager.getInstance().getEventsCityList(context);
 				bindCitiesSpinner();
 			}

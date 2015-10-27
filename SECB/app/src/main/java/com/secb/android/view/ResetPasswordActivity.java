@@ -6,12 +6,21 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.ForgetPasswordOperation;
+import com.secb.android.controller.backend.RequestIds;
 
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.CTHttpResponse;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
+import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 
-public class ResetPasswordActivity extends SECBBaseActivity {
+public class ResetPasswordActivity extends SECBBaseActivity implements RequestObserver{
 
-    EditText edt_email;
+	private static final String TAG = "ResetPasswordActivity";
+	EditText edt_email;
     Button btn_resetPassword;
     public ResetPasswordActivity() {
         super(R.layout.reset_password, false);
@@ -27,8 +36,9 @@ public class ResetPasswordActivity extends SECBBaseActivity {
     private void initViews()
     {
         edt_email = (EditText) findViewById(R.id.edt_email);
-        btn_resetPassword = (Button) findViewById(R.id.btn_resetPassword);
 
+		edt_email.setText("secbadmin");
+        btn_resetPassword = (Button) findViewById(R.id.btn_resetPassword);
         btn_resetPassword.setOnClickListener(this);
     }
 
@@ -38,7 +48,8 @@ public class ResetPasswordActivity extends SECBBaseActivity {
         switch (v.getId())
         {
             case R.id.btn_resetPassword:
-	            if(validateInputFields())
+//	            if(validateInputFields())
+//	            displaySuccessMessage();
 		            sendResetEmail();
             break;
         }
@@ -46,7 +57,10 @@ public class ResetPasswordActivity extends SECBBaseActivity {
 
 	private void sendResetEmail()
 	{
-		displayToast(getString(R.string.password_reset_done) +"\n"+ edt_email.getText().toString());
+		ForgetPasswordOperation operation = new ForgetPasswordOperation(RequestIds.FORGET_PASSWORD_REQUEST_ID,true,this, edt_email.getText().toString());
+		operation.addRequsetObserver(this);
+		operation.execute();
+//		displayToast(getString(R.string.password_reset_done) + "\n" + edt_email.getText().toString());
 	}
 
 	public void applyFonts(){
@@ -63,5 +77,58 @@ public class ResetPasswordActivity extends SECBBaseActivity {
 			edt_email.setError(getString(R.string.error_empty_email));
 
 		return isEmailValid;
+	}
+
+	public void displaySuccessMessage(){
+		String msg = getString(R.string.password_reset_done);
+		msg = String.format(msg, edt_email.getText().toString());
+		ErrorDialog.showMessageDialog(getString(R.string.success),
+				msg,
+				ResetPasswordActivity.this);
+	}
+
+
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject) {
+		if (error==null){
+			if((int)requestId==RequestIds.FORGET_PASSWORD_REQUEST_ID &&
+					resulObject!=null &&
+					((CTHttpResponse)resulObject).statusCode==200)
+			{
+				displaySuccessMessage();
+
+			}
+		}
+		else if (error != null && error instanceof CTHttpError)
+		{
+			int statusCode = ((CTHttpError) error).getStatusCode();
+			String errorMsg = ((CTHttpError) error).getErrorMsg();
+			if (RequestHandler.isRequestTimedOut(statusCode))
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), ResetPasswordActivity.this);
+			}
+			else if (statusCode == -1)
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+						ResetPasswordActivity.this);
+			}
+			else
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), errorMsg,
+						ResetPasswordActivity.this);
+			}
+
+			Logger.instance().v(TAG,error);
+		}
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
 	}
 }

@@ -219,6 +219,9 @@ public class Engine {
 		//initialize events folder
 		DataFolder.USER_EVENTS= getCacheDir(appContext,"events");
 
+		//initialize e-guide locations folder
+		DataFolder.USER_EGUIDE_LOCATION= getCacheDir(appContext,"locations");
+
 	}
 
     public static void switchAppLanguage(ContextWrapper context) {
@@ -308,21 +311,30 @@ public class Engine {
 
 	    //image gallery list
 	    public final static String APP_IMG_GALLERY = "app_img_gallery.dat";
+
 	    //video gallery list
 	    public static final String APP_VIDEO_GALLERY = "app_video_gallery.dat";
 
 	    //news categories list
 	    public static final String APP_NEWS_CATEGORIES = "app_news_categories.dat";
+
 		//news  list
 	    public static final String APP_NEWS_LIST = "app_news_list.dat";
 
 	    //events cities list
 	    public static final String APP_EVENTS_CITIES= "app_events_cities.dat";
+
 	    //events categories list
 	    public static final String APP_EVENTS_CATEGORIES = "app_events_categories.dat";
+
 	    //events  list
 	    public static final String APP_EVENTS_LIST = "app_events_list.dat";
 
+	    //e-guide location types
+	    public static final String APP_EGUIDE_LOCATION_TYPES= "app_eguide_location_types.dat";
+
+	    //e-guide location list
+	    public static final String APP_EGUIDE_LOCATION_LIST = "app_eguide_location_list.dat";
     }
 
     public static class DataFolder{
@@ -341,6 +353,8 @@ public class Engine {
 	    public static File USER_NEWS ;
 	    //News folder for eventsList file , eventsCities file, eventsCategories file , eventsDetails files .
 	    public static File USER_EVENTS ;
+	    //E-guide Locations folder for locationsTypes file ,  locationList file , locationDetails files .
+	    public static File USER_EGUIDE_LOCATION ;
     }
 
     /**

@@ -4,8 +4,10 @@
     <string name="error_invalid_password">كلمة المرور غير صحيحة</string>
     <string name="error_empty_email">يجب ادخال عنوان البريد الالكتروني بشكل صحيح</string>
     <string name="error_empty_password">يجب ادخال كلمة المرور بشكل صحيح</string>
-    <string name="password_reset_done">يرجي مراجعة صندوق البريد الالكتروني</string>
+    <!--<string name="password_reset_done">يرجي مراجعة صندوق البريد الالكتروني</string>-->
+    <string name="password_reset_done">تم ارسال رساله اعادة ضبط كلمة المرور الي %s . يرجي التوجه الي صندوق البريد الالكتروني</string>
     <string name="attention">انتباه</string>
+    <string name="success">نجاح</string>
     <string name="conn_error">خطأ ف الاتصال!</string>
     <string name="loading">جاري التحميل..</string>
     <string name="ok">موافق</string>
@@ -143,11 +145,12 @@
     <string name="album_no_files">لا توجد ملفات.</string>
     <string name="login_failed">برجاء مراجعة اسم المستخدم و كلمة المرور.</string>
     <string name="news_no_news">لا توجد اخبار.</string>
-    <string name="details_no_details">لا توجد تفاصيل .</string>
-    <string name="news_no_categories">لا توجد فئات.</string>
-    <string name="events_no_events">لا توجد فعاليات</string>
+    <string name="details_no_details">لا توجد تفاصيل.</string>
+    <string name="news_no_types">لا توجد فئات.</string>
+    <string name="events_no_events">لا توجد فعاليات.</string>
     <string name="event_all_day">طوال اليوم</string>
     <string name="event_repeated">متكرر</string>
+    <string name="locations_no_locations">لا توجد مواقع.</string>
 
 
 </resources>

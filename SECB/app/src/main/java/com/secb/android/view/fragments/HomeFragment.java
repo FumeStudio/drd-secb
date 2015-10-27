@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.EventItem;
@@ -38,8 +39,6 @@ import java.util.List;
 public class HomeFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener, RequestObserver {
 
 	private static final String TAG = "HomeFragment";
-	private static final int NEWS_LIST_REQUEST_ID = 4;
-	private static final int EVENTS_LIST_REQUEST_ID = 6;
 	ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
 
@@ -124,7 +123,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
 		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList(getActivity());
 		if(newsList!= null && newsList.size()>0){
-			handleRequestFinished(NEWS_LIST_REQUEST_ID, null, newsList);
+			handleRequestFinished(RequestIds.NEWS_LIST_REQUEST_ID, null, newsList);
 		}
 		else {
 			//retry
@@ -136,7 +135,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	/**Event */
 		List<EventItem> eventList = EventsManager.getInstance().getEventsUnFilteredList(getActivity());
 		if(eventList!=null && eventList.size()>0){
-			handleRequestFinished(EVENTS_LIST_REQUEST_ID, null, eventList);
+			handleRequestFinished(RequestIds.EVENTS_LIST_REQUEST_ID, null, eventList);
 		}
 		else{
 			//retry
@@ -366,12 +365,12 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
 		if (error == null)
 		{
-			if((int)requestId == NEWS_LIST_REQUEST_ID && resultObject!=null)
+			if((int)requestId == RequestIds.NEWS_LIST_REQUEST_ID && resultObject!=null)
 			{
 				newsList= (ArrayList<NewsItem>) resultObject;
 				bindNewsRecycler();
 			}
-			else if((int)requestId == EVENTS_LIST_REQUEST_ID && resultObject!=null)
+			else if((int)requestId == RequestIds.EVENTS_LIST_REQUEST_ID && resultObject!=null)
 			{
 				ArrayList<EventItem> temp = (ArrayList<EventItem>) resultObject;
 				if (temp!=null  &&temp.size()>0){

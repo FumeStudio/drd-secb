@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.LoginOperation;
+import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.User;
 
 import net.comptoirs.android.common.controller.backend.CTHttpError;
@@ -22,7 +24,6 @@ import net.comptoirs.android.common.helper.Utilities;
 public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 
     private static final String TAG = "LoginActivity";
-    private static final int LOGIN_REQUEST_ID = 1;
     EditText edt_email,edt_password;
     TextView txtv_forgetPassword;
     Button btn_login, btn_signUp;
@@ -43,8 +44,8 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_password = (EditText) findViewById(R.id.edt_password);
 
-//        edt_email.setText("secbadmin");
-//        edt_password.setText("SecbAdmin159");
+        edt_email.setText("secbadmin");
+        edt_password.setText("SecbAdmin159");
 
         txtv_forgetPassword = (TextView) findViewById(R.id.txtv_forgetPassword);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -67,8 +68,16 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
             case R.id.btn_login:
 //	            if(validateInputFields())
 	            {
-//		            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-		            startLoginOperation();
+					//get cached user
+		            if(UserManager.getInstance().getUser()!=null &&
+				            !Utilities.isNullString(UserManager.getInstance().getUser().loginCookie))
+		            {
+			            handleRequestFinished(RequestIds.LOGIN_REQUEST_ID,null,UserManager.getInstance().getUser());
+		            }
+		            else
+		            {
+			            startLoginOperation();
+		            }
 	            }
 //                startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 break;
@@ -110,7 +119,7 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
         user.password= edt_password.getText().toString();
 
         boolean rememberMe=true;
-        LoginOperation operation = new LoginOperation(LOGIN_REQUEST_ID, true, LoginActivity.this, user,rememberMe);
+        LoginOperation operation = new LoginOperation(RequestIds.LOGIN_REQUEST_ID, true, LoginActivity.this, user,rememberMe);
         operation.addRequsetObserver(this);
         operation.execute();
 
@@ -121,7 +130,7 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
     public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
         if (error == null) {
             Logger.instance().v(TAG,"Success \n\t\t"+resultObject);
-            if((int)requestId == LOGIN_REQUEST_ID && resultObject!=null &&
+            if((int)requestId == RequestIds.LOGIN_REQUEST_ID && resultObject!=null &&
                     !Utilities.isNullString(((User)resultObject).loginCookie))
             {
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));

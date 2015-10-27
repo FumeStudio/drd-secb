@@ -4,6 +4,8 @@ public class ServerKeys
 {
 	public static final String STATUS_CODE = "statusCode";
 	public static final String STATUS_MESSAGE = "statusMessage";
+
+	//used in the url encoding
 	public static final String ALLOWED_URI_CHARS = "@#&=*+-_.,:!?()/~'%";
 
 	/*Login*/
@@ -36,5 +38,16 @@ public class ServerKeys
 
 	/*Events Cities*/
 	public static final String EVENTS_CITIES_URL = "http://secb.linkdev.com/webapi/api/events/GetCities";
+
+	/*Forget Password*/
+	public static final String FORGET_PASSWORD = "http://secb.linkdev.com/webapi/api/user/ForgetPassword";
+
+	/*E-guide Location Types*/
+	public static final String EGUIDE_LOCATION_TYPES = "http://secb.linkdev.com/webapi/api/location/GetlocationTypes";
+
+	/*E-guide Location List*/
+	public static final String EGUIDE_LOCATION_LIST= "http://secb.linkdev.com/WebApi/api/location/GetLocation";
+
+
 
 }

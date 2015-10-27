@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.EventsListOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
@@ -39,7 +40,6 @@ public class EventsListFragment extends SECBBaseFragment
 
 {
 	private static final String TAG = "EventsListFragment";
-	private static int EVENTS_LIST_REQUEST_ID = 6;
 	RecyclerView eventsRecyclerView;
     EventItemRecyclerAdapter eventItemRecyclerAdapter;
     ArrayList<EventItem> eventsList;
@@ -225,7 +225,7 @@ public class EventsListFragment extends SECBBaseFragment
 
 		eventsList = (ArrayList<EventItem>) EventsManager.getInstance().getEventsUnFilteredList(getActivity());
 		if(eventsList!= null && eventsList.size()>0){
-			handleRequestFinished(EVENTS_LIST_REQUEST_ID, null, eventsList);
+			handleRequestFinished(RequestIds.EVENTS_LIST_REQUEST_ID, null, eventsList);
 		}
 		else {
 			if (((MainActivity) getActivity()).isEventsLoadingFinished == false) {
@@ -254,7 +254,7 @@ public class EventsListFragment extends SECBBaseFragment
 	}
 
 	private void startEventsListOperation(EventsFilterData eventFilterData, boolean showDialog) {
-		EventsListOperation operation = new EventsListOperation(EVENTS_LIST_REQUEST_ID,showDialog,getActivity(),eventFilterData,100,0);
+		EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_REQUEST_ID,showDialog,getActivity(),eventFilterData,100,0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -265,7 +265,7 @@ public class EventsListFragment extends SECBBaseFragment
 		if (error == null)
 		{
 			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
-			if((int)requestId == EVENTS_LIST_REQUEST_ID && resultObject!=null){
+			if((int)requestId == RequestIds.EVENTS_LIST_REQUEST_ID && resultObject!=null){
 				eventsList= (ArrayList<EventItem>) resultObject;
 			}
 			bindViews();

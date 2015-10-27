@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.secb.android.model.AppConfiguration;
+import com.secb.android.model.EGuideLocationTypeItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsCategoryItem;
 import com.secb.android.model.EventsCityItem;
 import com.secb.android.model.GalleryItem;
+import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.User;
@@ -609,6 +611,78 @@ public class CachingManager {
 		{
 			//load object from "app_events_details_xx.dat" file
 			itemsList = (EventItem) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+
+
+
+	/***************************************************************************************************/
+	/* ************************* EGuide Location Part *********************/
+	/***************************************************************************************************/
+
+/**Types*/
+	//save Location types
+	public void saveEguideLocationTypes(ArrayList<EGuideLocationTypeItem> itemsList, Context appContext) {
+		if(itemsList != null && itemsList.size() > 0)
+		{
+			//create file called "app_eguide_location_types.dat"
+			// inside  folder called "locations" which existing in "Cache" folder
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,Engine.FileName.APP_EGUIDE_LOCATION_TYPES, appContext);
+
+			//save Events categories in the file "app_events_categories.dat
+			try {
+				saveObject(itemsList, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//load Location types
+	public ArrayList<EGuideLocationTypeItem> loadEguideLocationTypes(Context appContext)
+	{
+		//get file called "app_eguide_location_types.dat" from "locations" folder
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,Engine.FileName.APP_EGUIDE_LOCATION_TYPES, appContext);
+		ArrayList<EGuideLocationTypeItem> itemsList = null;
+		try
+		{
+			//load object from "app_eguide_location_types.dat" file
+			itemsList = (ArrayList<EGuideLocationTypeItem>) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+
+/**Lists*/
+	//save Location types
+	public void saveLocationsList(ArrayList<LocationItem> itemsList, Context appContext) {
+		if (itemsList != null && itemsList.size() > 0) {
+			//create file called "app_eguide_location_list.dat"
+			// inside  folder called "locations" which existing in "Cache" folder
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION, Engine.FileName.APP_EGUIDE_LOCATION_LIST, appContext);
+
+			//save Events categories in the file "app_eguide_location_types.dat
+			try {
+				saveObject(itemsList, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//load Location types
+	public ArrayList<LocationItem> loadLocationsList(Context appContext)
+	{
+		//get file called "app_eguide_location_list.dat" from "locations" folder
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION, Engine.FileName.APP_EGUIDE_LOCATION_LIST, appContext);
+		ArrayList<LocationItem> itemsList = null;
+		try
+		{
+			//load object from "app_eguide_location_types.dat" file
+			itemsList = (ArrayList<LocationItem>) loadOject(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.NewsListOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
@@ -39,7 +40,6 @@ public class NewsListFragment extends SECBBaseFragment
 
 {
 	private static final String TAG = "NewsListFragment";
-	private static final int NEWS_LIST_REQUEST_ID = 4;
 	RecyclerView newsRecyclerView;
     NewsItemRecyclerAdapter newsItemRecyclerAdapter;
     ArrayList<NewsItem> newsList;
@@ -216,7 +216,7 @@ public class NewsListFragment extends SECBBaseFragment
 
 		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList(getActivity());
 		if(newsList!= null && newsList.size()>0){
-			handleRequestFinished(NEWS_LIST_REQUEST_ID, null, newsList);
+			handleRequestFinished(RequestIds.NEWS_LIST_REQUEST_ID, null, newsList);
 		}
 		else {
 			if (((MainActivity) getActivity()).isNewsLoadingFinished == false) {
@@ -245,7 +245,7 @@ public class NewsListFragment extends SECBBaseFragment
 	}
 	private void startNewsListOperation(NewsFilterData newsFilterData ,boolean showDialog)
 	{
-		NewsListOperation operation = new NewsListOperation(NEWS_LIST_REQUEST_ID,showDialog,getActivity(),newsFilterData,100,0);
+		NewsListOperation operation = new NewsListOperation(RequestIds.NEWS_LIST_REQUEST_ID,showDialog,getActivity(),newsFilterData,100,0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -270,7 +270,7 @@ public class NewsListFragment extends SECBBaseFragment
 		if (error == null)
 		{
 			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
-			if((int)requestId == NEWS_LIST_REQUEST_ID && resultObject!=null){
+			if((int)requestId == RequestIds.NEWS_LIST_REQUEST_ID && resultObject!=null){
 				newsList= (ArrayList<NewsItem>) resultObject;
 				bindViews();
 			}

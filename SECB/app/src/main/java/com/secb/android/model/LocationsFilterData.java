@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class LocationsFilterData
 {
-    public String name;
-    public String city;
+    public String name = "All";
+    public String city = "All";
+	public String selectedType="All";
+	public String capacity= "All";
 
-    public ArrayList<Integer> types;
-
+    public ArrayList<String> types;
     public String totalCapacityFrom;
     public String totalCapacityTo;
 

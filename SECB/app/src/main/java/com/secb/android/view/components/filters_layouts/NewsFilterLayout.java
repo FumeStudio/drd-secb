@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsFilterData;
@@ -28,7 +29,6 @@ import java.util.Date;
 import java.util.List;
 
 public class NewsFilterLayout extends LinearLayout implements View.OnClickListener, RequestObserver {
-	private static final int NEWS_CATEGORIES_REQUEST_ID = 3;
 	private final View view;
 
     private NewsFilterData newsFilterData;
@@ -104,7 +104,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 		{
 			newsCategoriesRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(context.getString(R.string.news_no_categories));
+			txtv_noData.setText(context.getString(R.string.news_no_types));
 		}
 	}
     private void applyFonts() {
@@ -229,7 +229,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
 		if (error == null)
 		{
-			if((int)requestId == NEWS_CATEGORIES_REQUEST_ID && resultObject!=null)
+			if((int)requestId == RequestIds.NEWS_CATEGORY_REQUEST_ID && resultObject!=null)
 			{
 				categoriesList= NewsManager.getInstance().getNewsCategoryList(context);
 				bindCategoriesRecycler();

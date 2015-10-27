@@ -24,6 +24,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.secb.android.R;
 import com.secb.android.controller.backend.AlbumOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.GalleryManager;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.view.FragmentBackObserver;
@@ -50,9 +51,6 @@ public class AlbumFragment extends SECBBaseFragment
 
 {
     private static final String TAG = "AlbumFragment";
-    private static final int PHOTO_ALBUM_REQUEST_ID = 1;
-    private static final int VIDEO_ALBUM_REQUEST_ID = 2;
-
     RecyclerView galleryRecyclerView;
     GridLayoutManager layoutManager;
     GalleryItemRecyclerAdapter galleryItemRecyclerAdapter;
@@ -242,13 +240,13 @@ public class AlbumFragment extends SECBBaseFragment
             galleryItemList = GalleryManager.getInstance().getImageAlbumList(getActivity(),albumId);
             if(galleryItemList == null || galleryItemList.size()==0)
             {
-                AlbumOperation operation = new AlbumOperation(GalleryItem.GALLERY_TYPE_IMAGE_ALBUM,PHOTO_ALBUM_REQUEST_ID ,
+                AlbumOperation operation = new AlbumOperation(GalleryItem.GALLERY_TYPE_IMAGE_ALBUM, RequestIds.PHOTO_ALBUM_REQUEST_ID ,
                         true,getActivity(), 100,0 , folderPath,albumId);
                 operation.addRequsetObserver(this);
                 operation.execute();
             }
             else{
-                handleRequestFinished(PHOTO_ALBUM_REQUEST_ID , null,galleryItemList);
+                handleRequestFinished(RequestIds.PHOTO_ALBUM_REQUEST_ID , null,galleryItemList);
             }
         }
 
@@ -258,13 +256,13 @@ public class AlbumFragment extends SECBBaseFragment
             galleryItemList = GalleryManager.getInstance().getVideosAlbumList(albumId,getActivity());
             if(galleryItemList == null || galleryItemList.size()==0)
             {
-                AlbumOperation operation = new AlbumOperation(GalleryItem.GALLERY_TYPE_VIDEO_ALBUM,VIDEO_ALBUM_REQUEST_ID ,
+                AlbumOperation operation = new AlbumOperation(GalleryItem.GALLERY_TYPE_VIDEO_ALBUM,RequestIds.VIDEO_ALBUM_REQUEST_ID ,
                         true,getActivity(), 100,0, folderPath,albumId);
                 operation.addRequsetObserver(this);
                 operation.execute();
             }
             else{
-                handleRequestFinished(VIDEO_ALBUM_REQUEST_ID, null, galleryItemList);
+                handleRequestFinished(RequestIds.VIDEO_ALBUM_REQUEST_ID, null, galleryItemList);
             }
         }
     }
@@ -443,7 +441,7 @@ public class AlbumFragment extends SECBBaseFragment
             Logger.instance().v(TAG,"Success \n\t\t"+resultObject);
 
             //photoAlbum
-            if((int)requestId == PHOTO_ALBUM_REQUEST_ID && resultObject!=null)
+            if((int)requestId == RequestIds.PHOTO_ALBUM_REQUEST_ID && resultObject!=null)
             {
                 galleryItemList = (List) resultObject;
                 for(Object iterator : galleryItemList){
@@ -453,7 +451,7 @@ public class AlbumFragment extends SECBBaseFragment
 
             }
             //videoAlbum
-            else if((int)requestId == VIDEO_ALBUM_REQUEST_ID && resultObject!=null)
+            else if((int)requestId == RequestIds.VIDEO_ALBUM_REQUEST_ID && resultObject!=null)
             {
                 galleryItemList = (List) resultObject;
                 for(Object iterator : galleryItemList){
