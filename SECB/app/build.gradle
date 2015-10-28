@@ -1,20 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        release_signing {
-            keyAlias 'android_signature'
-            keyPassword 'user_9999'
-            storeFile file('D:/Media/Video/Tutorials/Android/Amir-Hakim/workspace/drd-secb/SECB/Signing_key/secb_key_store.keystore')
-            storePassword 'user_9999'
-        }
-        debug_release {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('C:/Users/jo/.android/debug.keystore')
-            storePassword 'android'
-        }
-    }
+//    signingConfigs {
+//        release_signing {
+//            keyAlias 'android_signature'
+//            keyPassword 'user_9999'
+//            storeFile file('D:/Media/Video/Tutorials/Android/Amir-Hakim/workspace/drd-secb/SECB/Signing_key/secb_key_store.keystore')
+//            storePassword 'user_9999'
+//        }
+//        debug_release {
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'android'
+//            storeFile file('C:/Users/jo/.android/debug.keystore')
+//            storePassword 'android'
+//        }
+//    }
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
@@ -37,7 +37,7 @@ android {
         versionCode 1
         versionName "1.0.5"
         /*signingConfig signingConfigs.release_signing*/
-        signingConfig signingConfigs.release_signing
+//        signingConfig signingConfigs.release_signing
     }
     buildTypes {
         release {
