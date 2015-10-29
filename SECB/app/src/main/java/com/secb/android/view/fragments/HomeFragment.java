@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.manager.E_ServicesManager;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.controller.manager.NewsManager;
+import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
@@ -42,7 +44,9 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
 
-    int[] graphsValues;
+    ArrayList<Integer> graphsValues;
+
+
     TextView txtv_graph_title_closed, txtv_graph_title_inProgress,txtv_graph_title_inbox,
             txtv_graph_value_inbox, txtv_graph_value_closed, txtv_graph_value_inProgress;
 
@@ -52,6 +56,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     RecyclerView newsRecyclerView;
     NewsItemRecyclerAdapter newsItemRecyclerAdapter;
     ArrayList<NewsItem> newsList;
+
+	ArrayList<E_ServiceStatisticsItem> e_ServicesStatisticsList;
     EventItem eventItem;
 
     View view;
@@ -106,6 +112,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         }
 	    ((MainActivity)getActivity()).setNewsRequstObserver(this);
 	    ((MainActivity)getActivity()).setEventsRequstObserver(this);
+	    ((MainActivity)getActivity()).setEservicesRequstObserver(this);
         initViews(view);
 	    getData();
         applyFonts();
@@ -143,6 +150,11 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 				((MainActivity) getActivity()).getEventsList();/*startEventsListOperation(new NewsFilterData(),false);*/
 			}
 		}
+
+	/**E-services statistics*/
+		e_ServicesStatisticsList = (ArrayList<E_ServiceStatisticsItem>) E_ServicesManager.getInstance().getEservicesStatisticsList(getActivity());
+		if(e_ServicesStatisticsList !=null&& e_ServicesStatisticsList.size()>0)
+			handleRequestFinished(RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID,null, e_ServicesStatisticsList);
 	}
 
 	private void handleButtonsEvents() {
@@ -269,8 +281,13 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
 
-        graphsValues = new int[]{15, 36, 82};
-        fillWheelPercentage(graphsValues[0], graphsValues[1], graphsValues[2]);
+        graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+	    if(graphsValues==null || graphsValues.size()<3)
+	    {
+		    graphsValues = new ArrayList<>();
+		    graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
+	    }
+        fillWheelPercentage(graphsValues.get(0), graphsValues.get(1), graphsValues.get(2));
 
         txtv_viewAllNews.setOnClickListener(this);
     }
@@ -327,6 +344,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		}
 
 	}
+
     private void fillWheelPercentage(int closedScore, int inboxScore, int inProgressScore) {
 
         int largeRadius = (int) getResources().getDimension(R.dimen.home_graphs_wheel_size);
@@ -377,6 +395,11 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 					eventItem=	temp.get(0);
 					bindEventCard();
 				}
+			}
+			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
+			{
+				graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+				fillWheelPercentage(graphsValues.get(0),graphsValues.get(1),graphsValues.get(2));
 			}
 		}
 	}

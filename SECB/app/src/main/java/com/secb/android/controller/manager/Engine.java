@@ -347,6 +347,9 @@ public class Engine {
 
 	    //e-services requests list
 	    public static final String APP_EGUIDE_E_SERVICES_REQUESTS_LIST =  "app_eservices_requests_list.dat"  ;
+
+	    //e-services statistics list
+	    public static final String APP_EGUIDE_E_SERVICES_STATISTICS_LIST = "app_eservices_statistics_list.dat";
     }
 
     public static class DataFolder{
@@ -369,7 +372,7 @@ public class Engine {
 	    public static File USER_EGUIDE_LOCATION ;
 	    //E-guide organizers folder organizersList file , organizersDetails files .
 	    public static File USER_EGUIDE_ORGANIZERS ;
-	    //E-services folder requestsList file .
+	    //E-services folder requestsList file , statisticsList file .
 	    public static File USER_E_Services  ;
     }
 

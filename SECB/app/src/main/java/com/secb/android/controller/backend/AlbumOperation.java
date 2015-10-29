@@ -14,6 +14,7 @@ import net.comptoirs.android.common.controller.backend.BaseOperation;
 import net.comptoirs.android.common.controller.backend.CTHttpResponse;
 import net.comptoirs.android.common.controller.backend.ServerConnection;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import org.apache.http.client.methods.HttpGet;
 
@@ -49,9 +50,9 @@ public class AlbumOperation extends BaseOperation {
         if (galleryType != GalleryItem.GALLERY_TYPE_IMAGE_ALBUM && galleryType != GalleryItem.GALLERY_TYPE_VIDEO_ALBUM) {
             return null;
         }
-
-
         String language = UiEngine.getCurrentAppLanguage(context);
+		if(Utilities.isNullString(language))
+	        language=UiEngine.getCurrentDeviceLanguage(context);
 
         StringBuilder stringBuilder;
 

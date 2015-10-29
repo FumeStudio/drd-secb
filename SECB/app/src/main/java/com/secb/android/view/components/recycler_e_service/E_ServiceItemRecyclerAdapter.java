@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secb.android.R;
-import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServiceRequestItem;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -18,10 +18,10 @@ import java.util.List;
 public class E_ServiceItemRecyclerAdapter extends RecyclerView.Adapter<E_ServiceItemRecyclerViewHolder>
 {
     LayoutInflater inflater ;
-    List<E_ServiceItem>itemsList = Collections.emptyList();
+    List<E_ServiceRequestItem>itemsList = Collections.emptyList();
     Context context;
 
-    public E_ServiceItemRecyclerAdapter(Context context, List<E_ServiceItem> itemsList) {
+    public E_ServiceItemRecyclerAdapter(Context context, List<E_ServiceRequestItem> itemsList) {
 
 	    this.context=context;
 	    if(context == null)
@@ -49,7 +49,7 @@ public class E_ServiceItemRecyclerAdapter extends RecyclerView.Adapter<E_Service
 
     @Override
     public void onBindViewHolder(E_ServiceItemRecyclerViewHolder holder, int position) {
-        E_ServiceItem currentItem = itemsList.get(position);
+        E_ServiceRequestItem currentItem = itemsList.get(position);
 	    if(!Utilities.isNullString(currentItem.title))
 	    {
 		    holder.txtv_item_title.setVisibility(View.VISIBLE);

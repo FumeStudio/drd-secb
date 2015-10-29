@@ -5,10 +5,9 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.secb.android.controller.manager.NewsManager;
+import com.secb.android.controller.manager.EGuideLocationManager;
 import com.secb.android.controller.manager.UserManager;
-import com.secb.android.model.NewsFilterData;
-import com.secb.android.model.NewsItem;
+import com.secb.android.model.LocationItem;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.controller.backend.BaseOperation;
@@ -23,38 +22,40 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
-public class NewsDetailsOperation extends BaseOperation {
-	private static final String TAG = "NewsListOperation";
+public class E_GuideLocationDetailsListOperation extends BaseOperation {
+	private static final String TAG = "E_GuideLocationDetailsListOperation";
 	Context context;
-	NewsFilterData newsFilterData;
 	private int pageIndex;
 	private int pageSize;
+	private String locationID;
 
-	public NewsDetailsOperation(int requestID, boolean isShowLoadingDialog, Context context,
-	                            NewsFilterData newsFilterData, int pageSize, int pageIndex) {
+
+	public E_GuideLocationDetailsListOperation(int requestID, boolean isShowLoadingDialog, Context context,
+	                                           String locationID , int pageSize, int pageIndex) {
 		super(requestID, isShowLoadingDialog, context);
 		this.context = context;
-		this.newsFilterData = newsFilterData;
 		this.pageIndex = pageIndex;
 		this.pageSize = pageSize;
+		this.locationID=locationID;
 	}
 
 
 	@Override
 	public Object doMain() throws Exception {
-		if (newsFilterData == null)
+		if(Utilities.isNullString(locationID))
 			return null;
 		String language = UiEngine.getCurrentAppLanguage(context);
 
 		if(Utilities.isNullString(language))
 			language=UiEngine.getCurrentDeviceLanguage(context);
 
+
 		StringBuilder stringBuilder;
-		stringBuilder = new StringBuilder(ServerKeys.NEWS_URL);
-		stringBuilder.append("?Lang=" + language + "&NewsID=" + newsFilterData.newsID +
-				"&fromDate=" + newsFilterData.timeFrom + "&toDate=" + newsFilterData.timeTo +
-				"NewsCategory=" + newsFilterData.selectedCategoryId +
-				"&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
+		stringBuilder = new StringBuilder(ServerKeys.EGUIDE_LOCATION_DETAILS_LIST);
+		stringBuilder.append("?Lang=" + language + "&LocationID=" + locationID
+				/*+"&pageSize=" + pageSize + "&pageIndex=" + pageIndex*/
+		);
+
 		String requestUrl = stringBuilder.toString();
 		requestUrl = Uri.encode(requestUrl, ServerKeys.ALLOWED_URI_CHARS);
 		HashMap<String, String> cookies = new HashMap<>();
@@ -64,17 +65,21 @@ public class NewsDetailsOperation extends BaseOperation {
 		Logger.instance().v(TAG, response.response);
 
 		Gson gson = new Gson();
-		Type listType = new TypeToken<List<NewsItem>>() {}.getType();
-		List<NewsItem> newsItems = gson.fromJson(response.response.toString(), listType);
+		Type listType = new TypeToken<List<LocationItem>>() {}.getType();
+		List<LocationItem> locationItems = gson.fromJson(response.response.toString(), listType);
 
-		updateNewsManager(newsItems);
-		return newsItems;
+//		LocationItem locationDetails = gson.fromJson(response.response.toString(), LocationItem.class);
+		updateLocationsManager(locationItems);
+		if(locationItems == null || locationItems.size()==0 ||locationItems.get(0)== null)
+			return null;
+		return locationItems.get(0);
 	}
 
-	private void updateNewsManager(List<NewsItem> newsItems) {
-		if(newsItems!=null && newsItems.size()>0){
-			NewsManager.getInstance().setNewDetails(newsItems.get(0),context);
-		}
+	private void updateLocationsManager(List<LocationItem> locationItems)
+	{
+		if (locationItems == null || locationItems.size()==0 ||locationItems.get(0)== null)
+			return;
+		EGuideLocationManager.getInstance().setLocationDetails(locationItems.get(0), context);
 	}
 
 

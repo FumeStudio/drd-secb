@@ -6,7 +6,8 @@ import android.graphics.BitmapFactory;
 
 import com.secb.android.model.AppConfiguration;
 import com.secb.android.model.EGuideLocationTypeItem;
-import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServiceRequestItem;
+import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsCategoryItem;
 import com.secb.android.model.EventsCityItem;
@@ -29,11 +30,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CachingManager {
 
 	private static final String TAG = "GBACachingManager";
-
 
 
 	public enum ImageType {
@@ -660,7 +661,7 @@ public class CachingManager {
 	}
 
 /**Lists*/
-	//save Location types
+	//save Location list
 	public void saveLocationsList(ArrayList<LocationItem> itemsList, Context appContext) {
 		if (itemsList != null && itemsList.size() > 0) {
 			//create file called "app_eguide_location_list.dat"
@@ -675,7 +676,7 @@ public class CachingManager {
 			}
 		}
 	}
-	//load Location types
+	//load Location list
 	public ArrayList<LocationItem> loadLocationsList(Context appContext)
 	{
 		//get file called "app_eguide_location_list.dat" from "locations" folder
@@ -694,7 +695,7 @@ public class CachingManager {
 
 
 /**Details*/
-	//save Events details
+	//save Location details
 	public void saveLocationDetails(LocationItem item, Context appContext) {
 		if(item != null )
 		{
@@ -711,7 +712,7 @@ public class CachingManager {
 		}
 	}
 
-	//load Events details
+	//load Location details
 	public LocationItem loadLocationDetails(String LoocationID, Context appContext)
 	{
 		//get file called "app_events_details_xx.dat" from "Events" folder
@@ -804,10 +805,9 @@ public class CachingManager {
 	/* ************************* E-Services Organizers Part *********************/
 	/***************************************************************************************************/
 
-/**Lists*/
-
+/**RequestList*/
 	//save e-services requests list
-	public void saveE_ServicesRequestsList(ArrayList<E_ServiceItem> itemsList, Context appContext) {
+	public void saveE_ServicesRequestsList(ArrayList<E_ServiceRequestItem> itemsList, Context appContext) {
 		if (itemsList != null && itemsList.size() > 0) {
 			//create file called "app_eservices_requests_list.dat"
 			// inside  folder called "eservices" which existing in "Cache" folder
@@ -820,16 +820,47 @@ public class CachingManager {
 			}
 		}
 	}
-	//load organizers list
-	public ArrayList<E_ServiceItem> loadE_ServicesRequestsList(Context appContext)
+	//load e-services requests list
+	public ArrayList<E_ServiceRequestItem> loadE_ServicesRequestsList(Context appContext)
 	{
 		//get file called "app_eservices_requests_list.dat" from "eservices" folder
 		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_LIST, appContext);
-		ArrayList<E_ServiceItem> itemsList = null;
+		ArrayList<E_ServiceRequestItem> itemsList = null;
 		try
 		{
 			//load object from "app_eservices_requests_list.dat" file
-			itemsList = (ArrayList<E_ServiceItem>) loadOject(file);
+			itemsList = (ArrayList<E_ServiceRequestItem>) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+
+/** StatisticsList*/
+	//save e-services Statistics list
+	public void saveE_ServicesStatisticsList(ArrayList<E_ServiceStatisticsItem> itemsList, Context appContext) {
+		if (itemsList != null && itemsList.size() > 0) {
+			//create file called "app_eservices_statistics_list.dat"
+			// inside  folder called "eservices" which existing in "Cache" folder
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_STATISTICS_LIST, appContext);
+			//save Services Statistics in the file "app_eservices_statistics_list.dat
+			try {
+				saveObject(itemsList, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//load e-services Statistics list
+	public List<E_ServiceStatisticsItem> loadE_ServicesStatisticsList(Context appContext)
+	{
+		//get file called "app_eservices_statistics_list.dat" from "eservices" folder
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_STATISTICS_LIST, appContext);
+		ArrayList<E_ServiceStatisticsItem> itemsList = null;
+		try
+		{
+			//load object from "app_eservices_statistics_list.dat" file
+			itemsList = (ArrayList<E_ServiceStatisticsItem>) loadOject(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

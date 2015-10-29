@@ -20,6 +20,7 @@ import com.secb.android.model.LocationsFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.LocationsFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -116,8 +117,8 @@ public class LocationsListFragment extends SECBBaseFragment
      * Apply Fonts
      */
     private void applyFonts() {
-        // TODO::
-//		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.textViewAbout)), UiEngine.Fonts.HELVETICA_NEUE_LT_STD_CN);
+	    if(txtv_noData!=null)
+		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
     }
 
     private void goBack() {

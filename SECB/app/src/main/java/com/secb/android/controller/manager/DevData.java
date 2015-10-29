@@ -1,14 +1,11 @@
 package com.secb.android.controller.manager;
 
-import android.graphics.BitmapFactory;
-
 import com.secb.android.R;
-import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServiceRequestItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
-import com.secb.android.view.SECBApplication;
 
 import net.comptoirs.android.common.view.CTApplication;
 
@@ -135,7 +132,7 @@ public class DevData
         ArrayList<LocationItem> locationItems= new ArrayList<>();
         LocationItem locationItem = new LocationItem();
 
-        locationItem.LoccationItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
+//        locationItem.LoccationItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news3));
         locationItem.SiteName = CTApplication.getContext().getString(R.string.dev_name);
         locationItem.SiteAddressDescription = CTApplication.getContext().getString(R.string.dev_address);
         locationItem.SiteDescription =CTApplication.getContext().getString(R.string.dev_desc);
@@ -164,9 +161,9 @@ public class DevData
 
 
 
-    public static ArrayList<E_ServiceItem> getE_ServicesList() {
-        ArrayList<E_ServiceItem> e_serviceItems = new ArrayList<>();
-        E_ServiceItem item = new E_ServiceItem();
+    public static ArrayList<E_ServiceRequestItem> getE_ServicesList() {
+        ArrayList<E_ServiceRequestItem> e_serviceRequestItems = new ArrayList<>();
+        E_ServiceRequestItem item = new E_ServiceRequestItem();
 
         item.title = "Nine Firms Warned for Committing Violations.";
         item.RequestDate = "20 Oct 2015";
@@ -174,14 +171,14 @@ public class DevData
         item.RequestNumber = "21-360406-85769";
         item.RequestType = "Organization Service Request";
 
-        e_serviceItems.add(item);
-        e_serviceItems.add(item);
-        e_serviceItems.add(item);
-        e_serviceItems.add(item);
-        e_serviceItems.add(item);
-        e_serviceItems.add(item);
-        e_serviceItems.add(item);
+        e_serviceRequestItems.add(item);
+        e_serviceRequestItems.add(item);
+        e_serviceRequestItems.add(item);
+        e_serviceRequestItems.add(item);
+        e_serviceRequestItems.add(item);
+        e_serviceRequestItems.add(item);
+        e_serviceRequestItems.add(item);
 
-        return e_serviceItems;
+        return e_serviceRequestItems;
     }
 }

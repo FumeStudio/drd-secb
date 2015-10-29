@@ -23,15 +23,34 @@
         android:orientation="vertical"
         android:padding="@dimen/eservice_item_padding">
 
-        <TextView
-            android:id="@+id/txtv_item_title"
+
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/eservice_item_padding"
-            android:gravity="left"
-            android:text="Nine Firms Warned for Committing Violations."
-            android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/eservice_item_title_text_size" />
+            android:gravity="center_vertical"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/txtv_number_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/eservice_number"
+                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                android:text="@string/number"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/eservice_item_title_text_size" />
+
+            <TextView
+                android:id="@+id/txtv_number_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="aaaaaaa"
+                android:textColor="@color/secb_grey_text"
+                android:textSize="@dimen/eservice_item_title_text_size" />
+
+        </TableRow>
 
 
         <LinearLayout
@@ -101,34 +120,16 @@
 
         </LinearLayout>
 
-        <TableRow
+
+        <TextView
+            android:id="@+id/txtv_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/eservice_item_padding"
-            android:gravity="center_vertical"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/txtv_number_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/eservice_number"
-                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
-                android:text="@string/number"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/eservice_item_title_text_size" />
-
-            <TextView
-                android:id="@+id/txtv_number_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="aaaaaaa"
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/eservice_item_title_text_size" />
-
-        </TableRow>
-
+            android:gravity="left"
+            android:text="Nine Firms Warned for Committing Violations."
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/eservice_item_title_text_size" />
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

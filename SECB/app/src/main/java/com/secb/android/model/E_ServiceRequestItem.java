@@ -2,7 +2,7 @@ package com.secb.android.model;
 
 import java.io.Serializable;
 
-public class E_ServiceItem implements Serializable
+public class E_ServiceRequestItem implements Serializable
 {
     public String title;
     public String RequestDate;
