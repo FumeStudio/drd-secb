@@ -14,21 +14,23 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.secb.android.R;
-import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServiceRequestItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
+
+import net.comptoirs.android.common.helper.Utilities;
 
 public class E_ServiceDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
 
 	WebView webv_E_ServicePage;
     View view;
-	E_ServiceItem e_serviceItem;
-    public static E_ServiceDetailsFragment newInstance( E_ServiceItem e_serviceItem)
+	E_ServiceRequestItem e_serviceRequestItem;
+    public static E_ServiceDetailsFragment newInstance( E_ServiceRequestItem e_serviceRequestItem)
     {
         E_ServiceDetailsFragment fragment = new E_ServiceDetailsFragment();
 	    Bundle bundle = new Bundle();
-	    bundle.putSerializable("e_serviceItem", e_serviceItem);
+	    bundle.putSerializable("e_serviceRequestItem", e_serviceRequestItem);
 	    fragment.setArguments(bundle);
         return fragment;
     }
@@ -73,7 +75,7 @@ public class E_ServiceDetailsFragment extends SECBBaseFragment implements Fragme
 	    Bundle bundle = getArguments();
 	    if(bundle!=null)
 	    {
-		    e_serviceItem = (E_ServiceItem)bundle.getSerializable("e_serviceItem");
+		    e_serviceRequestItem = (E_ServiceRequestItem)bundle.getSerializable("e_serviceRequestItem");
 	    }
         initViews(view);
         applyFonts();
@@ -118,7 +120,12 @@ public class E_ServiceDetailsFragment extends SECBBaseFragment implements Fragme
     private void initViews(View view)
     {
 	    webv_E_ServicePage = (WebView) view.findViewById(R.id.webv_E_ServicePage);
-//	    loadUrl(webv_E_ServicePage, getResources().getString(R.string.sign_up_registeration_url));
+	    if(e_serviceRequestItem !=null&&!Utilities.isNullString(e_serviceRequestItem.RequestUrl))
+		    if(!(e_serviceRequestItem.RequestUrl.startsWith("http://")))
+			    e_serviceRequestItem.RequestUrl="http://"+ e_serviceRequestItem.RequestUrl;
+	        loadUrl(webv_E_ServicePage, e_serviceRequestItem.RequestUrl);
+
+//	        loadUrl(webv_E_ServicePage, "http://secb.linkdev.com/en/Eservices/Pages/UpdateGeneralUserProfile.aspx?RequestNumber=UP20150062&FormMode=Display");
 
     }
 
@@ -139,7 +146,8 @@ public class E_ServiceDetailsFragment extends SECBBaseFragment implements Fragme
 		myWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				if (url.endsWith(".mp4")) {
+				if (url.endsWith(".mp4"))
+				{
 					Intent intent = new Intent(Intent.ACTION_VIEW);
 					intent.setDataAndType(Uri.parse(url), "video/mp4");
 					view.getContext().startActivity(intent);

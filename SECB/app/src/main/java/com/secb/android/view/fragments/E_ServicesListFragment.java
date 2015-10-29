@@ -14,10 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secb.android.R;
-import com.secb.android.controller.backend.E_ServicesListOperation;
+import com.secb.android.controller.backend.E_ServicesRequestsListOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.E_ServicesManager;
-import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServiceRequestItem;
+import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.E_ServicesFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
@@ -45,13 +46,13 @@ public class E_ServicesListFragment extends SECBBaseFragment
 	private static final String TAG = "E_ServicesListFragment";
 	RecyclerView eServicesRecyclerView;
     E_ServiceItemRecyclerAdapter e_serviceItemRecyclerAdapter;
-    ArrayList<E_ServiceItem> eServicesList;
+    ArrayList<E_ServiceRequestItem> eServicesList;
     E_ServicesFilterData e_servicesFilterData;
 	
     LinearLayout layout_graphs_container;
     ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
-    int[] graphsValues;
+	ArrayList<Integer> graphsValues;
     TextView txtv_graph_title_closed, txtv_graph_value_closed,
             txtv_graph_title_inbox, txtv_graph_value_inbox,
             txtv_graph_title_inProgress, txtv_graph_value_inProgress;
@@ -60,8 +61,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
     private EventsFilterLayout eventsFilterLayout = null;
 	private TextView txtv_noData;
 	private ProgressDialog progressDialog;
-
-
+	ArrayList<E_ServiceStatisticsItem> e_ServicesStatisticsList;
 
 	public static E_ServicesListFragment newInstance() {
         E_ServicesListFragment fragment = new E_ServicesListFragment();
@@ -221,8 +221,13 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		eServicesRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eServicesRecyclerView, this));
 
 //		eServicesList = DevData.getE_ServicesList();
-		graphsValues = new int[]{15, 36, 82};
-		fillWheelPercentage(graphsValues[0], graphsValues[1], graphsValues[2]);
+		graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+		if(graphsValues==null || graphsValues.size()<3)
+		{
+			graphsValues = new ArrayList<>();
+			graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
+		}
+		fillWheelPercentage(graphsValues.get(0), graphsValues.get(1), graphsValues.get(2));
 
 	}
 
@@ -261,12 +266,12 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		//start operation here.
 
 
-		eServicesList = (ArrayList<E_ServiceItem>) E_ServicesManager.getInstance().getEservicesRequestsUnFilteredList(getActivity());
+		eServicesList = (ArrayList<E_ServiceRequestItem>) E_ServicesManager.getInstance().getEservicesRequestsUnFilteredList(getActivity());
 		if(eServicesList!= null && eServicesList.size()>0){
-			handleRequestFinished(RequestIds.E_SERVICES_REQUEST_ID, null, eServicesList);
+			handleRequestFinished(RequestIds.E_SERVICES_REQUESTS_LIST_REQUEST_ID, null, eServicesList);
 		}
 		else {
-			if (((MainActivity) getActivity()).isEservicesLoadingFinished == false) {
+			if (((MainActivity) getActivity()).isEservicesRequestLoadingFinished == false) {
 				startWaiting();
 			}
 			else{
@@ -291,7 +296,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 	}
 
 	private void startEServicesRequestListOperation(E_ServicesFilterData e_servicesFilterData, boolean showDialog) {
-		E_ServicesListOperation operation = new E_ServicesListOperation(RequestIds.E_SERVICES_REQUEST_ID,showDialog,getActivity(),e_servicesFilterData,100,0);
+		E_ServicesRequestsListOperation operation = new E_ServicesRequestsListOperation(RequestIds.E_SERVICES_REQUESTS_LIST_REQUEST_ID,showDialog,getActivity(),e_servicesFilterData,100,0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -321,8 +326,13 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		if (error == null)
 		{
 			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
-			if((int)requestId == RequestIds.E_SERVICES_REQUEST_ID && resultObject!=null){
-				eServicesList= (ArrayList<E_ServiceItem>) resultObject;
+			if((int)requestId == RequestIds.E_SERVICES_REQUESTS_LIST_REQUEST_ID && resultObject!=null){
+				eServicesList= (ArrayList<E_ServiceRequestItem>) resultObject;
+			}
+			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
+			{
+				graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+				fillWheelPercentage(graphsValues.get(0),graphsValues.get(1),graphsValues.get(2));
 			}
 
 

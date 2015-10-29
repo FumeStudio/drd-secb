@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.secb.android.controller.manager.E_ServicesManager;
 import com.secb.android.controller.manager.UserManager;
-import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServiceRequestItem;
 import com.secb.android.model.E_ServicesFilterData;
 import com.secb.android.view.UiEngine;
 
@@ -23,14 +23,14 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
-public class E_ServicesListOperation extends BaseOperation {
+public class E_ServicesRequestsListOperation extends BaseOperation {
 	private static final String TAG = "E_ServicesListOperation";
 	Context context;
 	private int pageIndex;
 	private int pageSize;
 	E_ServicesFilterData e_servicesFilterData;
-	public E_ServicesListOperation(int requestID, boolean isShowLoadingDialog, Context context,
-	                               E_ServicesFilterData e_servicesFilterData, int pageSize, int pageIndex) {
+	public E_ServicesRequestsListOperation(int requestID, boolean isShowLoadingDialog, Context context,
+	                                       E_ServicesFilterData e_servicesFilterData, int pageSize, int pageIndex) {
 		super(requestID, isShowLoadingDialog, context);
 		this.context = context;
 		this.e_servicesFilterData=e_servicesFilterData;
@@ -45,6 +45,8 @@ public class E_ServicesListOperation extends BaseOperation {
 			return null;
 		String language = UiEngine.getCurrentAppLanguage(context);
 
+		if(Utilities.isNullString(language))
+			language=UiEngine.getCurrentDeviceLanguage(context);
 
 		StringBuilder stringBuilder;
 		stringBuilder = new StringBuilder(ServerKeys.E_Services_REQUESTS_LIST);
@@ -67,39 +69,39 @@ public class E_ServicesListOperation extends BaseOperation {
 		Logger.instance().v(TAG, response.response);
 
 		Gson gson = new Gson();
-		Type listType = new TypeToken<List<E_ServiceItem>>() {}.getType();
-		List<E_ServiceItem> e_serviceItems = gson.fromJson(response.response.toString(), listType);
-		removeUnCompletedItems(e_serviceItems);
+		Type listType = new TypeToken<List<E_ServiceRequestItem>>() {}.getType();
+		List<E_ServiceRequestItem> e_serviceRequestItems = gson.fromJson(response.response.toString(), listType);
+		removeUnCompletedItems(e_serviceRequestItems);
 
-		updateOrganizersManager(e_serviceItems);
-		return e_serviceItems;
+		updateOrganizersManager(e_serviceRequestItems);
+		return e_serviceRequestItems;
 	}
 
 	//if news Item does not contain title and brief and date remove it.
-	private void removeUnCompletedItems(List<E_ServiceItem> e_serviceItems) {
-		if (e_serviceItems == null || e_serviceItems.size() == 0)
+	private void removeUnCompletedItems(List<E_ServiceRequestItem> e_serviceRequestItems) {
+		if (e_serviceRequestItems == null || e_serviceRequestItems.size() == 0)
 			return;
 		//to avoid Concurrent Modification Exception
 		/*synchronized(organizerItems)*/{
-			for (int i = 0 ; i<e_serviceItems.size();i++)
+			for (int i = 0 ; i< e_serviceRequestItems.size();i++)
 			{
-				E_ServiceItem currentItem =e_serviceItems.get(i);
+				E_ServiceRequestItem currentItem = e_serviceRequestItems.get(i);
 				if (Utilities.isNullString(currentItem.RequestNumber) ||
 						Utilities.isNullString(currentItem.RequestDate) ||
 						Utilities.isNullString(currentItem.RequestType) )
 				{
-					e_serviceItems.remove(currentItem);
+					e_serviceRequestItems.remove(currentItem);
 				}
 
 			}
 		}
 	}
 
-	private void updateOrganizersManager(List<E_ServiceItem> e_serviceItems)
+	private void updateOrganizersManager(List<E_ServiceRequestItem> e_serviceRequestItems)
 	{
-		if (e_serviceItems == null || e_serviceItems.size() == 0)
+		if (e_serviceRequestItems == null || e_serviceRequestItems.size() == 0)
 			return;
-		E_ServicesManager.getInstance().setEservicesRequestsUnFilteredList(e_serviceItems, context);
+		E_ServicesManager.getInstance().setEservicesRequestsUnFilteredList(e_serviceRequestItems, context);
 
 	}
 

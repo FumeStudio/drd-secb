@@ -46,13 +46,15 @@ public class E_GuideLocationListOperation extends BaseOperation {
 			return null;
 		String language = UiEngine.getCurrentAppLanguage(context);
 
+		if(Utilities.isNullString(language))
+			language=UiEngine.getCurrentDeviceLanguage(context);
 
 		StringBuilder stringBuilder;
 		stringBuilder = new StringBuilder(ServerKeys.EGUIDE_LOCATION_LIST);
 		stringBuilder.append("?Lang=" + language + "&Name=" + locationsFilterData.name+
 				"&SiteCity=" + locationsFilterData.city + "&SiteType=" + locationsFilterData.selectedType +
 				"&Capacity=" + locationsFilterData.capacity +
-				"&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
+				"&pagesize=" + pageSize + "&pageindex=" + pageIndex);
 
 		String requestUrl = stringBuilder.toString();
 		requestUrl = Uri.encode(requestUrl, ServerKeys.ALLOWED_URI_CHARS);

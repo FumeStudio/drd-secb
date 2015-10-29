@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.secb.android.R;
 import com.secb.android.controller.backend.E_GuideLocationListOperation;
 import com.secb.android.controller.backend.E_GuideLocationTypesOperation;
 import com.secb.android.controller.backend.E_GuideOrganizersListOperation;
-import com.secb.android.controller.backend.E_ServicesListOperation;
+import com.secb.android.controller.backend.E_ServicesRequestsListOperation;
+import com.secb.android.controller.backend.E_ServicesStatisticsListOperation;
 import com.secb.android.controller.backend.EventsCategoryOperation;
 import com.secb.android.controller.backend.EventsCityOperation;
 import com.secb.android.controller.backend.EventsListOperation;
@@ -19,7 +19,9 @@ import com.secb.android.controller.backend.GalleryOperation;
 import com.secb.android.controller.backend.NewsCategoryOperation;
 import com.secb.android.controller.backend.NewsListOperation;
 import com.secb.android.controller.backend.RequestIds;
-import com.secb.android.model.E_ServiceItem;
+import com.secb.android.controller.manager.E_ServicesManager;
+import com.secb.android.model.E_ServiceRequestItem;
+import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.E_ServicesFilterData;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
@@ -72,19 +74,14 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	ArrayList<RequestObserver> organizersRequestObserverList;
 	ArrayList<RequestObserver> eservicesRequestObserverList;
 
-	private RequestObserver newsRequstObserver;
+
 	public boolean isNewsLoadingFinished;
-	private RequestObserver eventsRequstObserver;
 	public boolean isEventsLoadingFinished;
-	private RequestObserver galleryRequstObserver;
 	public boolean isPhotoGalleryLoadingFinished;
 	public boolean isVideoGalleryLoadingFinished;
-	private RequestObserver locationRequstObserver;
 	public boolean isLocationLoadingFinished;
-	private RequestObserver organizersRequestObserver;
 	public boolean isOrganizerLoadingFinished;
-	private RequestObserver eservicesRequestObserver;
-	public boolean isEservicesLoadingFinished;
+	public boolean isEservicesRequestLoadingFinished;
 
 
 	public static SimpleDateFormat sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
@@ -219,8 +216,8 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 	}
 
-	public void openE_ServiceDetailsFragment(E_ServiceItem e_serviceItem) {
-		E_ServiceDetailsFragment fragment = E_ServiceDetailsFragment.newInstance(e_serviceItem);
+	public void openE_ServiceDetailsFragment(E_ServiceRequestItem e_serviceRequestItem) {
+		E_ServiceDetailsFragment fragment = E_ServiceDetailsFragment.newInstance(e_serviceRequestItem);
 		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 //		openTestFragment(null);
@@ -291,6 +288,9 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	/*E-Service Requests List*/
 		getEserviceRequestsList();
+
+	/*E-Service Statistics List*/
+		getEserviceStatisticsList();
 	}
 
 
@@ -299,38 +299,38 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	 */
 //gallery
 	public void setGalleryRequstObserver(RequestObserver galleryRequstObserver) {
-		this.galleryRequstObserver = galleryRequstObserver;
+
 		galleryRequstObserverList.add(galleryRequstObserver);
 	}
 
 	//news
 	public void setNewsRequstObserver(RequestObserver newsRequstObserver) {
-		this.newsRequstObserver = newsRequstObserver;
+
 		newsRequstObserverList.add(newsRequstObserver);
 	}
 
 	//events
 	public void setEventsRequstObserver(RequestObserver newsRequstObserver) {
-		this.eventsRequstObserver = newsRequstObserver;
+
 		eventsRequstObserverList.add(newsRequstObserver);
 	}
 
 	//e-guide Locations
 	public void setLocationRequstObserver(RequestObserver locationRequstObserver) {
-		this.locationRequstObserver = locationRequstObserver;
+
 		locationRequstObserverList.add(locationRequstObserver);
 	}
 
 
 	//e-guide organizers
 	public void setOrganizersRequstObserver(RequestObserver organizersRequestObserver) {
-		this.organizersRequestObserver = organizersRequestObserver;
+
 		organizersRequestObserverList.add(organizersRequestObserver);
 	}
 
 	//e-services requsets
 	public void setEservicesRequstObserver(RequestObserver eservicesRequstObserver) {
-		this.eservicesRequestObserver = eservicesRequstObserver;
+
 		eservicesRequestObserverList.add(eservicesRequstObserver);
 	}
 
@@ -425,7 +425,14 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	//	E-Service Requests List
 	private void getEserviceRequestsList() {
-		E_ServicesListOperation operation = new E_ServicesListOperation(RequestIds.E_SERVICES_REQUEST_ID, false, this, new E_ServicesFilterData(), 100, 0);
+		E_ServicesRequestsListOperation operation = new E_ServicesRequestsListOperation(RequestIds.E_SERVICES_REQUESTS_LIST_REQUEST_ID, false, this, new E_ServicesFilterData(), 100, 0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+	//	E-Service Requests List
+	private void getEserviceStatisticsList() {
+		E_ServicesStatisticsListOperation operation = new E_ServicesStatisticsListOperation(RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID, false, this, 100, 0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -437,7 +444,8 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 //gallery
 		if (((int) requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
 				(int) requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
-				/*galleryRequstObserver!=null  && */galleryRequstObserverList.size() > 0) {
+				/*galleryRequstObserver!=null  && */galleryRequstObserverList.size() > 0)
+		{
 			if ((int) requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID)
 				isPhotoGalleryLoadingFinished = true;
 			else if ((int) requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID)
@@ -488,7 +496,8 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 //Eguide Locations
 		else if (((int) requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID ||
 				(int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID)
-				&& locationRequstObserverList.size() > 0) {
+				&& locationRequstObserverList.size() > 0)
+		{
 			if ((int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID)
 				isLocationLoadingFinished = true;
 			for (RequestObserver iterator : locationRequstObserverList)
@@ -504,11 +513,13 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 				iterator.handleRequestFinished(requestId, error, resulObject);
 		}
 //Eservices
-		else if (((int) requestId == RequestIds.E_SERVICES_REQUEST_ID)
+		else if ( ( (int) requestId == RequestIds.E_SERVICES_REQUESTS_LIST_REQUEST_ID||
+					(int) requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID )
 				&& eservicesRequestObserverList.size() > 0) {
 
-			if ((int) requestId == RequestIds.E_SERVICES_REQUEST_ID)
-				isEservicesLoadingFinished = true;
+			if ((int) requestId == RequestIds.E_SERVICES_REQUESTS_LIST_REQUEST_ID)
+				isEservicesRequestLoadingFinished = true;
+
 			for (RequestObserver iterator : eservicesRequestObserverList)
 				iterator.handleRequestFinished(requestId, error, resulObject);
 		}
@@ -552,15 +563,53 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		return video_id;
 	}
 
+	public ArrayList<Integer> calculateGraphsValues(){
+		ArrayList<Integer>valuesList = new ArrayList<>();
+		//1-get Sum of All requests
+		//2-get sum of closedRequests values
+		//3-get % of closedRequests in All requests
 
-	public GoogleMap customizeMap(GoogleMap googleMap) {
-		if (googleMap == null)
-			return null;
+		ArrayList<E_ServiceStatisticsItem> allRequsts = (ArrayList<E_ServiceStatisticsItem>) E_ServicesManager.getInstance().getEservicesStatisticsList(this);
+		if(allRequsts==null || allRequsts.size()==0)
+			return  null;
 
-		googleMap.setBuildingsEnabled(true);
+		//sum of all
+		int sumOfAllRequests=0;
+		//sum of Closed Requests
+		int closedRequests=0;
+		//sum of Inbox Requests
+		int inboxRequests=0;
+		//sum of InProgress Requests
+		int progressRequests=0;
 
+		for (E_ServiceStatisticsItem item: allRequsts)
+		{
+			int currentValue=0;
+			try
+			{
+				currentValue=Integer.parseInt(item.Value);
+			} catch (NumberFormatException e)
+			{
+				e.printStackTrace();
+				continue;
+			}
 
-		return googleMap;
+			if(currentValue<=0)
+				continue;
+
+			sumOfAllRequests+=currentValue;
+
+			if(item.Key.equalsIgnoreCase("ClosedRequests"))
+				closedRequests=currentValue;
+			else if (item.Key.equalsIgnoreCase("Inbox"))
+				inboxRequests=currentValue;
+			else if (item.Key.equalsIgnoreCase("InProgress"))
+				progressRequests=currentValue;
+		}
+		valuesList.add((int)(100*((double)closedRequests/(double)sumOfAllRequests)));
+		valuesList.add((int)(100*((double)inboxRequests/(double)sumOfAllRequests)));
+		valuesList.add((int)(100*((double)progressRequests/(double)sumOfAllRequests)));
+		return valuesList;
 	}
 
 }

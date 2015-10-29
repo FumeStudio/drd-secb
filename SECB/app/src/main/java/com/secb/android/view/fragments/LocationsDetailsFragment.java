@@ -5,44 +5,61 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.E_GuideLocationDetailsListOperation;
+import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.manager.EGuideLocationManager;
 import com.secb.android.model.LocationItem;
+import com.secb.android.model.RoomItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.squareup.picasso.Picasso;
 
+import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.Utilities;
 
-public class LocationsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
-    LocationItem locationItem;
+import java.util.ArrayList;
 
-    ImageView imgv_locationImg;
+public class LocationsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RequestObserver {
+    LocationItem bundleLocationItem; // sent with bundle from locationList
+    LocationItem locationItem; // returned from requestDetails Operation
+	String LocationId;
+
+	ImageView imgv_locationImg;
     TextView txtv_location_nameTitle;
     TextView txtv_location_nameValue;
     TextView txtv_location_typeTitle;
     TextView txtv_location_typeValue;
     TextView txtv_location_description;
-    TextView txtv_location_capacityValue;
-    TextView txtv_location_spaceValue;
-    TextView txtv_location_roomTypeValue;
-    TextView txtv_location_roomCapacityValue;
-    TextView txtv_location_roomSpaceValue;
-    TextView txtv_location_roomCountValue;
+	TextView txtv_location_capacityValue;
+	TextView txtv_location_spaceValue;
     TextView txtv_location_address_value;
     TextView txtv_location_phone_value;
     TextView txtv_location_email_value;
+
+	TextView txtv_location_roomTypeValue;
+	TextView txtv_location_roomCapacityValue;
+	TextView txtv_location_roomSpaceValue;
+	TextView txtv_location_roomCountValue;
     View view;
 
+	ImageButton btn_nextRoom,btn_PreviousRoom ;
+	int currentRoomIndex;
+	private TextView txtv_noData;
+	private LinearLayout location_details_root;
+	private ArrayList<RoomItem> locationRooms   ;
 
-    public static LocationsDetailsFragment newInstance(LocationItem organizerItem)
+	public static LocationsDetailsFragment newInstance(LocationItem organizerItem)
     {
         LocationsDetailsFragment fragment = new LocationsDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("locationItem",organizerItem);
+        bundle.putSerializable("locationItem", organizerItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -88,14 +105,38 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
         Bundle bundle = getArguments();
         if(bundle!=null)
         {
-            locationItem = (LocationItem)bundle.getSerializable("locationItem");
+            bundleLocationItem = (LocationItem)bundle.getSerializable("locationItem");
         }
+	    if(bundleLocationItem!=null)
+	        LocationId=bundleLocationItem.ID;
         initViews(view);
-        bindViews();
+	    getData();
         return view;
     }
 
-    private void handleButtonsEvents() {
+	private void getData() {
+		if(bundleLocationItem==null)
+			return;
+
+		locationItem = EGuideLocationManager.getInstance().getLocationDetails(bundleLocationItem.ID,getActivity());
+		if(locationItem!=null)
+			handleRequestFinished(RequestIds.EGUIDE_LOCATION_DETAILS_REQUEST_ID, null, locationItem);
+
+		else
+			startLocationDetailsOperation(true);
+	}
+
+	private void startLocationDetailsOperation(boolean showDialog)
+	{
+		E_GuideLocationDetailsListOperation operation = new E_GuideLocationDetailsListOperation(RequestIds.EGUIDE_LOCATION_DETAILS_REQUEST_ID,
+				showDialog,getActivity(),LocationId,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+
+
+	}
+
+	private void handleButtonsEvents() {
     }
 
     /*
@@ -104,7 +145,7 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
     private void applyFonts()
     {
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
-        UiEngine.applyFontsForAll(getActivity(),view,UiEngine.Fonts.HVAR);
+        UiEngine.applyFontsForAll(getActivity(), view, UiEngine.Fonts.HVAR);
     }
 
     private void goBack()
@@ -127,14 +168,24 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
             case R.id.imageViewBackHeader:
                 onBack();
                 break;
+            case R.id.btn_nextRoom:
+                getNextRoom();
+                break;
+            case R.id.btn_previousRoom:
+	            getPreviousRoom();
+                break;
 
             default:
                 break;
+
         }
     }
 
     private void initViews(View view)
     {
+	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
+	    location_details_root = (LinearLayout) view.findViewById(R.id.location_details_root);
+
         imgv_locationImg = (ImageView) view.findViewById(R.id.imgv_locationImg);
         txtv_location_nameValue = (TextView) view.findViewById(R.id.txtv_location_nameValue);
         txtv_location_typeValue = (TextView) view.findViewById(R.id.txtv_location_typeValue);
@@ -148,6 +199,13 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
         txtv_location_address_value = (TextView) view.findViewById(R.id.txtv_location_address_value);
         txtv_location_phone_value = (TextView) view.findViewById(R.id.txtv_location_phone_value);
         txtv_location_email_value = (TextView) view.findViewById(R.id.txtv_location_email_value);
+
+	    btn_nextRoom= (ImageButton) view.findViewById(R.id.btn_nextRoom);
+	    btn_PreviousRoom= (ImageButton) view.findViewById(R.id.btn_previousRoom);
+
+	    btn_nextRoom.setOnClickListener(this);
+	    btn_PreviousRoom.setOnClickListener(this);
+
     }
 
 
@@ -156,7 +214,9 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
     {
         if(this.locationItem !=null)
         {
-//            imgv_locationImg.setImageBitmap(locationItem.LoccationItemImage);
+	        location_details_root.setVisibility(View.VISIBLE);
+	        txtv_noData.setVisibility(View.GONE);
+//            imgv_locationImg.setImageBitmap(bundleLocationItem.LoccationItemImage);
 
 	        if(!Utilities.isNullString(locationItem.SiteImage))
 	        {
@@ -174,15 +234,79 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
             txtv_location_description.setText(locationItem.SiteDescription);
             txtv_location_capacityValue.setText(locationItem.SiteCapacity +"");
             txtv_location_spaceValue.setText(locationItem.SiteArea +"");
-            txtv_location_roomTypeValue.setText(locationItem.LoccationItemRoomType+"");
-            txtv_location_roomCapacityValue.setText(locationItem.LoccationItemRoomCapacity+"");
-            txtv_location_roomSpaceValue.setText(locationItem.LoccationItemRoomSpace+"");
-            txtv_location_roomCountValue.setText(locationItem.LoccationItemNumberOrRooms+"");
             txtv_location_address_value.setText(locationItem.SiteAddressDescription);
             txtv_location_phone_value.setText(locationItem.SitePhone);
             txtv_location_email_value.setText(locationItem.SiteEmail);
+
+	        if(locationRooms!=null & locationRooms.size()>0)
+	        {
+		        txtv_location_roomTypeValue.setText(locationRooms.get(currentRoomIndex).RoomType+"");
+		        txtv_location_roomCapacityValue.setText(locationRooms.get(currentRoomIndex).RoomCapacity+"");
+		        txtv_location_roomSpaceValue.setText(locationRooms.get(currentRoomIndex).RoomArea+"");
+		        txtv_location_roomCountValue.setText(locationRooms.get(currentRoomIndex).RoomsCount+"");
+	        }
+
+
+        }
+	    else
+        {
+	        location_details_root.setVisibility(View.GONE);
+	        txtv_noData.setVisibility(View.VISIBLE);
+	        txtv_noData.setText(getString(R.string.details_no_details));
         }
     }
 
+	public void getNextRoom(){
+		if(currentRoomIndex==locationRooms.size()-1)
+		{
+			btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right_disabled));
+			return;
+		}
+		else{
+			btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right));
+			currentRoomIndex++;
+			bindViews();
+		}
+	}
 
+	public void getPreviousRoom(){
+		if(currentRoomIndex==0)
+		{
+			btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left_disabled));
+			return;
+		}
+		else{
+			btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left));
+			currentRoomIndex--;
+			bindViews();
+		}
+	}
+
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject) {
+		if(error==null)
+		{
+			if((int)requestId == RequestIds.EGUIDE_LOCATION_DETAILS_REQUEST_ID&&resulObject!=null)
+			{
+				locationItem = (LocationItem) resulObject  ;
+				locationRooms = (ArrayList<RoomItem>) locationItem.LocationRooms;
+				bindViews();
+			}
+
+		}
+		else{
+
+		}
+		bindViews();
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
+	}
 }

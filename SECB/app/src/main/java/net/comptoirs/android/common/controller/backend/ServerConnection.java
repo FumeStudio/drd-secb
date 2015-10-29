@@ -84,7 +84,7 @@ public class ServerConnection {
         Logger.instance()
                 .v(
                         "sendRequestToServer",
-                        url + " " + ((bodyEntity != null) ? bodyEntity.toString() + "  " + bodyEntity.getContentLength() : "Null")
+                        url + " bodyEntity = " + ((bodyEntity != null) ? bodyEntity.toString() + "  " + bodyEntity.getContentLength() : "Null")
                                 + "  ", true);
 
 

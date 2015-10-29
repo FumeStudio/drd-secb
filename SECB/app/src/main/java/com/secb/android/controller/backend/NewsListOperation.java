@@ -46,12 +46,14 @@ public class NewsListOperation extends BaseOperation {
 			return null;
 		String language = UiEngine.getCurrentAppLanguage(context);
 
+		if(Utilities.isNullString(language))
+			language=UiEngine.getCurrentDeviceLanguage(context);
 
 		StringBuilder stringBuilder;
 		stringBuilder = new StringBuilder(ServerKeys.NEWS_URL);
 		stringBuilder.append("?Lang=" + language + "&NewsID=" + newsFilterData.newsID +
 				"&fromDate=" + newsFilterData.timeFrom + "&toDate=" + newsFilterData.timeTo +
-				"NewsCategory=" + newsFilterData.selectedCategoryId +
+				"&NewsCategory=" + newsFilterData.selectedCategoryId +
 				"&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
 		String requestUrl = stringBuilder.toString();
 		requestUrl = Uri.encode(requestUrl, ServerKeys.ALLOWED_URI_CHARS);

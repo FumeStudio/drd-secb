@@ -289,9 +289,8 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
 //        putEventOnMap();
 
 	    this.googleMap = googleMap;
-
 	    putEventOnMap();
-	    this.googleMap = ((MainActivity)getActivity()).customizeMap(googleMap);
+
     }
 
     private void putEventOnMap()

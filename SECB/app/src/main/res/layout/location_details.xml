@@ -6,112 +6,153 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
-        android:id="@+id/location_details_root"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="@dimen/eguide_base_padding"
-        android:weightSum="3.5">
+        android:layout_height="match_parent">
 
-        <!--1-->
-
+        <TextView
+            android:id="@+id/txtv_noData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/gallery_item_text_size"
+            android:visibility="visible"/>
 
 
         <LinearLayout
+            android:id="@+id/location_details_root"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/off_white"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/organizer_details_margin"
-            android:paddingRight="@dimen/organizer_details_margin"
-            android:paddingBottom="@dimen/organizer_details_margin">
-            <ImageView
-                android:id="@+id/imgv_locationImg"
+            android:padding="@dimen/eguide_base_padding"
+            android:visibility="visible"
+            android:weightSum="3.5">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/news_details_img_height"
-                android:layout_gravity="center_horizontal|top"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                android:src="@drawable/news_img_sample" />
-            <include
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/off_white"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/organizer_details_margin"
+                    android:paddingLeft="@dimen/organizer_details_margin"
+                    android:paddingRight="@dimen/organizer_details_margin">
+
+                    <ImageView
+                        android:id="@+id/imgv_locationImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/news_details_img_height"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/news_img_sample"/>
+
+                    <include
+                        layout="@layout/location_name_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/organizer_details_margin_small"/>
+
+                    <TextView
+                        android:id="@+id/txtv_location_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/organizer_details_margin_small"
+                        android:text="adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/event_card_h3_text_size"/>
+
+                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btn_nextRoom"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/arrow_to_right"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/organizer_details_margin"
+                    android:paddingRight="@dimen/organizer_details_margin"/>
+                <ImageButton
+                    android:id="@+id/btn_previousRoom"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/arrow_to_left"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/organizer_details_margin"
+                    android:paddingRight="@dimen/organizer_details_margin"/>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/organizer_details_margin_small"
-                layout="@layout/location_name_info" />
+                android:background="@color/off_white"
+                android:paddingLeft="@dimen/organizer_details_margin"
+                android:paddingRight="@dimen/organizer_details_margin">
 
-            <TextView
-                android:id="@+id/txtv_location_description"
+                <include
+                    android:id="@+id/location_capacity_info"
+                    layout="@layout/location_capacity_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/organizer_details_margin_small"
+                    android:background="@color/off_white"
+                    android:visibility="visible"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/organizer_details_margin_small"
-                android:text="adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad"
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/event_card_h3_text_size" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/organizer_details_margin_small"
-            android:background="@color/off_white"
-            android:paddingLeft="@dimen/organizer_details_margin"
-            android:paddingRight="@dimen/organizer_details_margin">
-
-            <include
-                android:id="@+id/location_capacity_info"
-                layout="@layout/location_capacity_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/organizer_details_margin_small"
                 android:background="@color/off_white"
-                android:visibility="visible"
+                android:paddingLeft="@dimen/organizer_details_margin"
+                android:paddingRight="@dimen/organizer_details_margin">
 
-                />
-        </LinearLayout>
+                <include
+                    android:id="@+id/location_capacity_info"
+                    layout="@layout/location_room_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/organizer_details_margin_small"
+                    android:background="@color/off_white"
+                    android:visibility="visible"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/organizer_details_margin_small"
-            android:background="@color/off_white"
-            android:paddingLeft="@dimen/organizer_details_margin"
-            android:paddingRight="@dimen/organizer_details_margin">
+                    />
+            </LinearLayout>
 
-            <include
-                android:id="@+id/location_capacity_info"
-                layout="@layout/location_room_info"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/organizer_details_margin_small"
-                android:background="@color/off_white"
-                android:visibility="visible"
-
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/organizer_details_margin_small"
-            android:layout_weight="1.0"
-            android:background="@color/off_white">
-
-            <include
-                android:id="@+id/location_personal_info"
-                layout="@layout/location_personal_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/organizer_details_margin_small"
+                android:layout_marginTop="@dimen/organizer_details_margin_small"
                 android:layout_weight="1.0"
-                android:background="@color/off_white"
-                android:visibility="visible"
+                android:background="@color/off_white">
 
-                />
+                <include
+                    android:id="@+id/location_personal_info"
+                    layout="@layout/location_personal_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/organizer_details_margin_small"
+                    android:layout_weight="1.0"
+                    android:background="@color/off_white"
+                    android:visibility="visible"
+
+                    />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

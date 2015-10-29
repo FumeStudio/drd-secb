@@ -46,6 +46,8 @@ public class EventsListOperation extends BaseOperation {
 			return null;
 		String language = UiEngine.getCurrentAppLanguage(context);
 
+		if(Utilities.isNullString(language))
+			language=UiEngine.getCurrentDeviceLanguage(context);
 
 		StringBuilder stringBuilder;
 		stringBuilder = new StringBuilder(ServerKeys.EVENTS_URL);
