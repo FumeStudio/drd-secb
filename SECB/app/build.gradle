@@ -1,18 +1,40 @@
 apply plugin: 'com.android.application'
+//if (project.hasProperty("project.properties")
+//        && new File(project.property("project.properties")).exists())
+//{
+//    Properties props = new Properties()
+//    props.load(new FileInputStream(file(project.property("project.properties"))))
+//    android {
+//        signingConfigs {
+//            release_signing {
+//                keyAlias 'android_signature'
+//                keyPassword props['keystore.password']
+//                storeFile file(props['keystore'])
+//                storePassword props['keystore.password']
+//            }
+//            debug_signing {
+//                keyAlias 'debug'
+//                keyPassword props['keystore.password']
+//                storeFile file(props['keystore'])
+//                storePassword props['keystore.password']
+//            }
+//        }
+
 
 android {
     signingConfigs {
         release_signing {
-            keyAlias 'android_signature'
-            keyPassword 'user_9999'
-            storeFile file('D:/Media/Video/Tutorials/Android/Amir-Hakim/workspace/drd-secb/SECB/Signing_key/secb_key_store.keystore')
-            storePassword 'user_9999'
+//            keyAlias 'android_signature'
+//            keyPassword 'user_9999'
+//            storeFile file('D:/Media/Video/Tutorials/Android/Amir-Hakim/workspace/drd-secb/SECB/Signing_key/secb_key_store.keystore')
+//            storePassword 'user_9999'
+
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
         }
-        debug_release {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('C:/Users/jo/.android/debug.keystore')
-            storePassword 'android'
+        debug_signing {
         }
     }
     lintOptions {
@@ -78,3 +100,4 @@ dependencies {
     compile project(':library')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
 }
+//}

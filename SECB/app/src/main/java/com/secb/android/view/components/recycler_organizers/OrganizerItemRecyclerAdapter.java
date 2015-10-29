@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.secb.android.R;
 import com.secb.android.model.OrganizerItem;
+import com.squareup.picasso.Picasso;
 
+import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.Collections;
@@ -44,9 +46,19 @@ public class OrganizerItemRecyclerAdapter extends RecyclerView.Adapter<Organizer
     @Override
     public void onBindViewHolder(OrganizerItemRecyclerViewHolder holder, int position) {
         OrganizerItem currentItem = itemsList.get(position);
-        holder.imgv_organizerImg.setImageBitmap(currentItem.OraganizerItemImage);
-        holder.txtv_organizerTitle.setText(currentItem.OraganizerItemTitle);
-        holder.txtv_organizerDescription.setText(currentItem.OraganizerItemDescription);
+	    if(!Utilities.isNullString(currentItem.OrganizerImage))
+	    {
+		    Picasso.with(context)
+				    .load(currentItem.OrganizerImage)
+				    .placeholder(R.drawable.organizer_place_holder)
+				    .into(holder.imgv_organizerImg)
+		    ;
+	    }
+	    else
+		    holder.imgv_organizerImg.setImageResource(R.drawable.organizer_place_holder);
+
+        holder.txtv_organizerTitle.setText(currentItem.OrganizerName);
+        holder.txtv_organizerDescription.setText(currentItem.OrganizerDescription);
     }
 
     @Override

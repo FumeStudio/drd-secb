@@ -82,7 +82,7 @@ public class E_GuideLocationListOperation extends BaseOperation {
 				locationsFilterData.capacity.equalsIgnoreCase("All"))
 		{
 
-			updateNewsManager(locationItems);
+			updateLocationsManager(locationItems);
 		}
 		return locationItems;
 	}
@@ -92,24 +92,26 @@ public class E_GuideLocationListOperation extends BaseOperation {
 		if (locationItems == null || locationItems.size() == 0)
 			return;
 
-		for (LocationItem currentItem : locationItems)
 		{
-			if (Utilities.isNullString(currentItem.ID) ||
-					Utilities.isNullString(currentItem.SiteName) ||
-					Utilities.isNullString(currentItem.SiteDescription) )
+			for (int i = 0 ; i <locationItems.size();i++)
 			{
-				locationItems.remove(currentItem);
-			}
+				LocationItem currentItem = locationItems.get(i);
+				if (Utilities.isNullString(currentItem.ID) ||
+						Utilities.isNullString(currentItem.SiteName) ||
+						Utilities.isNullString(currentItem.SiteDescription) )
+				{
+					locationItems.remove(currentItem);
+				}
 
+			}
 		}
 	}
 
-	private void updateNewsManager(List<LocationItem> newsItems) {
+	private void updateLocationsManager(List<LocationItem> newsItems)
+	{
 		if (newsItems == null || newsItems.size() == 0)
 			return;
-
 		EGuideLocationManager.getInstance().setLocationsUnFilteredList(newsItems,context);
-
 	}
 
 

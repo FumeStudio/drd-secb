@@ -13,7 +13,9 @@ import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.squareup.picasso.Picasso;
 
+import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
 public class OrganizersDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener {
@@ -138,12 +140,22 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     {
         if(this.organizerItem !=null)
         {
-            imgv_organizerImg.setImageBitmap(organizerItem.OraganizerItemImage);
-            txtv_organizerName.setText(organizerItem.OraganizerItemTitle);
-            txtv_organizer_address_value.setText(organizerItem.OraganizerItemAddress);
-            txtv_organizer_phone_value.setText(organizerItem.OraganizerItemPhone);
-            txtv_organizer_email_value.setText(organizerItem.OraganizerItemEmail);
-            txtv_organizer_website_value.setText(organizerItem.OraganizerItemWebsite);
+	        if(!Utilities.isNullString(organizerItem.OrganizerImage))
+	        {
+		        Picasso.with(getActivity())
+				        .load(organizerItem.OrganizerImage)
+				        .placeholder(R.drawable.organizer_place_holder)
+				        .into(imgv_organizerImg)
+		        ;
+	        }
+	        else
+		        imgv_organizerImg.setImageResource(R.drawable.organizer_place_holder);
+
+	        txtv_organizerName.setText(organizerItem.OrganizerName);
+            txtv_organizer_address_value.setText(organizerItem.OrganizerAddressDescription);
+            txtv_organizer_phone_value.setText(organizerItem.OrganizerPhone);
+            txtv_organizer_email_value.setText(organizerItem.OrganizerEmail);
+            txtv_organizer_website_value.setText(organizerItem.OrganizerWebAddress);
         }
     }
 

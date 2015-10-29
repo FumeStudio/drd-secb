@@ -151,6 +151,9 @@ public class LocationsListFragment extends SECBBaseFragment
     private void getFilterDataObject() {
 	    ((MainActivity)getActivity()).hideFilterLayout();
         locationsFilterData =this.locationsFilterLayout.getFilterData();
+	    if(locationsFilterData!=null)
+		    startLocationsListOperation(locationsFilterData,true);
+
 //        if(locationsFilterData !=null){
 //            StringBuilder types = new StringBuilder();
 //            for(int i : locationsFilterData.types){

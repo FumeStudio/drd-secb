@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import com.secb.android.model.AppConfiguration;
 import com.secb.android.model.EGuideLocationTypeItem;
+import com.secb.android.model.E_ServiceItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsCategoryItem;
 import com.secb.android.model.EventsCityItem;
@@ -13,6 +14,7 @@ import com.secb.android.model.GalleryItem;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsItem;
+import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.User;
 
 import net.comptoirs.android.common.helper.Logger;
@@ -688,4 +690,150 @@ public class CachingManager {
 		}
 		return itemsList;
 	}
+
+
+
+/**Details*/
+	//save Events details
+	public void saveLocationDetails(LocationItem item, Context appContext) {
+		if(item != null )
+		{
+			//create file called "app_events_details_xx.dat"
+			// inside  folder called "Events" which existing in "Cache" folder
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,"app_eguide_location_details_"+item.ID+".dat", appContext);
+
+			//save Events list in the file "app_events_details_xx.dat
+			try {
+				saveObject(item, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//load Events details
+	public LocationItem loadLocationDetails(String LoocationID, Context appContext)
+	{
+		//get file called "app_events_details_xx.dat" from "Events" folder
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,"app_eguide_location_details_"+LoocationID+".dat", appContext);
+		LocationItem itemsDetails = null;
+		try
+		{
+			//load object from "app_events_details_xx.dat" file
+			itemsDetails = (LocationItem) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsDetails;
+	}
+
+
+
+	/***************************************************************************************************/
+	/* ************************* EGuide Organizers Part *********************/
+	/***************************************************************************************************/
+
+/**Lists*/
+	//save organizers list
+	public void saveOrganizersList(ArrayList<OrganizerItem> itemsList, Context appContext) {
+		if (itemsList != null && itemsList.size() > 0) {
+			//create file called "app_eguide_organizers_list.dat"
+			// inside  folder called "organizers" which existing in "Cache" folder
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST, appContext);
+			//save Events categories in the file "app_eguide_organizers_list.dat
+			try {
+				saveObject(itemsList, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//load organizers list
+	public ArrayList<OrganizerItem> loadOrganizersList(Context appContext)
+	{
+		//get file called "app_eguide_location_list.dat" from "organizers" folder
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST, appContext);
+		ArrayList<OrganizerItem> itemsList = null;
+		try
+		{
+			//load object from "app_eguide_organizers_list.dat" file
+			itemsList = (ArrayList<OrganizerItem>) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+
+
+
+/**Details*/
+	//save organizer details
+	public void saveOrganizerDetails(OrganizerItem item, Context appContext) {
+		if(item != null )
+		{
+			//create file called "app_eguide_organizer_details_xx.dat"
+			// inside  folder called "Organizers" which existing in "Cache" folder
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS,"app_eguide_organizer_details_"+item.OrganizerEmail+".dat", appContext);
+			//save Events list in the file "app_eguide_organizer_details_xx.dat
+			try {
+				saveObject(item, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//load organizer details
+	public OrganizerItem loadOrganizerDetails(String OrganizerEmail, Context appContext)
+	{
+		//get file called "app_eguide_organizer_details_xx.dat" from "Organizers" folder
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS,"app_eguide_organizer_details_"+OrganizerEmail+".dat", appContext);
+		OrganizerItem itemsDetails = null;
+		try
+		{
+			//load object from "app_eguide_organizer_details_xx.dat" file
+			itemsDetails = (OrganizerItem) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsDetails;
+	}
+
+
+	/***************************************************************************************************/
+	/* ************************* E-Services Organizers Part *********************/
+	/***************************************************************************************************/
+
+/**Lists*/
+
+	//save e-services requests list
+	public void saveE_ServicesRequestsList(ArrayList<E_ServiceItem> itemsList, Context appContext) {
+		if (itemsList != null && itemsList.size() > 0) {
+			//create file called "app_eservices_requests_list.dat"
+			// inside  folder called "eservices" which existing in "Cache" folder
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_LIST, appContext);
+			//save Events categories in the file "app_eservices_requests_list.dat
+			try {
+				saveObject(itemsList, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//load organizers list
+	public ArrayList<E_ServiceItem> loadE_ServicesRequestsList(Context appContext)
+	{
+		//get file called "app_eservices_requests_list.dat" from "eservices" folder
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_LIST, appContext);
+		ArrayList<E_ServiceItem> itemsList = null;
+		try
+		{
+			//load object from "app_eservices_requests_list.dat" file
+			itemsList = (ArrayList<E_ServiceItem>) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+
 }
