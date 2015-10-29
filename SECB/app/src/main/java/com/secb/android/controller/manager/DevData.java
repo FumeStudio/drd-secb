@@ -115,13 +115,13 @@ public class DevData
         ArrayList<OrganizerItem> organizerItems= new ArrayList<>();
         OrganizerItem organizerItem = new OrganizerItem();
 
-        organizerItem.OraganizerItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news_img_sample));
-        organizerItem.OraganizerItemTitle = CTApplication.getContext().getString(R.string.dev_name);
-        organizerItem.OraganizerItemAddress= CTApplication.getContext().getString(R.string.dev_address);
-        organizerItem.OraganizerItemDescription= CTApplication.getContext().getString(R.string.dev_desc);
-        organizerItem.OraganizerItemEmail="email@gmail.com";
-        organizerItem.OraganizerItemPhone="012222233555-012258554555";
-        organizerItem.OraganizerItemWebsite="www.linkedin/namename.com";
+//        organizerItem.OraganizerItemImage=(BitmapFactory.decodeResource(SECBApplication.getContext().getResources(), R.drawable.news_img_sample));
+        organizerItem.OrganizerName = CTApplication.getContext().getString(R.string.dev_name);
+        organizerItem.OrganizerAddressDescription = CTApplication.getContext().getString(R.string.dev_address);
+        organizerItem.OrganizerDescription = CTApplication.getContext().getString(R.string.dev_desc);
+        organizerItem.OrganizerEmail ="email@gmail.com";
+        organizerItem.OrganizerPhone ="012222233555-012258554555";
+        organizerItem.OrganizerWebAddress ="www.linkedin/namename.com";
 
         organizerItems.add(organizerItem);
         organizerItems.add(organizerItem);
@@ -169,10 +169,10 @@ public class DevData
         E_ServiceItem item = new E_ServiceItem();
 
         item.title = "Nine Firms Warned for Committing Violations.";
-        item.date = "20 Oct 2015";
-        item.status = "In progress";
-        item.number = "21-360406-85769";
-        item.type = "Organization Service Request";
+        item.RequestDate = "20 Oct 2015";
+        item.RequestStatus = "In progress";
+        item.RequestNumber = "21-360406-85769";
+        item.RequestType = "Organization Service Request";
 
         e_serviceItems.add(item);
         e_serviceItems.add(item);

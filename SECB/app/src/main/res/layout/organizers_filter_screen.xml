@@ -42,7 +42,7 @@
             android:paddingLeft="@dimen/news_filter_padding"
             android:paddingRight="@dimen/news_filter_padding">
 
-            <!--name title-->
+            <!-- title-->
             <TextView
                 android:id="@+id/txtv_news_filter_time_from_title"
                 android:layout_width="0dp"
@@ -53,15 +53,15 @@
                 android:gravity="center_vertical"
                 android:textSize="@dimen/news_filter_text_size" />
 
-            <!--from value-->
+            <!--name value-->
             <EditText
                 android:id="@+id/txtv_news_filter_time_from_value"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:text=""
                 android:layout_height="match_parent"
                 android:textColor="@color/secb_grey_text"
+                android:hint="@string/hint_name"
                 android:gravity="center_vertical"
                 android:textSize="@dimen/news_filter_text_size" />
         </TableRow>
@@ -90,15 +90,16 @@
                 android:textSize="@dimen/news_filter_text_size" />
 
             <!--city value-->
-            <EditText
-                android:id="@+id/txtv_city_filter_city_value"
+            <Spinner
+                android:id="@+id/spn_city_filter_city_value"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:maxLines="1"
-                android:text=""
                 android:layout_height="match_parent"
-                android:textColor="@color/secb_grey_text"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
+                android:hint="@string/hint_city"
+                android:maxLines="1"
+                android:background="@color/white"
+                android:textColor="@color/secb_grey_text"
                 android:textSize="@dimen/news_filter_text_size" />
 
         </TableRow>

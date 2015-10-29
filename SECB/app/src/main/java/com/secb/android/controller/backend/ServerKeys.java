@@ -48,6 +48,11 @@ public class ServerKeys
 	/*E-guide Location List*/
 	public static final String EGUIDE_LOCATION_LIST= "http://secb.linkdev.com/WebApi/api/location/GetLocation";
 
+	/*E-guide Organizers List*/
+	public static final String EGUIDE_ORGANIZERS_LIST= "http://secb.linkdev.com/WebApi/api/Organizer/Getorganizer";
+
+	/*E-Services RequestList*/
+	public static final String E_Services_REQUESTS_LIST = "http://secb.linkdev.com/WebApi/api/Requests/GetRequests";
 
 
 }

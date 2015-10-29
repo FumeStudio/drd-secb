@@ -84,7 +84,9 @@ public class NewsListOperation extends BaseOperation {
 		if (newsItems == null || newsItems.size() == 0)
 			return;
 
-		for (NewsItem currentItem : newsItems) {
+		for (int i = 0 ; i< newsItems.size();i++)
+		{
+			NewsItem currentItem = newsItems.get(i);
 			if (Utilities.isNullString(currentItem.Title) ||
 					Utilities.isNullString(currentItem.NewsBrief) ||
 					Utilities.isNullString(currentItem.CreationDate) ) {

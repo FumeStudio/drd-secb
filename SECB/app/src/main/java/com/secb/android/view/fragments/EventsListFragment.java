@@ -214,6 +214,7 @@ public class EventsListFragment extends SECBBaseFragment
     {
 
     }
+
 	public void getData()
 	{
 		//if news list is loaded in the manager get it and bind
@@ -268,7 +269,7 @@ public class EventsListFragment extends SECBBaseFragment
 			if((int)requestId == RequestIds.EVENTS_LIST_REQUEST_ID && resultObject!=null){
 				eventsList= (ArrayList<EventItem>) resultObject;
 			}
-			bindViews();
+
 
 		}
 		else if (error != null && error instanceof CTHttpError)
@@ -285,6 +286,7 @@ public class EventsListFragment extends SECBBaseFragment
 						getActivity());
 			}
 		}
+		bindViews();
 	}
 
 	@Override

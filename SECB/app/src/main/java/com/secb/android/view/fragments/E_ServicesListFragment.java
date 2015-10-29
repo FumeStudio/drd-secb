@@ -1,5 +1,7 @@
 package com.secb.android.view.fragments;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,29 +14,40 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secb.android.R;
-import com.secb.android.controller.manager.DevData;
+import com.secb.android.controller.backend.E_ServicesListOperation;
+import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.manager.E_ServicesManager;
 import com.secb.android.model.E_ServiceItem;
-import com.secb.android.model.EventsFilterData;
+import com.secb.android.model.E_ServicesFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.dialogs.ProgressWheel;
 import com.secb.android.view.components.filters_layouts.EventsFilterLayout;
 import com.secb.android.view.components.recycler_e_service.E_ServiceItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
+import net.comptoirs.android.common.helper.Logger;
+
 import java.util.ArrayList;
 
 public class E_ServicesListFragment extends SECBBaseFragment
-        implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener
+        implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener ,RequestObserver
 
 {
-    RecyclerView eServicesRecyclerView;
+	private static final String TAG = "E_ServicesListFragment";
+	RecyclerView eServicesRecyclerView;
     E_ServiceItemRecyclerAdapter e_serviceItemRecyclerAdapter;
     ArrayList<E_ServiceItem> eServicesList;
-    EventsFilterData eventsFilterData;
+    E_ServicesFilterData e_servicesFilterData;
+	
     LinearLayout layout_graphs_container;
     ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
@@ -45,9 +58,12 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
     View view;
     private EventsFilterLayout eventsFilterLayout = null;
+	private TextView txtv_noData;
+	private ProgressDialog progressDialog;
 
 
-    public static E_ServicesListFragment newInstance() {
+
+	public static E_ServicesListFragment newInstance() {
         E_ServicesListFragment fragment = new E_ServicesListFragment();
         return fragment;
     }
@@ -57,7 +73,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.eservices));
-        ((SECBBaseActivity) getActivity()).showFilterButton(true);
+        ((SECBBaseActivity) getActivity()).showFilterButton(false);//for now till the filter design is received
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
@@ -91,11 +107,19 @@ public class E_ServicesListFragment extends SECBBaseFragment
             handleButtonsEvents();
 
         }
+	    ((MainActivity)getActivity()).setEservicesRequstObserver(this);
         initViews(view);
         applyFonts();
         initFilterLayout();
+	    getData();
         return view;
     }
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		eServicesRecyclerView.setAdapter(null);
+	}
 
     public void initFilterLayout() {
         eventsFilterLayout = new EventsFilterLayout(getActivity());
@@ -112,8 +136,11 @@ public class E_ServicesListFragment extends SECBBaseFragment
     private void applyFonts() {
         // TODO::
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.textViewAbout)), UiEngine.Fonts.HELVETICA_NEUE_LT_STD_CN);
-
-        UiEngine.applyFontsForAll(getActivity(),layout_graphs_container, UiEngine.Fonts.HVAR);
+	    if(txtv_noData!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+	    }
+        UiEngine.applyFontsForAll(getActivity(), layout_graphs_container, UiEngine.Fonts.HVAR);
     }
 
     private void goBack() {
@@ -142,51 +169,133 @@ public class E_ServicesListFragment extends SECBBaseFragment
         }
     }
 
-    private void getFilterDataObject() {
-        eventsFilterData = this.eventsFilterLayout.getFilterData();
-        if (eventsFilterData != null) {
+	private void getFilterDataObject() {
+		((SECBBaseActivity)getActivity()).hideFilterLayout();
+        /*e_servicesFilterData = this.eventsFilterLayout.getFilterData();
+        if (e_servicesFilterData != null) {
             ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
-                    " city: " + eventsFilterData.city + "\n" +
-                    " Time From: " + eventsFilterData.timeFrom + "\n" +
-                    " Time To: " + eventsFilterData.timeTo + " \n" +
-                    " Type: " + eventsFilterData.selectedCategoryId);
-        }
-    }
+                    " city: " + e_servicesFilterData.city + "\n" +
+                    " Time From: " + e_servicesFilterData.timeFrom + "\n" +
+                    " Time To: " + e_servicesFilterData.timeTo + " \n" +
+                    " Type: " + e_servicesFilterData.selectedCategoryId);
+        }*/
+	}
+
+	private void initViews(View view) {
+		progressDialog = CustomProgressDialog.getInstance(getActivity(), true);
+		progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				bindViews();
+			}
+		});
+
+		progressWheelClosed = (ProgressWheel) view.findViewById(R.id.progressWheelClosed);
+		progressWheelInbox = (ProgressWheel) view.findViewById(R.id.progressWheelInbox);
+		progressWheelInProgress = (ProgressWheel) view.findViewById(R.id.progressWheelProgress);
 
 
-    private void initViews(View view) {
-        progressWheelClosed = (ProgressWheel) view.findViewById(R.id.progressWheelClosed);
-        progressWheelInbox = (ProgressWheel) view.findViewById(R.id.progressWheelInbox);
-        progressWheelInProgress = (ProgressWheel) view.findViewById(R.id.progressWheelProgress);
+		txtv_graph_title_closed = (TextView) view.findViewById(R.id.txtv_graph_title_closed);
+		txtv_graph_value_closed = (TextView) view.findViewById(R.id.txtv_graph_value_closed);
+
+		txtv_graph_title_inbox = (TextView) view.findViewById(R.id.txtv_graph_title_inbox);
+		txtv_graph_value_inbox = (TextView) view.findViewById(R.id.txtv_graph_value_inbox);
+
+		txtv_graph_title_inProgress = (TextView) view.findViewById(R.id.txtv_graph_title_inProgress);
+		txtv_graph_value_inProgress = (TextView) view.findViewById(R.id.txtv_graph_value_inProgress);
 
 
-        txtv_graph_title_closed = (TextView) view.findViewById(R.id.txtv_graph_title_closed);
-        txtv_graph_value_closed = (TextView) view.findViewById(R.id.txtv_graph_value_closed);
-
-        txtv_graph_title_inbox = (TextView) view.findViewById(R.id.txtv_graph_title_inbox);
-        txtv_graph_value_inbox = (TextView) view.findViewById(R.id.txtv_graph_value_inbox);
-
-        txtv_graph_title_inProgress = (TextView) view.findViewById(R.id.txtv_graph_title_inProgress);
-        txtv_graph_value_inProgress = (TextView) view.findViewById(R.id.txtv_graph_value_inProgress);
+		txtv_graph_title_closed.setText(Html.fromHtml(getString(R.string.graph_title_closed)));
+		txtv_graph_title_inbox.setText(Html.fromHtml(getString(R.string.graph_title_inbox)));
+		txtv_graph_title_inProgress.setText(Html.fromHtml(getString(R.string.graph_title_inProgress)));
+		layout_graphs_container = (LinearLayout) view.findViewById(R.id.layout_graphs_container);
 
 
-        txtv_graph_title_closed.setText(Html.fromHtml(getString(R.string.graph_title_closed)));
-        txtv_graph_title_inbox.setText(Html.fromHtml(getString(R.string.graph_title_inbox)));
-        txtv_graph_title_inProgress.setText(Html.fromHtml(getString(R.string.graph_title_inProgress)));
-        layout_graphs_container = (LinearLayout) view.findViewById(R.id.layout_graphs_container);
 
-        eServicesList = DevData.getE_ServicesList();
-        eServicesRecyclerView = (RecyclerView) view.findViewById(R.id.eServicesRecyclerView);
-        e_serviceItemRecyclerAdapter = new E_ServiceItemRecyclerAdapter(getActivity(), eServicesList);
-        eServicesRecyclerView.setAdapter(e_serviceItemRecyclerAdapter);
-        eServicesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		txtv_noData  = (TextView) view.findViewById(R.id.txtv_noData);
+		eServicesRecyclerView = (RecyclerView) view.findViewById(R.id.eServicesRecyclerView);
+		e_serviceItemRecyclerAdapter = new E_ServiceItemRecyclerAdapter(getActivity(), eServicesList);
+		eServicesRecyclerView.setAdapter(e_serviceItemRecyclerAdapter);
+		eServicesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        eServicesRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eServicesRecyclerView, this));
+		eServicesRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eServicesRecyclerView, this));
 
-        graphsValues = new int[]{15, 36, 82};
-        fillWheelPercentage(graphsValues[0], graphsValues[1], graphsValues[2]);
+//		eServicesList = DevData.getE_ServicesList();
+		graphsValues = new int[]{15, 36, 82};
+		fillWheelPercentage(graphsValues[0], graphsValues[1], graphsValues[2]);
 
-    }
+	}
+
+	public void bindViews(){
+		if(eServicesList!=null &&eServicesList.size()>0)
+		{
+			eServicesRecyclerView.setVisibility(View.VISIBLE);
+			txtv_noData.setVisibility(View.GONE);
+			e_serviceItemRecyclerAdapter = new E_ServiceItemRecyclerAdapter(getActivity(), eServicesList);
+			eServicesRecyclerView.setAdapter(e_serviceItemRecyclerAdapter);
+		}
+		else
+		{
+			eServicesRecyclerView.setVisibility(View.GONE);
+			txtv_noData.setVisibility(View.VISIBLE);
+			txtv_noData.setText(getString(R.string.events_no_events));
+		}
+	}
+
+	@Override
+	public void onItemClicked(View v, int position) {
+		((MainActivity) getActivity()).openE_ServiceDetailsFragment(eServicesList.get(position));
+	}
+
+	@Override
+	public void onItemLongClicked(View v, int position) {
+
+	}
+
+	public void getData()
+	{
+		//if news list is loaded in the manager get it and bind
+		//if not and the main activity is still loading the events list
+		// wait for it and it will notify handleRequestFinished in this fragment.
+		//if the main activity finished loading events list and the manager is still empty
+		//start operation here.
+
+
+		eServicesList = (ArrayList<E_ServiceItem>) E_ServicesManager.getInstance().getEservicesRequestsUnFilteredList(getActivity());
+		if(eServicesList!= null && eServicesList.size()>0){
+			handleRequestFinished(RequestIds.E_SERVICES_REQUEST_ID, null, eServicesList);
+		}
+		else {
+			if (((MainActivity) getActivity()).isEservicesLoadingFinished == false) {
+				startWaiting();
+			}
+			else{
+				startEServicesRequestListOperation(new E_ServicesFilterData(), true);
+			}
+		}
+
+	}
+
+	private void startWaiting() {
+		if(progressDialog!=null&& !progressDialog.isShowing())
+		{
+			progressDialog.show();
+		}
+	}
+
+	private void stopWaiting() {
+		if(progressDialog!=null&& progressDialog.isShowing())
+		{
+			progressDialog.dismiss();
+		}
+	}
+
+	private void startEServicesRequestListOperation(E_ServicesFilterData e_servicesFilterData, boolean showDialog) {
+		E_ServicesListOperation operation = new E_ServicesListOperation(RequestIds.E_SERVICES_REQUEST_ID,showDialog,getActivity(),e_servicesFilterData,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
 
     private void fillWheelPercentage(int closedScore, int inboxScore, int inProgressScore) {
 
@@ -205,13 +314,43 @@ public class E_ServicesListFragment extends SECBBaseFragment
         progressWheelInProgress.startLoading(inProgressScore, PROGRESS_WHEEL_TIME, "" + inProgressScore, largeRadius);
     }
 
-    @Override
-    public void onItemClicked(View v, int position) {
-        ((MainActivity) getActivity()).openE_ServiceDetailsFragment(eServicesList.get(position));
-    }
 
-    @Override
-    public void onItemLongClicked(View v, int position) {
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		stopWaiting();
+		if (error == null)
+		{
+			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
+			if((int)requestId == RequestIds.E_SERVICES_REQUEST_ID && resultObject!=null){
+				eServicesList= (ArrayList<E_ServiceItem>) resultObject;
+			}
 
-    }
+
+		}
+		else if (error != null && error instanceof CTHttpError)
+		{
+			Logger.instance().v(TAG,error);
+			int statusCode = ((CTHttpError) error).getStatusCode();
+			if (RequestHandler.isRequestTimedOut(statusCode))
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
+			}
+			else if (statusCode == -1)
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+						getActivity());
+			}
+		}
+		bindViews();
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
+	}
 }

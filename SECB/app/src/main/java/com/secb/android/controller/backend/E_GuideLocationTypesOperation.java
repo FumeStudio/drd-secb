@@ -47,13 +47,13 @@ public class E_GuideLocationTypesOperation extends BaseOperation {
         Type listType = new TypeToken<List<EGuideLocationTypeItem>>() {}.getType();
         List<EGuideLocationTypeItem> items= gson.fromJson(response.response.toString(), listType);
 
-        updateEventsManager(items);
+	    updateLocationTypesManager(items);
         return items;
     }
 
 
 
-    private void updateEventsManager(List<EGuideLocationTypeItem> items)
+    private void updateLocationTypesManager(List<EGuideLocationTypeItem> items)
     {
         if(items==null ||items.size()==0)
             return;

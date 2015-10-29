@@ -16,4 +16,6 @@ public class RequestIds
 	public static final int NEWS_DETAILS_REQUEST_ID = 12;
 	public static final int EGUIDE_LOCATION_TYPES_REQUEST_ID = 13;
 	public static final int EGUIDE_LOCATION_LIST_REQUEST_ID = 14;
+	public static final int EGUIDE_ORGANIZERS_LIST_REQUEST_ID = 15;
+	public static final int E_SERVICES_REQUEST_ID = 16;
 }

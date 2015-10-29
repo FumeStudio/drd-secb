@@ -151,6 +151,7 @@
     <string name="event_all_day">طوال اليوم</string>
     <string name="event_repeated">متكرر</string>
     <string name="locations_no_locations">لا توجد مواقع.</string>
+    <string name="organizer_no_organizers">لا يوجد منظمين.</string>
 
 
 </resources>

@@ -115,7 +115,7 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
     private void startLoginOperation()
     {
         User user = new User();
-        user.userName= edt_email.getText().toString();
+        user.emailAddress= edt_email.getText().toString();
         user.password= edt_password.getText().toString();
 
         boolean rememberMe=true;

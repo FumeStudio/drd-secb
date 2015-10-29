@@ -1,0 +1,107 @@
+package com.secb.android.controller.backend;
+
+import android.content.Context;
+import android.net.Uri;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.secb.android.controller.manager.E_ServicesManager;
+import com.secb.android.controller.manager.UserManager;
+import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServicesFilterData;
+import com.secb.android.view.UiEngine;
+
+import net.comptoirs.android.common.controller.backend.BaseOperation;
+import net.comptoirs.android.common.controller.backend.CTHttpResponse;
+import net.comptoirs.android.common.controller.backend.ServerConnection;
+import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
+
+import org.apache.http.client.methods.HttpGet;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+
+public class E_ServicesListOperation extends BaseOperation {
+	private static final String TAG = "E_ServicesListOperation";
+	Context context;
+	private int pageIndex;
+	private int pageSize;
+	E_ServicesFilterData e_servicesFilterData;
+	public E_ServicesListOperation(int requestID, boolean isShowLoadingDialog, Context context,
+	                               E_ServicesFilterData e_servicesFilterData, int pageSize, int pageIndex) {
+		super(requestID, isShowLoadingDialog, context);
+		this.context = context;
+		this.e_servicesFilterData=e_servicesFilterData;
+		this.pageIndex = pageIndex;
+		this.pageSize = pageSize;
+	}
+
+
+	@Override
+	public Object doMain() throws Exception {
+		if(e_servicesFilterData==null)
+			return null;
+		String language = UiEngine.getCurrentAppLanguage(context);
+
+
+		StringBuilder stringBuilder;
+		stringBuilder = new StringBuilder(ServerKeys.E_Services_REQUESTS_LIST);
+		stringBuilder.append("?Lang=" + language
+		+"&UserName="+e_servicesFilterData.UserName
+		+"&FromDate="+e_servicesFilterData.FromDate
+		+"&ToDate="+e_servicesFilterData.ToDate
+		+"&Status="+e_servicesFilterData.Status
+		+"&RequestType="+e_servicesFilterData.RequestType
+		+"&RequestNumber="+e_servicesFilterData.RequestNumber
+		/*+ "&pageSize=" + pageSize + "&pageIndex=" + pageIndex*/
+		);
+
+		String requestUrl = stringBuilder.toString();
+		requestUrl = Uri.encode(requestUrl, ServerKeys.ALLOWED_URI_CHARS);
+		HashMap<String, String> cookies = new HashMap<>();
+		cookies.put("Cookie", UserManager.getInstance().getUser().loginCookie);
+
+		CTHttpResponse response = doRequest(requestUrl, HttpGet.METHOD_NAME, null, null, cookies, null, ServerConnection.ResponseType.RESP_TYPE_STRING);
+		Logger.instance().v(TAG, response.response);
+
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<E_ServiceItem>>() {}.getType();
+		List<E_ServiceItem> e_serviceItems = gson.fromJson(response.response.toString(), listType);
+		removeUnCompletedItems(e_serviceItems);
+
+		updateOrganizersManager(e_serviceItems);
+		return e_serviceItems;
+	}
+
+	//if news Item does not contain title and brief and date remove it.
+	private void removeUnCompletedItems(List<E_ServiceItem> e_serviceItems) {
+		if (e_serviceItems == null || e_serviceItems.size() == 0)
+			return;
+		//to avoid Concurrent Modification Exception
+		/*synchronized(organizerItems)*/{
+			for (int i = 0 ; i<e_serviceItems.size();i++)
+			{
+				E_ServiceItem currentItem =e_serviceItems.get(i);
+				if (Utilities.isNullString(currentItem.RequestNumber) ||
+						Utilities.isNullString(currentItem.RequestDate) ||
+						Utilities.isNullString(currentItem.RequestType) )
+				{
+					e_serviceItems.remove(currentItem);
+				}
+
+			}
+		}
+	}
+
+	private void updateOrganizersManager(List<E_ServiceItem> e_serviceItems)
+	{
+		if (e_serviceItems == null || e_serviceItems.size() == 0)
+			return;
+		E_ServicesManager.getInstance().setEservicesRequestsUnFilteredList(e_serviceItems, context);
+
+	}
+
+
+}

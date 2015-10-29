@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.secb.android.R;
 import com.secb.android.model.E_ServiceItem;
 
+import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.Collections;
@@ -49,11 +50,18 @@ public class E_ServiceItemRecyclerAdapter extends RecyclerView.Adapter<E_Service
     @Override
     public void onBindViewHolder(E_ServiceItemRecyclerViewHolder holder, int position) {
         E_ServiceItem currentItem = itemsList.get(position);
-        holder.txtv_item_title.setText(currentItem.title);
-        holder.txtv_date_value.setText(currentItem.date);
-        holder.txtv_status_value.setText(currentItem.status);
-        holder.txtv_number_value.setText(currentItem.number);
-        holder.txtv_type_value.setText(currentItem.type);
+	    if(!Utilities.isNullString(currentItem.title))
+	    {
+		    holder.txtv_item_title.setVisibility(View.VISIBLE);
+		    holder.txtv_item_title.setText(currentItem.title);
+	    }
+	    else{
+		    holder.txtv_item_title.setVisibility(View.GONE);
+	    }
+        holder.txtv_date_value.setText(currentItem.RequestDate);
+        holder.txtv_status_value.setText(currentItem.RequestStatus);
+        holder.txtv_number_value.setText(currentItem.RequestNumber);
+        holder.txtv_type_value.setText(currentItem.RequestType);
     }
 
     @Override

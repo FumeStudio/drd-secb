@@ -4,13 +4,11 @@ import android.content.Context;
 
 import com.secb.android.R;
 import com.secb.android.model.EGuideLocationTypeItem;
-import com.secb.android.model.EventItem;
 import com.secb.android.model.LocationItem;
 
 import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class EGuideLocationManager {
@@ -18,11 +16,7 @@ public class EGuideLocationManager {
 	private List<LocationItem> locationUnFilteredList;
 	//news Categories List
 	List<EGuideLocationTypeItem> locationTypesList= null;
-
-	//map contains <Category , List on events in this category>
-	HashMap<String,List<EventItem>> eventsInCategory = new HashMap<>();
-
-	private EventItem eventDetails;
+	private LocationItem locationDetails;
 
 	private EGuideLocationManager() {
     }
@@ -87,28 +81,14 @@ public class EGuideLocationManager {
 //currently not used because there is no network operation to get event details
 //and the event item is sent in a bundle from EventList fragment to EventDetails Fragment
 /** Details*/
-	public EventItem getEventDetails(String eventId,Context context) {
-		eventDetails = CachingManager.getInstance().loadEventsDetails(eventId, context);
-		return eventDetails;
+	public LocationItem getLocationDetails(String LocationId,Context context) {
+		locationDetails = CachingManager.getInstance().loadLocationDetails(LocationId, context);
+		return locationDetails;
 	}
 
-	public void setEventDetails(EventItem eventItem , Context context) {
-		this.eventDetails = eventItem;
-		CachingManager.getInstance().saveEventDetails(this.eventDetails, context);
+	public void setLocationDetails(LocationItem eventItem , Context context) {
+		this.locationDetails = eventItem;
+		CachingManager.getInstance().saveLocationDetails(this.locationDetails, context);
 
 	}
-
-
-/** Not Used*/
-	public void addEventsListToCategory(String newsCategory, List<EventItem> newsItems) {
-		eventsInCategory.put(newsCategory, newsItems);
-	}
-
-	public List<EventItem> getEventsListFromCategory(String eventsCategory)
-	{
-		if(eventsInCategory.size()==0 || !eventsInCategory.containsKey(eventsCategory))
-			return null;
-		return eventsInCategory.get(eventsCategory);
-	}
-
 }

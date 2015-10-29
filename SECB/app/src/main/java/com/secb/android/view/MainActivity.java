@@ -10,6 +10,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.secb.android.R;
 import com.secb.android.controller.backend.E_GuideLocationListOperation;
 import com.secb.android.controller.backend.E_GuideLocationTypesOperation;
+import com.secb.android.controller.backend.E_GuideOrganizersListOperation;
+import com.secb.android.controller.backend.E_ServicesListOperation;
 import com.secb.android.controller.backend.EventsCategoryOperation;
 import com.secb.android.controller.backend.EventsCityOperation;
 import com.secb.android.controller.backend.EventsListOperation;
@@ -18,6 +20,7 @@ import com.secb.android.controller.backend.NewsCategoryOperation;
 import com.secb.android.controller.backend.NewsListOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.model.E_ServiceItem;
+import com.secb.android.model.E_ServicesFilterData;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
 import com.secb.android.model.GalleryItem;
@@ -26,6 +29,7 @@ import com.secb.android.model.LocationsFilterData;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
+import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.fragments.AboutUsFragment;
 import com.secb.android.view.fragments.AlbumFragment;
 import com.secb.android.view.fragments.ContactUsFragment;
@@ -55,51 +59,54 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainActivity extends SECBBaseActivity implements RequestObserver {
-    private static final String TAG = "MainActivity";
-
+	private static final String TAG = "MainActivity";
 
 
 	LinearLayout fragmentContainer;
-    HomeFragment homeFragment;
+	HomeFragment homeFragment;
 
 	ArrayList<RequestObserver> galleryRequstObserverList;
 	ArrayList<RequestObserver> newsRequstObserverList;
 	ArrayList<RequestObserver> eventsRequstObserverList;
 	ArrayList<RequestObserver> locationRequstObserverList;
+	ArrayList<RequestObserver> organizersRequestObserverList;
+	ArrayList<RequestObserver> eservicesRequestObserverList;
 
 	private RequestObserver newsRequstObserver;
 	public boolean isNewsLoadingFinished;
 	private RequestObserver eventsRequstObserver;
 	public boolean isEventsLoadingFinished;
-	private RequestObserver galleryRequstObserver ;
+	private RequestObserver galleryRequstObserver;
 	public boolean isPhotoGalleryLoadingFinished;
 	public boolean isVideoGalleryLoadingFinished;
-	private RequestObserver locationRequstObserver ;
+	private RequestObserver locationRequstObserver;
 	public boolean isLocationLoadingFinished;
+	private RequestObserver organizersRequestObserver;
+	public boolean isOrganizerLoadingFinished;
+	private RequestObserver eservicesRequestObserver;
+	public boolean isEservicesLoadingFinished;
 
 
 	public static SimpleDateFormat sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Time = new SimpleDateFormat("kk:mm a", UiEngine.getCurrentAppLocale());
-	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm",  UiEngine.getCurrentAppLocale());
-	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ",  UiEngine.getCurrentAppLocale());
-
+	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ", UiEngine.getCurrentAppLocale());
 
 
 	public MainActivity() {
-        super(-1, true);
-    }
+		super(-1, true);
+	}
 
-    @Override
-    protected void doOnCreate(Bundle arg0)
-    {
+	@Override
+	protected void doOnCreate(Bundle arg0) {
 /*        showHeader(true);
         setHeaderTitleText(getResources().getString(R.string.home_fragment));*/
-	    initObservers();
-        initiViews();
-        openHomeFragment(false);
+		initObservers();
+		initiViews();
+		openHomeFragment(false);
 
-	    //get server side data
-	    startSync();
+		//get server side data
+		startSync();
 
 /*
 	    //Initializes the Google Maps Android API so that its classes are ready for use
@@ -111,154 +118,147 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 */
 
 
-    }
+	}
 
 	private void initObservers() {
 		galleryRequstObserverList = new ArrayList<>();
-		newsRequstObserverList= new ArrayList<>();
-		eventsRequstObserverList= new ArrayList<>();
-		locationRequstObserverList= new ArrayList<>();
+		newsRequstObserverList = new ArrayList<>();
+		eventsRequstObserverList = new ArrayList<>();
+		locationRequstObserverList = new ArrayList<>();
+		organizersRequestObserverList = new ArrayList<>();
+		eservicesRequestObserverList = new ArrayList<>();
 	}
 
-	private void initiViews()
-    {
-        fragmentContainer = (LinearLayout) findViewById(R.id.simple_fragment);
-    }
+	private void initiViews() {
+		fragmentContainer = (LinearLayout) findViewById(R.id.simple_fragment);
+	}
 
 //==================================================================================================
 
-    public void openHomeFragment(boolean addToBackStack)
-    {
-        homeFragment = HomeFragment.newInstance();
-        addFragment(homeFragment, addToBackStack, FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
+	public void openHomeFragment(boolean addToBackStack) {
+		homeFragment = HomeFragment.newInstance();
+		addFragment(homeFragment, addToBackStack, FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
 
-    public void openNewsListFragment()
-    {
-        NewsListFragment newsListFragment = NewsListFragment.newInstance();
-        addFragment(newsListFragment, newsListFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	public void openNewsListFragment() {
+		NewsListFragment newsListFragment = NewsListFragment.newInstance();
+		addFragment(newsListFragment, newsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-    }
+	}
 
-    public void openNewDetailsFragment(NewsItem newsItem)
-    {
-        NewsDetailsFragment newDetailsFragment = NewsDetailsFragment.newInstance(newsItem);
-        addFragment(newDetailsFragment, newDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	public void openNewDetailsFragment(NewsItem newsItem) {
+		NewsDetailsFragment newDetailsFragment = NewsDetailsFragment.newInstance(newsItem);
+		addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-    }
+	}
 
-    public void openEventListFragment() {
-        EventsListFragment eventsListFragment = EventsListFragment.newInstance();
-        addFragment(eventsListFragment, eventsListFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
+	public void openEventListFragment() {
+		EventsListFragment eventsListFragment = EventsListFragment.newInstance();
+		addFragment(eventsListFragment, eventsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
 
 
-    public void openEventDetailsFragment(EventItem eventItem) {
-        EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(eventItem);
-        addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	public void openEventDetailsFragment(EventItem eventItem) {
+		EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(eventItem);
+		addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 //	    openTestFragment(eventItem);
-    }
+	}
 
-    public void openEventsCalendarFragment() {
-        EventsCalendarFragment eventsCalendarFragment = EventsCalendarFragment.newInstance();
-        addFragment(eventsCalendarFragment, eventsCalendarFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
-
-
-    public void openEguideHomeFragment() {
-        EguideHomeFragment eguideHomeFragment = EguideHomeFragment.newInstance();
-        addFragment(eguideHomeFragment, eguideHomeFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-
-    }
-
-    public void openEguideLocationFragment() {
-        LocationsListFragment locationsListFragment = LocationsListFragment.newInstance();
-        addFragment(locationsListFragment, locationsListFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
-
-    public void openEguideOrganizersFragment()
-    {
-        OrganizersListFragment organizersListFragment = OrganizersListFragment.newInstance();
-        addFragment(organizersListFragment, organizersListFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-
-    }
-
-    public void openOrganizerDetailsFragment(OrganizerItem organizerItem) {
-        OrganizersDetailsFragment organizersDetailsFragment = OrganizersDetailsFragment.newInstance(organizerItem);
-        addFragment(organizersDetailsFragment, organizersDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
-
-    public void openLocationDetailsFragment(LocationItem locationItem) {
-        LocationsDetailsFragment locationsDetailsFragment = LocationsDetailsFragment.newInstance(locationItem);
-        addFragment(locationsDetailsFragment, locationsDetailsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
+	public void openEventsCalendarFragment() {
+		EventsCalendarFragment eventsCalendarFragment = EventsCalendarFragment.newInstance();
+		addFragment(eventsCalendarFragment, eventsCalendarFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
 
 
-    public void openGalleryFragment(int galleryType, int galleryId)
-    {
-        GalleryFragment galleryFragment = GalleryFragment.newInstance(galleryType,galleryId);
-        addFragment(galleryFragment, galleryFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	public void openEguideHomeFragment() {
+		EguideHomeFragment eguideHomeFragment = EguideHomeFragment.newInstance();
+		addFragment(eguideHomeFragment, eguideHomeFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-    }
+	}
 
-    public void openAlbumFragment(int galleryType, String folderPath , String albumId)
-    {
-        AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType,folderPath , albumId);
-        addFragment(albumFragment, albumFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
+	public void openEguideLocationFragment() {
+		LocationsListFragment locationsListFragment = LocationsListFragment.newInstance();
+		addFragment(locationsListFragment, locationsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
 
-    public void openContactUsFragment(){
-        ContactUsFragment contactUsFragment = ContactUsFragment.newInstance();
-        addFragment(contactUsFragment, contactUsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
+	public void openEguideOrganizersFragment() {
+		OrganizersListFragment organizersListFragment = OrganizersListFragment.newInstance();
+		addFragment(organizersListFragment, organizersListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-    public void openE_ServicesFragment(){
-        E_ServicesListFragment fragment = E_ServicesListFragment.newInstance();
-        addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
+	}
+
+	public void openOrganizerDetailsFragment(OrganizerItem organizerItem) {
+		OrganizersDetailsFragment organizersDetailsFragment = OrganizersDetailsFragment.newInstance(organizerItem);
+		addFragment(organizersDetailsFragment, organizersDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
+
+	public void openLocationDetailsFragment(LocationItem locationItem) {
+		LocationsDetailsFragment locationsDetailsFragment = LocationsDetailsFragment.newInstance(locationItem);
+		addFragment(locationsDetailsFragment, locationsDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
+
+
+	public void openGalleryFragment(int galleryType, int galleryId) {
+		GalleryFragment galleryFragment = GalleryFragment.newInstance(galleryType, galleryId);
+		addFragment(galleryFragment, galleryFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+	}
+
+	public void openAlbumFragment(int galleryType, String folderPath, String albumId) {
+		AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType, folderPath, albumId);
+		addFragment(albumFragment, albumFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
+
+	public void openContactUsFragment() {
+		ContactUsFragment contactUsFragment = ContactUsFragment.newInstance();
+		addFragment(contactUsFragment, contactUsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
+
+	public void openE_ServicesFragment() {
+		E_ServicesListFragment fragment = E_ServicesListFragment.newInstance();
+		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
 
 	public void openE_ServiceDetailsFragment(E_ServiceItem e_serviceItem) {
 		E_ServiceDetailsFragment fragment = E_ServiceDetailsFragment.newInstance(e_serviceItem);
-		addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 //		openTestFragment(null);
 	}
 
-    public void openAboutUsFragment(){
-        AboutUsFragment fragment = AboutUsFragment.newInstance();
-        addFragment(fragment, fragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
-    }
+	public void openAboutUsFragment() {
+		AboutUsFragment fragment = AboutUsFragment.newInstance();
+		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
 
 
-    public void openPlayerFragment(String videoUrl) {
+	public void openPlayerFragment(String videoUrl) {
 //        VideoPlayerFragment videoPlayerFragment = VideoPlayerFragment.newInstance(videoUrl);
 //        addFragment(videoPlayerFragment,videoPlayerFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"), "video/*");
+		Intent intent = new Intent();
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.setDataAndType(Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"), "video/*");
 //        intent.setDataAndType(Uri.parse("http://www.youtube.com/watch?v=Hxy8BZGQ5Jo"), "video/*");
 
-        if (intent.resolveActivity(getPackageManager())!=null)
-            startActivity(intent);
-        else
-            displayToast("can't play this video file ");
-    }
+		if (intent.resolveActivity(getPackageManager()) != null)
+			startActivity(intent);
+		else
+			displayToast("can't play this video file ");
+	}
 
 
-	public void openTestFragment(Object item)
-	{
-		TestFragment contactUsFragment = TestFragment.newInstance((EventItem)item);
-		addFragment(contactUsFragment, contactUsFragment.getClass().getName() , FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	public void openTestFragment(Object item) {
+		TestFragment contactUsFragment = TestFragment.newInstance((EventItem) item);
+		addFragment(contactUsFragment, contactUsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 	}
 //==================================================================================================
 
 	/*background tasks to
-	* get the data (news list , events list , ...)
+	* get the data (news list , events list , galleries,...)
 	* and to update managers */
-	public void startSync()
-	{
+	public void startSync() {
 	/*Photo Gallery*/
 		getPhotoGallery();
 
@@ -285,6 +285,12 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	/*E-Guide Location List*/
 		getEguideLocationList();
+
+	/*E-Guide Organizers List*/
+		getEguideOrganizersList();
+
+	/*E-Service Requests List*/
+		getEserviceRequestsList();
 	}
 
 
@@ -292,39 +298,48 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	 * observers
 	 */
 //gallery
-	public void setGalleryRequstObserver(RequestObserver galleryRequstObserver)
-	{
+	public void setGalleryRequstObserver(RequestObserver galleryRequstObserver) {
 		this.galleryRequstObserver = galleryRequstObserver;
 		galleryRequstObserverList.add(galleryRequstObserver);
 	}
-//news
-	public void setNewsRequstObserver(RequestObserver newsRequstObserver)
-	{
+
+	//news
+	public void setNewsRequstObserver(RequestObserver newsRequstObserver) {
 		this.newsRequstObserver = newsRequstObserver;
 		newsRequstObserverList.add(newsRequstObserver);
 	}
-//events
-	public void setEventsRequstObserver(RequestObserver newsRequstObserver)
-	{
+
+	//events
+	public void setEventsRequstObserver(RequestObserver newsRequstObserver) {
 		this.eventsRequstObserver = newsRequstObserver;
 		eventsRequstObserverList.add(newsRequstObserver);
 	}
 
-//eventse-guide Location
-	public void setLocationRequstObserver(RequestObserver locationRequstObserver)
-	{
+	//e-guide Locations
+	public void setLocationRequstObserver(RequestObserver locationRequstObserver) {
 		this.locationRequstObserver = locationRequstObserver;
 		locationRequstObserverList.add(locationRequstObserver);
 	}
 
 
+	//e-guide organizers
+	public void setOrganizersRequstObserver(RequestObserver organizersRequestObserver) {
+		this.organizersRequestObserver = organizersRequestObserver;
+		organizersRequestObserverList.add(organizersRequestObserver);
+	}
+
+	//e-services requsets
+	public void setEservicesRequstObserver(RequestObserver eservicesRequstObserver) {
+		this.eservicesRequestObserver = eservicesRequstObserver;
+		eservicesRequestObserverList.add(eservicesRequstObserver);
+	}
+
 	/**
 	 * Operations
 	 */
 //photo gallery
-	private void getPhotoGallery()
-	{
-		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY,RequestIds.PHOTO_GALLERY_REQUEST_ID, false,this, 100,0);
+	private void getPhotoGallery() {
+		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, RequestIds.PHOTO_GALLERY_REQUEST_ID, false, this, 100, 0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 //		new Thread(new Runnable() {
@@ -339,214 +354,198 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 //			}
 //		}).start();
 	}
-//video gallery
+
+	//video gallery
 	private void getVideoGallery() {
-		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY,RequestIds.VIDEO_GALLERY_REQUEST_ID, false,this, 100,0);
+		final GalleryOperation operation = new GalleryOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, RequestIds.VIDEO_GALLERY_REQUEST_ID, false, this, 100, 0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
-//news categories
-	public void getNewsCategories()
-	{
-		NewsCategoryOperation operation = new NewsCategoryOperation(RequestIds.NEWS_CATEGORY_REQUEST_ID, false,this);
+
+	//news categories
+	public void getNewsCategories() {
+		NewsCategoryOperation operation = new NewsCategoryOperation(RequestIds.NEWS_CATEGORY_REQUEST_ID, false, this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
-//news list
-public void getNewsList()
-	{
+
+	//news list
+	public void getNewsList() {
 		NewsFilterData newsFilterData = new NewsFilterData();
-		newsFilterData.newsCategory="All";
-		newsFilterData.newsID="All";
-		NewsListOperation operation = new NewsListOperation(RequestIds.NEWS_LIST_REQUEST_ID,false,this,newsFilterData,100,0);
+		newsFilterData.newsCategory = "All";
+		newsFilterData.newsID = "All";
+		NewsListOperation operation = new NewsListOperation(RequestIds.NEWS_LIST_REQUEST_ID, false, this, newsFilterData, 100, 0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
-//events cities
-	public void getEventsCities()
-	{
-		EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID ,false,this);
+
+	//events cities
+	public void getEventsCities() {
+		EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID, false, this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
-//events categories
-	public void getEventsCategories()
-	{
-		EventsCategoryOperation operation = new EventsCategoryOperation(RequestIds.EVENTS_CATEGORY_REQUEST_ID ,false,this);
+
+	//events categories
+	public void getEventsCategories() {
+		EventsCategoryOperation operation = new EventsCategoryOperation(RequestIds.EVENTS_CATEGORY_REQUEST_ID, false, this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
-//events list
-public void getEventsList()
-	{
+
+	//events list
+	public void getEventsList() {
 		EventsFilterData eventsFilterData = new EventsFilterData();
-		final EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_REQUEST_ID,false,this,eventsFilterData,100,0);
+		final EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_REQUEST_ID, false, this, eventsFilterData, 100, 0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
 
-//E-Guide Location Types List
-	private void getEguideLocationTypes()
-	{
-		final E_GuideLocationTypesOperation operation = new E_GuideLocationTypesOperation(RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID ,false,this);
+	//E-Guide Location Types List
+	private void getEguideLocationTypes() {
+		final E_GuideLocationTypesOperation operation = new E_GuideLocationTypesOperation(RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID, false, this);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
 
 
-//E-Guide Location List
+	//E-Guide Location List
 	private void getEguideLocationList() {
-		E_GuideLocationListOperation operation = new E_GuideLocationListOperation(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID,false,this,new LocationsFilterData(),100,0);
+		E_GuideLocationListOperation operation = new E_GuideLocationListOperation(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, false, this, new LocationsFilterData(), 100, 0);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
 
+	//E-Guide Organizers List
+	private void getEguideOrganizersList() {
+		E_GuideOrganizersListOperation operation = new E_GuideOrganizersListOperation(RequestIds.EGUIDE_ORGANIZERS_LIST_REQUEST_ID, false, this, new OrganizersFilterData(), 100, 0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
-
-
-
-
-
+	//	E-Service Requests List
+	private void getEserviceRequestsList() {
+		E_ServicesListOperation operation = new E_ServicesListOperation(RequestIds.E_SERVICES_REQUEST_ID, false, this, new E_ServicesFilterData(), 100, 0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
 
 	/*let fragment handle requestFinished*/
 	@Override
-	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject)
-	{
+	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject) {
 //gallery
-		if( ((int)requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
-				(int)requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
-				/*galleryRequstObserver!=null  && */galleryRequstObserverList.size()>0)
-		{
-			if( (int)requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID)
+		if (((int) requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
+				(int) requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
+				/*galleryRequstObserver!=null  && */galleryRequstObserverList.size() > 0) {
+			if ((int) requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID)
 				isPhotoGalleryLoadingFinished = true;
-			else if( (int)requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID)
+			else if ((int) requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID)
 				isVideoGalleryLoadingFinished = true;
 
-			for(RequestObserver iterator:galleryRequstObserverList)
-				try
-				{
-					iterator.handleRequestFinished(requestId,error,resulObject);
-				} catch (Exception e)
-				{
+			for (RequestObserver iterator : galleryRequstObserverList)
+				try {
+					iterator.handleRequestFinished(requestId, error, resulObject);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 		}
 //news
-		else if( ((int)requestId == RequestIds.NEWS_LIST_REQUEST_ID ||
-				(int)requestId == RequestIds.NEWS_CATEGORY_REQUEST_ID)/* &&
-				newsRequstObserver!=null*/ && newsRequstObserverList.size()>0)
-		{
-			if( (int)requestId == RequestIds.NEWS_LIST_REQUEST_ID)
+		else if (((int) requestId == RequestIds.NEWS_LIST_REQUEST_ID ||
+				(int) requestId == RequestIds.NEWS_CATEGORY_REQUEST_ID)/* &&
+				newsRequstObserver!=null*/ && newsRequstObserverList.size() > 0) {
+			if ((int) requestId == RequestIds.NEWS_LIST_REQUEST_ID)
 				isNewsLoadingFinished = true;
-			for(RequestObserver iterator:newsRequstObserverList)
-				iterator.handleRequestFinished(requestId,error,resulObject);
+			for (RequestObserver iterator : newsRequstObserverList)
+				iterator.handleRequestFinished(requestId, error, resulObject);
 		}
 //events
-		else if( (  (int)requestId == RequestIds.EVENTS_LIST_REQUEST_ID ||
-					(int)requestId == RequestIds.EVENTS_CATEGORY_REQUEST_ID ||
-					(int)requestId == RequestIds.EVENTS_CITY_REQUEST_ID
-				 )
+		else if (((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID ||
+				(int) requestId == RequestIds.EVENTS_CATEGORY_REQUEST_ID ||
+				(int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID
+		)
 				/*&& eventsRequstObserver!=null*/
-				&& eventsRequstObserverList.size()>0)
-		{
-			if( (int)requestId == RequestIds.EVENTS_LIST_REQUEST_ID)
+				&& eventsRequstObserverList.size() > 0) {
+			if ((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID)
 				isEventsLoadingFinished = true;
-			for(RequestObserver iterator:eventsRequstObserverList)
-				iterator.handleRequestFinished(requestId,error,resulObject);
+			for (RequestObserver iterator : eventsRequstObserverList)
+				iterator.handleRequestFinished(requestId, error, resulObject);
 
 			//because location use same city api used by events
 			//let location observer listen finishing loading event
-			if((int)requestId == RequestIds.EVENTS_CITY_REQUEST_ID && locationRequstObserverList.size()>0){
-				for(RequestObserver iterator:locationRequstObserverList)
-					iterator.handleRequestFinished(requestId,error,resulObject);
+			if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID && locationRequstObserverList.size() > 0) {
+				for (RequestObserver iterator : locationRequstObserverList)
+					iterator.handleRequestFinished(requestId, error, resulObject);
+
+				//because Organizers use same city api used by events
+				//let Organizers observer listen finishing loading event
+				if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID && organizersRequestObserverList.size() > 0) {
+					for (RequestObserver iterator : organizersRequestObserverList)
+						iterator.handleRequestFinished(requestId, error, resulObject);
+				}
 			}
 		}
 //Eguide Locations
-		else if( (  (int)requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID ||
-					(int)requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID    )
-				&& locationRequstObserverList.size()>0)
-		{
-			if( (int)requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID)
+		else if (((int) requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID ||
+				(int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID)
+				&& locationRequstObserverList.size() > 0) {
+			if ((int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID)
 				isLocationLoadingFinished = true;
-			for(RequestObserver iterator:locationRequstObserverList)
-				iterator.handleRequestFinished(requestId,error,resulObject);
+			for (RequestObserver iterator : locationRequstObserverList)
+				iterator.handleRequestFinished(requestId, error, resulObject);
 		}
+//Eguide Organizers
+		else if (((int) requestId == RequestIds.EGUIDE_ORGANIZERS_LIST_REQUEST_ID)
+				&& organizersRequestObserverList.size() > 0) {
+			//this line is commented because there are no other operations in organizers page
+//			if( (int)requestId == RequestIds.EGUIDE_ORGANIZERS_LIST_REQUEST_ID)
+			isOrganizerLoadingFinished = true;
+			for (RequestObserver iterator : organizersRequestObserverList)
+				iterator.handleRequestFinished(requestId, error, resulObject);
+		}
+//Eservices
+		else if (((int) requestId == RequestIds.E_SERVICES_REQUEST_ID)
+				&& eservicesRequestObserverList.size() > 0) {
+
+			if ((int) requestId == RequestIds.E_SERVICES_REQUEST_ID)
+				isEservicesLoadingFinished = true;
+			for (RequestObserver iterator : eservicesRequestObserverList)
+				iterator.handleRequestFinished(requestId, error, resulObject);
+		}
+
 	}
 
 	@Override
-	public void requestCanceled(Integer requestId, Throwable error)
-	{
-//gallery
-		if( (requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
-				requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
-				galleryRequstObserver!=null)
-		{
-			galleryRequstObserver.requestCanceled(requestId, error);
-		}
-//news
-		else if(requestId == RequestIds.NEWS_LIST_REQUEST_ID && newsRequstObserver!=null && newsRequstObserver!=null)
-		{
-			newsRequstObserver.requestCanceled(requestId, error);
-		}
-//events
-		else if(requestId == RequestIds.EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
-		{
-			eventsRequstObserver.requestCanceled(requestId, error);
-		}
+	public void requestCanceled(Integer requestId, Throwable error) {
 	}
 
 	@Override
-	public void updateStatus(Integer requestId, String statusMsg)
-	{
-//gallery
-		if( (requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
-				requestId ==RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
-				galleryRequstObserver!=null)
-		{
-			galleryRequstObserver.updateStatus(requestId, statusMsg);
-		}
-//news
-		else if(requestId == RequestIds.NEWS_LIST_REQUEST_ID && eventsRequstObserver!=null)
-		{
-			newsRequstObserver.updateStatus(requestId, statusMsg);
-		}
-//events
-		else if(requestId == RequestIds.EVENTS_LIST_REQUEST_ID &&eventsRequstObserver!=null)
-		{
-			eventsRequstObserver.updateStatus(requestId, statusMsg);
-		}
+	public void updateStatus(Integer requestId, String statusMsg) {
 	}
 
-	public static String reFormatDate(String oldDate,SimpleDateFormat sdf){
+	public static String reFormatDate(String oldDate, SimpleDateFormat sdf) {
 		String newString = null;
-		try
-		{
-			Date date  = sdf_Source.parse(oldDate);
+		try {
+			Date date = sdf_Source.parse(oldDate);
 			newString = sdf.format(date);
-		}
-		catch (ParseException e)
-		{
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return newString;
 	}
 
 
-	public static String getYoutubeVideoId(String youtubeUrl)
-	{
-		String video_id="";
-		if (youtubeUrl != null && youtubeUrl.trim().length() > 0 && youtubeUrl.startsWith("http"))
-		{
+	public static String getYoutubeVideoId(String youtubeUrl) {
+		String video_id = "";
+		if (youtubeUrl != null && youtubeUrl.trim().length() > 0 && youtubeUrl.startsWith("http")) {
 
-			String expression = "^.*((youtu.be"+ "\\/)" + "|(v\\/)|(\\/u\\/w\\/)|(embed\\/)|(watch\\?))\\??v?=?([^#\\&\\?]*).*"; // var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+			String expression = "^.*((youtu.be" + "\\/)" + "|(v\\/)|(\\/u\\/w\\/)|(embed\\/)|(watch\\?))\\??v?=?([^#\\&\\?]*).*"; // var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
 			CharSequence input = youtubeUrl;
 			Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(input);
-			if (matcher.matches())
-			{
+			if (matcher.matches()) {
 				String groupIndex1 = matcher.group(7);
-				if(groupIndex1!=null && groupIndex1.length()==11)
+				if (groupIndex1 != null && groupIndex1.length() == 11)
 					video_id = groupIndex1;
 			}
 		}
@@ -555,7 +554,7 @@ public void getEventsList()
 
 
 	public GoogleMap customizeMap(GoogleMap googleMap) {
-		if(googleMap==null)
+		if (googleMap == null)
 			return null;
 
 		googleMap.setBuildingsEnabled(true);
@@ -563,4 +562,5 @@ public void getEventsList()
 
 		return googleMap;
 	}
+
 }

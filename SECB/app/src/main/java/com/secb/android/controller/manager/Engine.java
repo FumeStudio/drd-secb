@@ -222,6 +222,12 @@ public class Engine {
 		//initialize e-guide locations folder
 		DataFolder.USER_EGUIDE_LOCATION= getCacheDir(appContext,"locations");
 
+		//initialize e-guide organizers folder
+		DataFolder.USER_EGUIDE_ORGANIZERS = getCacheDir(appContext,"organizers");
+
+		//initialize e-guide organizers folder
+		DataFolder.USER_E_Services = getCacheDir(appContext,"e_services");
+
 	}
 
     public static void switchAppLanguage(ContextWrapper context) {
@@ -331,10 +337,16 @@ public class Engine {
 	    public static final String APP_EVENTS_LIST = "app_events_list.dat";
 
 	    //e-guide location types
-	    public static final String APP_EGUIDE_LOCATION_TYPES= "app_eguide_location_types.dat";
+	    public static final String APP_EGUIDE_LOCATION_TYPES= "app_eguide_locations_types.dat";
 
 	    //e-guide location list
-	    public static final String APP_EGUIDE_LOCATION_LIST = "app_eguide_location_list.dat";
+	    public static final String APP_EGUIDE_LOCATION_LIST = "app_eguide_locations_list.dat";
+
+	    //e-guide organizers list
+	    public static final String APP_EGUIDE_ORGANIZERS_LIST = "app_eguide_organizers_list.dat";
+
+	    //e-services requests list
+	    public static final String APP_EGUIDE_E_SERVICES_REQUESTS_LIST =  "app_eservices_requests_list.dat"  ;
     }
 
     public static class DataFolder{
@@ -355,6 +367,10 @@ public class Engine {
 	    public static File USER_EVENTS ;
 	    //E-guide Locations folder for locationsTypes file ,  locationList file , locationDetails files .
 	    public static File USER_EGUIDE_LOCATION ;
+	    //E-guide organizers folder organizersList file , organizersDetails files .
+	    public static File USER_EGUIDE_ORGANIZERS ;
+	    //E-services folder requestsList file .
+	    public static File USER_E_Services  ;
     }
 
     /**

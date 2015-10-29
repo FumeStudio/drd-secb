@@ -82,7 +82,7 @@ public class LoginXmlGenerator {
 
             //add <username> to <login>
             Element userName = doc.createElement(ServerKeys.LOGEN_KEY_USER_NAME);
-            userName.appendChild(doc.createTextNode(user.userName));
+            userName.appendChild(doc.createTextNode(user.emailAddress));
             login.appendChild(userName);
 
             //add <username> to <login>
