@@ -80,6 +80,8 @@
     <dimen name="event_details_text_size">13dp</dimen> <!-- 25PX - HEIGHT -->
     <dimen name="event_details_iconed_info_icon_margin">8dp</dimen> <!-- 15PX - HEIGHT -->
     <dimen name="event_details_map_height">118dp</dimen> <!-- 235PX - HEIGHT -->
+    <dimen name="eventImgDate_day_text_size">25dp</dimen> <!-- 50PX - HEIGHT -->
+    <dimen name="eventImgDate_month_text_size">13dp</dimen> <!-- 25PX - HEIGHT -->
 
     <dimen name="calendar_moth_text_size">16dp</dimen> <!-- 32PX - HEIGHT -->
     <dimen name="calendar_week_text_size">13dp</dimen> <!-- 25PX - HEIGHT -->

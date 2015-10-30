@@ -64,12 +64,17 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
 	    else
 		    holder.imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
 
-
-
+		String evdateStr =null;
+		evdateStr= MainActivity.reFormatDate(currentItem.EventDate,MainActivity.sdf_day_mon);
+		if(!Utilities.isNullString(evdateStr)){
+			String[] dayMonthArr = evdateStr.split("-");
+			holder.txtv_eventImgDate_day.setText(dayMonthArr[0]);
+			holder.txtv_eventImgDate_month.setText(dayMonthArr[1]);
+		}
 	    holder.txtv_eventTitle.setText(currentItem.Title);
         holder.txtv_eventDescription.setText(currentItem.Description);
 
-	    String evdateStr = MainActivity.reFormatDate(currentItem.EventDate, MainActivity.sdf_Date);
+	    evdateStr = MainActivity.reFormatDate(currentItem.EventDate, MainActivity.sdf_Date);
 
         holder.txtv_event_timeValue.setText(evdateStr);
         holder.txtv_event_placeValue.setText(currentItem.EventSiteCity);

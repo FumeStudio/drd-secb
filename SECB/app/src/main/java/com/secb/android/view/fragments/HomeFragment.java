@@ -30,7 +30,6 @@ import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCus
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
 import com.secb.android.view.menu.MenuItem;
-import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.Utilities;
@@ -71,9 +70,11 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     private TextView txtv_event_placeValue;
     private TextView txtv_event_categoryValue;
 
+	private TextView txtv_eventImgDate_day;
+	private TextView txtv_eventImgDate_month;
 
 
-    public static HomeFragment newInstance() {
+	public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
     }
@@ -203,6 +204,15 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	    {
 		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
 	    }
+
+	    if(txtv_eventImgDate_day!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR);
+	    }
+	    if(txtv_eventImgDate_month!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_eventImgDate_month, UiEngine.Fonts.HVAR);
+	    }
     }
 
     private void goBack() {
@@ -263,6 +273,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         txtv_event_categoryValue = (TextView) view.findViewById(R.id.txtv_event_categoryValue);
         imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
         event_card_container=view.findViewById(R.id.event_card_container);
+	    txtv_eventImgDate_day = (TextView) view.findViewById(R.id.txtv_eventImgDate_day);
+	    txtv_eventImgDate_month = (TextView) view.findViewById(R.id.txtv_eventImgDate_month);
 	    event_card_container.setVisibility(View.GONE);
         event_card_container.setOnClickListener(this);
 
@@ -300,20 +312,29 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	    }
 
 	    event_card_container.setVisibility(View.VISIBLE);
-	    if(!Utilities.isNullString(eventItem.ImageUrl))
-	    {
-		    Picasso.with(getActivity())
-				    .load(eventItem.ImageUrl)
-				    .placeholder(R.drawable.events_image_place_holder)
-				    .into(imgv_eventImg)
-		    ;
+//	    if(!Utilities.isNullString(eventItem.ImageUrl))
+//	    {
+//		    Picasso.with(getActivity())
+//				    .load(eventItem.ImageUrl)
+//				    .placeholder(R.drawable.events_image_place_holder)
+//				    .into(imgv_eventImg)
+//		    ;
+//	    }
+//	    else
+//		    imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
+
+
+	    String evdateStr= MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_day_mon);
+	    if(!Utilities.isNullString(evdateStr)){
+		    String[] dayMonthArr = evdateStr.split("-");
+		    txtv_eventImgDate_day.setText(dayMonthArr[0]);
+		    txtv_eventImgDate_month.setText(dayMonthArr[1]);
 	    }
-	    else
-		    imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
 
         txtv_eventTitle.setText(eventItem.Title);
         txtv_eventDescription.setText(eventItem.Description);
-	    String evdateStr = MainActivity.reFormatDate(eventItem.EventDate, MainActivity.sdf_Date);
+
+	    evdateStr = MainActivity.reFormatDate(eventItem.EventDate, MainActivity.sdf_Date);
         txtv_event_timeValue.setText(evdateStr);
         txtv_event_placeValue.setText(eventItem.EventSiteCity);
         txtv_event_categoryValue.setText(eventItem.EventCategory);
@@ -399,6 +420,11 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
 			{
 				graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+				if(graphsValues==null || graphsValues.size()<3)
+				{
+					graphsValues = new ArrayList<>();
+					graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
+				}
 				fillWheelPercentage(graphsValues.get(0),graphsValues.get(1),graphsValues.get(2));
 			}
 		}

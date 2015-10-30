@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.secb.android.R;
+import com.secb.android.controller.manager.UserManager;
+
+import net.comptoirs.android.common.helper.Utilities;
 
 public class SplashActivity extends SECBBaseActivity {
 
@@ -38,12 +41,15 @@ public class SplashActivity extends SECBBaseActivity {
 	 */
     private void redirect()
     {
-//		// User logged in -> open home_fragment
-//		if (UserManager.getLayoutView().isUserLoggedIn())
-//			startActivity(new Intent(SplashActivity.this, MainActivity.class)); // TestActivity
-//
+		// User logged in -> open home_fragment
+		if (UserManager.getInstance().getUser()!=null && !Utilities.isNullString(UserManager.getInstance().getUser().loginCookie) )
+		{
+			startActivity(new Intent(SplashActivity.this, MainActivity.class)); // TestActivity
+			finish();
+		}
+
 //      User not logged in -> open Login
-//      else
+      else
         startActivity(new Intent(SplashActivity.this, LoginActivity.class)); // TestActivity
         overridePendingTransition(-1, -1);
         finish();

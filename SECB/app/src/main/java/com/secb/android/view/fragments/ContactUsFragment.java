@@ -18,22 +18,31 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.secb.android.R;
+import com.secb.android.controller.backend.ContactUsOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.model.CompanyProfile;
 import com.secb.android.model.User;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.CTHttpResponse;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
+import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
+import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.MapsHelper;
 import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactUsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, OnMapReadyCallback {
+public class ContactUsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, OnMapReadyCallback, RequestObserver {
 
-    CompanyProfile companyProfile;
-    User user;
+	private static final String TAG ="ContactUsFragment";
+	CompanyProfile companyProfile;
+   /* User user;*/
 
     TextView txtv_location;
     TextView txtv_email;
@@ -57,9 +66,10 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     View view;
     private GoogleMap googleMap;
     private SupportMapFragment supportMapFragment;
+	private boolean isContactUsDone;
 
 
-    public static ContactUsFragment newInstance() {
+	public static ContactUsFragment newInstance() {
         ContactUsFragment fragment = new ContactUsFragment();
         return fragment;
     }
@@ -105,7 +115,7 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
             applyFonts(view);
         }
 
-        user = new User();
+        /*user = new User();*/
 
         initViews(view);
         getCompanyProfile();
@@ -169,7 +179,7 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
                 break;
 
             case R.id.btn_send:
-                getUserData();
+                startContactUsOperation();
                 break;
 
             default:
@@ -177,7 +187,20 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         }
     }
 
-    private void initViews(View view) {
+	private void startContactUsOperation() {
+		if(!isContactUsDone){
+			User user = getUserData();
+			ContactUsOperation operation = new ContactUsOperation(RequestIds.CONTACT_US_REQUEST_ID,true,getActivity(),user);
+			operation.addRequsetObserver(this);
+			operation.execute(true);
+		}
+		else
+		{
+			displaySuccessMessage();
+		}
+	}
+
+	private void initViews(View view) {
         txtv_location = (TextView) view.findViewById(R.id.txtv_location);
         txtv_email = (TextView) view.findViewById(R.id.txtv_email);
         txtv_phone = (TextView) view.findViewById(R.id.txtv_phone);
@@ -280,6 +303,7 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     }
 
     public User getUserData() {
+	    User user = new User();
         user.userName = edtxt_name.getText().toString();
         user.phoneNumber = edtxt_mobile.getText().toString();
         user.organization = edtxt_organization.getText().toString();
@@ -316,4 +340,47 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         putCompanyOnMap();
     }
 
+	@Override
+	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject) {
+		if(error==null){
+			if((int)requestId==RequestIds.CONTACT_US_REQUEST_ID  &&
+					((CTHttpResponse)resulObject).statusCode==200)
+			{
+				isContactUsDone = true;
+				displaySuccessMessage();
+			}
+		}
+		else if (error != null && error instanceof CTHttpError)
+		{
+			Logger.instance().v(TAG,error);
+			int statusCode = ((CTHttpError) error).getStatusCode();
+			if (RequestHandler.isRequestTimedOut(statusCode))
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
+			}
+			else if (statusCode == -1)
+			{
+				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+						getActivity());
+			}
+		}
+	}
+
+
+	public void displaySuccessMessage(){
+		String msg = getString(R.string.contact_us_done);
+		ErrorDialog.showMessageDialog(getString(R.string.success),
+				msg,
+				getActivity());
+	}
+
+	@Override
+	public void requestCanceled(Integer requestId, Throwable error) {
+
+	}
+
+	@Override
+	public void updateStatus(Integer requestId, String statusMsg) {
+
+	}
 }

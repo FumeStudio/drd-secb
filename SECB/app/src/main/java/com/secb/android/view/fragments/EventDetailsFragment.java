@@ -43,6 +43,11 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     private TextView txtv_event_details_eventBody;
 	private LinearLayout layout_map_container;
 
+
+	private TextView txtv_eventImgDate_day;
+	private TextView txtv_eventImgDate_month;
+
+
 	private GoogleMap googleMap;
 	private SupportMapFragment supportMapFragment;
 
@@ -165,6 +170,15 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         {
             UiEngine.applyCustomFont(txtv_event_details_eventBody, UiEngine.Fonts.HVAR);
         }
+
+	    if(txtv_eventImgDate_day!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR);
+	    }
+	    if(txtv_eventImgDate_month!=null)
+	    {
+		    UiEngine.applyCustomFont(txtv_eventImgDate_month, UiEngine.Fonts.HVAR);
+	    }
     }
 
     private void goBack()
@@ -205,6 +219,8 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         txtv_event_details_eventBody = (TextView) view.findViewById(R.id.event_details_body);
 
 	    layout_map_container = (LinearLayout) view.findViewById(R.id.map_container);
+	    txtv_eventImgDate_day = (TextView) view.findViewById(R.id.txtv_eventImgDate_day);
+	    txtv_eventImgDate_month = (TextView) view.findViewById(R.id.txtv_eventImgDate_month);
 
 	    /*if(Utilities.isGooglePlayServicesInstalled(getActivity()))
 	    {
@@ -250,10 +266,18 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     {
         if(this.eventItem !=null)
         {
+
+	        String evdateStr= MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_day_mon);
+	        if(!Utilities.isNullString(evdateStr)){
+		        String[] dayMonthArr = evdateStr.split("-");
+		        txtv_eventImgDate_day.setText(dayMonthArr[0]);
+		        txtv_eventImgDate_month.setText(dayMonthArr[1]);
+	        }
+
             imgv_event_details_img.setImageResource(R.drawable.events_image_place_holder);
             txtv_event_details_eventTitle.setText(eventItem.Title);
 
-	        String evdateStr = MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_DateTime);
+	         evdateStr = MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_DateTime);
 	        txtv_event_details_eventDate.setText(evdateStr);
             txtv_event_details_eventPlace.setText(eventItem.EventSiteCity);
             txtv_event_details_eventCategory.setText(eventItem.EventCategory);

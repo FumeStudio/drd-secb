@@ -1,37 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/event_details_header_card_height"
-    android:orientation="horizontal"
-    android:paddingTop="@dimen/event_card_margin"
-    android:paddingBottom="@dimen/event_card_margin"
-    android:weightSum="3"
-
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/event_details_header_card_height"
+          android:gravity="left"
+          android:orientation="horizontal"
+          android:paddingBottom="@dimen/event_card_margin"
+          android:paddingTop="@dimen/event_card_margin"
+          android:weightSum="3"
+          android:layout_marginLeft="@dimen/event_card_margin"
     >
 
     <ImageView
-    android:id="@+id/imgv_eventImg"
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/event_card_margin"
-    android:src="@drawable/events_image_place_holder"/>
+        android:id="@+id/imgv_eventImg"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/event_card_margin"
+        android:layout_weight="1"
+        android:src="@drawable/events_image_place_holder"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="@dimen/evet_card_img_size"
+        android:layout_height="@dimen/evet_card_img_size"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="@dimen/event_card_margin"
+        android:paddingTop="@dimen/event_card_margin"
+        android:paddingBottom="@dimen/event_card_margin"
+        android:background="@drawable/event_card_img"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtv_eventImgDate_day"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:text="13"
+            android:textColor="@color/secb_orange"
+            android:textSize="@dimen/eventImgDate_day_text_size"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/txtv_eventImgDate_month"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|top"
+            android:text="OCT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eventImgDate_month_text_size"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="2"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginRight="@dimen/event_card_margin">
+        android:layout_marginRight="@dimen/event_card_margin"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtv_eventTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:text=""
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/event_details_text_size"
-            android:gravity="center_vertical"/>
+            android:textSize="@dimen/event_details_text_size"/>
 
     </LinearLayout>
-</LinearLayout>
+</TableRow>

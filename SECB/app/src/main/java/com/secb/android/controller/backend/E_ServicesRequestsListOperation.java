@@ -68,6 +68,8 @@ public class E_ServicesRequestsListOperation extends BaseOperation {
 		CTHttpResponse response = doRequest(requestUrl, HttpGet.METHOD_NAME, null, null, cookies, null, ServerConnection.ResponseType.RESP_TYPE_STRING);
 		Logger.instance().v(TAG, response.response);
 
+		if(response == null || Utilities.isNullString(response.response.toString()))
+			return null;
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<E_ServiceRequestItem>>() {}.getType();
 		List<E_ServiceRequestItem> e_serviceRequestItems = gson.fromJson(response.response.toString(), listType);

@@ -52,6 +52,8 @@
     <dimen name="event_card_h3_text_size">7dp</dimen> <!-- 22PX - HEIGHT -->
     <dimen name="home_event_card_height">71dp</dimen> <!-- 200PX - HEIGHT -->
     <dimen name="evet_card_img_size">62dp</dimen> <!-- 175PX - HEIGHT -->
+    <dimen name="eventImgDate_day_text_size">17dp</dimen> <!-- 50PX - HEIGHT -->
+    <dimen name="eventImgDate_month_text_size">8dp</dimen> <!-- 25PX - HEIGHT -->
 
     <dimen name="home_news_recycler_height">110dp</dimen> <!-- 310PX - HEIGHT -->
     <dimen name="home_news_recycler_items_margin">8dp</dimen> <!-- 25PX - HEIGHT -->

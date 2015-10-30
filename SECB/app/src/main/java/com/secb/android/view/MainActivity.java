@@ -86,6 +86,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	public static SimpleDateFormat sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Time = new SimpleDateFormat("kk:mm a", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_day_mon = new SimpleDateFormat("dd-MMM", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ", UiEngine.getCurrentAppLocale());
 
