@@ -21,10 +21,12 @@ import com.secb.android.model.User;
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -434,11 +436,15 @@ public class CachingManager {
 		try
 		{
 			//load object from "app_news_list.dat" file
-			itemsList = (ArrayList<NewsItem>) loadOject(file);
-		} catch (Exception e) {
+			Object object = loadOject(file);
+			if(object != null)
+				itemsList = (ArrayList<NewsItem>) object;
+		} catch (EOFException e) {
+            e.printStackTrace();
+        } catch (Throwable e) {
 			e.printStackTrace();
 		}
-		return itemsList;
+        return itemsList;
 	}
 
 

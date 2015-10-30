@@ -49,7 +49,6 @@ public class E_GuideLocationDetailsListOperation extends BaseOperation {
 		if(Utilities.isNullString(language))
 			language=UiEngine.getCurrentDeviceLanguage(context);
 
-
 		StringBuilder stringBuilder;
 		stringBuilder = new StringBuilder(ServerKeys.EGUIDE_LOCATION_DETAILS_LIST);
 		stringBuilder.append("?Lang=" + language + "&LocationID=" + locationID
