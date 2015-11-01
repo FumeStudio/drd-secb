@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.EventsCityOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EventsCityItem;
@@ -43,7 +44,10 @@ public class OrganizersFilterLayout extends LinearLayout implements RequestObser
         initViews(view);
 	    ((MainActivity)context).setOrganizersRequstObserver(this);
         applyFonts(view);
-        getFilterData();
+	    if(citiesList!=null && citiesList.size()>0)
+	    {
+		    getFilterData();
+	    }
     }
 
     private void initViews(View view)
@@ -52,10 +56,20 @@ public class OrganizersFilterLayout extends LinearLayout implements RequestObser
         edtxt_name = (EditText) view.findViewById(R.id.txtv_news_filter_time_from_value);
 	    spn_city = (Spinner) view.findViewById(R.id.spn_city_filter_city_value);
 	    citiesList = EventsManager.getInstance().getEventsCityList(context);
+	    if(citiesList==null || citiesList.size()==0)
+	    {
+		    startLocationCitiesOperation();
+	    }
 	    bindCitiesSpinner();
     }
 
-    private void applyFonts(View view) {
+	private void startLocationCitiesOperation() {
+		EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID, false, context);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+	private void applyFonts(View view) {
         UiEngine.applyFontsForAll(context, view, UiEngine.Fonts.HVAR);
     }
 

@@ -30,48 +30,26 @@
             android:background="@color/white"
             android:orientation="vertical"
             android:padding="@dimen/eguide_base_padding"
-            android:visibility="visible"
+            android:visibility="gone"
             android:weightSum="3.5">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/off_white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/organizer_details_margin"
+                android:paddingLeft="@dimen/organizer_details_margin"
+                android:paddingRight="@dimen/organizer_details_margin">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/imgv_locationImg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/news_details_img_height"
+                    android:layout_gravity="center_horizontal|top"
                     android:layout_weight="1"
-                    android:background="@color/off_white"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/organizer_details_margin"
-                    android:paddingLeft="@dimen/organizer_details_margin"
-                    android:paddingRight="@dimen/organizer_details_margin">
-
-                    <ImageView
-                        android:id="@+id/imgv_locationImg"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/news_details_img_height"
-                        android:layout_gravity="center_horizontal|top"
-                        android:layout_weight="1"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/news_img_sample"/>
-
-                    <include
-                        layout="@layout/location_name_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/organizer_details_margin_small"/>
-
-                    <TextView
-                        android:id="@+id/txtv_location_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/organizer_details_margin_small"
-                        android:text="adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad"
-                        android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/event_card_h3_text_size"/>
-
-                </LinearLayout>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/news_img_sample"/>
                 <ImageButton
                     android:id="@+id/btn_nextRoom"
                     android:layout_centerVertical="true"
@@ -79,20 +57,47 @@
                     android:layout_width="wrap_content"
                     android:background="@drawable/arrow_to_right"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/organizer_details_margin"
                     android:paddingRight="@dimen/organizer_details_margin"/>
                 <ImageButton
                     android:id="@+id/btn_previousRoom"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
                     android:layout_width="wrap_content"
-                    android:background="@drawable/arrow_to_left"
+                    android:background="@drawable/arrow_to_left_disabled"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/organizer_details_margin"
                     android:paddingRight="@dimen/organizer_details_margin"/>
+
+
+
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/off_white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/organizer_details_margin"
+                android:paddingLeft="@dimen/organizer_details_margin"
+                android:paddingRight="@dimen/organizer_details_margin">
 
+
+                <include
+                    layout="@layout/location_name_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/organizer_details_margin_small"/>
+
+                <TextView
+                    android:id="@+id/txtv_location_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/organizer_details_margin_small"
+                    android:text="adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/event_card_h3_text_size"/>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

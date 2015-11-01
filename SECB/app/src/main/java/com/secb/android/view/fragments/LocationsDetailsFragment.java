@@ -240,10 +240,25 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
 
 	        if(locationRooms!=null & locationRooms.size()>0)
 	        {
+		        if(locationRooms.size()>1)
+		        {
+			        btn_nextRoom.setVisibility(View.VISIBLE);
+			        btn_PreviousRoom.setVisibility(View.VISIBLE);
+		        }
+		        else
+		        {
+			        btn_nextRoom.setVisibility(View.GONE);
+			        btn_PreviousRoom.setVisibility(View.GONE);
+		        }
 		        txtv_location_roomTypeValue.setText(locationRooms.get(currentRoomIndex).RoomType+"");
 		        txtv_location_roomCapacityValue.setText(locationRooms.get(currentRoomIndex).RoomCapacity+"");
 		        txtv_location_roomSpaceValue.setText(locationRooms.get(currentRoomIndex).RoomArea+"");
 		        txtv_location_roomCountValue.setText(locationRooms.get(currentRoomIndex).RoomsCount+"");
+	        }
+	        else
+	        {
+		        btn_nextRoom.setVisibility(View.GONE);
+		        btn_PreviousRoom.setVisibility(View.GONE);
 	        }
 
 
@@ -256,30 +271,63 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
         }
     }
 
-	public void getNextRoom(){
+	public void getNextRoom()
+	{
+		if(locationRooms.size()>1)
+		{
+			btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left));
+		}
+		else {
+			btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left_disabled));
+		}
+
+
+
 		if(currentRoomIndex==locationRooms.size()-1)
 		{
 			btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right_disabled));
 			return;
 		}
 		else{
-			btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right));
 			currentRoomIndex++;
+			if(currentRoomIndex==locationRooms.size()-1)
+				btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right_disabled));
+			else
+				btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right));
+
 			bindViews();
 		}
 	}
 
-	public void getPreviousRoom(){
+	public void getPreviousRoom()
+	{
+		if(locationRooms.size()>1)
+		{
+			btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right));
+		}
+		else {
+			btn_nextRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_right_disabled));
+		}
+
+
 		if(currentRoomIndex==0)
 		{
 			btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left_disabled));
 			return;
 		}
 		else{
-			btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left));
 			currentRoomIndex--;
+			if(currentRoomIndex == 0)
+				btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left_disabled));
+			else
+				btn_PreviousRoom.setBackgroundDrawable(getResources().getDrawable(R.drawable.arrow_to_left));
+
 			bindViews();
 		}
+	}
+
+	public void handleRoomNavigationButtons()
+	{
 	}
 
 	@Override

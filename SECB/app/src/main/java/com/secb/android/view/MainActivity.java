@@ -104,7 +104,10 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		openHomeFragment(false);
 
 		//get server side data
-		startSync();
+		//if disabled the boolean values are initialized with true
+		//and the sync operations will not be executed
+		disableSync(true);
+		startSyncForHome();
 
 /*
 	    //Initializes the Google Maps Android API so that its classes are ready for use
@@ -114,8 +117,22 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
             e.printStackTrace();
         }
 */
+	}
 
+	//set all flags that are used in sync operations
+	//true = don't use the flags and don't start sync operations
+	private void disableSync(boolean isDisabled)
+	{
+		  isNewsLoadingFinished = isDisabled;
+		  isEventsLoadingFinished= isDisabled;
+		  isPhotoGalleryLoadingFinished= isDisabled;
+		  isVideoGalleryLoadingFinished= isDisabled;
+		  isLocationLoadingFinished= isDisabled;
+		  isOrganizerLoadingFinished= isDisabled;
+		  isEservicesRequestLoadingFinished= isDisabled;
 
+		if(!isDisabled)
+			startSync();
 	}
 
 	private void initObservers() {
@@ -294,6 +311,20 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		getEserviceStatisticsList();
 	}
 
+	public void startSyncForHome()
+	{
+		isNewsLoadingFinished = false;
+		isEventsLoadingFinished= false;
+
+		/*E-Service Statistics List*/
+		getEserviceStatisticsList();
+
+		/*News UnFiltered News List*/
+		getNewsList();
+
+		/*Events UnFiltered  List*/
+		getEventsList();
+	}
 
 	/**
 	 * observers

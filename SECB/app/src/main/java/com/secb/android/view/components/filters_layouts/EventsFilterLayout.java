@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.EventsCategoryOperation;
+import com.secb.android.controller.backend.EventsCityOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.Consts;
@@ -61,6 +63,8 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
 	private List<EventsCategoryItem> categoriesList ;
 	private List<EventsCityItem> citiesList ;
 	private EventFilterCitiesSpinnerAdapter eventFilterCitiesSpinnerAdapter;
+	private boolean isCategoryOperationDone;
+	private boolean isCityOperationDone;
 
 
 	public View getLayoutView() {
@@ -74,11 +78,38 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
         initViews(view);
 	    ((MainActivity)context).setEventsRequstObserver(this);
         applyFonts();
-//        getFilterData();
+	    categoriesList = EventsManager.getInstance().getEventsCategoryList(context);
+	    if(categoriesList==null || categoriesList.size()==0)
+	    {
+		    startEventsCategoriesOperation();
+	    }
+	    citiesList = EventsManager.getInstance().getEventsCityList(context);
+	    if(citiesList==null || citiesList.size()==0)
+	    {
+		    startEventsCitiesOperation();
+	    }
+
+	    if(citiesList!=null && categoriesList!=null &&
+			    citiesList.size()>0&& categoriesList.size()>0)
+	    {
+		    getFilterData();
+	    }
     }
 
+	private void startEventsCitiesOperation() {
+		EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID, false, context);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
-    public void initViews(View view) {
+	private void startEventsCategoriesOperation() {
+		EventsCategoryOperation operation = new EventsCategoryOperation(RequestIds.EVENTS_CATEGORY_REQUEST_ID, false, context);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+
+	public void initViews(View view) {
         spn_city = (Spinner) view.findViewById(R.id.spn_city_filter_city_value);
         txtv_timeFrom = (TextView) view.findViewById(R.id.txtv_news_filter_time_from_value);
         txtv_timeTo = (TextView) view.findViewById(R.id.txtv_news_filter_time_to_value);
@@ -120,7 +151,8 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
 		{
 			eventsCategoriesRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(context.getString(R.string.news_no_types));
+			if(isCategoryOperationDone)
+				txtv_noData.setText(context.getString(R.string.news_no_types));
 		}
 	}
 
@@ -276,12 +308,15 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
 		if (error == null)
 		{
-			if((int)requestId == RequestIds.EVENTS_CATEGORY_REQUEST_ID && resultObject!=null)
+			if((int)requestId == RequestIds.EVENTS_CATEGORY_REQUEST_ID )
 			{
+				isCategoryOperationDone =true;
 				categoriesList= EventsManager.getInstance().getEventsCategoryList(context);
 				bindCategoriesRecycler();
 			}
-			else if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID && resultObject != null) {
+			else if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID )
+			{
+				isCityOperationDone =true;
 				citiesList = EventsManager.getInstance().getEventsCityList(context);
 				bindCitiesSpinner();
 			}

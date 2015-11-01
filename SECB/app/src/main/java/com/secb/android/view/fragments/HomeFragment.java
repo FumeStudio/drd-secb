@@ -135,7 +135,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		}
 		else {
 			//retry
-			if (((MainActivity) getActivity()).isNewsLoadingFinished==false) {
+			if (((MainActivity) getActivity()).isNewsLoadingFinished==true) {
 				((MainActivity) getActivity()).getNewsList(); /* (new NewsFilterData(),false);*/
 			}
 		}
@@ -147,7 +147,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		}
 		else{
 			//retry
-			if (((MainActivity) getActivity()).isEventsLoadingFinished==false) {
+			if (((MainActivity) getActivity()).isEventsLoadingFinished==true) {
 				((MainActivity) getActivity()).getEventsList();/*startEventsListOperation(new NewsFilterData(),false);*/
 			}
 		}
