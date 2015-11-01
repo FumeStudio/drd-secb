@@ -419,7 +419,12 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 			}
 			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
 			{
-				graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+				try {
+					graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 				if(graphsValues==null || graphsValues.size()<3)
 				{
 					graphsValues = new ArrayList<>();

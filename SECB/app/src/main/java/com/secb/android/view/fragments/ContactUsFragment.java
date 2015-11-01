@@ -3,6 +3,7 @@ package com.secb.android.view.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -245,17 +246,29 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     }
 
     public boolean initMap() {
-        if (googleMap == null) {
-/*            FragmentManager fragmentManager = getFragmentManager();
+	    FragmentManager fm = getChildFragmentManager();
+	    supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.mapFrame);
+	    if (supportMapFragment == null)
+	    {
+		    supportMapFragment = SupportMapFragment.newInstance();
+		    fm.beginTransaction().replace(R.id.mapFrame, supportMapFragment).addToBackStack("MAP").commit();
+
+		    supportMapFragment.getMapAsync(this);
+	    }
+	    else
+		    supportMapFragment.getMapAsync(this);
+
+/*        if (googleMap == null) {
+*//*            FragmentManager fragmentManager = getFragmentManager();
             SupportMapFragment mapFrag = (SupportMapFragment)fragmentManager.findFragmentById(R.id.map1);
-            googleMap = mapFrag.getMap();*/
+            googleMap = mapFrag.getMap();*//*
 
             supportMapFragment = ((SupportMapFragment) getFragmentManager()
                     .findFragmentById(R.id.map));
 
             if (supportMapFragment != null)
                 supportMapFragment.getMapAsync(this);
-        }
+        }*/
         return (googleMap != null);
     }
 
@@ -320,8 +333,15 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
             list.add(companyProfile.locationOnMap);
 
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.secb_map_marker);
-            Marker marker = MapsHelper.addMarker(googleMap, companyProfile.locationOnMap, bitmap);
-            MapsHelper.setMapCenter(true, googleMap, companyProfile.locationOnMap);
+//            Marker marker = MapsHelper.addMarker(googleMap, companyProfile.locationOnMap, bitmap);
+
+	        if(companyProfile.locationOnMap!=null){
+		        Marker marker = MapsHelper.addMarker(googleMap,companyProfile.locationOnMap, bitmap);;
+		        MapsHelper.zoomToSingleMarker(companyProfile.locationOnMap, googleMap ,11,true);
+	        }
+
+
+//            MapsHelper.setMapCenter(true, googleMap, companyProfile.locationOnMap);
 //                MapsHelper.zoomToAllMarkers(list, googleMap, 5, 15);
         }
 
@@ -330,8 +350,11 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        if(supportMapFragment!=null)
-//            getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+	    if(supportMapFragment!=null)
+	    {
+		    getFragmentManager().popBackStack("MAP",FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		    getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+	    }
     }
 
     @Override
