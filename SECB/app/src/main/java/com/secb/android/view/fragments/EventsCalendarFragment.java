@@ -51,6 +51,9 @@ public class EventsCalendarFragment extends SECBBaseFragment
     private TextView txtv_event_placeValue;
     private TextView txtv_event_categoryValue;
 
+	private TextView txtv_eventImgDate_day;
+	private TextView txtv_eventImgDate_month;
+
 	public static Date lastSelectedDate;
     public static EventsCalendarFragment newInstance() {
         EventsCalendarFragment fragment = new EventsCalendarFragment();
@@ -131,6 +134,11 @@ public class EventsCalendarFragment extends SECBBaseFragment
         }
         if(txtv_viewAllEvents!=null)
             UiEngine.applyCustomFont(txtv_viewAllEvents, UiEngine.Fonts.HVAR);
+
+	    if(txtv_eventImgDate_day!=null)
+            UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR);
+	    if(txtv_eventImgDate_month!=null)
+            UiEngine.applyCustomFont(txtv_eventImgDate_month, UiEngine.Fonts.HVAR);
     }
 
     private void goBack() {
@@ -171,6 +179,10 @@ public class EventsCalendarFragment extends SECBBaseFragment
         txtv_event_timeValue = (TextView) view.findViewById(R.id.txtv_event_timeValue);
         txtv_event_placeValue = (TextView) view.findViewById(R.id.txtv_event_placeValue);
         txtv_event_categoryValue = (TextView) view.findViewById(R.id.txtv_event_categoryValue);
+
+
+	    txtv_eventImgDate_day = (TextView) view.findViewById(R.id.txtv_eventImgDate_day);
+	    txtv_eventImgDate_month = (TextView) view.findViewById(R.id.txtv_eventImgDate_month);
 
         imgv_eventImg = (ImageView)view.findViewById(R.id.imgv_eventImg);
 
@@ -290,9 +302,17 @@ public class EventsCalendarFragment extends SECBBaseFragment
 		    else
 			    imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
 
+		    String evdateStr= MainActivity.reFormatDate(cardEventItem.EventDate,MainActivity.sdf_day_mon);
+		    if(!Utilities.isNullString(evdateStr)){
+			    String[] dayMonthArr = evdateStr.split("-");
+			    txtv_eventImgDate_day.setText(dayMonthArr[0]);
+			    txtv_eventImgDate_month.setText(dayMonthArr[1]);
+		    }
+
+
 		    txtv_eventTitle.setText(cardEventItem.Title);
 		    txtv_eventDescription.setText(cardEventItem.Description);
-		    String evdateStr = MainActivity.reFormatDate(cardEventItem.EventDate, MainActivity.sdf_Date);
+		     evdateStr = MainActivity.reFormatDate(cardEventItem.EventDate, MainActivity.sdf_Date);
 		    txtv_event_timeValue.setText(evdateStr);
 		    txtv_event_placeValue.setText(cardEventItem.EventSiteCity);
 		    txtv_event_categoryValue.setText(cardEventItem.EventCategory);

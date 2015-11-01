@@ -161,4 +161,5 @@
     <string name="eservices_form">E-service Forms</string>
     <string name="locations_no_locations">There are no locations</string>
     <string name="organizer_no_organizers">There are no organizers.</string>
+    <string name="contact_us_done">Your data sent successfully .</string>
 </resources>

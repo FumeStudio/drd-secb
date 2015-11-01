@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.controller.backend.NewsDetailsOperation;
 import com.secb.android.controller.backend.RequestIds;
@@ -198,9 +199,14 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 
 	        if(!Utilities.isNullString(newsItem.ImageUrl))
 	        {
-		        Picasso.with(getActivity())
+//		        Picasso.with(getActivity())
+//				        .load(newsItem.ImageUrl)
+//				        .placeholder(R.drawable.news_image_place_holder)
+//				        .into(imgv_news_details_img);
+                    Glide.with(getActivity())
 				        .load(newsItem.ImageUrl)
 				        .placeholder(R.drawable.news_image_place_holder)
+                        .centerCrop()
 				        .into(imgv_news_details_img);
 	        }
 	        else

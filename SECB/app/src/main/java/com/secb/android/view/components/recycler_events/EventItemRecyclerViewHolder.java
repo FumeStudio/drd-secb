@@ -17,6 +17,10 @@ public class EventItemRecyclerViewHolder extends RecyclerView.ViewHolder
     TextView txtv_event_timeValue;
     TextView txtv_event_placeValue;
     TextView txtv_event_categoryValue;
+
+
+    TextView txtv_eventImgDate_day;
+    TextView txtv_eventImgDate_month;
     ImageView imgv_eventImg;
 
     public EventItemRecyclerViewHolder(View itemView)
@@ -32,6 +36,8 @@ public class EventItemRecyclerViewHolder extends RecyclerView.ViewHolder
         txtv_event_timeValue = (TextView) itemView.findViewById(R.id.txtv_event_timeValue);
         txtv_event_placeValue = (TextView) itemView.findViewById(R.id.txtv_event_placeValue);
         txtv_event_categoryValue = (TextView) itemView.findViewById(R.id.txtv_event_categoryValue);
+	    txtv_eventImgDate_day = (TextView) itemView.findViewById(R.id.txtv_eventImgDate_day);
+	    txtv_eventImgDate_month = (TextView) itemView.findViewById(R.id.txtv_eventImgDate_month);
 
         imgv_eventImg = (ImageView)itemView.findViewById(R.id.imgv_eventImg);
     }
@@ -53,6 +59,14 @@ public class EventItemRecyclerViewHolder extends RecyclerView.ViewHolder
             UiEngine.applyCustomFont(txtv_event_placeValue, UiEngine.Fonts.HVAR);
         }
         if(txtv_event_categoryValue!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_eventImgDate_day!=null)
+        {
+            UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
+        }
+        if(txtv_eventImgDate_month!=null)
         {
             UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
         }

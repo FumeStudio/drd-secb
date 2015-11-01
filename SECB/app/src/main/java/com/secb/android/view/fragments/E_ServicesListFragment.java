@@ -332,6 +332,11 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
 			{
 				graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+				if(graphsValues==null || graphsValues.size()<3)
+				{
+					graphsValues = new ArrayList<>();
+					graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
+				}
 				fillWheelPercentage(graphsValues.get(0),graphsValues.get(1),graphsValues.get(2));
 			}
 
