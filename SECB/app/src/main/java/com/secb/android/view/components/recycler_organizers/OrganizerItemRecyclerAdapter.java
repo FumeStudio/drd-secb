@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.OrganizerItem;
-import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -48,11 +48,11 @@ public class OrganizerItemRecyclerAdapter extends RecyclerView.Adapter<Organizer
         OrganizerItem currentItem = itemsList.get(position);
 	    if(!Utilities.isNullString(currentItem.OrganizerImage))
 	    {
-		    Picasso.with(context)
+		    Glide.with(context)
 				    .load(currentItem.OrganizerImage)
+                    .centerCrop()
 				    .placeholder(R.drawable.organizer_place_holder)
-				    .into(holder.imgv_organizerImg)
-		    ;
+				    .into(holder.imgv_organizerImg);
 	    }
 	    else
 		    holder.imgv_organizerImg.setImageResource(R.drawable.organizer_place_holder);

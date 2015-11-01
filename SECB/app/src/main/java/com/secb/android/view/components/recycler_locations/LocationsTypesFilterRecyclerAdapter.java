@@ -63,12 +63,34 @@ public class LocationsTypesFilterRecyclerAdapter extends RecyclerView.Adapter<Lo
 
 		    @Override
 		    public void onClick(View v) {
-			    notifyDataSetChanged();
-			    currentItem.isSelected=holder.chkbox_locationTypeItem.isChecked();
-			    notifyDataSetChanged();
+//			    currentItem.isSelected=holder.chkbox_locationTypeItem.isChecked();
+//			    notifyDataSetChanged();
+
+			    setItemChecked(position, holder.chkbox_locationTypeItem.isChecked());
 		    }
 	    });
     }
+
+	private void setItemChecked(int position, boolean checked)
+	{
+		//if user selected any other type remove selection from type "All"
+ 		if (position!=0) //index of type "All"
+	    {
+		    this.itemsList.get(0).isSelected=false;
+		    this.itemsList.get(position).isSelected=checked;
+	    }
+
+	    //if user checked type "All" check all
+	    // and if un-checked type "All" un check all
+		else if (position == 0)
+	    {
+		    for (int i = 0 ; i<this.itemsList.size();i++)
+		    {
+			    this.itemsList.get(i).isSelected=checked;
+		    }
+	    }
+		notifyDataSetChanged();
+	}
 
 	@Override
     public int getItemCount()

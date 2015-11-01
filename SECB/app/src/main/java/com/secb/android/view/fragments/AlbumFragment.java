@@ -19,6 +19,7 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
@@ -35,7 +36,6 @@ import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.recycler_gallery.GalleryItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
-import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.controller.backend.CTHttpError;
 import net.comptoirs.android.common.controller.backend.RequestHandler;
@@ -390,9 +390,10 @@ public class AlbumFragment extends SECBBaseFragment
     {
         if(imgv_imageAlbum!=null &&layout_imagePlayerContainer !=null)
         {
-            Picasso.with(getActivity())
+            Glide.with(getActivity())
                     .load(imageUrl)
                     .placeholder(R.drawable.image_place_holder) // optional
+                    .centerCrop()
                     .error(R.drawable.image_place_holder_failed)         // optional
                     .into(imgv_imageAlbum);
 

@@ -12,9 +12,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 import com.secb.android.R;
 import com.secb.android.model.NewsItem;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
@@ -30,7 +27,6 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     List<NewsItem>itemsList = Collections.emptyList();
     Context context;
 
-    Picasso picasso;
     public NewsItemRecyclerAdapter(Context context, List<NewsItem> itemsList) {
 
         this.itemsList = itemsList;
@@ -45,19 +41,6 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 	    } catch (Exception e) {
 		    e.printStackTrace();
 	    }
-//        OkHttpClient client = new OkHttpClient();
-//        client.setProtocols(Arrays.asList(WifiConfiguration.Protocol.HTTP_11));
-        picasso = new Picasso.Builder(context)
-                .listener(new Picasso.Listener() {
-                    @Override
-                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                        //Here your log
-                        Logger.instance().v("News-Card", "onImageLoadFailed: " + uri+" , exc: "+exception, false);
-                        if(exception != null) exception.printStackTrace();
-                    }
-                })
-                .build();
-
     }
 
 	@Override
@@ -80,28 +63,11 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 		Logger.instance().v("News-Card", "Image: "+currentItem.getImageUrl(), false);
 	    if(!Utilities.isNullString(currentItem.getImageUrl()))
 	    {
-//		    Picasso.with(context)
-//            picasso
-//                    .load(currentItem.getImageUrl())
-//                    .placeholder(R.drawable.news_image_place_holder)
-//                    .into(holder.imgv_newImg/*, new Callback() {
-//                        @Override
-//                        public void onSuccess() {
-//                            Logger.instance().v("News-Card", "Image: " + currentItem.getImageUrl() +" << Loaded succss", false);
-//                        }
-//
-//                        @Override
-//                        public void onError() {
-//                            Logger.instance().v("News-Card", "Image: " + currentItem.getImageUrl() +" << Loaded -- error", false);
-//                        }
-//                    }*/);
-//
             Glide.with(context).load(currentItem.getImageUrl())
                     .placeholder(R.drawable.news_image_place_holder)
 //                    .signature(new StringSignature(user.userPhotoID != null ? user.userPhotoID : ""))
                     .centerCrop()
                     .into(holder.imgv_newImg);
-
         }
 	    else
 		    holder.imgv_newImg.setImageResource(R.drawable.news_image_place_holder);

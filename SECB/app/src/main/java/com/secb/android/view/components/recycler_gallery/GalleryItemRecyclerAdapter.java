@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.GalleryItem;
-import com.squareup.picasso.Picasso;
 
+import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
@@ -84,11 +85,13 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
     /*1-Image Gallery*/
         if (currentItemType == GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
         {
-            if(!Utilities.isNullString(currentItem.PhotoGalleryAlbumThumbnail))
+//            Logger.instance().v("Image", "gallery Album: "+currentItem.PhotoGalleryAlbumThumbnail + " -- "+currentItem.PhotoGalleryImageUrl, false);
+            if(!Utilities.isNullString(currentItem.getPhotoGalleryImageThumbnail()))
             {
-                Picasso.with(context)
-                        .load(currentItem.PhotoGalleryAlbumThumbnail)
+                Glide.with(context)
+                        .load(currentItem.getPhotoGalleryImageThumbnail())
                         .placeholder(R.drawable.image_place_holder)
+                        .centerCrop()
                         .into(holder.imgv_galleryImg);
             }
             else
@@ -98,11 +101,12 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
     /*2-Video Gallery*/
         else if (currentItemType == GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
         {
-            if(!Utilities.isNullString(currentItem.VideosGalleryAlbumThumbnail))
+            if(!Utilities.isNullString(currentItem.getVideoGalleryImageThumbnail()))
             {
-                Picasso.with(context)
-                        .load(currentItem.VideosGalleryAlbumThumbnail)
+                Glide.with(context)
+                        .load(currentItem.getVideoGalleryImageThumbnail())
                         .placeholder(R.drawable.video_place_holder)
+                        .centerCrop()
                         .into(holder.imgv_galleryImg);
             }
             else
@@ -114,9 +118,10 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
         {
             if(!Utilities.isNullString(currentItem.PhotoGalleryImageUrl))
             {
-                Picasso.with(context)
+                Glide.with(context)
                         .load(currentItem.PhotoGalleryImageUrl)
                         .placeholder(R.drawable.image_place_holder)
+                        .centerCrop()
                         .into(holder.imgv_galleryImg);
             }
             else
@@ -127,11 +132,12 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
     /*4-Video Album*/
         else if (currentItemType == GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
         {
-            if(!Utilities.isNullString(currentItem.VideosGalleryAlbumThumbnail))
+            if(!Utilities.isNullString(currentItem.VideoGalleryUrl))
             {
-                Picasso.with(context)
-                        .load(currentItem.VideosGalleryAlbumThumbnail)
+                Glide.with(context)
+                        .load(currentItem.VideoGalleryUrl)
                         .placeholder(R.drawable.video_place_holder)
+                        .centerCrop()
                         .into(holder.imgv_galleryImg);
             }
             else

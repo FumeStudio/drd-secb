@@ -3,6 +3,7 @@ package com.secb.android.view.components.filters_layouts;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.E_GuideLocationTypesOperation;
+import com.secb.android.controller.backend.EventsCityOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EGuideLocationManager;
 import com.secb.android.controller.manager.EventsManager;
@@ -26,6 +29,7 @@ import com.secb.android.view.components.NewDividerItemDecoration;
 import com.secb.android.view.components.recycler_locations.LocationsTypesFilterRecyclerAdapter;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,7 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 	private List<EGuideLocationTypeItem> locationTypesList;
 	private List<EventsCityItem> citiesList ;
 	private EventFilterCitiesSpinnerAdapter eventFilterCitiesSpinnerAdapter;
+	private boolean isCategoryOperationDone;
 
 	public View getLayoutView() {
         return view;
@@ -62,7 +67,23 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 	    ((MainActivity)context).setLocationRequstObserver(this);
         initViews(view);
         applyFonts(view);
-        getFilterData();
+	    locationTypesList = EGuideLocationManager.getInstance().getLocationTypesList(context);
+	    if(locationTypesList==null || locationTypesList.size()==0)
+	    {
+		    startLocationTypesOperation();
+	    }
+	    citiesList = EventsManager.getInstance().getEventsCityList(context);
+	    if(citiesList==null || citiesList.size()==0)
+	    {
+		    startLocationCitiesOperation();
+	    }
+
+	    if(citiesList!=null && locationTypesList!=null &&
+			    citiesList.size()>0&& locationTypesList.size()>0)
+	    {
+		    getFilterData();
+	    }
+
     }
 
     private void initViews(View view) {
@@ -84,11 +105,27 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 	    locationTypesRecyclerView = (RecyclerView) view.findViewById(R.id.locationTypesRecyclerView);
 	    locationTypesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 	    locationTypesRecyclerView.addItemDecoration(new NewDividerItemDecoration(context));
+
 	    locationTypesList= EGuideLocationManager.getInstance().getLocationTypesList(context);
 	    citiesList = EventsManager.getInstance().getEventsCityList(context);
-	    bindCitiesSpinner();
+
 	    bindLocationTypesRecycler();
+	    bindCitiesSpinner();
+
+
     }
+
+	private void startLocationCitiesOperation() {
+		EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID, false, context);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+	private void startLocationTypesOperation() {
+		final E_GuideLocationTypesOperation operation = new E_GuideLocationTypesOperation(RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID, false, context);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
 	private void bindLocationTypesRecycler() {
 		if (locationTypesList != null && locationTypesList.size() > 0)
@@ -102,7 +139,10 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 		{
 			locationTypesRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(context.getString(R.string.news_no_types));
+			if(isCategoryOperationDone)
+				txtv_noData.setText(context.getString(R.string.news_no_types));
+
+
 		}
 	}
 	private void bindCitiesSpinner()
@@ -161,7 +201,8 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
         }*/
     }
 
-    public LocationsFilterData getFilterData() {
+    public LocationsFilterData getFilterData()
+    {
         locationsFilterData = new LocationsFilterData();
 
         locationsFilterData.name = txtv_location_filter_name_value.getText().toString();
@@ -169,8 +210,10 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 	    EventsCityItem selectedItem = ((EventsCityItem) spn_city.getSelectedItem());
 	    locationsFilterData.city=selectedItem.ID;
 
-        locationsFilterData.totalCapacityFrom = txtv_location_filter_capacity_from_value.getText().toString();
-        locationsFilterData.totalCapacityTo = txtv_location_filter_capacity_to_value.getText().toString();
+	    if(!Utilities.isNullString(txtv_location_filter_capacity_from_value .getText().toString()))
+            locationsFilterData.totalCapacityFrom = txtv_location_filter_capacity_from_value.getText().toString();
+	    if(!Utilities.isNullString(txtv_location_filter_capacity_to_value .getText().toString()))
+	        locationsFilterData.totalCapacityTo = txtv_location_filter_capacity_to_value.getText().toString();
 
 
         locationsFilterData.types = new ArrayList<>();
@@ -192,7 +235,12 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 		    if(iterator.isSelected)
 			    locationsFilterData.types.add(iterator.ID);
 	    }
-        return locationsFilterData;
+	    if(locationsFilterData.types.size()>0)
+		    if (! locationsFilterData.types.get(0).equalsIgnoreCase("All"))
+		        locationsFilterData.selectedType = TextUtils.join(",",locationsFilterData.types);
+	        else
+			    locationsFilterData.selectedType="All";
+	    return locationsFilterData;
     }
 
 	@Override
@@ -205,13 +253,14 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
 		if (error == null)
 		{
-			if((int)requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID && resultObject!=null)
+			if((int)requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID )
 			{
+				isCategoryOperationDone=true;
 				locationTypesList= EGuideLocationManager.getInstance().getLocationTypesList(context);
 				bindLocationTypesRecycler();
 			}
 
-			else if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID && resultObject != null) {
+			else if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID ) {
 				citiesList = EventsManager.getInstance().getEventsCityList(context);
 				bindCitiesSpinner();
 			}

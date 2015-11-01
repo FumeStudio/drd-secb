@@ -1,5 +1,7 @@
 package com.secb.android.model;
 
+import net.comptoirs.android.common.helper.Utilities;
+
 import java.io.Serializable;
 
 public class GalleryItem implements Serializable
@@ -26,4 +28,11 @@ public class GalleryItem implements Serializable
 //for video gallery
     public String VideoGalleryUrl;
     public String VideosGalleryAlbumThumbnail;
+
+    public String getPhotoGalleryImageThumbnail() {
+        return !Utilities.isNullString(PhotoGalleryAlbumThumbnail) ? PhotoGalleryAlbumThumbnail : PhotoGalleryImageUrl;
+    }
+    public String getVideoGalleryImageThumbnail() {
+        return !Utilities.isNullString(VideosGalleryAlbumThumbnail) ? VideosGalleryAlbumThumbnail : VideoGalleryUrl;
+    }
 }

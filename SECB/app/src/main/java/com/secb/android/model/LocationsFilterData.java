@@ -10,11 +10,6 @@ public class LocationsFilterData
 	public String capacity= "All";
 
     public ArrayList<String> types;
-    public String totalCapacityFrom;
-    public String totalCapacityTo;
-
-    public static int TYPE_ALL=1;
-    public static int TYPE_ECONOMIC=2;
-    public static int TYPE_POLITICAL=3;
-    public static int TYPE_PUBLIC=4;
+    public String totalCapacityFrom = "All";
+    public String totalCapacityTo="All";
 }

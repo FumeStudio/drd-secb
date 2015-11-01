@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.LocationItem;
-import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -54,9 +54,10 @@ public class LocationsItemRecyclerAdapter extends RecyclerView.Adapter<Locations
 
 	    if(!Utilities.isNullString(currentItem.SiteImage))
 	    {
-		    Picasso.with(context)
+		    Glide.with(context)
 				    .load(currentItem.SiteImage)
 				    .placeholder(R.drawable.location_image_place_holder)
+                    .centerCrop()
 				    .into(holder.imgv_locationImg)
 		    ;
 	    }

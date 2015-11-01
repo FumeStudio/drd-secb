@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
 import com.secb.android.view.MainActivity;
-import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -55,11 +55,11 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
         EventItem currentItem = itemsList.get(position);
 	    if(!Utilities.isNullString(currentItem.ImageUrl))
 	    {
-		    Picasso.with(context)
+		    Glide.with(context)
 				    .load(currentItem.ImageUrl)
 				    .placeholder(R.drawable.events_image_place_holder)
-				    .into(holder.imgv_eventImg)
-		    ;
+					.centerCrop()
+				    .into(holder.imgv_eventImg);
 	    }
 	    else
 		    holder.imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);

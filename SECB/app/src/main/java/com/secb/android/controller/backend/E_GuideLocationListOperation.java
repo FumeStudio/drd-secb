@@ -53,7 +53,7 @@ public class E_GuideLocationListOperation extends BaseOperation {
 		stringBuilder = new StringBuilder(ServerKeys.EGUIDE_LOCATION_LIST);
 		stringBuilder.append("?Lang=" + language + "&Name=" + locationsFilterData.name+
 				"&SiteCity=" + locationsFilterData.city + "&SiteType=" + locationsFilterData.selectedType +
-				"&Capacity=" + locationsFilterData.capacity +
+				"&CapacityFrom=" + locationsFilterData.totalCapacityFrom +"&CapacityTo=" + locationsFilterData.totalCapacityTo +
 				"&pagesize=" + pageSize + "&pageindex=" + pageIndex);
 
 		String requestUrl = stringBuilder.toString();
@@ -80,8 +80,12 @@ public class E_GuideLocationListOperation extends BaseOperation {
 				!Utilities.isNullString(locationsFilterData.selectedType) &&
 				locationsFilterData.selectedType.equalsIgnoreCase("All") &&
 
-				!Utilities.isNullString(locationsFilterData.capacity) &&
-				locationsFilterData.capacity.equalsIgnoreCase("All"))
+				!Utilities.isNullString(locationsFilterData.totalCapacityFrom) &&
+				locationsFilterData.totalCapacityFrom.equalsIgnoreCase("All") &&
+
+				!Utilities.isNullString(locationsFilterData.totalCapacityTo) &&
+				locationsFilterData.totalCapacityTo.equalsIgnoreCase("All")
+				)
 		{
 
 			updateLocationsManager(locationItems);

@@ -8,12 +8,12 @@ import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
-import com.squareup.picasso.Picasso;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -31,11 +31,10 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     View view;
 
 
-    public static OrganizersDetailsFragment newInstance(OrganizerItem organizerItem)
-    {
+    public static OrganizersDetailsFragment newInstance(OrganizerItem organizerItem) {
         OrganizersDetailsFragment fragment = new OrganizersDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("locationItem",organizerItem);
+        bundle.putSerializable("locationItem", organizerItem);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -78,9 +77,8 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
             applyFonts();
         }
         Bundle bundle = getArguments();
-        if(bundle!=null)
-        {
-            organizerItem = (OrganizerItem)bundle.getSerializable("locationItem");
+        if (bundle != null) {
+            organizerItem = (OrganizerItem) bundle.getSerializable("locationItem");
         }
         initViews(view);
         bindViews();
@@ -93,17 +91,15 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     /*
      * Apply Fonts
      */
-    private void applyFonts()
-    {
+    private void applyFonts() {
 //		UiEngine.applyCustomFont(((TextView) view.findViewById(R.id.txtv_news_details_newTitle)), UiEngine.Fonts.BDCN);
         UiEngine.applyFontsForAll(CTApplication.getContext(), view, UiEngine.Fonts.HVAR);
     }
 
-    private void goBack()
-    {
+    private void goBack() {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
     }
 
     // ////////////////////////////////////////////////////////////
@@ -125,8 +121,7 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
         }
     }
 
-    private void initViews(View view)
-    {
+    private void initViews(View view) {
         imgv_organizerImg = (ImageView) view.findViewById(R.id.imgv_organizerImg);
         txtv_organizerName = (TextView) view.findViewById(R.id.txtv_organizerName);
         txtv_organizerDescription = (TextView) view.findViewById(R.id.txtv_organizerDescription);
@@ -136,22 +131,18 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
         txtv_organizer_website_value = (TextView) view.findViewById(R.id.txtv_organizer_website_value);
     }
 
-    private void bindViews()
-    {
-        if(this.organizerItem !=null)
-        {
-	        if(!Utilities.isNullString(organizerItem.OrganizerImage))
-	        {
-		        Picasso.with(getActivity())
-				        .load(organizerItem.OrganizerImage)
-				        .placeholder(R.drawable.organizer_place_holder)
-				        .into(imgv_organizerImg)
-		        ;
-	        }
-	        else
-		        imgv_organizerImg.setImageResource(R.drawable.organizer_place_holder);
+    private void bindViews() {
+        if (this.organizerItem != null) {
+            if (!Utilities.isNullString(organizerItem.OrganizerImage)) {
+                Glide.with(getActivity())
+                        .load(organizerItem.OrganizerImage)
+                        .centerCrop()
+                        .placeholder(R.drawable.organizer_place_holder)
+                        .into(imgv_organizerImg);
+            } else
+                imgv_organizerImg.setImageResource(R.drawable.organizer_place_holder);
 
-	        txtv_organizerName.setText(organizerItem.OrganizerName);
+            txtv_organizerName.setText(organizerItem.OrganizerName);
             txtv_organizer_address_value.setText(organizerItem.OrganizerAddressDescription);
             txtv_organizer_phone_value.setText(organizerItem.OrganizerPhone);
             txtv_organizer_email_value.setText(organizerItem.OrganizerEmail);

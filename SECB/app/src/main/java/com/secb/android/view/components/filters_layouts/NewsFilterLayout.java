@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.NewsCategoryOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsCategoryItem;
@@ -31,7 +32,8 @@ import java.util.List;
 public class NewsFilterLayout extends LinearLayout implements View.OnClickListener, RequestObserver {
 	private final View view;
 
-    private NewsFilterData newsFilterData;
+
+	private NewsFilterData newsFilterData;
     private TextView txtv_timeFrom, txtv_timeTo;
     private TextView txtv_news_filter_time_title, txtv_news_filter_type_title;
     private TextView txtv_noData;
@@ -47,6 +49,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 
     private Context context;
 	private List<NewsCategoryItem> categoriesList;
+	private boolean isCategoryOperationDone;
 
 
 	public View getLayoutView() {
@@ -60,11 +63,24 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         initViews(view);
 	    ((MainActivity)context).setNewsRequstObserver(this);
         applyFonts();
-        getFilterData();
+
+	    categoriesList = NewsManager.getInstance().getNewsCategoryList(context);
+	    if(categoriesList==null || categoriesList.size()==0)
+	    {
+		    startNewsCategoriesOperation();
+	    }
+	    else
+			getFilterData();
     }
 
+	private void startNewsCategoriesOperation() {
+		NewsCategoryOperation operation = new NewsCategoryOperation(RequestIds.NEWS_CATEGORY_REQUEST_ID, false, context);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
 
-    private void initViews(View view) {
+
+	private void initViews(View view) {
 
         newsFilterData = new NewsFilterData();
         txtv_timeFrom = (TextView) view.findViewById(R.id.txtv_news_filter_time_from_value);
@@ -104,7 +120,10 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 		{
 			newsCategoriesRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(context.getString(R.string.news_no_types));
+			if(isCategoryOperationDone)
+				txtv_noData.setText(context.getString(R.string.news_no_types));
+
+
 		}
 	}
     private void applyFonts() {
@@ -231,6 +250,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 		{
 			if((int)requestId == RequestIds.NEWS_CATEGORY_REQUEST_ID && resultObject!=null)
 			{
+				isCategoryOperationDone=true;
 				categoriesList= NewsManager.getInstance().getNewsCategoryList(context);
 				bindCategoriesRecycler();
 			}
