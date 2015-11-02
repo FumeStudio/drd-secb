@@ -28,7 +28,7 @@ public class Engine {
 
     public final static Logger LOGGER = Logger.getLogger("SECB_LOGGER");
 
-    public static boolean isLanguangeFromApp = false;  // this to modify if the language from application or the settings
+    public static boolean isLanguangeFromApp = true;  // this to modify if the language from application or the settings
 
     public static final SimpleDateFormat SDF_DIR = new SimpleDateFormat("ddMMyyyy", Locale.ENGLISH);
 
@@ -230,16 +230,17 @@ public class Engine {
 
 	}
 
-    public static void switchAppLanguage(ContextWrapper context) {
+    public static void switchAppLanguage(ContextWrapper context, String newLang) {
 
         String switchLanguage = "en";
-        String currentLanguage = appConfig.getLanguage();
-
-        if (currentLanguage.equals("ar")) {
-            switchLanguage = "en";
-        } else if (currentLanguage.equals("en")) {
-            switchLanguage = "ar";
-        }
+        if(Utilities.isNullString(newLang)) {
+            String currentLanguage = appConfig.getLanguage();
+            if (currentLanguage.equals("ar")) {
+                switchLanguage = "en";
+            } else if (currentLanguage.equals("en")) {
+                switchLanguage = "ar";
+            }
+        } else switchLanguage = newLang;
 
         appConfig.setLanguage(switchLanguage);
 
