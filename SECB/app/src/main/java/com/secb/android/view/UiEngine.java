@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import net.comptoirs.android.common.helper.SharedPreferenceData;
+import com.secb.android.controller.manager.Engine;
+
 import net.comptoirs.android.common.view.CTApplication;
 
 import java.util.Locale;
@@ -53,7 +54,8 @@ public class UiEngine {
 	public static Locale getCurrentAppLocale()
 	{
 		Context context = CTApplication.getContext();
-		Locale locale = context.getResources().getConfiguration().locale;
+		Locale locale = new Locale(Engine.getAppConfiguration().getLanguage());
+				/*context.getResources().getConfiguration().locale;*/
 		return locale;
 	}
 
@@ -119,12 +121,13 @@ public class UiEngine {
 	}
 
 	public static boolean isAppLanguageArabic(Context context) {
-		return getCurrentAppLanguage(context).equalsIgnoreCase("ar");
+		return Engine.isCurrentLanguageArabic(context)/*getCurrentAppLanguage(context).equalsIgnoreCase("ar")*/;
 	}
 
 	public static String getCurrentAppLanguage(Context context) {
-		SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(context);
-		return (String)sharedPreferenceData.get("language",String.class);
+		return Engine.getAppConfiguration().getLanguage();
+//		SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(context);
+//		return (String)sharedPreferenceData.get("language",String.class);
 	}
 
 

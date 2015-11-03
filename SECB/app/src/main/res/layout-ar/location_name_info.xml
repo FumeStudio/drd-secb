@@ -26,7 +26,7 @@
             android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
             android:layout_toLeftOf="@+id/type_icon"
             android:gravity="center_vertical"
-            android:text="@string/filter_type"
+            android:text="@string/location_type_title"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
 

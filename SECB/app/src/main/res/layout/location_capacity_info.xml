@@ -15,14 +15,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/location_capacity_icon" />
+            android:src="@drawable/location_capacity_icon"
+            android:visibility="gone"/>
 
+
+        <!--android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"-->
+        <!--android:layout_marginRight="@dimen/organizer_p_info_icon_margin"-->
         <TextView
+            android:drawableLeft="@drawable/location_capacity_icon"
+            android:drawablePadding="@dimen/contact_us_text_drwable_padding"
             android:id="@+id/txtv_location_capacityTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
-            android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -54,17 +58,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/location_space_icon" />
+            android:src="@drawable/location_space_icon"
+            android:visibility="gone"/>
 
+        android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
+        android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
         <TextView
             android:id="@+id/txtv_location_spaceTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
-            android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
             android:ellipsize="end"
             android:maxLines="1"
+            android:drawableLeft="@drawable/location_space_icon"
+            android:drawablePadding="@dimen/contact_us_text_drwable_padding"
             android:text="@string/location_spaceTitle"
             android:textStyle="bold"
             android:textColor="@color/secb_dark_text"

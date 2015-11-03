@@ -201,7 +201,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
     }
 
 
-    public FlexibleCalendarView customizeCalendarView(FlexibleCalendarView calendarView) {
+    public FlexibleCalendarView customizeCalendarView(final FlexibleCalendarView calendarView) {
         if (calendarView != null) {
 
             String[] customDayNames = new String[8];
@@ -247,7 +247,8 @@ public class EventsCalendarFragment extends SECBBaseFragment
                         cellView = (BaseCellView) inflater.inflate(R.layout.event_calendar_week_cell_view, null);
                         cellView.setBackgroundColor(getResources().getColor(android.R.color.white)); //week day bg color
                         cellView.setTextColor(getResources().getColor(R.color.sceb_dark_blue));//week day text color
-                        cellView.setTextSize(13);
+                        cellView.setTextSize(16);
+	                    UiEngine.applyFontsForAll(getActivity(),cellView, UiEngine.Fonts.HVAR_BOLD);
                     }
                     return cellView;
                 }

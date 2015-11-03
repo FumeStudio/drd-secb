@@ -159,7 +159,7 @@
                 android:drawableLeft="@drawable/user_shape_icon"
                 android:textSize="@dimen/contact_us_text_us"
                 android:hint="@string/hint_name"
-
+                android:background="@null"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:textColor="@color/secb_dark_text"
                 android:layout_weight="1"
@@ -177,7 +177,7 @@
                 android:textSize="@dimen/contact_us_text_us"
                 android:hint="@string/hint_mobile"
                 android:textColor="@color/secb_dark_text"
-
+                android:background="@null"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:layout_weight="1"/>
             <LinearLayout
@@ -191,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/organization_icon"
                 android:textSize="@dimen/contact_us_text_us"
-
+                android:background="@null"
                 android:hint="@string/hint_organization"
                 android:textColor="@color/secb_dark_text"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
@@ -208,7 +208,7 @@
                 android:drawableLeft="@drawable/email_icon"
                 android:textSize="@dimen/contact_us_text_us"
                 android:hint="@string/email_address"
-
+                android:background="@null"
                 android:textColor="@color/secb_dark_text"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:layout_weight="1"/>
@@ -223,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/job_icon"
                 android:textSize="@dimen/contact_us_text_us"
-
+                android:background="@null"
                 android:hint="@string/hint_job_title"
                 android:textColor="@color/secb_dark_text"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
@@ -239,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/subject_icon"
                 android:textSize="@dimen/contact_us_text_us"
-
+                android:background="@null"
                 android:hint="@string/hint_subject"
                 android:textColor="@color/secb_dark_text"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
@@ -254,6 +254,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/contact_us_btn_text_us"
             android:text="@string/send"
+            android:textAllCaps="false"
             android:textColor="@color/secb_dark_text"
             android:background="@color/secb_orange"
             android:layout_margin="@dimen/contact_us_padding"

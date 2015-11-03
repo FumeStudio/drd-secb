@@ -230,7 +230,7 @@ public class GalleryFragment extends SECBBaseFragment
 			        startWaiting();
 		        }
 		        else{
-			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, false);
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true);
 		        }
 	        }
         }
@@ -248,7 +248,7 @@ public class GalleryFragment extends SECBBaseFragment
 			        startWaiting();
 		        }
 		        else{
-			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, false);
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, true);
 		        }
 	        }
         }

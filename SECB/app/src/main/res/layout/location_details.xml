@@ -122,6 +122,8 @@
                     />
             </LinearLayout>
 
+            <!--android:paddingLeft="@dimen/organizer_details_margin"-->
+            <!--android:paddingRight="@dimen/organizer_details_margin"-->
             <LinearLayout
                 android:id="@+id/layout_rooms_container"
                 android:layout_width="match_parent"
@@ -129,8 +131,6 @@
                 android:layout_marginBottom="@dimen/organizer_details_margin_small"
                 android:layout_marginTop="@dimen/organizer_details_margin_small"
                 android:background="@color/off_white"
-                android:paddingLeft="@dimen/organizer_details_margin"
-                android:paddingRight="@dimen/organizer_details_margin"
                 android:orientation="vertical">
 
                 <include

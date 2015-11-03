@@ -26,8 +26,9 @@ public class GalleryOperation extends BaseOperation {
     Context context;
     int pageSize , pageIndex;
     int galleryType;
+	private String language ;
 
-    public GalleryOperation(int galleryType, int requestID, boolean isShowLoadingDialog,
+	public GalleryOperation(int galleryType, int requestID, boolean isShowLoadingDialog,
                             Context context, int pageSize, int pageIndex)
     {
         super(requestID, isShowLoadingDialog, context);
@@ -48,7 +49,7 @@ public class GalleryOperation extends BaseOperation {
             return null;
         }
 
-        String language = UiEngine.getCurrentAppLanguage(context);
+        language = UiEngine.getCurrentAppLanguage(context);
 
 	    if(Utilities.isNullString(language))
 		    language=UiEngine.getCurrentDeviceLanguage(context);

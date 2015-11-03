@@ -19,6 +19,7 @@ import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
+import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
@@ -181,7 +182,9 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
             txtv_noData.setVisibility(View.GONE);
 
             txtv_news_details_newTitle.setText(newsItem.Title);
-            txtv_news_details_newDate.setText(newsItem.CreationDate);
+
+	        String new_day = MainActivity.reFormatNewsDate(newsItem.CreationDate,MainActivity.sdf_Time);
+            txtv_news_details_newDate.setText(new_day);
             String decodedBody = Uri.decode(newsItem.NewsBody);
             txtv_news_details_newBody.setText(Html.fromHtml(decodedBody));
 

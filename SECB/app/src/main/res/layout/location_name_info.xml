@@ -13,18 +13,22 @@
             android:id="@+id/imgv_location_nameIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/location_name_icon" />
+            android:src="@drawable/location_name_icon"
+            android:visibility="gone"/>
 
+
+        <!--android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"-->
+        <!--android:layout_marginRight="@dimen/organizer_p_info_icon_margin"-->
         <TextView
             android:id="@+id/txtv_location_nameTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
-            android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:textStyle="bold"
+            android:drawableLeft="@drawable/location_name_icon"
+            android:drawablePadding="@dimen/contact_us_text_drwable_padding"
             android:text="@string/location_nameTitle"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h3_text_size" />
@@ -51,19 +55,22 @@
             android:id="@+id/type_icon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/location_type_icon" />
-
+            android:src="@drawable/location_type_icon"
+            android:visibility="gone"/>
+<!--
+        android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
+        android:layout_marginRight="@dimen/organizer_p_info_icon_margin"-->
         <TextView
             android:id="@+id/txtv_location_typeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/organizer_p_info_icon_margin"
-            android:layout_marginRight="@dimen/organizer_p_info_icon_margin"
             android:textStyle="bold"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@string/filter_type"
+            android:drawableLeft="@drawable/location_type_icon"
+            android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+            android:text="@string/location_type_title"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h3_text_size" />
 

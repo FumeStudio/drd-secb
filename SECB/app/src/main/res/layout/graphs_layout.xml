@@ -48,7 +48,7 @@
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/home_graphs_title_text_size"
             android:includeFontPadding="false"
-            android:lineSpacingMultiplier="0.8"
+            android:lineSpacingMultiplier="0.9"
             android:lines="2"
             android:textStyle="normal"/>
     </LinearLayout>

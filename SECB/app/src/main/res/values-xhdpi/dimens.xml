@@ -101,6 +101,7 @@
     <dimen name="organizer_details_margin">18dp</dimen> <!-- 35PX - HEIGHT -->
     <dimen name="organizer_details_margin_small">10dp</dimen> <!-- 20PX - HEIGHT -->
     <dimen name="item_card_height">105dp</dimen> <!-- 210PX - HEIGHT -->
+    <dimen name="organizer_card_img_size">69dp</dimen> <!-- 138PX - HEIGHT -->
 
 
     <dimen name="gallery_item_text_size">13dp</dimen> <!-- 25PX - HEIGHT -->

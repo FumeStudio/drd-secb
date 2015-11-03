@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/organizer_details_margin_small"
+        android:paddingLeft="@dimen/organizer_details_margin"
+        android:paddingRight="@dimen/organizer_details_margin"
         android:orientation="vertical">
 
         <LinearLayout

@@ -52,6 +52,7 @@ import com.secb.android.view.fragments.OrganizersListFragment;
 import com.secb.android.view.fragments.TestFragment;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.view.CTApplication;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -593,18 +594,33 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 			DateTime dateTime = new DateTime(date);
 			DateTime now = new DateTime();
 			Period period = new Period(dateTime, now);
-			PeriodFormatter formatter = new PeriodFormatterBuilder()
-					.appendYears().appendSuffix(" year, ", " years, ")
-					.appendMonths().appendSuffix(" month, ", " months, ")
-					.appendWeeks().appendSuffix(" week, ", " weeks, ")
-					.appendDays().appendSuffix(" day, ", " days, ")
-					.appendHours().appendSuffix(" hour, ", " hours, ")
-					.appendMinutes().appendSuffix(" minute, ", " minutes, ")
+			String yearsStr= CTApplication.getContext().getResources().getString(R.string.years);
+			String monthsStr= CTApplication.getContext().getResources().getString(R.string.months);
+			String weeksStr= CTApplication.getContext().getResources().getString(R.string.weeks);
+			String daysStr= CTApplication.getContext().getResources().getString(R.string.days);
+			String hoursStr= CTApplication.getContext().getResources().getString(R.string.hours);
+			String minutesStr= CTApplication.getContext().getResources().getString(R.string.minutes);
+			String ago= CTApplication.getContext().getResources().getString(R.string.ago);
+
+			PeriodFormatter formatter;
+			formatter = new PeriodFormatterBuilder()
+					.appendYears().appendSuffix(" year, ", " "+yearsStr+", ")
+					.appendMonths().appendSuffix(" month, ", " "+monthsStr+", ")
+					.appendWeeks().appendSuffix(" week, ", " "+weeksStr+", ")
+					.appendDays().appendSuffix(" day, ", " "+daysStr+", ")
+					.appendHours().appendSuffix(" hour, ", " "+hoursStr+", ")
+					.appendMinutes().appendSuffix(" minute, ", " "+minutesStr+", ")
 					/*.appendSeconds().appendSuffix(" second", " seconds")*/
 					.printZeroNever()
 					.toFormatter();
 
-			 elapsed = formatter.print(period)+ " ago";
+			if(UiEngine.isAppLanguageArabic(CTApplication.getContext())){
+				elapsed = ago+" "+formatter.print(period);
+			}
+			else{
+				elapsed = formatter.print(period)+" "+ago;
+			}
+
 			newString = sdf.format(date);
 		} catch (ParseException e) {
 			e.printStackTrace();

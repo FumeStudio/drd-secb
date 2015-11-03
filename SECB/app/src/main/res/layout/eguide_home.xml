@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:background="@color/secb_orange"
             android:text="@string/location_eguide"
+            android:textAllCaps="false"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/eguide_base_text_size"
             android:paddingTop="@dimen/eguide_base_padding"

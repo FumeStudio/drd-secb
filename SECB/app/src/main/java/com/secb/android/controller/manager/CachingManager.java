@@ -17,6 +17,7 @@ import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.User;
+import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
@@ -26,7 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -35,7 +35,6 @@ import java.util.Date;
 import java.util.List;
 
 public class CachingManager {
-
 	private static final String TAG = "GBACachingManager";
 
 
@@ -238,8 +237,12 @@ public class CachingManager {
 		if(galleryItems != null && galleryItems.size() > 0){
 			//create file called "app_img_gallery.dat"
 			// inside  folder called "images" which existing in "Cache" folder
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			String img_gallery = Engine.FileName.APP_IMG_GALLERY;
+			if(language!=null)
+				img_gallery=img_gallery+"_"+language.toUpperCase();
 			File file = Engine.getCacheFile(Engine.DataFolder.USER_IMAGES,
-					Engine.FileName.APP_IMG_GALLERY, appContext);
+					img_gallery, appContext);
 
 			//save Image Gallery in the file "app_img_gallery.dat
 			try {
@@ -254,7 +257,14 @@ public class CachingManager {
 	public ArrayList<GalleryItem> loadImageGallery(Context appContext)
 	{
 		//get file called "app_img_gallery.dat" from "images" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_IMAGES, Engine.FileName.APP_IMG_GALLERY, appContext);
+//		File file = Engine.getCacheFile(Engine.DataFolder.USER_IMAGES, Engine.FileName.APP_IMG_GALLERY, appContext);
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		String img_gallery = Engine.FileName.APP_IMG_GALLERY;
+		if(language!=null)
+			img_gallery=img_gallery+"_"+language.toUpperCase();
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_IMAGES,
+				img_gallery, appContext);
+
 		ArrayList<GalleryItem> itemsList = null;
 		try
 		{
@@ -306,8 +316,16 @@ public class CachingManager {
 		if(galleryItems != null && galleryItems.size() > 0){
 			//create file called "app_video_gallery.dat"
 			// inside "videos" folder which existing in "Cache" folder
+//			File file = Engine.getCacheFile(Engine.DataFolder.USER_VIDEOS,
+//					Engine.FileName.APP_VIDEO_GALLERY, appContext);
+
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			String vid_gallery = Engine.FileName.APP_VIDEO_GALLERY;
+			if(language!=null)
+				vid_gallery=vid_gallery+"_"+language.toUpperCase();
 			File file = Engine.getCacheFile(Engine.DataFolder.USER_VIDEOS,
-					Engine.FileName.APP_VIDEO_GALLERY, appContext);
+					vid_gallery, appContext);
+
 
 			//save Image Gallery in the file "app_img_gallery.dat
 			try {
@@ -322,7 +340,14 @@ public class CachingManager {
 	public ArrayList<GalleryItem> loadVideoGallery(Context appContext)
 	{
 //get file called "app_img_gallery.dat" from "videos" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_VIDEOS, Engine.FileName.APP_VIDEO_GALLERY, appContext);
+//		File file = Engine.getCacheFile(Engine.DataFolder.USER_VIDEOS, Engine.FileName.APP_VIDEO_GALLERY, appContext);
+
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		String vid_gallery = Engine.FileName.APP_VIDEO_GALLERY;
+		if(language!=null)
+			vid_gallery=vid_gallery+"_"+language.toUpperCase();
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_VIDEOS,
+				vid_gallery, appContext);
 		ArrayList<GalleryItem> itemsList = null;
 		try
 		{
@@ -672,7 +697,16 @@ public class CachingManager {
 		if (itemsList != null && itemsList.size() > 0) {
 			//create file called "app_eguide_location_list.dat"
 			// inside  folder called "locations" which existing in "Cache" folder
-			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION, Engine.FileName.APP_EGUIDE_LOCATION_LIST, appContext);
+//			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION, Engine.FileName.APP_EGUIDE_LOCATION_LIST, appContext);
+
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			String location_list_file = Engine.FileName.APP_EGUIDE_LOCATION_LIST;
+			if(language!=null)
+				location_list_file=location_list_file+"_"+language.toUpperCase();
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,
+					location_list_file, appContext);
+
+
 
 			//save Events categories in the file "app_eguide_location_types.dat
 			try {
@@ -686,7 +720,15 @@ public class CachingManager {
 	public ArrayList<LocationItem> loadLocationsList(Context appContext)
 	{
 		//get file called "app_eguide_location_list.dat" from "locations" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION, Engine.FileName.APP_EGUIDE_LOCATION_LIST, appContext);
+//		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION, Engine.FileName.APP_EGUIDE_LOCATION_LIST, appContext);
+
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		String location_list_file = Engine.FileName.APP_EGUIDE_LOCATION_LIST;
+		if(language!=null)
+			location_list_file=location_list_file+"_"+language.toUpperCase();
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,
+				location_list_file, appContext);
+
 		ArrayList<LocationItem> itemsList = null;
 		try
 		{
@@ -707,7 +749,8 @@ public class CachingManager {
 		{
 			//create file called "app_events_details_xx.dat"
 			// inside  folder called "Events" which existing in "Cache" folder
-			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,"app_eguide_location_details_"+item.ID+".dat", appContext);
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,"app_eguide_location_details_"+item.ID+"_"+language.toUpperCase()+".dat", appContext);
 
 			//save Events list in the file "app_events_details_xx.dat
 			try {
@@ -722,7 +765,8 @@ public class CachingManager {
 	public LocationItem loadLocationDetails(String LoocationID, Context appContext)
 	{
 		//get file called "app_events_details_xx.dat" from "Events" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,"app_eguide_location_details_"+LoocationID+".dat", appContext);
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,"app_eguide_location_details_"+LoocationID+"_"+language.toUpperCase()+".dat", appContext);
 		LocationItem itemsDetails = null;
 		try
 		{
@@ -742,12 +786,20 @@ public class CachingManager {
 
 /**Lists*/
 	//save organizers list
-	public void saveOrganizersList(ArrayList<OrganizerItem> itemsList, Context appContext) {
+	public void saveOrganizersList(ArrayList<OrganizerItem> itemsList, Context appContext)
+	{
 		if (itemsList != null && itemsList.size() > 0) {
 			//create file called "app_eguide_organizers_list.dat"
 			// inside  folder called "organizers" which existing in "Cache" folder
-			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST, appContext);
+//			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST, appContext);
 			//save Events categories in the file "app_eguide_organizers_list.dat
+
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			String organizers_list_file = Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST;
+			if(language!=null)
+				organizers_list_file=organizers_list_file+"_"+language.toUpperCase();
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS,
+					organizers_list_file, appContext);
 			try {
 				saveObject(itemsList, file);
 			} catch (IOException e) {
@@ -759,8 +811,16 @@ public class CachingManager {
 	public ArrayList<OrganizerItem> loadOrganizersList(Context appContext)
 	{
 		//get file called "app_eguide_location_list.dat" from "organizers" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST, appContext);
+//		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST, appContext);
 		ArrayList<OrganizerItem> itemsList = null;
+
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		String organizers_list_file = Engine.FileName.APP_EGUIDE_ORGANIZERS_LIST;
+		if(language!=null)
+			organizers_list_file=organizers_list_file+"_"+language.toUpperCase();
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS,
+				organizers_list_file, appContext);
+
 		try
 		{
 			//load object from "app_eguide_organizers_list.dat" file
@@ -780,7 +840,11 @@ public class CachingManager {
 		{
 			//create file called "app_eguide_organizer_details_xx.dat"
 			// inside  folder called "Organizers" which existing in "Cache" folder
-			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS,"app_eguide_organizer_details_"+item.OrganizerEmail+".dat", appContext);
+
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, "app_eguide_organizer_details_" + item.OrganizerEmail + "_" + language.toUpperCase() + ".dat", appContext);
+
+
 			//save Events list in the file "app_eguide_organizer_details_xx.dat
 			try {
 				saveObject(item, file);
@@ -794,7 +858,9 @@ public class CachingManager {
 	public OrganizerItem loadOrganizerDetails(String OrganizerEmail, Context appContext)
 	{
 		//get file called "app_eguide_organizer_details_xx.dat" from "Organizers" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS,"app_eguide_organizer_details_"+OrganizerEmail+".dat", appContext);
+
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_ORGANIZERS, "app_eguide_organizer_details_" + OrganizerEmail +"_"+language.toUpperCase()+ ".dat", appContext);
 		OrganizerItem itemsDetails = null;
 		try
 		{

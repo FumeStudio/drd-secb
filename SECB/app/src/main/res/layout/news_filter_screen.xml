@@ -43,6 +43,7 @@
                 android:text="@string/filter_time"
                 android:textColor="@color/secb_light_text"
                 android:textSize="@dimen/news_filter_btn_text_size"
+                android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <!--time input-->
@@ -63,11 +64,11 @@
                     android:visibility="gone" />
 
                 <!--from value-->
+                <!--android:drawableLeft="@drawable/date_picker_icon"-->
                 <TextView
                     android:id="@+id/txtv_news_filter_time_from_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/date_picker_icon"
                     android:hint="@string/filter_time_from"
                     android:maxLines="1"
                     android:text=""
@@ -86,11 +87,11 @@
                     android:visibility="gone" />
 
                 <!--to value-->
+                <!--android:drawableLeft="@drawable/date_picker_icon"-->
                 <TextView
                     android:id="@+id/txtv_news_filter_time_to_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/date_picker_icon"
                     android:hint="@string/filter_time_to"
                     android:maxLines="1"
                     android:text=""
@@ -109,6 +110,7 @@
                 android:text="@string/filter_type"
                 android:textColor="@color/secb_light_text"
                 android:textSize="@dimen/news_filter_btn_text_size"
+                android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <!--types input-->
@@ -128,6 +130,7 @@
                     android:visibility="visible"
                     android:gravity="center"
                     android:text="@string/loading"/>
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/newsCategoriesRecyclerView"
@@ -213,6 +216,7 @@
         android:layout_width="fill_parent"
         android:layout_height="2.3dp"
         android:clickable="true"
+        android:visibility="gone"
         android:layout_above="@+id/filter_container"
         android:background="@drawable/shadow_h"></View>
 </RelativeLayout>

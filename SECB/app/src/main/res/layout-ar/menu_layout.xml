@@ -2,13 +2,14 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/menu_item_vertical_margin"
-                android:background="@drawable/menu_bg">
+                android:background="@drawable/menu_bg"
+                android:paddingTop="@dimen/menu_item_vertical_margin">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/menuItemRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/menu_item_vertical_margin"
         android:layout_marginTop="@dimen/menu_item_vertical_margin">
 

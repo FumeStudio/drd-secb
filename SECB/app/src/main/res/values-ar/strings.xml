@@ -79,6 +79,7 @@
     <string name="filter_location_name">اسم الموقع:</string>
     <string name="filter_total_capacity">اجمالي السعة</string>
     <string name="location_nameTitle">الاسم:</string>
+    <string name="location_type_title">النوع:</string>
     <string name="location_roomType">نوع الغرفة:</string>
     <string name="location_roomCapacity">سعة الغرفة:</string>
     <string name="location_roomSpace">مساحة الغرفة:</string>
@@ -153,6 +154,14 @@
     <string name="locations_no_locations">لا توجد مواقع.</string>
     <string name="organizer_no_organizers">لا يوجد منظمين.</string>
     <string name="contact_us_done">تم ارسال بياناتكم بنجاح.</string>
+
+    <string name="years">سنوات</string>
+    <string name="months">شهور</string>
+    <string name="weeks">أسابيع</string>
+    <string name="days">أيام</string>
+    <string name="hours">ساعات</string>
+    <string name="minutes">دقائق</string>
+    <string name="ago">منذ</string>
 
 
 </resources>
