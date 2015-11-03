@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
 import com.secb.android.R;
+import com.secb.android.controller.manager.Engine;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.Consts;
 import com.secb.android.view.components.HeaderLayout;
@@ -56,16 +57,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     private int mActivityLayout;                                                        // inner layout to be inflatted
 
     MenuFragment fragmentLeftMenu;                                                    // menu_layout fragment
-    private  boolean isMenuOpened;
+    private boolean isMenuOpened;
     private DrawerLayout mDrawerLayout;                                            // menu_layout holder
     private HeaderLayout headerLayoutHome;                                    // header layout
 
     public static SECBBaseActivity activity;
     public static MenuItem menuItemSelected = null;                    // Current menu_layout item selected
 
-    public int MENU_GRAVITY=Gravity.LEFT;
+    public int MENU_GRAVITY = Gravity.LEFT;
 
-    float filterStartX =0;
+    float filterStartX = 0;
     float filterStartY = 0;
     boolean isFilterLayoutOpened;
     //icon when clicked , display filter view
@@ -110,10 +111,10 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
      */
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        Engine.setApplicationLanguage(this, Engine.getAppConfiguration().getLanguage());
         super.onCreate(savedInstanceState);
-        this.savedInstanceState=savedInstanceState;
+        this.savedInstanceState = savedInstanceState;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // startIncomingView();
@@ -121,8 +122,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
         activity = SECBBaseActivity.this;
 
-        if (mAllowSideMenu)
-        {
+        if (mAllowSideMenu) {
             setContentView(R.layout.main);
 
             ViewGroup contentLayout = (ViewGroup) findViewById(R.id.simple_fragment);
@@ -174,16 +174,14 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
 
             //if arabic open menu_layout from right to left
-            if(Utilities.getLanguage().startsWith("ar"))
-                MENU_GRAVITY =Gravity.RIGHT;
+            if (Engine.getAppConfiguration().getLanguage().startsWith("ar"))
+                MENU_GRAVITY = Gravity.RIGHT;
                 //else open from left to right
             else
-                MENU_GRAVITY =Gravity.LEFT;
+                MENU_GRAVITY = Gravity.LEFT;
 
 
-        }
-        else
-        {
+        } else {
             setContentView(mActivityLayout);
         }
 
@@ -231,7 +229,6 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
-
     private void handleButtonsEvents() {
     }
 
@@ -241,20 +238,20 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
      * *****************************************************************************
      */
 /*filter button*/
-    public void showFilterButton(boolean isVisible){
+    public void showFilterButton(boolean isVisible) {
         imgv_filter.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
-    public void setApplyFilterClickListener(View.OnClickListener listener){
-        applyFilterClickListener =(listener);
+    public void setApplyFilterClickListener(View.OnClickListener listener) {
+        applyFilterClickListener = (listener);
     }
 
-    public void setFilterLayout(LinearLayout filterLayout ,boolean isVerticalAnimation) {
-        filterStartX =headerLayoutHome.getX();
-        filterStartY =headerLayoutHome.getMeasuredHeight();
+    public void setFilterLayout(LinearLayout filterLayout, boolean isVerticalAnimation) {
+        filterStartX = headerLayoutHome.getX();
+        filterStartY = headerLayoutHome.getMeasuredHeight();
         this.filterLayout = filterLayout;
         this.isVerticalAnimation = isVerticalAnimation;
-        layoutAnimator = new LayoutAnimator(filterLayoutHolder,isVerticalAnimation,filterStartX,filterStartY);
+        layoutAnimator = new LayoutAnimator(filterLayoutHolder, isVerticalAnimation, filterStartX, filterStartY);
 
     }
 
@@ -262,37 +259,30 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         this.filterLayoutView = filterLayoutView;
     }
 
-    public void prepareFilerLayout()
-    {
-        if(filterLayoutHolder !=null && filterLayoutView!=null)
-        {
+    public void prepareFilerLayout() {
+        if (filterLayoutHolder != null && filterLayoutView != null) {
             filterLayoutHolder.removeAllViews();
             filterLayoutHolder.addView(filterLayoutView);
-            if (filterLayoutView.findViewById(R.id.btn_applyFilter)!=null &&applyFilterClickListener!=null)
-            {
+            if (filterLayoutView.findViewById(R.id.btn_applyFilter) != null && applyFilterClickListener != null) {
                 filterLayoutView.findViewById(R.id.btn_applyFilter).setOnClickListener(applyFilterClickListener);
             }
-            if (filterLayoutView.findViewById(R.id.layout_dark_layer)!=null){
+            if (filterLayoutView.findViewById(R.id.layout_dark_layer) != null) {
                 filterLayoutView.findViewById(R.id.layout_dark_layer).setOnClickListener(this);
             }
             showFilterLayout();
         }
     }
 
-    public void hideFilterLayout()
-    {
-        if(this.filterLayoutHolder !=null && layoutAnimator!=null&&isFilterLayoutOpened)
-        {
+    public void hideFilterLayout() {
+        if (this.filterLayoutHolder != null && layoutAnimator != null && isFilterLayoutOpened) {
 //            this.filterLayoutHolder.setVisibility(View.GONE);
             isFilterLayoutOpened = false;
             layoutAnimator.hidePreviewPanel();
         }
     }
 
-    public void showFilterLayout()
-    {
-        if(this.filterLayoutHolder !=null && layoutAnimator!=null)
-        {
+    public void showFilterLayout() {
+        if (this.filterLayoutHolder != null && layoutAnimator != null) {
 //            this.filterLayoutHolder.setVisibility(View.VISIBLE);
             isFilterLayoutOpened = true;
             layoutAnimator.showPreviewPanel();
@@ -309,6 +299,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void setHeaderTitleText(String title) {
         headerLayoutHome.setTitleText(title);
     }
+
     // apply font to  header 'title'
     public void setHeaderTitleFont(Typeface font) {
         headerLayoutHome.applyFontToTitleText(font);
@@ -408,8 +399,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         addFragment(fragment, addToBackStack, transition, true);
     }
 
-    public void addFragment(Fragment fragment, boolean addToBackStack, int transition, boolean isAnimated)
-    {
+    public void addFragment(Fragment fragment, boolean addToBackStack, int transition, boolean isAnimated) {
 
         Log.v("addFragment", addToBackStack + " " + fragment);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -427,8 +417,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
 
     //always add fragment to back stack with a tag
-    public void addFragment(Fragment fragment, String Tag, int transition, boolean isAnimated)
-    {
+    public void addFragment(Fragment fragment, String Tag, int transition, boolean isAnimated) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (isAnimated)
             ft.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out, R.anim.push_right_in, R.anim.push_right_out);
@@ -438,8 +427,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
-    public void finishFragmentOrActivity()
-    {
+    public void finishFragmentOrActivity() {
         hideFilterLayout();
         FragmentManager manager = getSupportFragmentManager();
         Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
@@ -452,8 +440,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
-    public void finishFragmentOrActivity(String name)
-    {
+    public void finishFragmentOrActivity(String name) {
         hideFilterLayout();
 
 
@@ -469,11 +456,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
-    public SECBBaseFragment getCurrentDisplayedFragment()
-    {
+    public SECBBaseFragment getCurrentDisplayedFragment() {
         currentDisplayedFragment = (SECBBaseFragment) getSupportFragmentManager().findFragmentById(R.id.simple_fragment);
         return currentDisplayedFragment;
     }
+
     /*
      * pop to root of fragments list
      */
@@ -518,8 +505,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         backObservers.remove(fragmentBackObserver);
     }
 
-    private void callBack()
-    {
+    private void callBack() {
         if (backObservers != null)
             for (FragmentBackObserver backObserver : backObservers)
                 backObserver.onBack();
@@ -538,15 +524,13 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         return super.onKeyDown(keyCode, event);
     }
 
-    public boolean onBackButtonPressed()
-    {
+    public boolean onBackButtonPressed() {
         Log.v("FragmentStackAct", "Back " + getSupportFragmentManager().getBackStackEntryCount() + "  ");
-        if(isMenuOpened)
-        {
+        if (isMenuOpened) {
             closeMenuPanel();
             return true;
         }
-        if(isFilterLayoutOpened){
+        if (isFilterLayoutOpened) {
             hideFilterLayout();
             return true;
         }
@@ -571,8 +555,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     /*
      * Handle open/close menu_layout
      */
-    public void handleMenuAppearance()
-    {
+    public void handleMenuAppearance() {
         if (mDrawerLayout.isDrawerOpen(MENU_GRAVITY))
             mDrawerLayout.closeDrawer(MENU_GRAVITY);
         else mDrawerLayout.openDrawer(MENU_GRAVITY);
@@ -646,8 +629,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
-    public void showConfirmDialog(final SECBBaseActivity activity , String dialogMessage, final DialogConfirmListener listener)
-    {
+    public void showConfirmDialog(final SECBBaseActivity activity, String dialogMessage, final DialogConfirmListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(true);
         builder.setMessage(dialogMessage);
@@ -672,17 +654,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         alert.show();
     }
 
-    public void changeAppLanguage(boolean changeToEnglish)
-    {
-        String languageToLoad  = "en";
-        if(!changeToEnglish)
-            languageToLoad  = "ar";
+    public void changeAppLanguage(boolean changeToEnglish) {
+        String languageToLoad = "en";
+        if (!changeToEnglish)
+            languageToLoad = "ar";
 
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        saveLanguageSetting(languageToLoad);
+        Engine.switchAppLanguage(this, languageToLoad);
         myOnConfigurationChanged(config);
 
         getBaseContext().getResources().updateConfiguration(config,
@@ -690,19 +671,6 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //        CTApplication.getApplication().onConfigurationChanged(config);
 
 
-    }
-
-    public void saveLanguageSetting(String languageToLoad)
-    {
-        SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(this);
-        sharedPreferenceData.save("language", languageToLoad);
-    }
-
-
-    public String getSavedLanguageSetting()
-    {
-        SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(this);
-        return (String)sharedPreferenceData.get( "language",String.class);
     }
 
     public void myOnConfigurationChanged(Configuration newConfig) {
@@ -715,7 +683,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     public void logout() {
         //clear user from manager
-	    UserManager.getInstance().logout();
+        UserManager.getInstance().logout();
         //go to login page
         Intent i = new Intent(activity, LoginActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -725,11 +693,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 
-    public void registerLanguageBroadcastReceiver(){
+    public void registerLanguageBroadcastReceiver() {
         registerReceiver(languageChangedBroadcastReceiver, languageIntentFiler);
     }
 
-    public void unRegisterLanguageBroadcastReceiver(){
+    public void unRegisterLanguageBroadcastReceiver() {
         try {
             unregisterReceiver(languageChangedBroadcastReceiver);
         } catch (Exception e) {
@@ -737,14 +705,12 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         }
     }
 
-//if the device language is changed save the new language in preferences
-    private final BroadcastReceiver languageChangedBroadcastReceiver = new BroadcastReceiver()
-    {
-        public void onReceive(Context paramAnonymousContext, Intent paramAnonymousIntent)
-        {
-            String language=""+UiEngine.getCurrentDeviceLanguage(SECBBaseActivity.this);
-            Logger.instance().v(TAG + " - Language changed", "Broadcast - onReceive - saveLanguage "+getResources().getConfiguration().locale.getLanguage());
-            saveLanguageSetting(language);
+    //if the device language is changed save the new language in preferences
+    private final BroadcastReceiver languageChangedBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context paramAnonymousContext, Intent paramAnonymousIntent) {
+            String language = "" + UiEngine.getCurrentDeviceLanguage(SECBBaseActivity.this);
+            Logger.instance().v(TAG + " - Language changed", "Broadcast - onReceive - saveLanguage " + getResources().getConfiguration().locale.getLanguage());
+//            saveLanguageSetting(language);
         }
     };
 

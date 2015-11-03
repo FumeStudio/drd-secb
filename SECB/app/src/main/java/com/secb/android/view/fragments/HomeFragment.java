@@ -403,6 +403,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        if(getActivity() == null)
+            return;
 		if (error == null)
 		{
 			if((int)requestId == RequestIds.NEWS_LIST_REQUEST_ID && resultObject!=null)

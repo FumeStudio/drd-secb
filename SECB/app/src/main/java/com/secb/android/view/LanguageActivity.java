@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.secb.android.R;
+import com.secb.android.controller.manager.Engine;
 
 import net.comptoirs.android.common.helper.SharedPreferenceData;
 import net.comptoirs.android.common.helper.Utilities;
@@ -12,7 +13,6 @@ import net.comptoirs.android.common.helper.Utilities;
 public class LanguageActivity extends SECBBaseActivity {
 
     Button btn_arabic, btn_english;
-    SharedPreferenceData sharedPreferenceData;
     String prefsLanguage;
     public LanguageActivity()
     {
@@ -23,7 +23,6 @@ public class LanguageActivity extends SECBBaseActivity {
     protected void doOnCreate(Bundle arg0)
     {
 
-        sharedPreferenceData = new SharedPreferenceData( LanguageActivity.this);
         applyPreferredLanguage();
 
         initViews();
@@ -33,7 +32,7 @@ public class LanguageActivity extends SECBBaseActivity {
     private void applyPreferredLanguage() {
 //        prefsLanguage = (String) sharedPreferenceData.get("language",String.class);
 
-        prefsLanguage = getSavedLanguageSetting();
+        prefsLanguage = Engine.getAppConfiguration().getLanguage();
         if(!Utilities.isNullString(prefsLanguage));
         {
             if(prefsLanguage.equalsIgnoreCase("en")) {

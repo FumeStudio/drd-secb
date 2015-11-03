@@ -94,8 +94,10 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
 		super.onDestroy();
 		if(supportMapFragment!=null)
 		{
-			getFragmentManager().popBackStack("MAP",FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+			try {
+                getFragmentManager().popBackStack("MAP",FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+            } catch(Exception ex) {ex.printStackTrace();}
 		}
 	}
 
