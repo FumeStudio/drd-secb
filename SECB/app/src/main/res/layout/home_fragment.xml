@@ -24,7 +24,8 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/home_graphs_card_padding"
             android:paddingRight="@dimen/home_graphs_card_padding"
-            android:paddingTop="@dimen/home_graphs_card_padding">
+            android:paddingTop="@dimen/home_graphs_card_padding"
+            android:paddingBottom="@dimen/home_graphs_card_padding">
 
             <!--Title:services requests-->
             <include layout="@layout/home_services_request_title" />

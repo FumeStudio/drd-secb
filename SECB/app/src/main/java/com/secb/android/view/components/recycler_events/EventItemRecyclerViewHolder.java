@@ -64,11 +64,11 @@ public class EventItemRecyclerViewHolder extends RecyclerView.ViewHolder
         }
         if(txtv_eventImgDate_day!=null)
         {
-            UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR_BOLD);
         }
         if(txtv_eventImgDate_month!=null)
         {
-            UiEngine.applyCustomFont(txtv_event_categoryValue, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_eventImgDate_month, UiEngine.Fonts.HVAR);
         }
     }
 

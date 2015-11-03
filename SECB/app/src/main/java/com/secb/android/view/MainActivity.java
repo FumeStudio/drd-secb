@@ -53,6 +53,11 @@ import com.secb.android.view.fragments.TestFragment;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,6 +94,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	public static SimpleDateFormat sdf_day_mon = new SimpleDateFormat("dd-MMM", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss", UiEngine.getCurrentAppLocale());
 
 
 	public MainActivity() {
@@ -316,14 +322,14 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		isNewsLoadingFinished = false;
 		isEventsLoadingFinished= false;
 
-		/*E-Service Statistics List*/
-		getEserviceStatisticsList();
-
 		/*News UnFiltered News List*/
 		getNewsList();
 
 		/*Events UnFiltered  List*/
 		getEventsList();
+
+		/*E-Service Statistics List*/
+		getEserviceStatisticsList();
 	}
 
 	/**
@@ -577,8 +583,40 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		return newString;
 	}
 
+	public static String reFormatNewsDate(String oldDate, SimpleDateFormat sdf)
+	{
+		String newString = null;
+		String elapsed=null;
+		try {
+			Date date = sdf_Source_News.parse(oldDate);
+//			DateTime dateTime = new DateTime(1978, 3, 26, 12, 35, 0, 0);
+			DateTime dateTime = new DateTime(date);
+			DateTime now = new DateTime();
+			Period period = new Period(dateTime, now);
+			PeriodFormatter formatter = new PeriodFormatterBuilder()
+					.appendYears().appendSuffix(" year, ", " years, ")
+					.appendMonths().appendSuffix(" month, ", " months, ")
+					.appendWeeks().appendSuffix(" week, ", " weeks, ")
+					.appendDays().appendSuffix(" day, ", " days, ")
+					.appendHours().appendSuffix(" hour, ", " hours, ")
+					.appendMinutes().appendSuffix(" minute, ", " minutes, ")
+					/*.appendSeconds().appendSuffix(" second", " seconds")*/
+					.printZeroNever()
+					.toFormatter();
 
-	public static String getYoutubeVideoId(String youtubeUrl) {
+			 elapsed = formatter.print(period)+ " ago";
+			newString = sdf.format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return elapsed;
+	}
+
+
+
+
+
+		public static String getYoutubeVideoId(String youtubeUrl) {
 		String video_id = "";
 		if (youtubeUrl != null && youtubeUrl.trim().length() > 0 && youtubeUrl.startsWith("http")) {
 

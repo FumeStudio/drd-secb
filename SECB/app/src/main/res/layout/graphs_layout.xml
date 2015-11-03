@@ -47,8 +47,10 @@
             android:text="@string/graph_title_closed"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/home_graphs_title_text_size"
+            android:includeFontPadding="false"
+            android:lineSpacingMultiplier="0.8"
             android:lines="2"
-            android:textStyle="normal" />
+            android:textStyle="normal"/>
     </LinearLayout>
 
     <LinearLayout
@@ -92,6 +94,7 @@
             android:layout_width="match_parent"
             android:text="@string/graph_title_inbox"
             android:textColor="@color/secb_dark_text"
+            android:lineSpacingMultiplier="0.8"
             android:textSize="@dimen/home_graphs_title_text_size"
             android:lines="2"
             android:textStyle="normal" />
@@ -137,6 +140,7 @@
             android:layout_width="match_parent"
             android:text="@string/graph_title_inProgress"
             android:textColor="@color/secb_dark_text"
+            android:lineSpacingMultiplier="0.8"
             android:textSize="@dimen/home_graphs_title_text_size"
             android:lines="2"
             android:textStyle="normal" />

@@ -69,7 +69,7 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
 		if(!Utilities.isNullString(evdateStr)){
 			String[] dayMonthArr = evdateStr.split("-");
 			holder.txtv_eventImgDate_day.setText(dayMonthArr[0]);
-			holder.txtv_eventImgDate_month.setText(dayMonthArr[1]);
+			holder.txtv_eventImgDate_month.setText(dayMonthArr[1].toUpperCase());
 		}
 	    holder.txtv_eventTitle.setText(currentItem.Title);
         holder.txtv_eventDescription.setText(currentItem.Description);

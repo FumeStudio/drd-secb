@@ -122,9 +122,9 @@ public class E_ServicesListFragment extends SECBBaseFragment
 	}
 
     public void initFilterLayout() {
-        eventsFilterLayout = new EventsFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(eventsFilterLayout, false);
-        ((SECBBaseActivity) getActivity()).setFilterLayoutView(eventsFilterLayout.getLayoutView());
+//        eventsFilterLayout = new EventsFilterLayout(getActivity());
+//        ((SECBBaseActivity) getActivity()).setFilterLayout(eventsFilterLayout, false);
+//        ((SECBBaseActivity) getActivity()).setFilterLayoutView(eventsFilterLayout.getLayoutView());
     }
 
     private void handleButtonsEvents() {
@@ -221,7 +221,11 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		eServicesRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eServicesRecyclerView, this));
 
 //		eServicesList = DevData.getE_ServicesList();
-		graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+		try {
+			graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if(graphsValues==null || graphsValues.size()<3)
 		{
 			graphsValues = new ArrayList<>();
@@ -331,7 +335,12 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			}
 			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
 			{
-				graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+
+				try {
+					graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				if(graphsValues==null || graphsValues.size()<3)
 				{
 					graphsValues = new ArrayList<>();

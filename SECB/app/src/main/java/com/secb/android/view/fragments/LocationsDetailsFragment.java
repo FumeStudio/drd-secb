@@ -241,13 +241,15 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
 //                    btn_PreviousRoom.setVisibility(View.VISIBLE);
 
 	                location_room_item.setVisibility(View.GONE);
+	                layout_rooms_container.setBackgroundColor(getResources().getColor(R.color.white));
 	                for (int currentRoomIndex=0; currentRoomIndex<locationRooms.size();currentRoomIndex++)
 	                {
 		                final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		                if(inflater!=null){
 			               View roomItemView = inflater.inflate(R.layout.location_room_info,null/*layout_rooms_container,false*/);
 			                roomItemView.setId(currentRoomIndex);
-
+			                LinearLayout layout = (LinearLayout)roomItemView.findViewById(R.id.layout_room_item);
+			                layout.setBackgroundColor(getResources().getColor(R.color.off_white));
 			                TextView roomTypeValue = (TextView) roomItemView.findViewById(R.id.txtv_location_roomTypeValue);
 			                TextView roomCapacityValue = (TextView) roomItemView.findViewById(R.id.txtv_location_roomCapacityValue);
 			                TextView roomSpaceValue = (TextView) roomItemView.findViewById(R.id.txtv_location_roomSpaceValue);
@@ -271,6 +273,7 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
 
 	                //first Room Item
 	                location_room_item.setVisibility(View.VISIBLE);
+	                layout_rooms_container.setBackgroundColor(getResources().getColor(R.color.off_white));
 	                txtv_location_roomTypeValue.setText(locationRooms.get(currentRoomIndex).RoomType + "");
 	                txtv_location_roomCapacityValue.setText(locationRooms.get(currentRoomIndex).RoomCapacity + "");
 	                txtv_location_roomSpaceValue.setText(locationRooms.get(currentRoomIndex).RoomArea + "");

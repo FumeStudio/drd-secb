@@ -54,7 +54,7 @@
     <string name="last_news">Last News</string>
 
     <string name="graph_title_closed">
-        <![CDATA[<strong>Closed</strong> <br/>Requests]]>
+        <![CDATA[<strong>Closed </strong> <br/>Requests]]>
     </string>
 
     <string name="graph_title_inbox">

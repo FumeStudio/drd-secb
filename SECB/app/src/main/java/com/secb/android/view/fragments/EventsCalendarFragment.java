@@ -133,7 +133,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
             UiEngine.applyCustomFont(txtv_viewAllEvents, UiEngine.Fonts.HVAR);
 
         if (txtv_eventImgDate_day != null)
-            UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR_BOLD);
         if (txtv_eventImgDate_month != null)
             UiEngine.applyCustomFont(txtv_eventImgDate_month, UiEngine.Fonts.HVAR);
     }
@@ -294,7 +294,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
             if (!Utilities.isNullString(evdateStr)) {
                 String[] dayMonthArr = evdateStr.split("-");
                 txtv_eventImgDate_day.setText(dayMonthArr[0]);
-                txtv_eventImgDate_month.setText(dayMonthArr[1]);
+                txtv_eventImgDate_month.setText(dayMonthArr[1].toUpperCase());
             }
 
 

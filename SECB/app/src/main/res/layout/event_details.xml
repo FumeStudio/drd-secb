@@ -10,6 +10,7 @@
     android:padding="@dimen/contact_us_base_margin">
 
     <LinearLayout
+        android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">

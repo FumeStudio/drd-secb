@@ -1,23 +1,20 @@
 package com.secb.android.view.components.recycler_news;
 
 import android.content.Context;
-import android.net.Uri;
-import android.net.wifi.WifiConfiguration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.secb.android.R;
 import com.secb.android.model.NewsItem;
+import com.secb.android.view.MainActivity;
 
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -74,8 +71,8 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 
         holder.txtv_newTitle.setText(currentItem.Title);
         holder.txtv_newDescription.setText(currentItem.NewsBrief);
-//	    String newdateStr = MainActivity.reFormatDate(currentItem.CreationDate, MainActivity.sdf_Date);
-        holder.txtv_newTime.setText(currentItem.CreationDate);
+	    String newdateStr = MainActivity.reFormatNewsDate(currentItem.CreationDate, MainActivity.sdf_Date);
+        holder.txtv_newTime.setText(newdateStr);
     }
 
     @Override

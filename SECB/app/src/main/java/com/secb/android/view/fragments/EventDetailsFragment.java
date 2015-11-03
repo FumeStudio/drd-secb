@@ -141,8 +141,17 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
      */
     private void applyFonts()
     {
-	    UiEngine.applyFontsForAll(getActivity(),view, UiEngine.Fonts.HVAR);
-        if(txtv_event_details_eventTitle!=null)
+
+	    View body_view = view.findViewById(R.id.layout_txt_map_container);
+	    View header_view = view.findViewById(R.id.layout_header);
+	    UiEngine.applyFontsForAll(getActivity(),body_view, UiEngine.Fonts.HVAR);
+	    UiEngine.applyFontsForAll(getActivity(),header_view, UiEngine.Fonts.HVAR);
+
+	    if(header_view.findViewById(R.id.txtv_eventImgDate_day)!=null)
+	    {
+		    UiEngine.applyCustomFont(header_view.findViewById(R.id.txtv_eventImgDate_day), UiEngine.Fonts.HVAR_BOLD);
+	    }
+        /*if(txtv_event_details_eventTitle!=null)
         {
             UiEngine.applyCustomFont(txtv_event_details_eventTitle, UiEngine.Fonts.HVAR);
         }
@@ -170,15 +179,14 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         {
             UiEngine.applyCustomFont(txtv_event_details_eventBody, UiEngine.Fonts.HVAR);
         }
-
 	    if(txtv_eventImgDate_day!=null)
 	    {
-		    UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR);
+		    UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR_BOLD);
 	    }
 	    if(txtv_eventImgDate_month!=null)
 	    {
 		    UiEngine.applyCustomFont(txtv_eventImgDate_month, UiEngine.Fonts.HVAR);
-	    }
+	    }*/
     }
 
     private void goBack()
@@ -271,7 +279,7 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
 	        if(!Utilities.isNullString(evdateStr)){
 		        String[] dayMonthArr = evdateStr.split("-");
 		        txtv_eventImgDate_day.setText(dayMonthArr[0]);
-		        txtv_eventImgDate_month.setText(dayMonthArr[1]);
+		        txtv_eventImgDate_month.setText(dayMonthArr[1].toUpperCase());
 	        }
 
             imgv_event_details_img.setImageResource(R.drawable.events_image_place_holder);

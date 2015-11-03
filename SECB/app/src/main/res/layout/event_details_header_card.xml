@@ -22,20 +22,16 @@
     <LinearLayout
         android:layout_width="@dimen/evet_card_img_size"
         android:layout_height="@dimen/evet_card_img_size"
-        android:layout_centerInParent="true"
+        android:background="@color/secb_dark_text"
         android:layout_marginRight="@dimen/event_card_margin"
-        android:paddingTop="@dimen/event_card_margin"
-        android:paddingBottom="@dimen/event_card_margin"
-        android:background="@drawable/event_card_img"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/txtv_eventImgDate_day"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="13"
             android:textColor="@color/secb_orange"
             android:textSize="@dimen/eventImgDate_day_text_size"
@@ -44,11 +40,8 @@
 
         <TextView
             android:id="@+id/txtv_eventImgDate_month"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="OCT"
             android:textColor="@color/white"
             android:textSize="@dimen/eventImgDate_month_text_size"

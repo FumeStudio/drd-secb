@@ -179,15 +179,15 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         if(txtv_graph_title_closed!=null)
             UiEngine.applyCustomFont(txtv_graph_title_closed, UiEngine.Fonts.HVAR);
         if(txtv_graph_value_closed!=null)
-            UiEngine.applyCustomFont(txtv_graph_value_closed, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_graph_value_closed, UiEngine.Fonts.HVAR_BOLD);
         if(txtv_graph_title_inbox!=null)
             UiEngine.applyCustomFont(txtv_graph_title_inbox, UiEngine.Fonts.HVAR);
         if(txtv_graph_value_inbox!=null)
-            UiEngine.applyCustomFont(txtv_graph_value_inbox, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_graph_value_inbox, UiEngine.Fonts.HVAR_BOLD);
         if(txtv_graph_title_inProgress!=null)
             UiEngine.applyCustomFont(txtv_graph_title_inProgress, UiEngine.Fonts.HVAR);
         if(txtv_graph_value_inProgress!=null)
-            UiEngine.applyCustomFont(txtv_graph_value_inProgress, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_graph_value_inProgress, UiEngine.Fonts.HVAR_BOLD);
         if(txtv_viewAllNews!=null)
             UiEngine.applyCustomFont(txtv_viewAllNews, UiEngine.Fonts.HVAR);
         if(txtv_eventTitle!=null)
@@ -207,7 +207,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
 	    if(txtv_eventImgDate_day!=null)
 	    {
-		    UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR);
+		    UiEngine.applyCustomFont(txtv_eventImgDate_day, UiEngine.Fonts.HVAR_BOLD);
+
 	    }
 	    if(txtv_eventImgDate_month!=null)
 	    {
@@ -328,13 +329,13 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	    if(!Utilities.isNullString(evdateStr)){
 		    String[] dayMonthArr = evdateStr.split("-");
 		    txtv_eventImgDate_day.setText(dayMonthArr[0]);
-		    txtv_eventImgDate_month.setText(dayMonthArr[1]);
+		    txtv_eventImgDate_month.setText(dayMonthArr[1].toUpperCase());
 	    }
 
         txtv_eventTitle.setText(eventItem.Title);
         txtv_eventDescription.setText(eventItem.Description);
 
-	    evdateStr = MainActivity.reFormatDate(eventItem.EventDate, MainActivity.sdf_Date);
+	    evdateStr = MainActivity.reFormatDate(eventItem.EventDate, MainActivity.sdf_Time);
         txtv_event_timeValue.setText(evdateStr);
         txtv_event_placeValue.setText(eventItem.EventSiteCity);
         txtv_event_categoryValue.setText(eventItem.EventCategory);
