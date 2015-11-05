@@ -93,6 +93,7 @@ public class E_ServicesRequestsListOperation extends BaseOperation {
 						Utilities.isNullString(currentItem.RequestType) )
 				{
 					e_serviceRequestItems.remove(currentItem);
+					i-=1; //to reLoop current items
 				}
 
 			}

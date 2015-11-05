@@ -589,7 +589,16 @@ public class CachingManager {
 		{
 			//create file called "app_events_list.dat"
 			// inside  folder called "Events" which existing in "Cache" folder
-			File file = Engine.getCacheFile(Engine.DataFolder.USER_EVENTS,Engine.FileName.APP_EVENTS_LIST, appContext);
+//			File file = Engine.getCacheFile(Engine.DataFolder.USER_EVENTS,Engine.FileName.APP_EVENTS_LIST, appContext);
+
+
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			String events_list_file = Engine.FileName.APP_EVENTS_LIST;
+			if(language!=null)
+				events_list_file =events_list_file +"_"+language.toUpperCase();
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_EVENTS,
+					events_list_file , appContext);
+
 
 			//save Events list in the file "app_events_list.dat
 			try {
@@ -604,7 +613,17 @@ public class CachingManager {
 	public ArrayList<EventItem> loadEventsList(Context appContext)
 	{
 		//get file called "app_events_list.dat" from "Events" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_EVENTS,Engine.FileName.APP_EVENTS_LIST, appContext);
+//		File file = Engine.getCacheFile(Engine.DataFolder.USER_EVENTS,Engine.FileName.APP_EVENTS_LIST, appContext);
+
+
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		String events_list_file = Engine.FileName.APP_EVENTS_LIST;
+		if(language!=null)
+			events_list_file =events_list_file +"_"+language.toUpperCase();
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_EVENTS,
+				events_list_file , appContext);
+
+
 		ArrayList<EventItem> itemsList = null;
 		try
 		{

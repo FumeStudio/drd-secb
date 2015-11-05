@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -44,8 +43,7 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
     private EditText txtv_location_filter_name_value,
             txtv_location_filter_capacity_from_value,
             txtv_location_filter_capacity_to_value;
-    private CheckBox chkbox_type1, chkbox_type2, chkbox_type3, chkbox_type4;
-	private Spinner spn_city;
+   private Spinner spn_city;
 	private RecyclerView locationTypesRecyclerView;
 	private LocationsTypesFilterRecyclerAdapter locationsTypesFilterRecyclerAdapter;
 	private TextView txtv_noData;
@@ -95,10 +93,7 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 	    spn_city = (Spinner) view.findViewById(R.id.spn_city_filter_city_value);
         txtv_location_filter_capacity_from_value = (EditText) view.findViewById(R.id.txtv_location_filter_capacity_from_value);
         txtv_location_filter_capacity_to_value = (EditText) view.findViewById(R.id.txtv_location_filter_capacity_to_value);
-        chkbox_type1 = (CheckBox) view.findViewById(R.id.chkbox_type1);
-        chkbox_type2 = (CheckBox) view.findViewById(R.id.chkbox_type2);
-        chkbox_type3 = (CheckBox) view.findViewById(R.id.chkbox_type3);
-        chkbox_type4 = (CheckBox) view.findViewById(R.id.chkbox_type4);
+
         btn_applyFilter = (Button) view.findViewById(R.id.btn_applyFilter);
 
 	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
@@ -184,20 +179,7 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
         if (txtv_location_filter_capacity_to_value != null) {
             UiEngine.applyCustomFont(txtv_location_filter_capacity_to_value, UiEngine.Fonts.HVAR);
         }
-        if (chkbox_type1 != null) {
-            UiEngine.applyCustomFont(chkbox_type1, UiEngine.Fonts.HVAR);
-        }
-        if (chkbox_type2 != null) {
-            UiEngine.applyCustomFont(chkbox_type2, UiEngine.Fonts.HVAR);
-        }
-        if (chkbox_type3 != null) {
-            UiEngine.applyCustomFont(chkbox_type3, UiEngine.Fonts.HVAR);
-        }
-        if (chkbox_type4 != null) {
-            UiEngine.applyCustomFont(chkbox_type4, UiEngine.Fonts.HVAR);
-        }
-        if (btn_applyFilter != null) {
-            UiEngine.applyCustomFont(btn_applyFilter, UiEngine.Fonts.HVAR);
+
         }*/
     }
 
@@ -217,18 +199,6 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 
 
         locationsFilterData.types = new ArrayList<>();
-       /* if (chkbox_type1.isChecked()) {
-            locationsFilterData.types.add(1);
-        }
-        if (chkbox_type2.isChecked()) {
-            locationsFilterData.types.add(2);
-        }
-        if (chkbox_type3.isChecked()) {
-            locationsFilterData.types.add(3);
-        }
-        if (chkbox_type4.isChecked()) {
-            locationsFilterData.types.add(4);
-        }*/
 
 	    for(EGuideLocationTypeItem iterator:locationTypesList)
 	    {
@@ -243,6 +213,23 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
 	    return locationsFilterData;
     }
 
+
+	public void clearFilters(){
+		txtv_location_filter_name_value.setText("");
+		txtv_location_filter_name_value.setHint(context.getString(R.string.hint_name));
+
+		txtv_location_filter_capacity_to_value.setText("");
+		txtv_location_filter_capacity_to_value.setHint(context.getString(R.string.filter_time_from));
+
+		txtv_location_filter_capacity_from_value.setText("");
+		txtv_location_filter_capacity_from_value.setHint(context.getString(R.string.filter_time_to));
+
+		this.locationsFilterData = new LocationsFilterData();
+		locationTypesList= EGuideLocationManager.getInstance().getLocationTypesList(context);
+
+		bindLocationTypesRecycler();
+		bindCitiesSpinner();
+	}
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();

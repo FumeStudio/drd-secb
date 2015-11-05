@@ -12,6 +12,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -30,6 +33,7 @@ import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -847,5 +851,28 @@ public class Utilities {
 			e.printStackTrace();
 		}
 		return pi!=null;
+	}
+
+
+//	force to get the string from values-languageTag even if it's not the current language.
+	public static String getStringFromLanguage(Context context, String languageTag, int stringResId)
+	{
+		String value="";
+		if(!isNullString(languageTag) && context!=null && stringResId>0 )
+		{
+			try {
+				Resources standardResources = context.getResources();
+				AssetManager assets = standardResources.getAssets();
+				DisplayMetrics metrics = standardResources.getDisplayMetrics();
+				Configuration config = new Configuration(standardResources.getConfiguration());
+				config.locale = new Locale(languageTag);
+				Resources mResources = new Resources(assets, metrics, config);
+				value= mResources.getString(stringResId);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return value;
 	}
 }

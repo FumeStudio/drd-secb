@@ -63,6 +63,7 @@ public class OrganizersListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizers_eguide));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
+        ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
 
@@ -144,11 +145,13 @@ public class OrganizersListFragment extends SECBBaseFragment
 			case R.id.btn_applyFilter:
 				getFilterDataObject();
 				break;
+			case R.id.btn_clearFilter:
+				clearFilters();
+				break;
 			default:
 				break;
 		}
 	}
-
 
 
 	private void initViews(View view)
@@ -243,6 +246,12 @@ public class OrganizersListFragment extends SECBBaseFragment
 //                    "City : "+ organizerFilterData.city+" \n" );
         }
     }
+
+
+	private void clearFilters() {
+		this.organizersFilterLayout.clearFilters();
+	}
+
 
 	@Override
     public void onItemClicked(View v, int position)

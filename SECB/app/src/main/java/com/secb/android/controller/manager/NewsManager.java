@@ -6,7 +6,7 @@ import com.secb.android.R;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsItem;
 
-import net.comptoirs.android.common.view.CTApplication;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,8 +47,10 @@ public class NewsManager {
 		this.newsCategoryList =new ArrayList<>();
 		NewsCategoryItem newsCategoryItem  =new NewsCategoryItem ();
 		newsCategoryItem.ID = "All";
-		newsCategoryItem.CategoryArabic = CTApplication.getContext().getResources().getString(R.string.news_filter_all_types);
-		newsCategoryItem.CategoryEnglish = CTApplication.getContext().getResources().getString(R.string.news_filter_all_types);
+
+		newsCategoryItem.CategoryEnglish = Utilities.getStringFromLanguage(context,"en",R.string.news_filter_all_types);
+		newsCategoryItem.CategoryArabic = Utilities.getStringFromLanguage(context,"ar",R.string.news_filter_all_types);
+
 		newsCategoryItem.isSelected =true;
 		this.newsCategoryList.add(newsCategoryItem);
 

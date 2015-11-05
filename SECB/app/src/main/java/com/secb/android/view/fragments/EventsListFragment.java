@@ -65,6 +65,7 @@ public class EventsListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
 
     }
 
@@ -152,6 +153,10 @@ public class EventsListFragment extends SECBBaseFragment
             case R.id.btn_applyFilter:
                 getFilterDataObject();
                 break;
+	        case R.id.btn_clearFilter:
+		        clearFilters();
+		        break;
+
             default:
                 break;
         }
@@ -172,6 +177,11 @@ public class EventsListFragment extends SECBBaseFragment
         }
     }
 
+
+	private void clearFilters() {
+		this.eventsFilterLayout.clearFilters();
+
+	}
 
     private void initViews(View view)
     {

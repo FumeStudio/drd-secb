@@ -75,17 +75,21 @@ public class OrganizersFilterLayout extends LinearLayout implements RequestObser
 
     public OrganizersFilterData getFilterData()
     {
-
 	    UiEngine.applyFontsForAll(context,view, UiEngine.Fonts.HVAR);
         organizersFilterData.name= edtxt_name.getText().toString();
 
 	    EventsCityItem selectedItem = ((EventsCityItem) spn_city.getSelectedItem());
 	    organizersFilterData.city=selectedItem.ID;
 
-
-        
         return organizersFilterData;
     }
+
+	public void clearFilters() {
+		edtxt_name.setText("");
+		edtxt_name.setHint(context.getString(R.string.hint_name));
+		bindCitiesSpinner();
+		organizersFilterData = new OrganizersFilterData();
+	}
 
 	private void bindCitiesSpinner()
 	{
@@ -120,4 +124,5 @@ public class OrganizersFilterLayout extends LinearLayout implements RequestObser
 	public void updateStatus(Integer requestId, String statusMsg) {
 
 	}
+
 }

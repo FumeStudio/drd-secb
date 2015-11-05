@@ -107,6 +107,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 /*        showHeader(true);
         setHeaderTitleText(getResources().getString(R.string.home_fragment));*/
 		initObservers();
+		initDateFormatters();
 		initiViews();
 		openHomeFragment(false);
 
@@ -124,6 +125,18 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
             e.printStackTrace();
         }
 */
+	}
+
+	private void initDateFormatters() {
+
+		sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
+		sdf_Time = new SimpleDateFormat("kk:mm a", UiEngine.getCurrentAppLocale());
+		sdf_day_mon = new SimpleDateFormat("dd-MMM", UiEngine.getCurrentAppLocale());
+		sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm", UiEngine.getCurrentAppLocale());
+		sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ", UiEngine.getCurrentAppLocale());
+		sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss", UiEngine.getCurrentAppLocale());
+
+
 	}
 
 	//set all flags that are used in sync operations

@@ -80,6 +80,7 @@ public class E_ServicesStatisticsListOperation extends BaseOperation {
 						Utilities.isNullString(currentItem.Value)  )
 				{
 					e_serviceStatisticsItems.remove(currentItem);
+					i-=1; //to reLoop current items
 				}
 			}
 		}

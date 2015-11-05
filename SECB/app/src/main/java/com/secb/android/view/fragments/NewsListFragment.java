@@ -65,6 +65,7 @@ public class NewsListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
+        ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
 
     }
 
@@ -151,12 +152,16 @@ public class NewsListFragment extends SECBBaseFragment
             case R.id.btn_applyFilter:
                 applyFilters();
                 break;
+            case R.id.btn_clearFilter:
+                clearFilters();
+                break;
             default:
                 break;
         }
     }
 
-    private void applyFilters()
+
+	private void applyFilters()
     {
         newsFilterData =this.newsFilterLayout.getFilterData();
 	    ((SECBBaseActivity)getActivity()).hideFilterLayout();
@@ -171,6 +176,10 @@ public class NewsListFragment extends SECBBaseFragment
 
     }
 
+	private void clearFilters() {
+		this.newsFilterLayout.clearFilters();
+
+	}
 
     private void initViews(View view)
     {

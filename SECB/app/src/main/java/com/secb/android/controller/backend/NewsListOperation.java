@@ -93,6 +93,7 @@ public class NewsListOperation extends BaseOperation {
 					Utilities.isNullString(currentItem.NewsBrief) ||
 					Utilities.isNullString(currentItem.CreationDate) ) {
 				newsItems.remove(currentItem);
+				i-=1; //to reLoop current items
 			}
 
 		}

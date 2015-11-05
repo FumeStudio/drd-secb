@@ -267,6 +267,7 @@ public class Engine {
             DisplayMetrics dm = res.getDisplayMetrics();
             android.content.res.Configuration conf = res.getConfiguration();
             conf.locale = new Locale(currentLanguage);
+	        appConfig.setLocale(conf.locale);
             res.updateConfiguration(conf, dm);
         }
     }

@@ -42,8 +42,6 @@ import com.secb.android.view.menu.MenuFragment;
 import com.secb.android.view.menu.MenuItem;
 
 import net.comptoirs.android.common.helper.Logger;
-import net.comptoirs.android.common.helper.SharedPreferenceData;
-import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -83,6 +81,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     //on click listener for the apply filters button
     View.OnClickListener applyFilterClickListener;
+    //on click listener for the clear filters button
+    View.OnClickListener clearFilterClickListener;
     private LayoutAnimator layoutAnimator;
     private boolean isVerticalAnimation;
     Bundle savedInstanceState;
@@ -245,6 +245,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void setApplyFilterClickListener(View.OnClickListener listener) {
         applyFilterClickListener = (listener);
     }
+    public void setClearFilterClickListener(View.OnClickListener listener) {
+        clearFilterClickListener = (listener);
+    }
 
     public void setFilterLayout(LinearLayout filterLayout, boolean isVerticalAnimation) {
         filterStartX = headerLayoutHome.getX();
@@ -263,8 +266,13 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         if (filterLayoutHolder != null && filterLayoutView != null) {
             filterLayoutHolder.removeAllViews();
             filterLayoutHolder.addView(filterLayoutView);
+	        //apply filter
             if (filterLayoutView.findViewById(R.id.btn_applyFilter) != null && applyFilterClickListener != null) {
                 filterLayoutView.findViewById(R.id.btn_applyFilter).setOnClickListener(applyFilterClickListener);
+            }
+            //clear filter
+            if (filterLayoutView.findViewById(R.id.btn_clearFilter) != null && clearFilterClickListener != null) {
+                filterLayoutView.findViewById(R.id.btn_clearFilter).setOnClickListener(clearFilterClickListener );
             }
             if (filterLayoutView.findViewById(R.id.layout_dark_layer) != null) {
                 filterLayoutView.findViewById(R.id.layout_dark_layer).setOnClickListener(this);

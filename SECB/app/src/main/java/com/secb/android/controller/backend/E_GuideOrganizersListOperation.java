@@ -96,6 +96,7 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 						Utilities.isNullString(currentItem.OrganizerDescription) )
 				{
 					organizerItems.remove(currentItem);
+					i-=1; //to reLoop current items
 				}
 
 			}

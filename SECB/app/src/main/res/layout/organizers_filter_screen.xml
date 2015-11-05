@@ -115,8 +115,23 @@
             android:layout_marginTop="@dimen/news_filter_padding"
             android:background="@color/secb_orange"
             android:text="@string/filters_apply_filter"
+            android:textAllCaps="false"
             android:textColor="@color/secb_light_text"
             android:textSize="@dimen/news_filter_btn_text_size" />
+
+        <!--Clear Filters button-->
+
+        <Button
+            android:id="@+id/btn_clearFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/news_filter_padding"
+            android:background="@color/secb_orange"
+            android:text="@string/filters_clear_filter"
+            android:textAllCaps="false"
+            android:textColor="@color/secb_light_text"
+            android:textSize="@dimen/news_filter_btn_text_size"/>
+
 
 
     </LinearLayout>
