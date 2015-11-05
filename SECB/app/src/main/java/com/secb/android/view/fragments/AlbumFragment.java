@@ -268,7 +268,8 @@ public class AlbumFragment extends SECBBaseFragment
     }
 
     @Override
-    public void onItemClicked(View v, int position) {
+    public void onItemClicked(View v, int position)
+    {
         GalleryItem clickedItem = galleryItemList.get(position);
         //play video
         if (galleryType == GalleryItem.GALLERY_TYPE_VIDEO_ALBUM)
@@ -363,17 +364,18 @@ public class AlbumFragment extends SECBBaseFragment
             vidv_videoAlbum.start();
         }*/
 
-	    if(!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube"))
+	    /*if(!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube"))
 	    {
 			String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
-		    if(!Utilities.isNullString(videoId)/*&&youTubePlayer!=null*/)
+		    if(!Utilities.isNullString(videoId)*//*&&youTubePlayer!=null*//*)
 		    {
 //			    layout_videoPlayerContainer.setVisibility(View.VISIBLE);
 //			    youTubePlayer.cueVideo(videoId);
 			    initYoutubePlayer(videoId);
 		    }
 	    }
-	    else
+	    else*/
+	    if(!Utilities.isNullString(videoUrlvideoUrl) )
 	    {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
@@ -394,7 +396,6 @@ public class AlbumFragment extends SECBBaseFragment
                     .load(imageUrl)
                     .placeholder(R.drawable.image_place_holder) // optional
                     .centerCrop()
-                    .error(R.drawable.image_place_holder_failed)         // optional
                     .into(imgv_imageAlbum);
 
             layout_imagePlayerContainer.setVisibility(View.VISIBLE);

@@ -2,6 +2,8 @@ package com.secb.android.view.fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.controller.backend.GalleryOperation;
 import com.secb.android.controller.backend.RequestIds;
@@ -30,6 +35,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.List;
 
@@ -48,9 +54,11 @@ public class GalleryFragment extends SECBBaseFragment
     private List videoGalleryItemList;
     TextView txtv_noData;
 	private ProgressDialog progressDialog;
+	private ImageView imgv_imageAlbum   ;
+	private LinearLayout layout_imagePlayerContainer;
 
 
-    public static GalleryFragment newInstance(int galleryType , int galleryId)
+	public static GalleryFragment newInstance(int galleryType , int galleryId)
     {
         GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
@@ -72,6 +80,7 @@ public class GalleryFragment extends SECBBaseFragment
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
+	    hidePlayers();
     }
 
     @Override
@@ -155,13 +164,23 @@ public class GalleryFragment extends SECBBaseFragment
     // ////////////////////////////////////////////////////////////
 
     @Override
-    public void onBack() {
-        goBack();
+    public void onBack()
+    {
+	    if(layout_imagePlayerContainer!=null &&
+			    layout_imagePlayerContainer.getVisibility()==View.VISIBLE)
+	    {
+		    hidePlayers();
+	    }
+        else
+		    goBack();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+	        case R.id.imgv_imageAlbum:
+	        case R.id.layout_imagePlayerContainer:
+		        hidePlayers();
             default:
                 break;
         }
@@ -183,9 +202,14 @@ public class GalleryFragment extends SECBBaseFragment
         galleryRecyclerView.setLayoutManager(layoutManager);
         txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
         galleryRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), galleryRecyclerView, this));
+
+	     imgv_imageAlbum = (ImageView) view.findViewById(R.id.imgv_imageAlbum);
+	    layout_imagePlayerContainer = (LinearLayout) view.findViewById(R.id.layout_imagePlayerContainer);
+	    layout_imagePlayerContainer.setOnClickListener(this);
+	    imgv_imageAlbum .setOnClickListener(this);
     }
 
-    private void bindViews()
+	private void bindViews()
     {
 	    if (galleryType==GalleryItem.GALLERY_TYPE_IMAGE_GALLERY){
 		    galleryItemList=photoGalleryItemList;
@@ -288,11 +312,68 @@ public class GalleryFragment extends SECBBaseFragment
     public void onItemClicked(View v, int position)
     {
         GalleryItem clickedItem = (GalleryItem) galleryItemList.get(position);
-        if(clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
+
+	    //This item is an Album of Items
+        if(Boolean.valueOf(clickedItem.IsFolder) && (clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||
+		        clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY) )
         {
             ((MainActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id);
         }
+
+        //This item is a single item  Not Album of Items
+	    else{
+	        //play video
+	        if (galleryType == GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)
+	        {
+		        playVideo(clickedItem.VideoGalleryUrl);
+	        }
+	        //display image
+	        else if (galleryType == GalleryItem.GALLERY_TYPE_IMAGE_GALLERY)
+	        {
+		        playImage(clickedItem.PhotoGalleryImageUrl);
+	        }
+        }
     }
+
+	private void playVideo(String videoUrlvideoUrl)
+	{
+		if(!Utilities.isNullString(videoUrlvideoUrl) )
+		{
+			Intent intent = new Intent();
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.parse(videoUrlvideoUrl), "video/*");
+			Intent choserIntent = Intent.createChooser(intent, "");
+			if (choserIntent!=null)
+				startActivity(choserIntent);
+			else
+				((MainActivity)getActivity()).displayToast("can't play this video file ");
+		}
+	}
+
+
+	private void playImage(String imageUrl)
+	{
+		if(imgv_imageAlbum!=null &&layout_imagePlayerContainer !=null)
+		{
+			Glide.with(getActivity())
+					.load(imageUrl)
+					.placeholder(R.drawable.image_place_holder) // optional
+					.centerCrop()
+					.into(imgv_imageAlbum);
+
+			layout_imagePlayerContainer.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void hidePlayers() {
+
+		if(layout_imagePlayerContainer !=null)
+		{
+			layout_imagePlayerContainer.setVisibility(View.GONE);
+			imgv_imageAlbum.setImageBitmap(null);
+		}
+
+	}
 
     @Override
     public void onItemLongClicked(View v, int position)
