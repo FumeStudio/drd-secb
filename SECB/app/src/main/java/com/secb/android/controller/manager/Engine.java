@@ -295,6 +295,14 @@ public class Engine {
 
 
 /**************************************************/
+	//get the "Cache" folder
+	public static File getCacheRootDir(Context appContext)
+	{
+		File file = new File(getDiskCacheDir(appContext));
+		if (!file.exists())
+			file.mkdirs();
+		return file;
+	}
 	//create folder named "DirName" inside the "Cache" folder
 	public static File getCacheDir(Context appContext ,String DirName)
 	{
@@ -349,6 +357,10 @@ public class Engine {
 
 	    //e-services requests list
 	    public static final String APP_EGUIDE_E_SERVICES_REQUESTS_LIST =  "app_eservices_requests_list.dat"  ;
+	    //e-services requests types list
+	    public static final String APP_EGUIDE_E_SERVICES_REQUESTS_TYPES_LIST =  "app_eservices_requests_types_list.dat"  ;
+	    //e-services requests WorkSpaceModes list
+	    public static final String APP_EGUIDE_E_SERVICES_REQUESTS_WORKSPACEMODE_LIST =  "app_eservices_requests_workSpaceMode_list.dat"  ;
 
 	    //e-services statistics list
 	    public static final String APP_EGUIDE_E_SERVICES_STATISTICS_LIST = "app_eservices_statistics_list.dat";

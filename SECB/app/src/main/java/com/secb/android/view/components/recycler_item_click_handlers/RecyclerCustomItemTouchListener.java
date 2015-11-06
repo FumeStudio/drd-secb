@@ -45,6 +45,14 @@ public class RecyclerCustomItemTouchListener implements RecyclerView.OnItemTouch
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e)
     {
+	    //if recyclerView is inside ScrollView allow scrolling for recycler
+	    int action = e.getAction();
+	    switch (action) {
+		    case MotionEvent.ACTION_MOVE:
+			    rv.getParent().requestDisallowInterceptTouchEvent(true);
+			    break;
+	    }
+
 //listen to the short click event
 
         boolean b=gestureDetector.onTouchEvent(e);

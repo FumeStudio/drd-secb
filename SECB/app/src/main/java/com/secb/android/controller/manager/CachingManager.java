@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import com.secb.android.model.AppConfiguration;
 import com.secb.android.model.EGuideLocationTypeItem;
 import com.secb.android.model.E_ServiceRequestItem;
+import com.secb.android.model.E_ServiceRequestTypeItem;
+import com.secb.android.model.E_ServiceRequestWorkSpaceModeItem;
 import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsCategoryItem;
@@ -159,6 +161,17 @@ public class CachingManager {
 		}
 
 		return appConfig;
+	}
+
+
+//delete contents of cache folder
+	public void clearCachingFolder(Context context)
+	{
+		try {
+			Engine.deleteFileRecursive(Engine.getCacheRootDir(context));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*
@@ -895,6 +908,86 @@ public class CachingManager {
 	/***************************************************************************************************/
 	/* ************************* E-Services Organizers Part *********************/
 	/***************************************************************************************************/
+
+/** RequestTypesList*/
+	//save e-services requests list
+	public void saveE_ServicesRequestsTypesList(ArrayList<E_ServiceRequestTypeItem> itemsList, Context appContext)
+	{
+		if (itemsList != null && itemsList.size() > 0) {
+			//create file called "app_eservices_requests_list.dat"
+			// inside  folder called "eservices" which existing in "Cache" folder
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			String list_file = Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_TYPES_LIST;
+			if(language!=null)
+				list_file=list_file+"_"+language.toUpperCase();
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services,
+					list_file, appContext);
+
+//			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_LIST, appContext);
+			//save Events categories in the file "app_eservices_requests_list.dat
+			try {
+				saveObject(itemsList, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//load e-services requests list
+	public ArrayList<E_ServiceRequestTypeItem> loadE_ServicesRequestsTypesList(Context appContext)
+	{
+		//get file called "app_eservices_statistics_list.dat" from "eservices" folder
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		String list_file = Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_TYPES_LIST;
+		if(language!=null)
+			list_file=list_file+"_"+language.toUpperCase();
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services,
+				list_file, appContext);
+		ArrayList<E_ServiceRequestTypeItem> itemsList=null;
+		try
+		{
+			//load object from "app_eservices_statistics_list.dat" file
+			itemsList = (ArrayList<E_ServiceRequestTypeItem>) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+
+/** RequestWorkSpaceModeList*/
+	//save e-services requests list
+	public void saveE_ServicesRequestsWorkSpaceModesList(ArrayList<E_ServiceRequestWorkSpaceModeItem> itemsList, Context appContext)
+	{
+		if (itemsList != null && itemsList.size() > 0) {
+			//create file called "app_eservices_requests_list.dat"
+			// inside  folder called "eservices" which existing in "Cache" folder
+			String list_file = Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_WORKSPACEMODE_LIST;
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services,
+					list_file, appContext);
+			try {
+				saveObject(itemsList, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//load e-services requests list
+	public ArrayList<E_ServiceRequestWorkSpaceModeItem> loadE_ServicesRequestsWorkSpaceModesList(Context appContext)
+	{
+		//get file called "app_eservices_statistics_list.dat" from "eservices" folder
+		String list_file = Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_WORKSPACEMODE_LIST;
+
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services,
+				list_file, appContext);
+		ArrayList<E_ServiceRequestWorkSpaceModeItem> itemsList=null;
+		try
+		{
+			//load object from "app_eservices_statistics_list.dat" file
+			itemsList = (ArrayList<E_ServiceRequestWorkSpaceModeItem>) loadOject(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
 
 /**RequestList*/
 	//save e-services requests list

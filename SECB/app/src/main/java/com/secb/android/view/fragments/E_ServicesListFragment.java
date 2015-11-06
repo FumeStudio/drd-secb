@@ -18,6 +18,7 @@ import com.secb.android.controller.backend.E_ServicesRequestsListOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.E_ServicesManager;
 import com.secb.android.model.E_ServiceRequestItem;
+import com.secb.android.model.E_ServiceRequestTypeItem;
 import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.E_ServicesFilterData;
 import com.secb.android.view.FragmentBackObserver;
@@ -26,7 +27,7 @@ import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.dialogs.ProgressWheel;
-import com.secb.android.view.components.filters_layouts.EventsFilterLayout;
+import com.secb.android.view.components.filters_layouts.EServicesFilterLayout;
 import com.secb.android.view.components.recycler_e_service.E_ServiceItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
@@ -47,6 +48,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 	RecyclerView eServicesRecyclerView;
     E_ServiceItemRecyclerAdapter e_serviceItemRecyclerAdapter;
     ArrayList<E_ServiceRequestItem> eServicesList;
+	ArrayList<E_ServiceRequestTypeItem> e_serviceRequestsTypesItems;
     E_ServicesFilterData e_servicesFilterData;
 	
     LinearLayout layout_graphs_container;
@@ -58,7 +60,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
             txtv_graph_title_inProgress, txtv_graph_value_inProgress;
 
     View view;
-    private EventsFilterLayout eventsFilterLayout = null;
+    private EServicesFilterLayout eServicesFilterLayout = null;
 	private TextView txtv_noData;
 	private ProgressDialog progressDialog;
 	ArrayList<E_ServiceStatisticsItem> e_ServicesStatisticsList;
@@ -73,8 +75,9 @@ public class E_ServicesListFragment extends SECBBaseFragment
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.eservices));
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);//for now till the filter design is received
+        ((SECBBaseActivity) getActivity()).showFilterButton(true);//for now till the filter design is received
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
+        ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
 
@@ -122,9 +125,9 @@ public class E_ServicesListFragment extends SECBBaseFragment
 	}
 
     public void initFilterLayout() {
-//        eventsFilterLayout = new EventsFilterLayout(getActivity());
-//        ((SECBBaseActivity) getActivity()).setFilterLayout(eventsFilterLayout, false);
-//        ((SECBBaseActivity) getActivity()).setFilterLayoutView(eventsFilterLayout.getLayoutView());
+	    eServicesFilterLayout = new EServicesFilterLayout(getActivity());
+        ((SECBBaseActivity) getActivity()).setFilterLayout(eServicesFilterLayout, false);
+        ((SECBBaseActivity) getActivity()).setFilterLayoutView(eServicesFilterLayout.getLayoutView());
     }
 
     private void handleButtonsEvents() {
@@ -164,21 +167,30 @@ public class E_ServicesListFragment extends SECBBaseFragment
             case R.id.btn_applyFilter:
                 getFilterDataObject();
                 break;
+            case R.id.btn_clearFilter:
+                clearFilters();
+                break;
             default:
                 break;
         }
     }
-
 	private void getFilterDataObject() {
 		((SECBBaseActivity)getActivity()).hideFilterLayout();
-        /*e_servicesFilterData = this.eventsFilterLayout.getFilterData();
-        if (e_servicesFilterData != null) {
-            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
-                    " city: " + e_servicesFilterData.city + "\n" +
-                    " Time From: " + e_servicesFilterData.timeFrom + "\n" +
-                    " Time To: " + e_servicesFilterData.timeTo + " \n" +
-                    " Type: " + e_servicesFilterData.selectedCategoryId);
-        }*/
+        e_servicesFilterData = this.eServicesFilterLayout.getFilterData();
+        if (e_servicesFilterData != null)
+        {
+	        startEServicesRequestListOperation(e_servicesFilterData,true);
+            /*((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
+                    " Name: " + e_servicesFilterData.UserName + "\n" +
+                    " Time From: " + e_servicesFilterData.FromDate + "\n" +
+                    " Time To: " + e_servicesFilterData.ToDate+ " \n" +
+                    " Type: " + e_servicesFilterData.RequestType+
+                    " Status: " + e_servicesFilterData.Status);*/
+        }
+	}
+
+	private void clearFilters() {
+		eServicesFilterLayout.clearFilters();
 	}
 
 	private void initViews(View view) {

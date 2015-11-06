@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
 import com.secb.android.R;
+import com.secb.android.controller.manager.CachingManager;
 import com.secb.android.controller.manager.Engine;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.Consts;
@@ -692,6 +693,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void logout() {
         //clear user from manager
         UserManager.getInstance().logout();
+	    CachingManager.getInstance().clearCachingFolder(this);
         //go to login page
         Intent i = new Intent(activity, LoginActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.secb.android.R;
 import com.secb.android.controller.backend.LoginOperation;
 import com.secb.android.controller.backend.RequestIds;
-import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.User;
 
 import net.comptoirs.android.common.controller.backend.CTHttpError;
@@ -42,8 +41,8 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_password = (EditText) findViewById(R.id.edt_password);
 
-//        edt_email.setText("secbadmin"); // secbadmin
-//        edt_password.setText("SecbAdmin159"); // SecbAdmin159
+//        edt_email.setText("secbadmin"); // secb01
+//        edt_password.setText("SecbAdmin159"); // Secb01
 
         txtv_forgetPassword = (TextView) findViewById(R.id.txtv_forgetPassword);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -64,16 +63,17 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
                 break;
             case R.id.btn_login:
 //	            if(validateInputFields())
-            {
+/*            {
                 //get cached user
                 if (UserManager.getInstance().getUser() != null &&
-                        !Utilities.isNullString(UserManager.getInstance().getUser().loginCookie)) {
+                        !Utilities.isNullString(UserManager.getInstance().getUser().loginCookie))
+                {
                     handleRequestFinished(RequestIds.LOGIN_REQUEST_ID, null, UserManager.getInstance().getUser());
                 } else {
                     startLoginOperation();
                 }
-            }
-//                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }*/
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
             break;
             case R.id.btn_signUp:
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
