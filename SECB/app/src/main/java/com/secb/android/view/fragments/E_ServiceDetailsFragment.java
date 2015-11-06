@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.secb.android.R;
+import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.E_ServiceRequestItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
@@ -141,6 +144,14 @@ public class E_ServiceDetailsFragment extends SECBBaseFragment implements Fragme
 		myWebView.setHorizontalScrollBarEnabled(false);
 		WebSettings webSettings = myWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
+
+		/*set cookie */
+		CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(myWebView.getContext());
+		CookieManager cookieManager = CookieManager.getInstance();
+		cookieManager.setAcceptCookie(true);
+		cookieManager.removeSessionCookie();
+		cookieManager.setCookie(url, UserManager.getInstance().getUser().loginCookie);
+		cookieSyncManager.sync();
 
 
 		myWebView.setWebViewClient(new WebViewClient() {
