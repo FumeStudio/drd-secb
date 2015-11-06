@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.secb.android.R;
 import com.secb.android.controller.backend.LoginOperation;
 import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.User;
 
 import net.comptoirs.android.common.controller.backend.CTHttpError;
@@ -63,7 +64,7 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
                 break;
             case R.id.btn_login:
 //	            if(validateInputFields())
-/*            {
+            {
                 //get cached user
                 if (UserManager.getInstance().getUser() != null &&
                         !Utilities.isNullString(UserManager.getInstance().getUser().loginCookie))
@@ -72,8 +73,8 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
                 } else {
                     startLoginOperation();
                 }
-            }*/
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }
+//                startActivity(new Intent(LoginActivity.this,MainActivity.class));
             break;
             case R.id.btn_signUp:
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
