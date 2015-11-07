@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".view.SECBApplication"
         android:allowBackup="true"
@@ -65,9 +66,15 @@
             android:name=".view.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            >
+            ></activity>
 
-        </activity>
+        <!-- Addthis library -->
+        <activity android:name="com.addthis.ui.activities.ATAllServiceActivity" />
+        <activity android:name="com.addthis.ui.activities.ATFavoriteServiceActivity" />
+        <activity android:name="com.addthis.ui.activities.ATShareActivity" />
+        <activity android:name="com.addthis.ui.activities.ATActivityGroup" android:configChanges="orientation" />
+
+
     </application>
 
 </manifest>

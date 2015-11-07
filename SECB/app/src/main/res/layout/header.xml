@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/header_height"
-    android:orientation="vertical"
-    android:background="@color/sceb_blue">
+    android:background="@color/sceb_blue"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/padding_for_statusbar"
-        android:orientation="vertical"
-        android:background="@color/sceb_blue">
-    </LinearLayout>
+        android:background="@color/sceb_blue"
+        android:orientation="vertical"></LinearLayout>
+
     <RelativeLayout
         android:id="@+id/layoutContainerHeader"
         android:layout_width="match_parent"
@@ -59,6 +58,17 @@
             android:src="@drawable/header_menu_button"
             android:visibility="visible" />
 
+        <com.addthis.ui.views.ATButton
+            android:id="@+id/addthisShareButton"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="@dimen/header_menu_icon_margin_start"
+            android:paddingLeft="@dimen/header_menu_icon_margin_start"
+            android:paddingRight="@dimen/header_menu_icon_margin_end"
+            android:paddingTop="@dimen/header_menu_icon_margin_start"/>
+        <!--
         <ImageView
             android:id="@+id/imageViewShareHeader"
             android:layout_width="wrap_content"
@@ -66,11 +76,12 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingBottom="@dimen/header_menu_icon_margin_start"
-        android:paddingLeft="@dimen/header_menu_icon_margin_start"
-        android:paddingRight="@dimen/header_menu_icon_margin_end"
-        android:paddingTop="@dimen/header_menu_icon_margin_start"
-        android:src="@drawable/share_icon"
+            android:paddingLeft="@dimen/header_menu_icon_margin_start"
+            android:paddingRight="@dimen/header_menu_icon_margin_end"
+            android:paddingTop="@dimen/header_menu_icon_margin_start"
+            android:src="@drawable/share_icon"
             android:visibility="visible" />
+        -->
 
     </RelativeLayout>
 </LinearLayout>

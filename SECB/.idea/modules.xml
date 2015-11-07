@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SECB.iml" filepath="$PROJECT_DIR$/SECB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/addthis/addthis.iml" filepath="$PROJECT_DIR$/addthis/addthis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/addthislib/addthislib.iml" filepath="$PROJECT_DIR$/addthislib/addthislib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

@@ -605,9 +605,9 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             case R.id.layout_dark_layer:
                 hideFilterLayout();
                 break;
-            case R.id.imageViewShareHeader:
-                displayToast("share !");
-                break;
+//            case R.id.imageViewShareHeader:
+//                displayToast("share !");
+//                break;
             case R.id.imgv_filter:
                 prepareFilerLayout();
                 break;
