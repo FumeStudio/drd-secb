@@ -119,6 +119,7 @@ public class EventsListOperation extends BaseOperation {
 					Utilities.isNullString(currentItem.EventCategory) )
 			{
 				eventItems.remove(currentItem);
+				i-=1; //to reLoop current items
 			}
 		}
 	}

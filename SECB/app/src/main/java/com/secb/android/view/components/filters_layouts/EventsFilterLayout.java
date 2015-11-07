@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -46,17 +44,14 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
             txtv_event_filter_city_title ,
             txtv_event_filter_time_from_title ,
             txtv_event_filter_time_to_title ;
-    private RadioButton radbtn_allTypes;
-    private RadioButton radbtn_economicType;
-    private RadioButton radbtn_politicalType;
-    private RadioButton radbtn_publicType;
+
+
     private Button btn_applyFilter;
 
 	private TextView txtv_noData;
 	private RecyclerView eventsCategoriesRecyclerView;
 	private EventsCategoryFilterRecyclerAdapter eventsCategoryFilterRecyclerAdapter;
 
-    private RadioGroup radgro_newsTypes;
 
 
     private Context context;
@@ -119,10 +114,7 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
         txtv_event_filter_time_from_title = (TextView) view.findViewById(R.id.txtv_event_filter_time_from_title);
         txtv_event_filter_time_to_title = (TextView) view.findViewById(R.id.txtv_event_filter_time_to_title);
 
-	    radgro_newsTypes = (RadioGroup) view.findViewById(R.id.radgro_newsTypes);
-        radbtn_economicType = (RadioButton) view.findViewById(R.id.radbtn_economicType);
-        radbtn_politicalType = (RadioButton) view.findViewById(R.id.radbtn_politicalType);
-        radbtn_publicType = (RadioButton) view.findViewById(R.id.radbtn_publicType);
+
         btn_applyFilter = (Button) view.findViewById(R.id.btn_applyFilter);
 
 	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
@@ -263,6 +255,21 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
         }*/
         return eventsFilterData;
     }
+
+
+	public void clearFilters(){
+		txtv_timeFrom.setText("");
+		txtv_timeFrom.setHint(context.getString(R.string.filter_time_from));
+		txtv_timeTo.setText("");
+		txtv_timeTo.setHint(context.getString(R.string.filter_time_to));
+
+		this.eventsFilterData = new EventsFilterData();
+		categoriesList= EventsManager.getInstance().getEventsCategoryList(context);
+//		citiesList = EventsManager.getInstance().getEventsCityList(context);
+
+		bindCategoriesRecycler();
+		bindCitiesSpinner();
+	}
 
     @Override
     public void onClick(View v) {

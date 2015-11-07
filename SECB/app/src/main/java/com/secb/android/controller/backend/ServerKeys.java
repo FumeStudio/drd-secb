@@ -57,6 +57,12 @@ public class ServerKeys
 	/*E-Services RequestList*/
 	public static final String E_Services_REQUESTS_LIST = "http://secb.linkdev.com/WebApi/api/Requests/GetRequests";
 
+	/*E-Services RequestTypes*/
+	public static final String E_Services_REQUESTS_TYPES_LIST = "http://secb.linkdev.com/WebApi/api/Requests/GetRequesttypes";
+
+	/*E-Services WorkSpaceModes*/
+	public static final String E_Services_Work_SPACE_MODES_LIST = "http://secb.linkdev.com/WebApi/api/Requests/GetWorkSpaceModes";
+
 	/*E-Services Statistics List*/
 	public static final String E_Services_STATISTICS_LIST = "http://secb.linkdev.com/WebApi/api/requests/GetUserTasksStatistics";
 

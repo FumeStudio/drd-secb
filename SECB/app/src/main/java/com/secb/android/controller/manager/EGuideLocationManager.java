@@ -6,7 +6,7 @@ import com.secb.android.R;
 import com.secb.android.model.EGuideLocationTypeItem;
 import com.secb.android.model.LocationItem;
 
-import net.comptoirs.android.common.view.CTApplication;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,8 @@ public class EGuideLocationManager {
 		this.locationTypesList =new ArrayList<>();
 		EGuideLocationTypeItem item  =new EGuideLocationTypeItem ();
 		item.ID = "All";
-		item.SiteTypeEnglish = CTApplication.getContext().getResources().getString(R.string.news_filter_all_types);
-		item.SiteTypeArabic ="الكل";
+		item.SiteTypeEnglish = Utilities.getStringFromLanguage(context,"en",R.string.news_filter_all_types);
+		item.SiteTypeArabic = Utilities.getStringFromLanguage(context,"ar",R.string.news_filter_all_types);
 		item.isSelected =true;
 		this.locationTypesList.add(item);
 

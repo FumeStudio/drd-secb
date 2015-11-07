@@ -61,6 +61,7 @@
     <string name="news_filter_political_type">سياسي</string>
     <string name="news_filter_public_type">عام</string>
     <string name="filters_apply_filter">اجراء</string>
+    <string name="filters_clear_filter">اعادة الضبط</string>
     <string name="news_details">تفاصيل الخبر</string>
     <string name="filter_city">المدينة: </string>
     <string name="filter_time_starts">البداية: </string>
@@ -154,6 +155,7 @@
     <string name="locations_no_locations">لا توجد مواقع.</string>
     <string name="organizer_no_organizers">لا يوجد منظمين.</string>
     <string name="contact_us_done">تم ارسال بياناتكم بنجاح.</string>
+    <string name="news_no_status">لا توجد حالات.</string>
 
     <string name="years">سنوات</string>
     <string name="months">شهور</string>

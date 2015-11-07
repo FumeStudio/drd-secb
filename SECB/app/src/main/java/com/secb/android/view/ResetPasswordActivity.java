@@ -37,7 +37,7 @@ public class ResetPasswordActivity extends SECBBaseActivity implements RequestOb
     {
         edt_email = (EditText) findViewById(R.id.edt_email);
 
-		edt_email.setText("secbadmin");
+//		edt_email.setText("secbadmin");
         btn_resetPassword = (Button) findViewById(R.id.btn_resetPassword);
         btn_resetPassword.setOnClickListener(this);
     }

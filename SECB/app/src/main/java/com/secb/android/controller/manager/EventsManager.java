@@ -9,7 +9,6 @@ import com.secb.android.model.EventsCityItem;
 import com.secb.android.view.MainActivity;
 
 import net.comptoirs.android.common.helper.Utilities;
-import net.comptoirs.android.common.view.CTApplication;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -66,8 +65,11 @@ public class EventsManager {
 		this.eventsCategoryList =new ArrayList<>();
 		EventsCategoryItem eventsCategoryItem  =new EventsCategoryItem ();
 		eventsCategoryItem.ID = "All";
-		eventsCategoryItem.TitleArabic = CTApplication.getContext().getResources().getString(R.string.news_filter_all_types);
-		eventsCategoryItem.TitleEnglish = CTApplication.getContext().getResources().getString(R.string.news_filter_all_types);
+
+		eventsCategoryItem.TitleEnglish = Utilities.getStringFromLanguage(context, "en", R.string.news_filter_all_types);
+		eventsCategoryItem.TitleArabic = Utilities.getStringFromLanguage(context, "ar", R.string.news_filter_all_types);
+
+
 		eventsCategoryItem.isSelected =true;
 		this.eventsCategoryList.add(eventsCategoryItem);
 

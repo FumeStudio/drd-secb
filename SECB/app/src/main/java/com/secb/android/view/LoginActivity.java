@@ -42,8 +42,8 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
         edt_email = (EditText) findViewById(R.id.edt_email);
         edt_password = (EditText) findViewById(R.id.edt_password);
 
-//        edt_email.setText("secbadmin"); // secbadmin
-//        edt_password.setText("SecbAdmin159"); // SecbAdmin159
+//        edt_email.setText("secbadmin"); // secb01 , test741  , tawfik
+//        edt_password.setText("SecbAdmin159"); // Secb01 , test741 , t123456
 
         txtv_forgetPassword = (TextView) findViewById(R.id.txtv_forgetPassword);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -67,7 +67,8 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
             {
                 //get cached user
                 if (UserManager.getInstance().getUser() != null &&
-                        !Utilities.isNullString(UserManager.getInstance().getUser().loginCookie)) {
+                        !Utilities.isNullString(UserManager.getInstance().getUser().loginCookie))
+                {
                     handleRequestFinished(RequestIds.LOGIN_REQUEST_ID, null, UserManager.getInstance().getUser());
                 } else {
                     startLoginOperation();

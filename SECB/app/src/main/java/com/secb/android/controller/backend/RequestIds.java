@@ -21,4 +21,6 @@ public class RequestIds
 	public static final int E_SERVICES_STATISTICS_LIST_REQUEST_ID = 17;
 	public static final int EGUIDE_LOCATION_DETAILS_REQUEST_ID = 18;
 	public static final int CONTACT_US_REQUEST_ID = 19;
+	public static final int E_SERVICES_REQUESTS_TYPES_LIST_REQUEST_ID = 17;
+	public static final int E_SERVICES_REQUESTS_WORKSPACE_MODES_LIST_REQUEST_ID = 18;
 }

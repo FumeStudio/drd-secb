@@ -1,6 +1,7 @@
 package com.secb.android.model;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 public class AppConfiguration implements Serializable{
 	
@@ -13,6 +14,7 @@ public class AppConfiguration implements Serializable{
 	String language;
 	String lastKnownMCC;
 	String lastKnownMNC;
+	Locale locale;
 	
 	public AppConfiguration(){
 		
@@ -42,7 +44,12 @@ public class AppConfiguration implements Serializable{
 	public void setLastKnownMNC(String lastKnownMNC) {
 		this.lastKnownMNC = lastKnownMNC;
 	}
-	
-	
-	
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
 }

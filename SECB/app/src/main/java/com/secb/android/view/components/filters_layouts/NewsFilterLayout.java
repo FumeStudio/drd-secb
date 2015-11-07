@@ -7,10 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.secb.android.R;
@@ -40,12 +37,6 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 	private RecyclerView newsCategoriesRecyclerView;
 	private NewsCategoryFilterRecyclerAdapter newsCategoryFilterRecyclerAdapter;
 
-    private RadioGroup radgro_newsTypes;
-    private RadioButton radbtn_allTypes;
-    private RadioButton radbtn_economicType;
-    private RadioButton radbtn_politicalType;
-    private RadioButton radbtn_publicType;
-    private Button btn_applyFilter;
 
     private Context context;
 	private List<NewsCategoryItem> categoriesList;
@@ -89,13 +80,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         txtv_news_filter_time_title = (TextView) view.findViewById(R.id.txtv_news_filter_time_title);
         txtv_news_filter_type_title = (TextView) view.findViewById(R.id.txtv_news_filter_type_title);
 
-        radgro_newsTypes = (RadioGroup) view.findViewById(R.id.radgro_newsTypes);
-        radbtn_allTypes = (RadioButton) view.findViewById(R.id.radbtn_allTypes);
 
-        radbtn_economicType = (RadioButton) view.findViewById(R.id.radbtn_economicType);
-        radbtn_politicalType = (RadioButton) view.findViewById(R.id.radbtn_politicalType);
-        radbtn_publicType = (RadioButton) view.findViewById(R.id.radbtn_publicType);
-        btn_applyFilter = (Button) view.findViewById(R.id.btn_applyFilter);
 
 	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 	    newsCategoriesRecyclerView = (RecyclerView) view.findViewById(R.id.newsCategoriesRecyclerView);
@@ -183,25 +168,20 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
 		    newsFilterData.newsCategory = (UiEngine.isAppLanguageArabic(context)?
 	        selectedCategory.CategoryArabic:selectedCategory.CategoryEnglish);
 		    newsFilterData.selectedCategoryId = selectedCategory.ID;
-
 	    }
-
-        /*switch (radgro_newsTypes.getCheckedRadioButtonId()) {
-            case R.id.radbtn_allTypes:
-                newsFilterData.type = NewsFilterData.TYPE_ALL;
-                break;
-            case R.id.radbtn_economicType:
-                newsFilterData.type = NewsFilterData.TYPE_ECONOMIC;
-                break;
-            case R.id.radbtn_politicalType:
-                newsFilterData.type = NewsFilterData.TYPE_POLITICAL;
-                break;
-            case R.id.radbtn_publicType:
-                newsFilterData.type = NewsFilterData.TYPE_PUBLIC;
-                break;
-        }*/
         return newsFilterData;
     }
+
+	public void clearFilters(){
+		txtv_timeFrom.setText("");
+		txtv_timeFrom.setHint(context.getString(R.string.filter_time_from));
+		txtv_timeTo.setText("");
+		txtv_timeTo.setHint(context.getString(R.string.filter_time_to));
+
+		this.newsFilterData = new NewsFilterData();
+		categoriesList= NewsManager.getInstance().getNewsCategoryList(context);
+		bindCategoriesRecycler();
+	}
 
     @Override
     public void onClick(View v) {

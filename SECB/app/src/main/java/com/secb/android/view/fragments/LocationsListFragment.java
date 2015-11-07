@@ -63,6 +63,7 @@ public class LocationsListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.location_eguide));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
+        ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
 
@@ -144,6 +145,10 @@ public class LocationsListFragment extends SECBBaseFragment
                 getFilterDataObject();
                 break;
 
+	        case R.id.btn_clearFilter:
+		        clearFilters();
+		        break;
+
             default:
                 break;
         }
@@ -170,6 +175,10 @@ public class LocationsListFragment extends SECBBaseFragment
     }
 
 
+	private void clearFilters() {
+		this.locationsFilterLayout.clearFilters();
+
+	}
     private void initViews(View view)
     {
 //        locationItems = DevData.getLocationsList();

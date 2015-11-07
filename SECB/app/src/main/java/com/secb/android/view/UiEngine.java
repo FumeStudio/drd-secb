@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.secb.android.controller.manager.Engine;
+import com.secb.android.model.AppConfiguration;
 
 import net.comptoirs.android.common.view.CTApplication;
 
@@ -53,6 +54,10 @@ public class UiEngine {
 
 	public static Locale getCurrentAppLocale()
 	{
+		AppConfiguration appConfig  = Engine.getAppConfiguration();
+		if(appConfig!=null){
+			return appConfig.getLocale();
+		}
 		Context context = CTApplication.getContext();
 		Locale locale = new Locale(Engine.getAppConfiguration().getLanguage());
 				/*context.getResources().getConfiguration().locale;*/

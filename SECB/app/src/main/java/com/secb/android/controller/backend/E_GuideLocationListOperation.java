@@ -107,6 +107,7 @@ public class E_GuideLocationListOperation extends BaseOperation {
 						Utilities.isNullString(currentItem.SiteDescription) )
 				{
 					locationItems.remove(currentItem);
+					i-=1; //to reLoop current items
 				}
 
 			}
