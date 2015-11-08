@@ -11,9 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.addthis.core.AddThis;
+import com.addthis.core.Config;
 import com.addthis.models.ATShareItem;
 import com.addthis.ui.views.ATButton;
 import com.secb.android.R;
+import com.secb.android.model.ShareItemInterface;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.helper.Utilities;
@@ -22,13 +24,13 @@ public class HeaderLayout extends LinearLayout {
     RelativeLayout layoutContainerHeader;
     ImageView imageViewMenuHeader;
     ImageView imageViewBackHeader;
-    //	ImageView imageViewShareHeader;
-    ATButton addthisShareButton;
+    ImageView imageViewShareHeader;
+//    ATButton addthisShareButton;
     TextView textViewTitleHeader;
 
     OnClickListener menuOnClickListener;
     OnClickListener backOnClickListener;
-    OnClickListener shareOnClickListener;
+    ShareItemInterface shareItemInterface;
 
     public HeaderLayout(Context context) {
         this(context, null);
@@ -45,8 +47,8 @@ public class HeaderLayout extends LinearLayout {
         layoutContainerHeader = (RelativeLayout) view.findViewById(R.id.layoutContainerHeader);
         imageViewMenuHeader = (ImageView) view.findViewById(R.id.imageViewMenuHeader);
         imageViewBackHeader = (ImageView) view.findViewById(R.id.imageViewBackHeader);
-//	  imageViewShareHeader = (ImageView) view.findViewById(R.id.imageViewShareHeader);
-        addthisShareButton = (ATButton) view.findViewById(R.id.addthisShareButton);
+	    imageViewShareHeader = (ImageView) view.findViewById(R.id.imageViewShareHeader);
+//        addthisShareButton = (ATButton) view.findViewById(R.id.addthisShareButton);
         textViewTitleHeader = (TextView) view.findViewById(R.id.textViewTitleHeader);
         layoutContainerHeader.setMinimumHeight(120);// (int)getResources().getDimension(R.dimen.header_height)
 
@@ -78,15 +80,28 @@ public class HeaderLayout extends LinearLayout {
             } else
                 imageViewBackHeader.setVisibility(View.GONE);
         }
-        if (addthisShareButton != null) {
-            if (shareOnClickListener != null) {
+        if (imageViewShareHeader != null) {
+            if (shareItemInterface != null) {
+                Config.configObject().setAddThisPubId("ra-563a8a466b38d02f");
+                Config.configObject().setFacebookAppId("1648071015475595");
+                Config.configObject().setTwitterConsumerKey("4ZvogbsyKFgjEFkB3jIi4I7tt");
+                Config.configObject().setTwitterConsumerSecret("ZKkReMP7ep6xgk9ighBbL2PijvTmhYh901nZVtSPr2VterAiPZ");
+//                Config.configObject().setShouldUseFacebookConnect(true);
+//                Config.configObject().setTwitterCallbackUrl("<any-url-need-not-be-existing-one>");
 //				imageViewShareHeader.setOnClickListener(shareOnClickListener);
-                addthisShareButton.setVisibility(View.VISIBLE);
-                ATShareItem item = new ATShareItem("http://www.example.com","Check this out","Lorem ipsum dolor");
-                addthisShareButton.setItem(item);
+                imageViewShareHeader.setVisibility(View.VISIBLE);
+                imageViewShareHeader.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ATShareItem item = new ATShareItem("http://secb.gov.sa",shareItemInterface.getSharingTitle(), shareItemInterface.getSharingDesc());
+                        AddThis.presentAddThisMenu(getContext(), item);
+                    }
+                });
+
+//                addthisShareButton.setItem(item);
 //                AddThis.presentAddThisMenu(getContext(), "http;//www.addthis.com", "title", "description");
             } else
-                addthisShareButton.setVisibility(View.GONE);
+                imageViewShareHeader.setVisibility(View.GONE);
         }
     }
 
@@ -119,8 +134,8 @@ public class HeaderLayout extends LinearLayout {
     }
 
 
-    public void enableShareButton(OnClickListener shareOnClickListener) {
-        this.shareOnClickListener = shareOnClickListener;
+    public void enableShareButton(ShareItemInterface shareItemInterface) {
+        this.shareItemInterface = shareItemInterface;
         handleButtonsEvents();
     }
 

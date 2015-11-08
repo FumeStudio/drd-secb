@@ -17,6 +17,7 @@
     <string name="login_login">دخول</string>
     <string name="login_signup">حساب جديد</string>
     <string name="email_address">البريد الالكتروني</string>
+    <string name="username">اسم المستخدم</string>
     <string name="password">كلمة السر</string>
 
     <!--sign up-->

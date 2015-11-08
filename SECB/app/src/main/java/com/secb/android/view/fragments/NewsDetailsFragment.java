@@ -64,7 +64,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news_details));
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderShareButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderShareButton(newsItem);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -178,6 +178,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 
     private void bindViews() {
         if (this.newsItem != null) {
+            ((SECBBaseActivity) getActivity()).enableHeaderShareButton(newsItem);
             layout_detailsContainer.setVisibility(View.VISIBLE);
             txtv_noData.setVisibility(View.GONE);
 

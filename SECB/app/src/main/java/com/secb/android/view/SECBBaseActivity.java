@@ -35,6 +35,7 @@ import com.secb.android.controller.manager.CachingManager;
 import com.secb.android.controller.manager.Engine;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.Consts;
+import com.secb.android.model.ShareItemInterface;
 import com.secb.android.view.components.HeaderLayout;
 import com.secb.android.view.components.LayoutAnimator;
 import com.secb.android.view.components.dialogs.DialogConfirmListener;
@@ -338,8 +339,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
     // Enable header 'share' button
-    public void enableHeaderShareButton() {
-        headerLayoutHome.enableShareButton(this);
+    public void enableHeaderShareButton(ShareItemInterface shareItemInterface) {
+        headerLayoutHome.enableShareButton(shareItemInterface);
     }
 
     // Disable header 'share' button

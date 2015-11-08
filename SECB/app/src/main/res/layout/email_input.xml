@@ -20,10 +20,10 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/login_input_text_margin_left"
         android:layout_toRightOf="@+id/imgv_emailIcon"
-        android:hint="@string/email_address"
+        android:background="@color/white"
+        android:hint="@string/username"
         android:padding="@dimen/login_input_text_pad"
         android:singleLine="true"
-        android:background="@color/white"
         android:text=""
         android:textColor="@color/secb_dark_text"
         android:textSize="@dimen/login_input_text_size" />

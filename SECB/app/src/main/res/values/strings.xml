@@ -29,6 +29,7 @@
     <string name="login_login">Login</string>
     <string name="login_signup">Sign Up</string>
     <string name="email_address">Email Address</string>
+    <string name="username">Username</string>
     <string name="password">Password</string>
 
     <!--sign up-->
