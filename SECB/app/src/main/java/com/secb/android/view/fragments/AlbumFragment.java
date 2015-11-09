@@ -364,17 +364,17 @@ public class AlbumFragment extends SECBBaseFragment
             vidv_videoAlbum.start();
         }*/
 
-	    /*if(!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube"))
+	    if(!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube"))
+    {
+	    String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
+	    if(!Utilities.isNullString(videoId)/*&&youTubePlayer!=null*/)
 	    {
-			String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
-		    if(!Utilities.isNullString(videoId)*//*&&youTubePlayer!=null*//*)
-		    {
 //			    layout_videoPlayerContainer.setVisibility(View.VISIBLE);
 //			    youTubePlayer.cueVideo(videoId);
-			    initYoutubePlayer(videoId);
-		    }
+		    initYoutubePlayer(videoId);
 	    }
-	    else*/
+    }
+	    else
 	    if(!Utilities.isNullString(videoUrlvideoUrl) )
 	    {
         Intent intent = new Intent();
