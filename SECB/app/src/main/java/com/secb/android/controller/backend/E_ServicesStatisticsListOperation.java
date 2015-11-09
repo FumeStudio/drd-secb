@@ -57,7 +57,7 @@ public class E_ServicesStatisticsListOperation extends BaseOperation {
 		cookies.put("Cookie", UserManager.getInstance().getUser().loginCookie);
 
 		CTHttpResponse response = doRequest(requestUrl, HttpGet.METHOD_NAME, null, null, cookies, null, ServerConnection.ResponseType.RESP_TYPE_STRING);
-		Logger.instance().v(TAG, response.response);
+		Logger.instance().v(TAG, "E-ServiceStats URL: "+requestUrl+" , Resp: "+response.response);
 
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<E_ServiceStatisticsItem>>() {}.getType();

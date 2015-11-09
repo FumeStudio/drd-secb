@@ -66,7 +66,7 @@ public class NewsListOperation extends BaseOperation {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<NewsItem>>() {}.getType();
 		List<NewsItem> newsItems = gson.fromJson(response.response.toString(), listType);
-		removeUnCompletedItems(newsItems);
+//		removeUnCompletedItems(newsItems);
 
 //	    only cache the not filtered list
 //	    i.e. category = all , id = all , timefrom = null , time to = null

@@ -23,6 +23,7 @@ public class E_ServiceItemRecyclerViewHolder extends RecyclerView.ViewHolder
     TextView txtv_number_value;
     TextView txtv_type_title;
     TextView txtv_type_value;
+    LinearLayout layout_eservice_colored_line;
     LinearLayout layout_data_holder;
 
 
@@ -43,7 +44,7 @@ public class E_ServiceItemRecyclerViewHolder extends RecyclerView.ViewHolder
         txtv_number_value = (TextView) itemView.findViewById(R.id.txtv_number_value);
         txtv_type_title = (TextView) itemView.findViewById(R.id.txtv_type_title);
         txtv_type_value = (TextView) itemView.findViewById(R.id.txtv_type_value);
-
+        layout_eservice_colored_line  = (LinearLayout) itemView.findViewById(R.id.layout_eservice_colored_line);
     }
 
     private void applyFonts(View itemView)

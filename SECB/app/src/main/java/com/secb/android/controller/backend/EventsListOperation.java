@@ -114,7 +114,7 @@ public class EventsListOperation extends BaseOperation {
 		{
 			EventItem currentItem  = eventItems.get(i);
 			if (Utilities.isNullString(currentItem.Title) ||
-					Utilities.isNullString(currentItem.Description) ||
+//					Utilities.isNullString(currentItem.Description) ||
 					Utilities.isNullString(currentItem.EventDate)  ||
 					Utilities.isNullString(currentItem.EventCategory) )
 			{

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.secb.android.R;
 import com.secb.android.model.E_ServiceRequestItem;
+import com.secb.android.view.MainActivity;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -58,10 +59,23 @@ public class E_ServiceItemRecyclerAdapter extends RecyclerView.Adapter<E_Service
 	    else{
 		    holder.txtv_item_title.setVisibility(View.GONE);
 	    }
-        holder.txtv_date_value.setText(currentItem.RequestDate);
-        holder.txtv_status_value.setText(currentItem.RequestStatus);
+        String newDate = "";
+        if(!Utilities.isNullString(currentItem.RequestDate))
+            newDate = MainActivity.reFormatDate(currentItem.RequestDate, MainActivity.sdf_Source_News, MainActivity.sdf_Source_EService);
+        holder.txtv_date_value.setText(newDate);
+        holder.txtv_status_value.setText(currentItem.ReuquestStatusSingleValue);
         holder.txtv_number_value.setText(currentItem.RequestNumber);
         holder.txtv_type_value.setText(currentItem.RequestType);
+
+        if(!Utilities.isNullString(currentItem.ReuquestStatusSingleValue)) {
+            if(currentItem.ReuquestStatusSingleValue.compareToIgnoreCase(MainActivity.STATUS_INBOX) == 0) {
+                holder.layout_eservice_colored_line.setBackgroundColor(context.getResources().getColor(R.color.graph_color_inbox));
+            } else if(currentItem.ReuquestStatusSingleValue.compareToIgnoreCase(MainActivity.STATUS_CLOSEDREQUESTS) == 0) {
+                holder.layout_eservice_colored_line.setBackgroundColor(context.getResources().getColor(R.color.graph_color_closed));
+            } else if(currentItem.ReuquestStatusSingleValue.compareToIgnoreCase(MainActivity.STATUS_INPROGRESS) == 0) {
+                holder.layout_eservice_colored_line.setBackgroundColor(context.getResources().getColor(R.color.graph_color_inProgress));
+            }
+        }
     }
 
     @Override

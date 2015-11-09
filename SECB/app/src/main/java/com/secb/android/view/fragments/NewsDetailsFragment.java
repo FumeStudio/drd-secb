@@ -187,7 +187,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 	        String new_day = MainActivity.reFormatNewsDate(newsItem.CreationDate,MainActivity.sdf_Time);
             txtv_news_details_newDate.setText(new_day);
             String decodedBody = Uri.decode(newsItem.NewsBody);
-            txtv_news_details_newBody.setText(Html.fromHtml(decodedBody));
+            txtv_news_details_newBody.setText(!Utilities.isNullString(decodedBody) ? Html.fromHtml(decodedBody) : "");
 
             if (!Utilities.isNullString(newsItem.ImageUrl)) {
 //		        Picasso.with(getActivity())
@@ -196,11 +196,11 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 //				        .into(imgv_news_details_img);
                 Glide.with(getActivity())
                         .load(newsItem.ImageUrl)
-                        .placeholder(R.drawable.news_image_place_holder)
+                        .placeholder(R.drawable.news_placeholder)
                         .centerCrop()
                         .into(imgv_news_details_img);
             } else
-                imgv_news_details_img.setImageResource(R.drawable.news_image_place_holder);
+                imgv_news_details_img.setImageResource(R.drawable.news_placeholder);
         } else {
             layout_detailsContainer.setVisibility(View.GONE);
             txtv_noData.setText(getResources().getString(R.string.details_no_details));

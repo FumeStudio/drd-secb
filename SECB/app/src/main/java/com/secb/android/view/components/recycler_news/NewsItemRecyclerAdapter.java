@@ -61,13 +61,13 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 	    if(!Utilities.isNullString(currentItem.getImageUrl()))
 	    {
             Glide.with(context).load(currentItem.getImageUrl())
-                    .placeholder(R.drawable.news_image_place_holder)
+                    .placeholder(R.drawable.news_placeholder)
 //                    .signature(new StringSignature(user.userPhotoID != null ? user.userPhotoID : ""))
                     .centerCrop()
                     .into(holder.imgv_newImg);
         }
 	    else
-		    holder.imgv_newImg.setImageResource(R.drawable.news_image_place_holder);
+		    holder.imgv_newImg.setImageResource(R.drawable.news_placeholder);
 
         holder.txtv_newTitle.setText(currentItem.Title);
         holder.txtv_newDescription.setText(currentItem.NewsBrief);

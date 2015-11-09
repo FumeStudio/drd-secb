@@ -69,6 +69,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"
         android:layout_weight="1"
-        android:src="@drawable/news_image_place_holder" />
+        android:src="@drawable/news_placeholder"
+        android:scaleType="centerCrop"/>
 
 </LinearLayout>

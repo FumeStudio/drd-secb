@@ -96,8 +96,11 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_Source_EService = new SimpleDateFormat("dd MMM yyyy", UiEngine.getCurrentAppLocale());
 
-
+    public static String STATUS_INPROGRESS = "InProgress";
+    public static String STATUS_CLOSEDREQUESTS = "Closes";
+    public static String STATUS_INBOX = "Inbox";
 	public MainActivity() {
 		super(-1, true);
 	}
@@ -586,6 +589,16 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	public void updateStatus(Integer requestId, String statusMsg) {
 	}
 
+	public static String reFormatDate(String oldDate, SimpleDateFormat currentSDF, SimpleDateFormat newSDF) {
+		String newString = null;
+		try {
+			Date date = currentSDF.parse(oldDate);
+			newString = newSDF.format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return newString;
+	}
 	public static String reFormatDate(String oldDate, SimpleDateFormat sdf) {
 		String newString = null;
 		try {

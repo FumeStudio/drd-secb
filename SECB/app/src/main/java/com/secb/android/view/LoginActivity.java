@@ -126,6 +126,7 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
             if ((int) requestId == RequestIds.LOGIN_REQUEST_ID && resultObject != null &&
                     !Utilities.isNullString(((User) resultObject).loginCookie)) {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             } else {
                 ErrorDialog.showMessageDialog(null, getString(R.string.login_failed), LoginActivity.this);
             }

@@ -325,7 +325,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 //		    imgv_eventImg.setImageResource(R.drawable.events_image_place_holder);
 
 
-	    String evdateStr= MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_day_mon);
+	    String evdateStr= MainActivity.reFormatDate(eventItem.EventDate, MainActivity.sdf_day_mon);
 	    if(!Utilities.isNullString(evdateStr)){
 		    String[] dayMonthArr = evdateStr.split("-");
 		    txtv_eventImgDate_day.setText(dayMonthArr[0]);
@@ -346,7 +346,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		ArrayList<NewsItem>homeNewsList = new ArrayList<>();
 		//for testing set newsList = null;
 //		newsList = null;
-		if (newsList != null && newsList.size() > 2) {
+		if (newsList != null && newsList.size() >= 2) {
 			homeNewsList.add(newsList.get(0));
 			homeNewsList.add(newsList.get(1));
 			/*while(newsList.size()>2)
@@ -416,7 +416,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 			{
 				ArrayList<EventItem> temp = (ArrayList<EventItem>) resultObject;
 				if (temp!=null  &&temp.size()>0){
-					eventItem=	temp.get(0);
+					eventItem =	temp.get(0);
 					bindEventCard();
 				}
 			}

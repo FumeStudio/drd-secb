@@ -52,7 +52,7 @@
     <string name="language">عربي</string>
     <string name="logout">Logout</string>
     <string name="services_requests">Services Requests</string>
-    <string name="last_news">Last News</string>
+    <string name="last_news">Latest News</string>
 
     <string name="graph_title_closed">
         <![CDATA[<strong>Closed </strong> <br/>Requests]]>
