@@ -39,9 +39,9 @@ public class LocationsItemRecyclerAdapter extends RecyclerView.Adapter<Locations
     @Override
     public LocationsItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-	    if(inflater==null && context!=null)
+	    if(inflater == null && context!=null)
 		    this.inflater = LayoutInflater.from(context);
-	    View view = inflater.inflate(R.layout.location_item_card, null);
+	    View view = inflater.inflate(R.layout.location_item_card, parent, false);
 
         LocationsItemRecyclerViewHolder vh = new LocationsItemRecyclerViewHolder(view);
         return vh;

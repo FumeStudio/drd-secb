@@ -55,7 +55,7 @@ public class LocationsTypesFilterRecyclerAdapter extends RecyclerView.Adapter<Lo
     public void onBindViewHolder(final LocationsTypesFilterRecyclerViewHolder holder, final int position)
     {
 	    final EGuideLocationTypeItem currentItem = itemsList.get(position);
-	    String radbtn_text = UiEngine.isAppLanguageArabic(context)?currentItem.SiteTypeArabic:currentItem.SiteTypeEnglish;
+	    String radbtn_text = UiEngine.isAppLanguageArabic(context) ? currentItem.SiteTypeArabic : currentItem.SiteTypeEnglish;
 	    holder.chkbox_locationTypeItem.setText(radbtn_text);
 	    holder.chkbox_locationTypeItem.setChecked(currentItem.isSelected);
 

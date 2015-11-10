@@ -21,6 +21,7 @@ import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.secb.android.view.components.EndlessRecyclerOnScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -194,9 +195,17 @@ public class NewsListFragment extends SECBBaseFragment
         newsRecyclerView = (RecyclerView) view.findViewById(R.id.newsRecyclerView);
 	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 //        newsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        newsRecyclerView.setLayoutManager(linearLayoutManager);
         newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
-    }
+//		newsRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+//			@Override
+//			public void onLoadMore(int current_page) {
+//				Logger.instance().v("Paging", "NewsList over scrolled");
+//			}
+//		});
+
+	}
 
 	public void bindViews()
 	{

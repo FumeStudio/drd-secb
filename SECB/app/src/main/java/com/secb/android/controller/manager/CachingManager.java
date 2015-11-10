@@ -757,7 +757,7 @@ public class CachingManager {
 		String language = UiEngine.getCurrentAppLanguage(appContext);
 		String location_list_file = Engine.FileName.APP_EGUIDE_LOCATION_LIST;
 		if(language!=null)
-			location_list_file=location_list_file+"_"+language.toUpperCase();
+			location_list_file = location_list_file+"_"+language.toUpperCase();
 		File file = Engine.getCacheFile(Engine.DataFolder.USER_EGUIDE_LOCATION,
 				location_list_file, appContext);
 

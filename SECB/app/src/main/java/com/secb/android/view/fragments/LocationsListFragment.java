@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.E_GuideLocationListOperation;
@@ -21,6 +22,7 @@ import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.secb.android.view.components.EndlessRecyclerOnScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.LocationsFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -32,6 +34,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -191,8 +194,16 @@ public class LocationsListFragment extends SECBBaseFragment
 	    });
 	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 	    locationsRecyclerView = (RecyclerView) view.findViewById(R.id.locationsRecyclerView);
-        locationsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        locationsRecyclerView.setLayoutManager(linearLayoutManager);
         locationsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), locationsRecyclerView, this));
+		locationsRecyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+			@Override
+			public void onLoadMore(int current_page) {
+				Logger.instance().v("Paging", "Locationslist over scrolled");
+//                Utilities.showToastMsg("Locationslist over scrolled", Toast.LENGTH_SHORT);
+			}
+		});
     }
 
 	private void bindViews() {

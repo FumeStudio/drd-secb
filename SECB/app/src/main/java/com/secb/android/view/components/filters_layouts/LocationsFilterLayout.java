@@ -33,54 +33,51 @@ import net.comptoirs.android.common.helper.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationsFilterLayout extends LinearLayout  implements  RequestObserver {
+public class LocationsFilterLayout extends LinearLayout implements RequestObserver {
     private final View view;
-	private final Context context;
+    private final Context context;
 
-	private LocationsFilterData locationsFilterData;
+    private LocationsFilterData locationsFilterData;
     private TextView txtv_location_filter_name_title, txtv_location_filter_city_title,
             txtv_location_filter_capacity_from_title, txtv_location_filter_capacity_to_title;
     private EditText txtv_location_filter_name_value,
             txtv_location_filter_capacity_from_value,
             txtv_location_filter_capacity_to_value;
-   private Spinner spn_city;
-	private RecyclerView locationTypesRecyclerView;
-	private LocationsTypesFilterRecyclerAdapter locationsTypesFilterRecyclerAdapter;
-	private TextView txtv_noData;
+    private Spinner spn_city;
+    private RecyclerView locationTypesRecyclerView;
+    private LocationsTypesFilterRecyclerAdapter locationsTypesFilterRecyclerAdapter;
+    private TextView txtv_noData;
 
     private Button btn_applyFilter;
-	private List<EGuideLocationTypeItem> locationTypesList;
-	private List<EventsCityItem> citiesList ;
-	private EventFilterCitiesSpinnerAdapter eventFilterCitiesSpinnerAdapter;
-	private boolean isCategoryOperationDone;
+    private List<EGuideLocationTypeItem> locationTypesList;
+    private List<EventsCityItem> citiesList;
+    private EventFilterCitiesSpinnerAdapter eventFilterCitiesSpinnerAdapter;
+    private boolean isCategoryOperationDone;
 
-	public View getLayoutView() {
+    public View getLayoutView() {
         return view;
     }
 
     public LocationsFilterLayout(Context context) {
         super(context);
-	    this.context=context;
+        this.context = context;
         view = LayoutInflater.from(context).inflate(R.layout.locations_filter_screen, null);
-	    ((MainActivity)context).setLocationRequstObserver(this);
+        ((MainActivity) context).setLocationRequstObserver(this);
         initViews(view);
         applyFonts(view);
-	    locationTypesList = EGuideLocationManager.getInstance().getLocationTypesList(context);
-	    if(locationTypesList==null || locationTypesList.size()==0)
-	    {
-		    startLocationTypesOperation();
-	    }
-	    citiesList = EventsManager.getInstance().getEventsCityList(context);
-	    if(citiesList==null || citiesList.size()==0)
-	    {
-		    startLocationCitiesOperation();
-	    }
+        locationTypesList = EGuideLocationManager.getInstance().getLocationTypesList(context);
+        if (locationTypesList == null || locationTypesList.size() == 0) {
+            startLocationTypesOperation();
+        }
+        citiesList = EventsManager.getInstance().getEventsCityList(context);
+        if (citiesList == null || citiesList.size() == 0) {
+            startLocationCitiesOperation();
+        }
 
-	    if(citiesList!=null && locationTypesList!=null &&
-			    citiesList.size()>0&& locationTypesList.size()>0)
-	    {
-		    getFilterData();
-	    }
+        if (citiesList != null && locationTypesList != null &&
+                citiesList.size() > 0 && locationTypesList.size() > 0) {
+            getFilterData();
+        }
 
     }
 
@@ -90,70 +87,66 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
         txtv_location_filter_capacity_from_title = (TextView) view.findViewById(R.id.txtv_location_filter_capacity_from_title);
         txtv_location_filter_capacity_to_title = (TextView) view.findViewById(R.id.txtv_location_filter_capacity_to_title);
         txtv_location_filter_name_value = (EditText) view.findViewById(R.id.txtv_location_filter_name_value);
-	    spn_city = (Spinner) view.findViewById(R.id.spn_city_filter_city_value);
+        spn_city = (Spinner) view.findViewById(R.id.spn_city_filter_city_value);
         txtv_location_filter_capacity_from_value = (EditText) view.findViewById(R.id.txtv_location_filter_capacity_from_value);
         txtv_location_filter_capacity_to_value = (EditText) view.findViewById(R.id.txtv_location_filter_capacity_to_value);
 
         btn_applyFilter = (Button) view.findViewById(R.id.btn_applyFilter);
 
-	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
-	    locationTypesRecyclerView = (RecyclerView) view.findViewById(R.id.locationTypesRecyclerView);
-	    locationTypesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-	    locationTypesRecyclerView.addItemDecoration(new NewDividerItemDecoration(context));
+        txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
+        locationTypesRecyclerView = (RecyclerView) view.findViewById(R.id.locationTypesRecyclerView);
+        locationTypesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        locationTypesRecyclerView.addItemDecoration(new NewDividerItemDecoration(context));
 
-	    locationTypesList= EGuideLocationManager.getInstance().getLocationTypesList(context);
-	    citiesList = EventsManager.getInstance().getEventsCityList(context);
+        locationTypesList = EGuideLocationManager.getInstance().getLocationTypesList(context);
+        citiesList = EventsManager.getInstance().getEventsCityList(context);
 
-	    bindLocationTypesRecycler();
-	    bindCitiesSpinner();
+        bindLocationTypesRecycler();
+        bindCitiesSpinner();
 
 
     }
 
-	private void startLocationCitiesOperation() {
-		EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID, false, context);
-		operation.addRequsetObserver(this);
-		operation.execute();
-	}
+    private void startLocationCitiesOperation() {
+        EventsCityOperation operation = new EventsCityOperation(RequestIds.EVENTS_CITY_REQUEST_ID, false, context);
+        operation.addRequsetObserver(this);
+        operation.execute();
+    }
 
-	private void startLocationTypesOperation() {
-		final E_GuideLocationTypesOperation operation = new E_GuideLocationTypesOperation(RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID, false, context);
-		operation.addRequsetObserver(this);
-		operation.execute();
-	}
+    private void startLocationTypesOperation() {
+        final E_GuideLocationTypesOperation operation = new E_GuideLocationTypesOperation(RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID, false, context);
+        operation.addRequsetObserver(this);
+        operation.execute();
+    }
 
-	private void bindLocationTypesRecycler() {
-		if (locationTypesList != null && locationTypesList.size() > 0)
-		{
-			locationTypesRecyclerView.setVisibility(View.VISIBLE);
-			txtv_noData.setVisibility(View.GONE);
-			locationsTypesFilterRecyclerAdapter = new LocationsTypesFilterRecyclerAdapter(context,locationTypesList);
-			locationTypesRecyclerView.setAdapter(locationsTypesFilterRecyclerAdapter);
-		}
-		else
-		{
-			locationTypesRecyclerView.setVisibility(View.GONE);
-			txtv_noData.setVisibility(View.VISIBLE);
-			if(isCategoryOperationDone)
-				txtv_noData.setText(context.getString(R.string.news_no_types));
+    private void bindLocationTypesRecycler() {
+        if (locationTypesList != null && locationTypesList.size() > 0) {
+            locationTypesRecyclerView.setVisibility(View.VISIBLE);
+            txtv_noData.setVisibility(View.GONE);
+            locationsTypesFilterRecyclerAdapter = new LocationsTypesFilterRecyclerAdapter(context, locationTypesList);
+            locationTypesRecyclerView.setAdapter(locationsTypesFilterRecyclerAdapter);
+        } else {
+            locationTypesRecyclerView.setVisibility(View.GONE);
+            txtv_noData.setVisibility(View.VISIBLE);
+            if (isCategoryOperationDone)
+                txtv_noData.setText(context.getString(R.string.news_no_types));
 
 
-		}
-	}
-	private void bindCitiesSpinner()
-	{
-		if(citiesList!=null && citiesList.size()>0)
-		{
-			eventFilterCitiesSpinnerAdapter =
-					new EventFilterCitiesSpinnerAdapter(context,
-							R.layout.spinner_simple_row,
-							(ArrayList<EventsCityItem>) citiesList);
-			spn_city.setAdapter(eventFilterCitiesSpinnerAdapter);
-		}
-	}
-	private void applyFonts(View view)
-    {
-        UiEngine.applyFontsForAll(context,view, UiEngine.Fonts.HVAR);
+        }
+    }
+
+    private void bindCitiesSpinner() {
+        if (citiesList != null && citiesList.size() > 0) {
+            eventFilterCitiesSpinnerAdapter =
+                    new EventFilterCitiesSpinnerAdapter(context,
+                            R.layout.spinner_simple_row,
+                            (ArrayList<EventsCityItem>) citiesList);
+            spn_city.setAdapter(eventFilterCitiesSpinnerAdapter);
+        }
+    }
+
+    private void applyFonts(View view) {
+        UiEngine.applyFontsForAll(context, view, UiEngine.Fonts.HVAR);
         /*
         if (txtv_location_filter_name_title != null) {
             UiEngine.applyCustomFont(txtv_location_filter_name_title, UiEngine.Fonts.HVAR);
@@ -183,84 +176,79 @@ public class LocationsFilterLayout extends LinearLayout  implements  RequestObse
         }*/
     }
 
-    public LocationsFilterData getFilterData()
-    {
+    public LocationsFilterData getFilterData() {
         locationsFilterData = new LocationsFilterData();
 
         locationsFilterData.name = txtv_location_filter_name_value.getText().toString();
 
-	    EventsCityItem selectedItem = ((EventsCityItem) spn_city.getSelectedItem());
-	    locationsFilterData.city=selectedItem.ID;
+        EventsCityItem selectedItem = ((EventsCityItem) spn_city.getSelectedItem());
+        locationsFilterData.city = selectedItem.ID;
 
-	    if(!Utilities.isNullString(txtv_location_filter_capacity_from_value .getText().toString()))
+        if (!Utilities.isNullString(txtv_location_filter_capacity_from_value.getText().toString()))
             locationsFilterData.totalCapacityFrom = txtv_location_filter_capacity_from_value.getText().toString();
-	    if(!Utilities.isNullString(txtv_location_filter_capacity_to_value .getText().toString()))
-	        locationsFilterData.totalCapacityTo = txtv_location_filter_capacity_to_value.getText().toString();
+        if (!Utilities.isNullString(txtv_location_filter_capacity_to_value.getText().toString()))
+            locationsFilterData.totalCapacityTo = txtv_location_filter_capacity_to_value.getText().toString();
 
 
         locationsFilterData.types = new ArrayList<>();
 
-	    for(EGuideLocationTypeItem iterator:locationTypesList)
-	    {
-		    if(iterator.isSelected)
-			    locationsFilterData.types.add(iterator.ID);
-	    }
-	    if(locationsFilterData.types.size()>0)
-		    if (! locationsFilterData.types.get(0).equalsIgnoreCase("All"))
-		        locationsFilterData.selectedType = TextUtils.join(",",locationsFilterData.types);
-	        else
-			    locationsFilterData.selectedType="All";
-	    return locationsFilterData;
+        for (EGuideLocationTypeItem iterator : locationTypesList) {
+            if (iterator.isSelected)
+                locationsFilterData.types.add(iterator.ID);
+        }
+        if (locationsFilterData.types.size() > 0)
+            if (!locationsFilterData.types.get(0).equalsIgnoreCase("All"))
+                locationsFilterData.selectedType = TextUtils.join(",", locationsFilterData.types);
+            else
+                locationsFilterData.selectedType = "All";
+        return locationsFilterData;
     }
 
 
-	public void clearFilters(){
-		txtv_location_filter_name_value.setText("");
-		txtv_location_filter_name_value.setHint(context.getString(R.string.hint_name));
+    public void clearFilters() {
+        txtv_location_filter_name_value.setText("");
+        txtv_location_filter_name_value.setHint(context.getString(R.string.hint_name));
 
-		txtv_location_filter_capacity_to_value.setText("");
-		txtv_location_filter_capacity_to_value.setHint(context.getString(R.string.filter_time_from));
+        txtv_location_filter_capacity_to_value.setText("");
+        txtv_location_filter_capacity_to_value.setHint(context.getString(R.string.filter_time_from));
 
-		txtv_location_filter_capacity_from_value.setText("");
-		txtv_location_filter_capacity_from_value.setHint(context.getString(R.string.filter_time_to));
+        txtv_location_filter_capacity_from_value.setText("");
+        txtv_location_filter_capacity_from_value.setHint(context.getString(R.string.filter_time_to));
 
-		this.locationsFilterData = new LocationsFilterData();
-		locationTypesList= EGuideLocationManager.getInstance().getLocationTypesList(context);
+        this.locationsFilterData = new LocationsFilterData();
+        locationTypesList = EGuideLocationManager.getInstance().getLocationTypesList(context);
 
-		bindLocationTypesRecycler();
-		bindCitiesSpinner();
-	}
-	@Override
-	protected void onDetachedFromWindow() {
-		super.onDetachedFromWindow();
-		locationTypesRecyclerView.setAdapter(null);
-	}
+        bindLocationTypesRecycler();
+        bindCitiesSpinner();
+    }
 
-	@Override
-	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
-		if (error == null)
-		{
-			if((int)requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID )
-			{
-				isCategoryOperationDone=true;
-				locationTypesList= EGuideLocationManager.getInstance().getLocationTypesList(context);
-				bindLocationTypesRecycler();
-			}
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        locationTypesRecyclerView.setAdapter(null);
+    }
 
-			else if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID ) {
-				citiesList = EventsManager.getInstance().getEventsCityList(context);
-				bindCitiesSpinner();
-			}
-		}
-	}
+    @Override
+    public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        if (error == null) {
+            if ((int) requestId == RequestIds.EGUIDE_LOCATION_TYPES_REQUEST_ID) {
+                isCategoryOperationDone = true;
+                locationTypesList = EGuideLocationManager.getInstance().getLocationTypesList(context);
+                bindLocationTypesRecycler();
+            } else if ((int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID) {
+                citiesList = EventsManager.getInstance().getEventsCityList(context);
+                bindCitiesSpinner();
+            }
+        }
+    }
 
-	@Override
-	public void requestCanceled(Integer requestId, Throwable error) {
+    @Override
+    public void requestCanceled(Integer requestId, Throwable error) {
 
-	}
+    }
 
-	@Override
-	public void updateStatus(Integer requestId, String statusMsg) {
+    @Override
+    public void updateStatus(Integer requestId, String statusMsg) {
 
-	}
+    }
 }

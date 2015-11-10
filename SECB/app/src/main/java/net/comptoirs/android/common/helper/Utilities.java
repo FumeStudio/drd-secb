@@ -857,6 +857,7 @@ public class Utilities {
 //	force to get the string from values-languageTag even if it's not the current language.
 	public static String getStringFromLanguage(Context context, String languageTag, int stringResId)
 	{
+//        return context.getString(stringResId, languageTag);
 		String value="";
 		if(!isNullString(languageTag) && context!=null && stringResId>0 )
 		{
@@ -865,10 +866,14 @@ public class Utilities {
 				AssetManager assets = standardResources.getAssets();
 				DisplayMetrics metrics = standardResources.getDisplayMetrics();
 				Configuration config = new Configuration(standardResources.getConfiguration());
-				config.locale = new Locale(languageTag);
+                Locale savedLocale = config.locale;
+                config.locale = new Locale(languageTag);
 				Resources mResources = new Resources(assets, metrics, config);
 				value= mResources.getString(stringResId);
 
+                // restore original locale
+                config.locale = savedLocale;
+                mResources.updateConfiguration(config, null);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

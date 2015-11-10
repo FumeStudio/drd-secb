@@ -40,7 +40,7 @@ public class EGuideLocationManager {
 	{
 		//add category called All to get all categories
 		this.locationTypesList =new ArrayList<>();
-		EGuideLocationTypeItem item  =new EGuideLocationTypeItem ();
+		EGuideLocationTypeItem item = new EGuideLocationTypeItem ();
 		item.ID = "All";
 		item.SiteTypeEnglish = Utilities.getStringFromLanguage(context,"en",R.string.news_filter_all_types);
 		item.SiteTypeArabic = Utilities.getStringFromLanguage(context,"ar",R.string.news_filter_all_types);
@@ -66,7 +66,7 @@ public class EGuideLocationManager {
 
 /** List*/
 	public List<LocationItem> getLocationsUnFilteredList(Context context) {
-		locationUnFilteredList =CachingManager.getInstance().loadLocationsList(context);
+		locationUnFilteredList = CachingManager.getInstance().loadLocationsList(context);
 		return locationUnFilteredList;
 	}
 

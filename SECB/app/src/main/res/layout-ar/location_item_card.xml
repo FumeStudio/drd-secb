@@ -8,26 +8,22 @@
     android:layout_marginTop="@dimen/event_card_margin"
     android:background="@color/off_white"
     android:orientation="horizontal"
-    android:weightSum="3"
-
     >
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="vertical"
-
-        android:weightSum="2.5">
+        >
 
         <TextView
             android:id="@+id/txtv_locationTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:maxLines="1"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/secb_dark_text"
@@ -37,10 +33,10 @@
         <TextView
             android:id="@+id/txtv_locationDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:maxLines="2"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/secb_grey_text"
@@ -154,10 +150,9 @@
 
     <ImageView
         android:id="@+id/imgv_locationImg"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/evet_card_img_size"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"
-        android:layout_weight="1"
         android:src="@drawable/event_card_img" />
 
 </LinearLayout>

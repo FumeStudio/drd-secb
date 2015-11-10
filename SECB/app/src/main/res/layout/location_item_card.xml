@@ -8,34 +8,31 @@
     android:layout_marginBottom="@dimen/eguide_base_padding"
     android:layout_marginTop="@dimen/eguide_base_padding"
     android:padding="@dimen/eguide_base_padding"
-    android:weightSum="3"
     android:background="@color/off_white">
 
     <ImageView
         android:id="@+id/imgv_locationImg"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/evet_card_img_size"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/event_card_margin"
-        android:layout_weight="1"
         android:src="@drawable/event_card_img" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/event_card_margin"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:weightSum="2.5">
+        >
 
         <TextView
             android:id="@+id/txtv_locationTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
             android:gravity="bottom"
-            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:text="Saudi Arabia"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_card_h1_text_size"
             android:textStyle="bold"/>
@@ -43,12 +40,12 @@
         <TextView
             android:id="@+id/txtv_locationDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
-            android:gravity="center_vertical"
-            android:text="Saudi Arabia has enhanced the development of exhibitions."
+            android:gravity="top"
+            android:text="Saudi Arabia has "
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/event_card_h2_text_size" />
 

@@ -242,7 +242,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
 			                23 ,59,59 /*hr, min , sec*/
 	                );
 	                endDate = MainActivity.sdf_Source_News.format(new Date(calendarTo.getTimeInMillis()));
-	                ((SECBBaseActivity)getActivity()).displayToast("startDate: "+startDate+"\nendDate: "+endDate);
+	                ((SECBBaseActivity)getActivity()).displayToast("> startDate: "+startDate+"\nendDate: "+endDate);
                 }
             });
 
