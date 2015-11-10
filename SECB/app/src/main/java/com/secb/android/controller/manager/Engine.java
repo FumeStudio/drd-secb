@@ -231,7 +231,7 @@ public class Engine {
 	}
 
     public static void switchAppLanguage(ContextWrapper context, String newLang) {
-
+        net.comptoirs.android.common.helper.Logger.instance().v("LANGUAGE", "Switch Language: New: "+newLang+" , old: "+appConfig.getLanguage());
         String switchLanguage = "en";
         if(Utilities.isNullString(newLang)) {
             String currentLanguage = appConfig.getLanguage();
@@ -257,7 +257,7 @@ public class Engine {
     }
 
     public static void setApplicationLanguage(ContextWrapper context, String language) {
-
+        net.comptoirs.android.common.helper.Logger.instance().v("LANGUAGE", "setApplicationLanguage: New: "+language+" , old: "+appConfig.getLanguage()+" isLanguangeFromApp? "+isLanguangeFromApp);
 
         if (isLanguangeFromApp) {
             String currentLanguage = language != null ? language

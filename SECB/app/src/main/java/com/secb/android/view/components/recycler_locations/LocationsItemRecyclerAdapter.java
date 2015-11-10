@@ -41,7 +41,7 @@ public class LocationsItemRecyclerAdapter extends RecyclerView.Adapter<Locations
 
 	    if(inflater==null && context!=null)
 		    this.inflater = LayoutInflater.from(context);
-	    View view = inflater.inflate(R.layout.location_item_card, parent, false);
+	    View view = inflater.inflate(R.layout.location_item_card, null);
 
         LocationsItemRecyclerViewHolder vh = new LocationsItemRecyclerViewHolder(view);
         return vh;

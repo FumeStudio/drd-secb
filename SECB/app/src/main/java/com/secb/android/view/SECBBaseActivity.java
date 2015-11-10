@@ -120,7 +120,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // startIncomingView();
-        Logger.instance().v("MainDialer", "onCreate", false);
+        Logger.instance().v("SecbBaseActivity", "onCreate", false);
 
         activity = SECBBaseActivity.this;
 
@@ -665,6 +665,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
     public void changeAppLanguage(boolean changeToEnglish) {
+        net.comptoirs.android.common.helper.Logger.instance().v("LANGUAGE", ">changeAppLanguage< changeToEnglish? "+changeToEnglish);
         String languageToLoad = "en";
         if (!changeToEnglish)
             languageToLoad = "ar";

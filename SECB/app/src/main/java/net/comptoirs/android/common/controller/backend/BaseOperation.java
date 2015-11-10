@@ -19,261 +19,236 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOperationResponse>
-{
-	
-	private static HashMap<String, BaseOperation<?>> activeOperations = new HashMap<String, BaseOperation<?>>();
-	private static HashMap<Object, BaseOperation<?>> activeOperationsMapByRequstId = new HashMap<Object, BaseOperation<?>>();
-	
-	public static final int UNHANDLED_EXCEPTION_STATUS_CODE = 1001;
+public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOperationResponse> {
 
-	ArrayList<RequestObserver> observersList;
+    private static HashMap<String, BaseOperation<?>> activeOperations = new HashMap<String, BaseOperation<?>>();
+    private static HashMap<Object, BaseOperation<?>> activeOperationsMapByRequstId = new HashMap<Object, BaseOperation<?>>();
 
-	protected ServerConnection serverConnection;
+    public static final int UNHANDLED_EXCEPTION_STATUS_CODE = 1001;
 
-	protected boolean isShowLoadingDialog = true;
-	protected Context context;
-//	private CustomProgressDialog dialog;
-	private ProgressDialog dialog;
+    ArrayList<RequestObserver> observersList;
 
-	protected Object requestID = 0;
+    protected ServerConnection serverConnection;
 
-	public BaseOperation(Object requestID, boolean isShowLoadingDialog, Context activity)
-	{
-		this.isShowLoadingDialog = isShowLoadingDialog;
-		this.context = activity;
-		this.requestID = requestID;
+    protected boolean isShowLoadingDialog = true;
+    protected Context context;
+    //	private CustomProgressDialog dialog;
+    private ProgressDialog dialog;
 
-		serverConnection = new ServerConnection();
-		observersList = new ArrayList<RequestObserver>();
-	}
+    protected Object requestID = 0;
 
-	/**
-	 * Do/Execute the operation itself
-	 * 
-	 * @return the object
-	 * @throws Exception
-	 */
-	public abstract T doMain() throws Throwable;
+    public BaseOperation(Object requestID, boolean isShowLoadingDialog, Context activity) {
+        this.isShowLoadingDialog = isShowLoadingDialog;
+        this.context = activity;
+        this.requestID = requestID;
 
-	 protected void showWaitingDialog()
-	 {
-		 if(dialog ==null)
-			 dialog =CustomProgressDialog.getInstance(context,true);
+        serverConnection = new ServerConnection();
+        observersList = new ArrayList<RequestObserver>();
+    }
 
-		 dialog.setCanceledOnTouchOutside(false);
-		if (!dialog.isShowing())
-			dialog.show();
+    /**
+     * Do/Execute the operation itself
+     *
+     * @return the object
+     * @throws Exception
+     */
+    public abstract T doMain() throws Throwable;
 
-		 dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-			 @Override
-			 public void onCancel(DialogInterface dialog) {
-				 Log.v("Dialog", "Canceled ");
-				 cancelConn();
-				 // Wake observers with the result
-				 for (RequestObserver observer : observersList) {
-					 observer.requestCanceled((int)requestID, null);
-				 }
-				 BaseOperation.this.cancel(true);
+    protected void showWaitingDialog() {
+        if (dialog == null)
+            dialog = CustomProgressDialog.getInstance(context, true);
 
-			 }
-		 });
+        dialog.setCanceledOnTouchOutside(false);
+        if (!dialog.isShowing())
+            dialog.show();
 
-		 try {
-			 if (!dialog.isShowing())
-				 dialog.show();
-		 } catch (Exception e) {
-		 } // Show dialog on activity killed
-	 }
-	
-	@Override
-	protected void onPreExecute()
-	{
-		activeOperations.put(this.getClass().getName(), this);
-		if(requestID != null)
-			activeOperationsMapByRequstId.put((int)requestID, this);
-		super.onPreExecute();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Log.v("Dialog", "Canceled ");
+                cancelConn();
+                // Wake observers with the result
+                for (RequestObserver observer : observersList) {
+                    observer.requestCanceled((int) requestID, null);
+                }
+                BaseOperation.this.cancel(true);
 
-		if (isShowLoadingDialog)
-		{
-			showWaitingDialog();
-		}
-		
-	}
+            }
+        });
+
+        try {
+            if (!dialog.isShowing())
+                dialog.show();
+        } catch (Exception e) {
+        } // Show dialog on activity killed
+    }
+
+    @Override
+    protected void onPreExecute() {
+        activeOperations.put(this.getClass().getName(), this);
+        if (requestID != null)
+            activeOperationsMapByRequstId.put((int) requestID, this);
+        super.onPreExecute();
+
+        if (isShowLoadingDialog) {
+            showWaitingDialog();
+        }
+
+    }
 
 
-	@Override
-	protected CTOperationResponse doInBackground(Object... params)
-	{
-		CTOperationResponse response = new CTOperationResponse();
-		try
-		{
-			response.response = doMain();
-		}
-		catch (Throwable t)
-		{
-			if (!(t instanceof CTHttpError)) t.printStackTrace();
-			
-
-			response.error = t;
-		}
-		
-		
-		return response;
-	}
-
-	private void cancelConn() {
-		dismiss();
-		disconnect();
-	}
-
-	private void dismiss()
-	{
-		try {
-			if (isShowLoadingDialog && dialog.isShowing()) dialog.dismiss();
-		}
-		catch (Exception e) {
-		} // Dismiss on activity killed
-	}
-
-	public void disconnect() {
-		if (serverConnection != null) serverConnection.cancelConnection();
-	}
+    @Override
+    protected CTOperationResponse doInBackground(Object... params) {
+        CTOperationResponse response = new CTOperationResponse();
+        try {
+            response.response = doMain();
+        } catch (Throwable t) {
+            if (!(t instanceof CTHttpError)) t.printStackTrace();
 
 
-	@Override
-	protected void onCancelled()
-	{
-		super.onCancelled();
-		if (isShowLoadingDialog && dialog.isShowing()) dialog.dismiss();
-	}
-
-	@Override
-	protected void onPostExecute(CTOperationResponse result)
-	{
-		activeOperations.remove(this.getClass().getName());
-		if(requestID != null)
-			activeOperationsMapByRequstId.remove(requestID);
-		
-		super.onPostExecute(result);
-		try{
-			if (isShowLoadingDialog && dialog.isShowing()) 
-				dialog.dismiss();
-		}catch(Exception ex){
-			//ignore exception, as this happens sometimes 
-			ex.printStackTrace();
-		}
-		
-		doOnPostExecute(result);
-		// Wake observers with the result
-		for (RequestObserver observer : observersList){
-			
-			observer.handleRequestFinished(requestID, result.error, result.response);
-		}
-	}
-
-	public static BaseOperation<?> getActiveOperation(Class<? extends BaseOperation<?>> operationClass){
-		return activeOperations.get(operationClass.getName());
-	}
-	
-	public static BaseOperation<?> getActiveOperationByRequestId(Object requestId){
-		
-		if(requestId != null)
-			return activeOperationsMapByRequstId.get(requestId);		
-		return null;
-	}
+            response.error = t;
+        }
 
 
-	protected void doOnPostExecute(CTOperationResponse result){
-		
-	}
-	/**
-	 * Execute http request
-	 * 
-	 * @param requestUrl
-	 *          URL for the request
-	 * @param methodType
-	 *          GET/POST/PUT etc..
-	 * @param contentType
-	 *          Content Type
-	 * @param additionalHeaders
-	 *          any headers to be applied for the request
-	 * @param bodyEntity
-	 *          if it was a Post request and need a body
-	 * @param responseType
-	 *          Byte/String
-	 * @return the CTHttpResponse object
-	 */
-	public CTHttpResponse doRequest(String requestUrl, String methodType, final String contentType,
-	  final HashMap<String, String> additionalHeaders,  final HashMap<String, String> cookies, final HttpEntity bodyEntity, final ResponseType responseType)
-	{
-		CTHttpResponse response = serverConnection.sendRequestToServer(requestUrl, methodType, contentType,
-		  additionalHeaders, cookies,null, bodyEntity, responseType);
+        return response;
+    }
 
-		ensureHTTPRequestSucceeded(response);
-		return response;
-	}
-	public CTHttpResponse doRequest(String requestUrl, String methodType, final String contentType,
-									final HashMap<String, String> additionalHeaders,final HashMap<String, String> cookies, HttpParams params, final HttpEntity bodyEntity, final ResponseType responseType)
-	{
-		CTHttpResponse response = serverConnection.sendRequestToServer(requestUrl, methodType, contentType,
-				additionalHeaders,cookies ,params, bodyEntity, responseType);
+    private void cancelConn() {
+        dismiss();
+        disconnect();
+    }
 
-		if(params == null || response.statusCode != 302)ensureHTTPRequestSucceeded(response);
-		return response;
-	}
+    private void dismiss() {
+        try {
+            if (isShowLoadingDialog && dialog.isShowing()) dialog.dismiss();
+        } catch (Exception e) {
+        } // Dismiss on activity killed
+    }
 
-	/*
-	 * ******************************************************************
-	 * ********************** Observers Handling ************************
-	 * ******************************************************************
-	 */
-	/*
+    public void disconnect() {
+        if (serverConnection != null) serverConnection.cancelConnection();
+    }
+
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        if (isShowLoadingDialog && dialog.isShowing()) dialog.dismiss();
+    }
+
+    @Override
+    protected void onPostExecute(CTOperationResponse result) {
+        activeOperations.remove(this.getClass().getName());
+        if (requestID != null)
+            activeOperationsMapByRequstId.remove(requestID);
+
+        super.onPostExecute(result);
+        try {
+            if (isShowLoadingDialog && dialog.isShowing())
+                dialog.dismiss();
+        } catch (Exception ex) {
+            //ignore exception, as this happens sometimes
+            ex.printStackTrace();
+        }
+
+        doOnPostExecute(result);
+        // Wake observers with the result
+        for (RequestObserver observer : observersList) {
+
+            observer.handleRequestFinished(requestID, result.error, result.response);
+        }
+    }
+
+    public static BaseOperation<?> getActiveOperation(Class<? extends BaseOperation<?>> operationClass) {
+        return activeOperations.get(operationClass.getName());
+    }
+
+    public static BaseOperation<?> getActiveOperationByRequestId(Object requestId) {
+
+        if (requestId != null)
+            return activeOperationsMapByRequstId.get(requestId);
+        return null;
+    }
+
+
+    protected void doOnPostExecute(CTOperationResponse result) {
+
+    }
+
+    /**
+     * Execute http request
+     *
+     * @param requestUrl        URL for the request
+     * @param methodType        GET/POST/PUT etc..
+     * @param contentType       Content Type
+     * @param additionalHeaders any headers to be applied for the request
+     * @param bodyEntity        if it was a Post request and need a body
+     * @param responseType      Byte/String
+     * @return the CTHttpResponse object
+     */
+    public CTHttpResponse doRequest(String requestUrl, String methodType, final String contentType,
+                                    final HashMap<String, String> additionalHeaders, final HashMap<String, String> cookies, final HttpEntity bodyEntity, final ResponseType responseType) {
+        CTHttpResponse response = serverConnection.sendRequestToServer(requestUrl, methodType, contentType,
+                additionalHeaders, cookies, null, bodyEntity, responseType);
+
+        ensureHTTPRequestSucceeded(response);
+        return response;
+    }
+
+    public CTHttpResponse doRequest(String requestUrl, String methodType, final String contentType,
+                                    final HashMap<String, String> additionalHeaders, final HashMap<String, String> cookies, HttpParams params, final HttpEntity bodyEntity, final ResponseType responseType) {
+        CTHttpResponse response = serverConnection.sendRequestToServer(requestUrl, methodType, contentType,
+                additionalHeaders, cookies, params, bodyEntity, responseType);
+
+        if (params == null || response.statusCode != 302) ensureHTTPRequestSucceeded(response);
+        return response;
+    }
+
+    /*
+     * ******************************************************************
+     * ********************** Observers Handling ************************
+     * ******************************************************************
+     */
+    /*
 	 * Add Request Observer to List
 	 */
-	public BaseOperation<T> addRequsetObserver(RequestObserver requestObserver)
-	{
-		// remove the observer if it was already added here
-		removeRequestObserver(requestObserver);
-		// add to observers List
-		observersList.add(requestObserver);
-		
-		return this;
-	}
+    public BaseOperation<T> addRequsetObserver(RequestObserver requestObserver) {
+        // remove the observer if it was already added here
+        removeRequestObserver(requestObserver);
+        // add to observers List
+        observersList.add(requestObserver);
 
-	/*
-	 * Remove Request Observer from the list
-	 */
-	public void removeRequestObserver(RequestObserver requestObserver)
-	{
-		observersList.remove(requestObserver);
-	}
+        return this;
+    }
 
-	// //////////////// End of observers handling /////////////////////
+    /*
+     * Remove Request Observer from the list
+     */
+    public void removeRequestObserver(RequestObserver requestObserver) {
+        observersList.remove(requestObserver);
+    }
 
-	/*
-	 * Check if the response is Valid HTTP Response
-	 */
-	protected void ensureHTTPRequestSucceeded( CTHttpResponse response)
-	{
-		if (response == null)
-		{
-			throw new RuntimeException("Invalid Response Object while processing operation ["
-			  + this.getClass().getName() + "]");
-		}
+    // //////////////// End of observers handling /////////////////////
 
-		if (response.statusCode != HttpURLConnection.HTTP_OK && response.statusCode != HttpURLConnection.HTTP_CREATED
-		  && response.statusCode != HttpURLConnection.HTTP_ACCEPTED)
-		{
-			throw new CTHttpError(response.statusMessage, response.statusCode);
-		}
-	}
+    /*
+     * Check if the response is Valid HTTP Response
+     */
+    protected void ensureHTTPRequestSucceeded(CTHttpResponse response) {
+        if (response == null) {
+            throw new RuntimeException("Invalid Response Object while processing operation ["
+                    + this.getClass().getName() + "]");
+        }
 
-	/*
-	 * Check if the JSON response is succeeded
-	 */
-	protected static void ensureRequestSucceeded(JSONObject responseJSON)
-	{
+        if (response.statusCode != HttpURLConnection.HTTP_OK && response.statusCode != HttpURLConnection.HTTP_CREATED
+                && response.statusCode != HttpURLConnection.HTTP_ACCEPTED) {
+            throw new CTHttpError(response.statusMessage, response.statusCode);
+        }
+    }
+
+    /*
+     * Check if the JSON response is succeeded
+     */
+    protected static void ensureRequestSucceeded(JSONObject responseJSON) {
 //		if (responseJSON != null)
 //		{
 //			String statusCode = responseJSON.optString(ServerKeys.STATUS_CODE);
@@ -287,25 +262,22 @@ public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOpera
 //					throw new CTHttpError(statusMessage, Double.valueOf(statusCode));
 //			}
 //		}
-	}
+    }
 
-	/*
-	 * Setters & Getters
-	 */
-	public void setShowLoadingDialog(boolean isShowLoadingDialog)
-	{
-		this.isShowLoadingDialog = isShowLoadingDialog;
-	}
+    /*
+     * Setters & Getters
+     */
+    public void setShowLoadingDialog(boolean isShowLoadingDialog) {
+        this.isShowLoadingDialog = isShowLoadingDialog;
+    }
 
-	public boolean isShowLoadingDialog()
-	{
-		return isShowLoadingDialog;
-	}
+    public boolean isShowLoadingDialog() {
+        return isShowLoadingDialog;
+    }
 
-	public HashMap<String, String> getAdditionalHeaders()
-	{
-		HashMap<String, String> additionalHeaders = new HashMap<String, String>();
+    public HashMap<String, String> getAdditionalHeaders() {
+        HashMap<String, String> additionalHeaders = new HashMap<String, String>();
 
-		return additionalHeaders;
-	}
+        return additionalHeaders;
+    }
 }

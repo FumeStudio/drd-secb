@@ -20,6 +20,7 @@ import com.secb.android.controller.backend.NewsCategoryOperation;
 import com.secb.android.controller.backend.NewsListOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.E_ServicesManager;
+import com.secb.android.controller.manager.Engine;
 import com.secb.android.model.E_ServiceRequestItem;
 import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.E_ServicesFilterData;
@@ -52,6 +53,7 @@ import com.secb.android.view.fragments.OrganizersListFragment;
 import com.secb.android.view.fragments.TestFragment;
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
 import org.joda.time.DateTime;
@@ -496,6 +498,9 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	/*let fragment handle requestFinished*/
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject) {
+        try {
+            Engine.setApplicationLanguage(this, Engine.getAppConfiguration().getLanguage());
+        }catch (Exception ex){}
 //gallery
 		if (((int) requestId == RequestIds.PHOTO_GALLERY_REQUEST_ID ||
 				(int) requestId == RequestIds.VIDEO_GALLERY_REQUEST_ID) &&
@@ -612,6 +617,8 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	public static String reFormatNewsDate(String oldDate, SimpleDateFormat sdf)
 	{
+        if(Utilities.isNullString(oldDate))
+            return "";
 		String newString = null;
 		String elapsed=null;
 		try {

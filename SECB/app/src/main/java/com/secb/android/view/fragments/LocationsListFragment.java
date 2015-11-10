@@ -244,8 +244,7 @@ public class LocationsListFragment extends SECBBaseFragment
 	}
 
 	private void stopWaiting() {
-		if(progressDialog!=null&& progressDialog.isShowing())
-		{
+		if(progressDialog!=null&& progressDialog.isShowing()) {
 			progressDialog.dismiss();
 		}
 	}
@@ -277,9 +276,7 @@ public class LocationsListFragment extends SECBBaseFragment
 			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
 			if((int)requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID && resultObject!=null){
 				locationItems= (ArrayList<LocationItem>) resultObject;
-
 			}
-
 		}
 		else if (error != null && error instanceof CTHttpError)
 		{

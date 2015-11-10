@@ -227,7 +227,8 @@ public class NewsListFragment extends SECBBaseFragment
 		if(newsList!= null && newsList.size()>0){
 			handleRequestFinished(RequestIds.NEWS_LIST_REQUEST_ID, null, newsList);
 		}
-		else {
+		else
+		{
 			if (((MainActivity) getActivity()).isNewsLoadingFinished == false) {
 				startWaiting();
 			}

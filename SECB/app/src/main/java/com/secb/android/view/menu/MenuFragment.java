@@ -246,6 +246,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
         {
             boolean changeToEnglish ;
             changeToEnglish = UiEngine.isDeviceLanguageArabic(getActivity());
+            net.comptoirs.android.common.helper.Logger.instance().v("LANGUAGE", "onDilaogConfirmed ");
             ((SECBBaseActivity) getActivity()).changeAppLanguage(changeToEnglish);
         }
         else if(confirmAbout==CONFIRM_LOGOUT)
