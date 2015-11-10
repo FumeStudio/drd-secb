@@ -165,6 +165,7 @@
     <string name="hours">ساعات</string>
     <string name="minutes">دقائق</string>
     <string name="ago">منذ</string>
+    <string name="error_player">لا يمكن تشغيل هذا الملف</string>
 
 
 </resources>

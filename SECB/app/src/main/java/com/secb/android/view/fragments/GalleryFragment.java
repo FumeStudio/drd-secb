@@ -30,6 +30,7 @@ import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.secb.android.view.YoutubePlayerActivity;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.recycler_gallery.GalleryItemRecyclerAdapter;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -352,14 +353,17 @@ public class GalleryFragment extends SECBBaseFragment
 
 	private void playVideo(String videoUrlvideoUrl)
 	{
+
 		if(!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube"))
 		{
 			String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
 			if(!Utilities.isNullString(videoId)/*&&youTubePlayer!=null*/)
 			{
+				((MainActivity)getActivity()).playYouTubeVideo(videoId);
 			    layout_videoPlayerContainer.setVisibility(View.VISIBLE);
 //			    youTubePlayer.cueVideo(videoId);
-				initYoutubePlayer(videoId);
+
+//				initYoutubePlayer(videoId);
 			}
 		}
 		else
@@ -409,7 +413,8 @@ public class GalleryFragment extends SECBBaseFragment
 	/** Youtube api*/
 	private void initYoutubePlayer(final String videoId) {
 		youTubePlayerSupportFragment= new YouTubePlayerSupportFragment();
-		youTubePlayerSupportFragment.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+		youTubePlayerSupportFragment.initialize(YoutubePlayerActivity.API_KEY/*YOUTUBE_API_KEY*/, new YouTubePlayer.OnInitializedListener() {
 
 
 			@Override

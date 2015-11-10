@@ -296,6 +296,13 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		addFragment(contactUsFragment, contactUsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 	}
+
+	public void playYouTubeVideo(String videoUrlvideoUrl)
+	{
+		Intent intent = new Intent(this,YoutubePlayerActivity.class);
+		intent.putExtra("youtubeVideoId",videoUrlvideoUrl);
+		startActivity(intent);
+	}
 //==================================================================================================
 
 	/*background tasks to
