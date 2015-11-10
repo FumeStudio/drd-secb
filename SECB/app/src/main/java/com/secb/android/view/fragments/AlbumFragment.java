@@ -371,7 +371,9 @@ public class AlbumFragment extends SECBBaseFragment
 	    {
 //			    layout_videoPlayerContainer.setVisibility(View.VISIBLE);
 //			    youTubePlayer.cueVideo(videoId);
-		    initYoutubePlayer(videoId);
+
+//			    initYoutubePlayer(videoId);
+		    ((MainActivity)getActivity()).playYouTubeVideo(videoId);
 	    }
     }
 	    else

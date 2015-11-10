@@ -174,4 +174,5 @@
     <string name="minutes">Minutes</string>
     <string name="ago">Ago</string>
     <string name="news_no_status">There are no Status</string>
+    <string name="error_player">Can\'t Play This Video</string>
 </resources>
