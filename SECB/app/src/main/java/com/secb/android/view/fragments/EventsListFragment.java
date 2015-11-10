@@ -32,6 +32,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -49,9 +50,18 @@ public class EventsListFragment extends SECBBaseFragment
 	TextView txtv_noData;
     private EventsFilterLayout eventsFilterLayout=null;
 	private ProgressDialog progressDialog;
+	private String startDate , endDate;
 
-    public static EventsListFragment newInstance() {
+	public static EventsListFragment newInstance() {
         EventsListFragment fragment = new EventsListFragment();
+        return fragment;
+    }
+    public static EventsListFragment newInstance(String startDate , String endDate) {
+        EventsListFragment fragment = new EventsListFragment();
+	    Bundle bundle = new Bundle();
+	    bundle.putString("startDate", startDate);
+	    bundle.putString("endDate", endDate);
+	    fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -98,6 +108,12 @@ public class EventsListFragment extends SECBBaseFragment
             handleButtonsEvents();
             applyFonts();
         }
+	    Bundle bundle = getArguments();
+	    if (bundle != null) {
+		    startDate=  bundle.getString("startDate");
+		    endDate=  bundle.getString("endDate");
+	    }
+
         initViews(view);
 	    ((MainActivity)getActivity()).setEventsRequstObserver(this);
         initFilterLayout();
@@ -234,19 +250,25 @@ public class EventsListFragment extends SECBBaseFragment
 		//start operation here.
 
 
-		eventsList = (ArrayList<EventItem>) EventsManager.getInstance().getEventsUnFilteredList(getActivity());
-		if(eventsList!= null && eventsList.size()>0){
-			handleRequestFinished(RequestIds.EVENTS_LIST_REQUEST_ID, null, eventsList);
+		if(!Utilities.isNullString(startDate)&&!Utilities.isNullString(endDate)){
+		/*from calendar*/
+			eventsFilterData = new EventsFilterData();
+			eventsFilterData.timeFrom=startDate;
+			eventsFilterData.timeTo=endDate;
+			startEventsListOperation(eventsFilterData, true);
 		}
 		else {
-			if (((MainActivity) getActivity()).isEventsLoadingFinished == false) {
-				startWaiting();
-			}
-			else{
-				startEventsListOperation(new EventsFilterData(),true);
+			eventsList = (ArrayList<EventItem>) EventsManager.getInstance().getEventsUnFilteredList(getActivity());
+			if (eventsList != null && eventsList.size() > 0) {
+				handleRequestFinished(RequestIds.EVENTS_LIST_REQUEST_ID, null, eventsList);
+			} else {
+				if (((MainActivity) getActivity()).isEventsLoadingFinished == false) {
+					startWaiting();
+				} else {
+					startEventsListOperation(new EventsFilterData(), true);
+				}
 			}
 		}
-
 	}
 
 

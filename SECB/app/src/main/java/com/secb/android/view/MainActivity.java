@@ -196,6 +196,11 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		EventsListFragment eventsListFragment = EventsListFragment.newInstance();
 		addFragment(eventsListFragment, eventsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 	}
+//used only with calendar
+	public void openEventListFragment(String startDate ,String endDate ) {
+		EventsListFragment eventsListFragment = EventsListFragment.newInstance(startDate,endDate);
+		addFragment(eventsListFragment, eventsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	}
 
 
 	public void openEventDetailsFragment(EventItem eventItem) {

@@ -44,6 +44,7 @@ import com.secb.android.view.menu.MenuFragment;
 import com.secb.android.view.menu.MenuItem;
 
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.SharedPreferenceData;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -670,6 +671,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         if (!changeToEnglish)
             languageToLoad = "ar";
 
+	    SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(this);
+	    sharedPreferenceData.save("language",languageToLoad);
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
