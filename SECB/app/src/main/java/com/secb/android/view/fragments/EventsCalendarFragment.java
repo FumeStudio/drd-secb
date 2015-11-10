@@ -55,8 +55,10 @@ public class EventsCalendarFragment extends SECBBaseFragment
     private TextView txtv_eventImgDate_month;
 
     public static Date lastSelectedDate;
+	private String endDate;
+	private String startDate;
 
-    public static EventsCalendarFragment newInstance() {
+	public static EventsCalendarFragment newInstance() {
         EventsCalendarFragment fragment = new EventsCalendarFragment();
         lastSelectedDate = new Date();
         return fragment;
@@ -153,7 +155,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtv_viewAllEvents:
-                ((MainActivity) getActivity()).openEventListFragment();
+                ((MainActivity) getActivity()).openEventListFragment(startDate,endDate);
                 break;
             case R.id.event_card_container:
                 ((MainActivity) getActivity()).openEventDetailsFragment(cardEventItem);
@@ -221,8 +223,26 @@ public class EventsCalendarFragment extends SECBBaseFragment
                     Calendar cal = Calendar.getInstance();
                     cal.set(year, month, 1);
                     monthTextView.setText(cal.getDisplayName(Calendar.MONTH,
-                            Calendar.LONG, currentLocale) + " " + year);
+		                    Calendar.LONG, currentLocale) + " " + year);
 
+	                Calendar calendarFrom =Calendar.getInstance(),
+			                calendarTo =Calendar.getInstance();
+
+	                calendarFrom.set(cal.get(Calendar.YEAR) ,
+			                cal.get(cal.MONTH),
+			                cal.getActualMinimum(Calendar.DAY_OF_MONTH) ,
+			                1 ,0 ,0 /*hr, min , sec*/
+	                );
+	                startDate = MainActivity.sdf_Source_News.format(new Date(calendarFrom.getTimeInMillis()));
+	       /*         if(!Utilities.isNullString(startDate))
+		                startDate=startDate.replace("T24","T00");*/
+	                calendarTo.set(cal.get(Calendar.YEAR) ,
+			                cal.get(cal.MONTH),
+			                cal.getActualMaximum(Calendar.DAY_OF_MONTH),
+			                23 ,59,59 /*hr, min , sec*/
+	                );
+	                endDate = MainActivity.sdf_Source_News.format(new Date(calendarTo.getTimeInMillis()));
+	                ((SECBBaseActivity)getActivity()).displayToast("startDate: "+startDate+"\nendDate: "+endDate);
                 }
             });
 

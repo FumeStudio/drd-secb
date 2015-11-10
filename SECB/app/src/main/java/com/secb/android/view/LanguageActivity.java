@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.secb.android.R;
-import com.secb.android.controller.manager.Engine;
 
 import net.comptoirs.android.common.helper.SharedPreferenceData;
 import net.comptoirs.android.common.helper.Utilities;
+import net.comptoirs.android.common.view.CTApplication;
 
 public class LanguageActivity extends SECBBaseActivity {
 
@@ -30,9 +30,13 @@ public class LanguageActivity extends SECBBaseActivity {
     }
 
     private void applyPreferredLanguage() {
-//        prefsLanguage = (String) sharedPreferenceData.get("language",String.class);
+	    SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(CTApplication.getContext());
+        prefsLanguage = (String) sharedPreferenceData.get("language",String.class);
 
-        prefsLanguage = Engine.getAppConfiguration().getLanguage();
+//        prefsLanguage = Engine.getAppConfiguration().getLanguage();
+//	    AppConfiguration appConfig = CachingManager.getInstance().loadAppConfiguration();
+//	    prefsLanguage = appConfig.getLanguage();
+
         if(!Utilities.isNullString(prefsLanguage));
         {
             if(prefsLanguage.equalsIgnoreCase("en")) {

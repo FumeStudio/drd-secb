@@ -30,6 +30,7 @@ import com.secb.android.view.components.recycler_events.EventsCategoryFilterRecy
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
             txtv_event_filter_time_from_title ,
             txtv_event_filter_time_to_title ;
 
-
+	private String selectedDateFrom,selectedDateTo;
     private Button btn_applyFilter;
 
 	private TextView txtv_noData;
@@ -229,8 +230,8 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
 
 	    EventsCityItem selectedItem = ((EventsCityItem) spn_city.getSelectedItem());
 	    eventsFilterData.city=selectedItem.ID;
-	    eventsFilterData.timeFrom = txtv_timeFrom.getText().toString();
-        eventsFilterData.timeTo = txtv_timeTo.getText().toString();
+	    eventsFilterData.timeFrom =selectedDateFrom /*txtv_timeFrom.getText().toString()*/;
+        eventsFilterData.timeTo = selectedDateTo/*txtv_timeTo.getText().toString()*/;
 	    EventsCategoryItem selectedCategory = EventsManager.getInstance().getSelectedCategory();
 	    if( selectedCategory!=null)
 	    {
@@ -275,10 +276,10 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txtv_news_filter_time_from_value:
-                showDateTimePicker(txtv_timeFrom);
+                showDateTimePicker(txtv_timeFrom , true );
                 break;
             case R.id.txtv_news_filter_time_to_value:
-                showDateTimePicker(txtv_timeTo);
+                showDateTimePicker(txtv_timeTo , false);
             break;
         }
     }
@@ -288,7 +289,7 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
 		super.onDetachedFromWindow();
 		eventsCategoriesRecyclerView.setAdapter(null);
 	}
-    public void showDateTimePicker(final TextView textView)
+    public void showDateTimePicker(final TextView textView , final boolean isDateFrom)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final DateTimePickerDialogView dialogView = new DateTimePickerDialogView(context);
@@ -297,7 +298,28 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(dialogView.getSelectedDateTime().getTimeInMillis()));
+	            Calendar selectedDateCalendar = dialogView.getSelectedDateTime();
+	            if(isDateFrom)
+	            {
+		            selectedDateCalendar.set(selectedDateCalendar.get(Calendar.YEAR) ,
+				            selectedDateCalendar.get(Calendar.MONTH),
+				            selectedDateCalendar.get(Calendar.DAY_OF_MONTH) ,
+				            1 ,0 ,0 /*hr, min , sec*/
+				            );
+		            selectedDateFrom = MainActivity.sdf_Source_News.format(new Date(selectedDateCalendar.getTimeInMillis()));
+
+	            }
+	            else{/*is Date to*/
+		            selectedDateCalendar.set(selectedDateCalendar.get(Calendar.YEAR) ,
+				            selectedDateCalendar.get(Calendar.MONTH),
+				            selectedDateCalendar.get(Calendar.DAY_OF_MONTH) ,
+				            23 ,59,59 /*hr, min , sec*/
+		            );
+		            selectedDateTo = MainActivity.sdf_Source_News.format(new Date(selectedDateCalendar.getTimeInMillis()));
+
+	            }
+
+	             CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(selectedDateCalendar.getTimeInMillis()));
                 textView.setText(time);
                 dialog.dismiss();
             }
