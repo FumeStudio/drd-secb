@@ -206,29 +206,29 @@ public class LocationsListFragment extends SECBBaseFragment
 ////                Utilities.showToastMsg("Locationslist over scrolled", Toast.LENGTH_SHORT);
 //			}
 //		});
-        locationsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView,
-                                             int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int visibleItemCount = linearLayoutManager.getChildCount();
-                int totalItemCount = linearLayoutManager.getItemCount();
-                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-
-                if (!mIsLoading && !mIsLastPage) {
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                            && firstVisibleItemPosition >= 0
-                            && totalItemCount >= PAGE_SIZE) {
-                        Utilities.showToastMsg("load more...", Toast.LENGTH_SHORT);
-                    }
-                }
-            }
-        });
+//        locationsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView,
+//                                             int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                int visibleItemCount = linearLayoutManager.getChildCount();
+//                int totalItemCount = linearLayoutManager.getItemCount();
+//                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+//
+//                if (!mIsLoading && !mIsLastPage) {
+//                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+//                            && firstVisibleItemPosition >= 0
+//                            && totalItemCount >= PAGE_SIZE) {
+//                        Utilities.showToastMsg("load more...", Toast.LENGTH_SHORT);
+//                    }
+//                }
+//            }
+//        });
     }
 
 	private void bindViews() {

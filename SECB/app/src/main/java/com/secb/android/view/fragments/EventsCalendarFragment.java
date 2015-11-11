@@ -194,7 +194,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
         txtv_viewAllEvents.setOnClickListener(this);
 
 
-	    Calendar cal =Calendar.getInstance();
+	    Calendar cal = Calendar.getInstance();
 	    cal.setTime(lastSelectedDate);
         bindEventCard(lastSelectedDate);
 	    getMonthEvents(cal);
@@ -330,6 +330,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
 	}
 
 	public List<EventItem> getEvents(int year, int month, int day){
+//        Logger.instance().v("EventsCalendarFrag", "getEvents called: "+day +" , "+ month +" , "+ year);
 		Calendar cal= Calendar.getInstance();
 		cal.set(year, month, day);
 		EventItem eventItem = EventsManager.getInstance().getEventOnDate(cal.getTime());
