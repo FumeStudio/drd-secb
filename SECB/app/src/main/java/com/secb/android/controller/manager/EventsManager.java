@@ -27,6 +27,9 @@ public class EventsManager {
 	private List<EventsCityItem> eventsCityItems;
 	private EventItem eventDetails;
 
+
+	private ArrayList<EventItem> monthEventsList;
+
 	private EventsManager() {
     }
     public static EventsManager getInstance() {
@@ -168,4 +171,12 @@ public class EventsManager {
 		return eventsInCategory.get(eventsCategory);
 	}
 
+	public void setMonthEventsList(ArrayList<EventItem> eventsList) {
+		this.monthEventsList=eventsList;
+	}
+
+
+	public ArrayList<EventItem> getMonthEventsList() {
+		return monthEventsList;
+	}
 }

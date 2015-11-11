@@ -1,8 +1,14 @@
 package com.secb.android.model;
 
+import android.graphics.Color;
+
+import com.p_v.flexiblecalendar.entity.Event;
+
+import net.comptoirs.android.common.helper.Utilities;
+
 import java.io.Serializable;
 
-public class EventItem implements Serializable {
+public class EventItem implements Serializable ,Event{
 /*    public transient  Bitmap eventItemImage;*/
 
     public double eventItemLatitude ;
@@ -22,6 +28,22 @@ public class EventItem implements Serializable {
 	public String IsAllDayEvent;
 	public String IsRecurrence;
 	public String ImageUrl;
+
+	@Override
+	public int getColor()
+	{
+		int color=0;
+		if(!Utilities.isNullString(EventColor)){
+			try {
+				if(!EventColor.startsWith("#"))
+					EventColor="#"+EventColor;
+				color=Color.parseColor(EventColor);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return color;
+	}
 
 
 

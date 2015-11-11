@@ -252,10 +252,13 @@ public class EventsListFragment extends SECBBaseFragment
 
 		if(!Utilities.isNullString(startDate)&&!Utilities.isNullString(endDate)){
 		/*from calendar*/
-			eventsFilterData = new EventsFilterData();
+			/*eventsFilterData = new EventsFilterData();
 			eventsFilterData.timeFrom=startDate;
 			eventsFilterData.timeTo=endDate;
-			startEventsListOperation(eventsFilterData, true);
+			startEventsListOperation(eventsFilterData, true);*/
+			eventsList = EventsManager.getInstance().getMonthEventsList();
+			bindViews();
+
 		}
 		else {
 			eventsList = (ArrayList<EventItem>) EventsManager.getInstance().getEventsUnFilteredList(getActivity());
