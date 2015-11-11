@@ -397,7 +397,7 @@ public class AlbumFragment extends SECBBaseFragment
             Glide.with(getActivity())
                     .load(imageUrl)
                     .placeholder(R.drawable.image_place_holder) // optional
-                    .centerCrop()
+//                    .centerCrop()
                     .into(imgv_imageAlbum);
 
             layout_imagePlayerContainer.setVisibility(View.VISIBLE);

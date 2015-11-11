@@ -62,7 +62,7 @@ public class Logger
 	}
 	public void v(String tag, Object msg, boolean writeToFile)
 	{
-		Log.v(tag, msg + "");
+//		Log.v(tag, msg + "");
 //		 if(canWrite && writeToFile)
 		// {
 		// try

@@ -51,7 +51,11 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity /*SECBBaseActivit
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+		Window window = getWindow();
+		WindowManager.LayoutParams wlp = window.getAttributes();
+		wlp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+		wlp.dimAmount = (float) 0.5;
+		window.setAttributes(wlp);
 		setContentView(R.layout.youtube_player_activity);
 
 		youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);

@@ -1,50 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--    android:paddingBottom="@dimen/event_card_margin"
+<?xml version="1.0" encoding="utf-8"?><!--    android:paddingBottom="@dimen/event_card_margin"
     android:paddingTop="@dimen/event_card_margin"-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_card_height"
+    android:layout_marginBottom="@dimen/eguide_base_padding"
+    android:layout_marginTop="@dimen/eguide_base_padding"
+    android:background="@color/off_white"
     android:orientation="horizontal"
     android:padding="@dimen/event_card_margin"
-    android:weightSum="3"
-    android:background="@color/off_white"
-    android:layout_marginBottom="@dimen/eguide_base_padding"
-    android:layout_marginTop="@dimen/eguide_base_padding">
+    android:weightSum="3">
 
 
-        <ImageView
-            android:id="@+id/imgv_eventImg"
-            android:layout_width="@dimen/evet_card_img_size"
-            android:layout_height="@dimen/evet_card_img_size"
-            android:layout_marginRight="@dimen/event_card_margin"
-            android:src="@drawable/event_card_img"
-            android:visibility="gone"/>
-        <LinearLayout
-            android:layout_width="@dimen/evet_card_img_size"
-            android:layout_height="@dimen/evet_card_img_size"
-            android:background="@color/secb_dark_text"
-            android:layout_marginRight="@dimen/event_card_margin"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            android:gravity="center">
-            <TextView
-                android:id="@+id/txtv_eventImgDate_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="13"
-                android:textColor="@color/secb_orange"
-                android:textSize="@dimen/eventImgDate_day_text_size"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:id="@+id/txtv_eventImgDate_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OCT"
-                android:textColor="@color/white"
-                android:textSize="@dimen/eventImgDate_month_text_size"
-                />
-        </LinearLayout>
+    <ImageView
+        android:id="@+id/imgv_eventImg"
+        android:layout_width="@dimen/evet_card_img_size"
+        android:layout_height="@dimen/evet_card_img_size"
+        android:layout_marginRight="@dimen/event_card_margin"
+        android:src="@drawable/event_card_img"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="@dimen/evet_card_img_size"
+        android:layout_height="@dimen/evet_card_img_size"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/event_card_margin"
+        android:background="@color/secb_dark_text"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtv_eventImgDate_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13"
+            android:textColor="@color/secb_orange"
+            android:textSize="@dimen/eventImgDate_day_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtv_eventImgDate_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OCT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eventImgDate_month_text_size" />
+    </LinearLayout>
 
 
     <!--android:layout_marginRight="@dimen/event_card_margin"-->
@@ -63,9 +63,9 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textStyle="bold"
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/event_card_h1_text_size" />
+            android:textSize="@dimen/event_card_h1_text_size"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtv_eventDescription"
@@ -158,6 +158,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/event_card_time_icon"
+                android:drawablePadding="3dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/secb_dark_text"
@@ -171,6 +172,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/event_card_place_icon"
+                android:drawablePadding="3dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/secb_dark_text"
@@ -184,6 +186,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/event_card_filter_icon"
+                android:drawablePadding="3dp"
+                android:text=""
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/secb_dark_text"

@@ -44,6 +44,7 @@ public class LocationsListFragment extends SECBBaseFragment
 {
 	private static final String TAG = "LocationsListFragment";
     RecyclerView locationsRecyclerView;
+    LinearLayoutManager linearLayoutManager;
     LocationsItemRecyclerAdapter locationsItemRecyclerAdapter;
     ArrayList<LocationItem> locationItems;
     LocationsFilterData locationsFilterData;
@@ -52,7 +53,8 @@ public class LocationsListFragment extends SECBBaseFragment
     private LocationsFilterLayout locationsFilterLayout =null;
 	private ProgressDialog progressDialog;
 
-
+    boolean mIsLoading , mIsLastPage;
+    int PAGE_SIZE = 5;
 	public static LocationsListFragment newInstance() {
         LocationsListFragment fragment = new LocationsListFragment();
         return fragment;
@@ -194,16 +196,39 @@ public class LocationsListFragment extends SECBBaseFragment
 	    });
 	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
 	    locationsRecyclerView = (RecyclerView) view.findViewById(R.id.locationsRecyclerView);
-		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+		linearLayoutManager = new LinearLayoutManager(getActivity());
         locationsRecyclerView.setLayoutManager(linearLayoutManager);
         locationsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), locationsRecyclerView, this));
-		locationsRecyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-			@Override
-			public void onLoadMore(int current_page) {
-				Logger.instance().v("Paging", "Locationslist over scrolled");
-//                Utilities.showToastMsg("Locationslist over scrolled", Toast.LENGTH_SHORT);
-			}
-		});
+//		locationsRecyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+//			@Override
+//			public void onLoadMore(int current_page) {
+//				Logger.instance().v("Paging", "Locationslist over scrolled");
+////                Utilities.showToastMsg("Locationslist over scrolled", Toast.LENGTH_SHORT);
+//			}
+//		});
+        locationsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView,
+                                             int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = linearLayoutManager.getChildCount();
+                int totalItemCount = linearLayoutManager.getItemCount();
+                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+
+                if (!mIsLoading && !mIsLastPage) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= PAGE_SIZE) {
+                        Utilities.showToastMsg("load more...", Toast.LENGTH_SHORT);
+                    }
+                }
+            }
+        });
     }
 
 	private void bindViews() {

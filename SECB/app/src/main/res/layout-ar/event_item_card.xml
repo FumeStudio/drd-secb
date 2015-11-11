@@ -129,11 +129,10 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:drawableRight="@drawable/event_card_time_icon"
+                android:drawablePadding="3dp"
                 android:ellipsize="end"
                 android:gravity="right"
-
                 android:maxLines="1"
-
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"/>
 
@@ -145,7 +144,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/event_card_margin"
                 android:layout_weight="1"
-
+                android:drawablePadding="3dp"
                 android:drawableRight="@drawable/event_card_place_icon"
                 android:ellipsize="end"
                 android:gravity="right"
@@ -162,8 +161,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/event_card_margin"
                 android:layout_weight="1"
-
                 android:drawableRight="@drawable/event_card_filter_icon"
+                android:drawablePadding="3dp"
                 android:ellipsize="end"
                 android:gravity="right"
                 android:maxLines="1"
