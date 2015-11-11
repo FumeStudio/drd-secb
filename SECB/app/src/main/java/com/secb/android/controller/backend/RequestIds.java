@@ -23,4 +23,5 @@ public class RequestIds
 	public static final int CONTACT_US_REQUEST_ID = 19;
 	public static final int E_SERVICES_REQUESTS_TYPES_LIST_REQUEST_ID = 17;
 	public static final int E_SERVICES_REQUESTS_WORKSPACE_MODES_LIST_REQUEST_ID = 18;
+	public static final int EVENTS_LIST_OF_MONTH_REQUEST_ID = 19;
 }

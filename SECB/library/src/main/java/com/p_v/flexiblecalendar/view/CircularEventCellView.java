@@ -105,12 +105,12 @@ public class CircularEventCellView extends BaseCellView {
             paintList = new ArrayList<>(colorList.size());
             for(Event e: colorList){
                 Paint eventPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                eventPaint.setStyle(Paint.Style.FILL);
-                eventPaint.setColor(getContext().getResources().getColor(e.getColor()));
+                eventPaint.setStyle(Paint.Style.FILL_AND_STROKE/*FILL*/);
+                eventPaint.setColor(/*getContext().getResources().getColor*/(e.getColor()));
                 paintList.add(eventPaint);
             }
             invalidate();
-            requestLayout();
+	            requestLayout();
         }
     }
 

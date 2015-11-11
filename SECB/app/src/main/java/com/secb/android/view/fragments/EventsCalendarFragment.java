@@ -11,11 +11,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.p_v.flexiblecalendar.FlexibleCalendarView;
+import com.p_v.flexiblecalendar.entity.Event;
 import com.p_v.flexiblecalendar.view.BaseCellView;
 import com.secb.android.R;
-import com.secb.android.controller.manager.DevData;
+import com.secb.android.controller.backend.EventsListOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EventItem;
+import com.secb.android.model.EventsFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
@@ -28,11 +31,12 @@ import net.comptoirs.android.common.helper.Utilities;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class EventsCalendarFragment extends SECBBaseFragment
         implements FragmentBackObserver, View.OnClickListener, FlexibleCalendarView.OnDateClickListener, RequestObserver {
-    private static final int EVENTS_LIST_REQUEST_ID = 6;
+
     private static final String TAG = "EventsCalendarFragment";
     ArrayList<EventItem> eventsList;
     View view;
@@ -166,7 +170,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
     }
 
     private void initViews(View view) {
-        eventsList = DevData.getEventsList();
+//        eventsList = DevData.getEventsList();
         calendarView = (FlexibleCalendarView) view.findViewById(R.id.calendar_view);
         monthTextView = (TextView) view.findViewById(R.id.month_text_view);
         txtv_viewAllEvents = (TextView) view.findViewById(R.id.txtv_viewAllEvents);
@@ -190,7 +194,10 @@ public class EventsCalendarFragment extends SECBBaseFragment
         txtv_viewAllEvents.setOnClickListener(this);
 
 
+	    Calendar cal =Calendar.getInstance();
+	    cal.setTime(lastSelectedDate);
         bindEventCard(lastSelectedDate);
+	    getMonthEvents(cal);
 
     }
 
@@ -218,12 +225,13 @@ public class EventsCalendarFragment extends SECBBaseFragment
 
             calendarView.setStartDayOfTheWeek(Calendar.SUNDAY, customDayNames);
             calendarView.setOnMonthChangeListener(new FlexibleCalendarView.OnMonthChangeListener() {
-                @Override
-                public void onMonthChange(int year, int month, @FlexibleCalendarView.Direction int direction) {
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(year, month, 1);
-                    monthTextView.setText(cal.getDisplayName(Calendar.MONTH,
-		                    Calendar.LONG, currentLocale) + " " + year);
+	            @Override
+	            public void onMonthChange(int year, int month, @FlexibleCalendarView.Direction int direction)
+	            {
+		            Calendar cal = Calendar.getInstance();
+		            cal.set(year, month, 1);
+		            monthTextView.setText(cal.getDisplayName(Calendar.MONTH,
+				            Calendar.LONG, currentLocale) + " " + year);
 
 	                Calendar calendarFrom =Calendar.getInstance(),
 			                calendarTo =Calendar.getInstance();
@@ -242,46 +250,96 @@ public class EventsCalendarFragment extends SECBBaseFragment
 			                23 ,59,59 /*hr, min , sec*/
 	                );
 	                endDate = MainActivity.sdf_Source_News.format(new Date(calendarTo.getTimeInMillis()));
-//	                ((SECBBaseActivity)getActivity()).displayToast("> startDate: "+startDate+"\nendDate: "+endDate);
+	                ((SECBBaseActivity)getActivity()).displayToast("startDate: "+startDate+"\nendDate: "+endDate);
                 }
             });
 
             calendarView.setShowDatesOutsideMonth(true);
 
             calendarView.setCalendarView(new FlexibleCalendarView.CalendarView() {
-                @Override
-                public BaseCellView getCellView(int position, View convertView, ViewGroup parent, int cellType) {
-                    BaseCellView cellView = (BaseCellView) convertView;
-                    if (cellView == null) {
-                        LayoutInflater inflater = LayoutInflater.from(getActivity());
-                        cellView = (BaseCellView) inflater.inflate(R.layout.event_calendar_date_cell_view, null);
-                    }
-                    return cellView;
-                }
+	            @Override
+	            public BaseCellView getCellView(int position, View convertView, ViewGroup parent, int cellType) {
+		            BaseCellView cellView = (BaseCellView) convertView;
+		            if (cellView == null) {
+			            LayoutInflater inflater = LayoutInflater.from(getActivity());
+			            cellView = (BaseCellView) inflater.inflate(R.layout.event_calendar_date_cell_view, null);
+		            }
+		            return cellView;
+	            }
 
-                @Override
-                public BaseCellView getWeekdayCellView(int position, View convertView, ViewGroup parent) {
-                    BaseCellView cellView = (BaseCellView) convertView;
-                    if (cellView == null) {
-                        LayoutInflater inflater = LayoutInflater.from(getActivity());
-                        cellView = (BaseCellView) inflater.inflate(R.layout.event_calendar_week_cell_view, null);
-                        cellView.setBackgroundColor(getResources().getColor(android.R.color.white)); //week day bg color
-                        cellView.setTextColor(getResources().getColor(R.color.sceb_dark_blue));//week day text color
-                        cellView.setTextSize(16);
-	                    UiEngine.applyFontsForAll(getActivity(),cellView, UiEngine.Fonts.HVAR_BOLD);
-                    }
-                    return cellView;
-                }
+	            @Override
+	            public BaseCellView getWeekdayCellView(int position, View convertView, ViewGroup parent) {
+		            BaseCellView cellView = (BaseCellView) convertView;
+		            if (cellView == null) {
+			            LayoutInflater inflater = LayoutInflater.from(getActivity());
+			            cellView = (BaseCellView) inflater.inflate(R.layout.event_calendar_week_cell_view, null);
+			            cellView.setBackgroundColor(getResources().getColor(android.R.color.white)); //week day bg color
+			            cellView.setTextColor(getResources().getColor(R.color.sceb_dark_blue));//week day text color
+			            cellView.setTextSize(16);
+			            UiEngine.applyFontsForAll(getActivity(), cellView, UiEngine.Fonts.HVAR_BOLD);
+		            }
+		            return cellView;
+	            }
 
-                @Override
-                public String getDayOfWeekDisplayValue(int dayOfWeek, String defaultValue) {
-                    return null;
-                }
+	            @Override
+	            public String getDayOfWeekDisplayValue(int dayOfWeek, String defaultValue) {
+		            return null;
+	            }
             });
+
+	        calendarView.setEventDataProvider(new FlexibleCalendarView.EventDataProvider() {
+		        @Override
+		        public List<? extends Event> getEventsForTheDay(int year, int month, int day) {
+			        return getEvents(year, month, day);
+		        }
+	        });
         }
         calendarView.setOnDateClickListener(this);
         return calendarView;
     }
+
+
+	private void getMonthEvents(Calendar cal) {
+		Calendar calendarFrom = Calendar.getInstance(),
+				calendarTo = Calendar.getInstance();
+
+		calendarFrom.set(cal.get(Calendar.YEAR),
+				cal.get(cal.MONTH),
+				cal.getActualMinimum(Calendar.DAY_OF_MONTH),
+				1, 0, 0 /*hr, min , sec*/
+		);
+		startDate = MainActivity.sdf_Source_News.format(new Date(calendarFrom.getTimeInMillis()));
+
+
+		calendarTo.set(cal.get(Calendar.YEAR),
+				cal.get(cal.MONTH),
+				cal.getActualMaximum(Calendar.DAY_OF_MONTH),
+				23, 59, 59 /*hr, min , sec*/
+		);
+		endDate = MainActivity.sdf_Source_News.format(new Date(calendarTo.getTimeInMillis()));
+		startEventOperation();
+	}
+
+	private void startEventOperation() {
+		EventsFilterData eventsFilterData = new EventsFilterData();
+		eventsFilterData.timeFrom=startDate;
+		eventsFilterData.timeTo=endDate;
+		EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_OF_MONTH_REQUEST_ID,true,getActivity(),eventsFilterData,100,0);
+		operation.addRequsetObserver(this);
+		operation.execute();
+	}
+
+	public List<EventItem> getEvents(int year, int month, int day){
+		Calendar cal= Calendar.getInstance();
+		cal.set(year, month, day);
+		EventItem eventItem = EventsManager.getInstance().getEventOnDate(cal.getTime());
+
+		List<EventItem> dayEvents = new ArrayList<>();
+		if(eventItem!=null)
+			dayEvents.add(eventItem);
+		return dayEvents;
+	}
+
 
     @Override
     public void onDateClick(int year, int month, int day) {
@@ -341,10 +399,19 @@ public class EventsCalendarFragment extends SECBBaseFragment
     public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
         if (error == null) {
             Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
-            if ((int) requestId == EVENTS_LIST_REQUEST_ID && resultObject != null) {
+            if ((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID && resultObject != null) {
                 eventsList = (ArrayList<EventItem>) resultObject;
                 bindEventCard(lastSelectedDate);
             }
+	        else if ((int) requestId == RequestIds.EVENTS_LIST_OF_MONTH_REQUEST_ID && resultObject != null) {
+                /*selected month events*/
+		        eventsList = (ArrayList<EventItem>) resultObject;
+		        EventsManager.getInstance().setMonthEventsList(eventsList);
+
+//                bindEventCard(lastSelectedDate);
+            }
+
+
 
         } else
             bindEventCard(null);
