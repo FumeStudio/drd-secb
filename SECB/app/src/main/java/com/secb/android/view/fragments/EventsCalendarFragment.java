@@ -233,24 +233,8 @@ public class EventsCalendarFragment extends SECBBaseFragment
 		            monthTextView.setText(cal.getDisplayName(Calendar.MONTH,
 				            Calendar.LONG, currentLocale) + " " + year);
 
-	                Calendar calendarFrom =Calendar.getInstance(),
-			                calendarTo =Calendar.getInstance();
-
-	                calendarFrom.set(cal.get(Calendar.YEAR) ,
-			                cal.get(cal.MONTH),
-			                cal.getActualMinimum(Calendar.DAY_OF_MONTH) ,
-			                1 ,0 ,0 /*hr, min , sec*/
-	                );
-	                startDate = MainActivity.sdf_Source_News.format(new Date(calendarFrom.getTimeInMillis()));
-	       /*         if(!Utilities.isNullString(startDate))
-		                startDate=startDate.replace("T24","T00");*/
-	                calendarTo.set(cal.get(Calendar.YEAR) ,
-			                cal.get(cal.MONTH),
-			                cal.getActualMaximum(Calendar.DAY_OF_MONTH),
-			                23 ,59,59 /*hr, min , sec*/
-	                );
-	                endDate = MainActivity.sdf_Source_News.format(new Date(calendarTo.getTimeInMillis()));
-	                ((SECBBaseActivity)getActivity()).displayToast("startDate: "+startDate+"\nendDate: "+endDate);
+	                getMonthEvents(cal);
+		            ((SECBBaseActivity)getActivity()).displayToast("startDate: "+startDate+"\nendDate: "+endDate);
                 }
             });
 
@@ -407,7 +391,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
                 /*selected month events*/
 		        eventsList = (ArrayList<EventItem>) resultObject;
 		        EventsManager.getInstance().setMonthEventsList(eventsList);
-
+	            calendarView.refresh();
 //                bindEventCard(lastSelectedDate);
             }
 

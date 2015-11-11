@@ -114,7 +114,7 @@ public class EventsManager {
 	}
 
 	public EventItem getEventOnDate(Date selectedDate) {
-		if(selectedDate==null || eventsUnFilteredList==null)
+		if(selectedDate==null || monthEventsList /*eventsUnFilteredList*/==null)
 			return null;
 /*		// to return list of events on this day
 		ArrayList<EventItem> dayEvents = new ArrayList<>();*/
@@ -122,7 +122,7 @@ public class EventsManager {
 		//parse date of each event
 		EventItem eventItem=null;
 
-		for(EventItem iterator:eventsUnFilteredList){
+		for(EventItem iterator:monthEventsList /*eventsUnFilteredList*/){
 			if(iterator==null)
 				continue;
 			Date eventDate = null;
