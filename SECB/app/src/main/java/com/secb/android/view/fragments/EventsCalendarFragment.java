@@ -59,6 +59,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
     private TextView txtv_eventImgDate_month;
 
     public static Date lastSelectedDate;
+    public static Calendar lastSwipedCalendar;
 	private String endDate;
 	private String startDate;
 
@@ -75,6 +76,8 @@ public class EventsCalendarFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.events));
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
+	    if(calendarView!=null)
+		    calendarView.refresh();
     }
 
     @Override
@@ -196,8 +199,11 @@ public class EventsCalendarFragment extends SECBBaseFragment
 
 	    Calendar cal = Calendar.getInstance();
 	    cal.setTime(lastSelectedDate);
-        bindEventCard(lastSelectedDate);
-	    getMonthEvents(cal);
+        bindEventCard(lastSelectedDate, true);
+	    if(lastSwipedCalendar!=null)
+	        getMonthEvents(lastSwipedCalendar);
+	    else
+	        getMonthEvents(cal);
 
     }
 
@@ -232,9 +238,9 @@ public class EventsCalendarFragment extends SECBBaseFragment
 		            cal.set(year, month, 1);
 		            monthTextView.setText(cal.getDisplayName(Calendar.MONTH,
 				            Calendar.LONG, currentLocale) + " " + year);
-
+		            lastSwipedCalendar=cal;
 	                getMonthEvents(cal);
-		            ((SECBBaseActivity)getActivity()).displayToast("startDate: "+startDate+"\nendDate: "+endDate);
+		            ((SECBBaseActivity)getActivity()).displayToast("startDate: " + startDate + "\nendDate: " + endDate);
                 }
             });
 
@@ -333,12 +339,22 @@ public class EventsCalendarFragment extends SECBBaseFragment
         calendar.set(year, month, day);
 
         lastSelectedDate = calendar.getTime();
-        bindEventCard(lastSelectedDate);
+        bindEventCard(lastSelectedDate,false);
     }
 
-    private void bindEventCard(Date selectedDate) {
-        //get event on this day and set it to cardEventItem
-        getDayEvent(selectedDate);
+    private void bindEventCard(Date selectedDate ,boolean isLoadFirstItemInListWithoutTodayDate) {
+
+        if(isLoadFirstItemInListWithoutTodayDate)
+	        //get first event from list and set it to cardEventItem
+        {
+	        if(eventsList!=null && eventsList.size()>0)
+	            cardEventItem =eventsList.get(0);
+	        else
+		        cardEventItem = null;
+        }
+	    else
+	        //get event on this day and set it to cardEventItem
+	        getDayEvent(selectedDate);
 
         if (cardEventItem == null) {
             event_card_container.setVisibility(View.GONE);
@@ -386,20 +402,20 @@ public class EventsCalendarFragment extends SECBBaseFragment
             Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
             if ((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID && resultObject != null) {
                 eventsList = (ArrayList<EventItem>) resultObject;
-                bindEventCard(lastSelectedDate);
+                bindEventCard(lastSelectedDate,true);
             }
 	        else if ((int) requestId == RequestIds.EVENTS_LIST_OF_MONTH_REQUEST_ID && resultObject != null) {
                 /*selected month events*/
 		        eventsList = (ArrayList<EventItem>) resultObject;
 		        EventsManager.getInstance().setMonthEventsList(eventsList);
 	            calendarView.refresh();
-//                bindEventCard(lastSelectedDate);
+                bindEventCard(lastSelectedDate,true);
             }
 
 
 
         } else
-            bindEventCard(null);
+            bindEventCard(null,true);
     }
 
     @Override
