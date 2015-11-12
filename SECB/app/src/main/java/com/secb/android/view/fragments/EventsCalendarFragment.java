@@ -240,7 +240,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
 				            Calendar.LONG, currentLocale) + " " + year);
 		            lastSwipedCalendar=cal;
 	                getMonthEvents(cal);
-		            ((SECBBaseActivity)getActivity()).displayToast("startDate: " + startDate + "\nendDate: " + endDate);
+//		            ((SECBBaseActivity)getActivity()).displayToast("startDate: " + startDate + "\nendDate: " + endDate);
                 }
             });
 
