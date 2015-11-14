@@ -138,7 +138,7 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     private void goBack() {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName,true);
     }
 
     // ////////////////////////////////////////////////////////////
@@ -365,6 +365,9 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject) {
+		//if not attached to activity
+		if(!isAdded())
+			return;
 		if(error==null){
 			if((int)requestId==RequestIds.CONTACT_US_REQUEST_ID  &&
 					((CTHttpResponse)resulObject).statusCode==200)

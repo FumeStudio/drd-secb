@@ -84,7 +84,7 @@ public class EguideHomeFragment extends SECBBaseFragment implements FragmentBack
     {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName,true);
     }
 
     // ////////////////////////////////////////////////////////////

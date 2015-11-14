@@ -114,12 +114,27 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
         switch (v.getId()) {
             case R.id.imageViewBackHeader:
                 onBack();
+	            break;
+            case R.id.txtv_organizer_phone_value:
+	            callOrganizerPhone();
+                break;
+            case R.id.txtv_organizer_email_value:
+	            sendOrganizerEmail();
                 break;
 
             default:
                 break;
         }
     }
+	private void sendOrganizerEmail() {
+		if (organizerItem != null && !Utilities.isNullString(organizerItem.OrganizerEmail))
+			Utilities.openEmail(getActivity(), organizerItem.OrganizerEmail, "", "");
+	}
+
+	private void callOrganizerPhone() {
+		if (organizerItem != null && !Utilities.isNullString(organizerItem.OrganizerPhone))
+			Utilities.callPhoneNumber(getActivity(), organizerItem.OrganizerPhone);
+	}
 
     private void initViews(View view) {
         imgv_organizerImg = (ImageView) view.findViewById(R.id.imgv_organizerImg);
@@ -129,6 +144,9 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
         txtv_organizer_phone_value = (TextView) view.findViewById(R.id.txtv_organizer_phone_value);
         txtv_organizer_email_value = (TextView) view.findViewById(R.id.txtv_organizer_email_value);
         txtv_organizer_website_value = (TextView) view.findViewById(R.id.txtv_organizer_website_value);
+
+	    txtv_organizer_phone_value.setOnClickListener(this);
+	    txtv_organizer_email_value.setOnClickListener(this);
     }
 
     private void bindViews() {

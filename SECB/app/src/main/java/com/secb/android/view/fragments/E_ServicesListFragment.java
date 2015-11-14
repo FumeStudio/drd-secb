@@ -259,7 +259,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		{
 			eServicesRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(getString(R.string.events_no_events));
+			txtv_noData.setText(getString(R.string.eservices_no_eservices));
 		}
 	}
 
@@ -337,7 +337,11 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
 
 	@Override
-	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject)
+	{
+		//if not attached to activity
+		if(!isAdded())
+			return;
 		stopWaiting();
 		if (error == null)
 		{
@@ -371,8 +375,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			{
 				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
 			}
-			else if (statusCode == -1)
-			{
+			else if (statusCode == -1) {
 				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
 						getActivity());
 			}

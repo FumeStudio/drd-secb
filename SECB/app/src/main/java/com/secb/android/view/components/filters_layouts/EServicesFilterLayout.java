@@ -31,10 +31,13 @@ import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCus
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.Utilities;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class EServicesFilterLayout extends LinearLayout implements View.OnClickListener, RequestObserver ,RecyclerCustomClickListener{
+public class EServicesFilterLayout extends LinearLayout implements View.OnClickListener, RequestObserver
+//		,RecyclerCustomClickListener
+{
 
 	private final View view;
 
@@ -55,7 +58,10 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 
 	private boolean isRequestStatusOperationDone;
 	private boolean isRequestTypesOperationDone;
+	private String selectedDateFrom , selectedDateTo;
 
+	RecyclerCustomItemTouchListener status_RecyclerCustomItemTouchListener;
+	RecyclerCustomItemTouchListener type_RecyclerCustomItemTouchListener;
 
 	public View getLayoutView() {
         return view;
@@ -65,6 +71,7 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
         super(context);
         this.context=context;
         view = LayoutInflater.from(context).inflate(R.layout.e_services_filter_screen, null);
+	    initRecyclersListeners();
         initViews(view);
 
 	    ((MainActivity)context).setEventsRequstObserver(this);
@@ -88,12 +95,39 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 	    }
 
 
+
 	    if(requestStatusList!=null && requestTypesList!=null &&
 			    requestStatusList.size()>0&& requestTypesList.size()>0)
 	    {
 		    getFilterData();
 	    }
     }
+
+	private void initRecyclersListeners() {
+		status_RecyclerCustomItemTouchListener =new RecyclerCustomItemTouchListener(context, requestStatusRecyclerView, new RecyclerCustomClickListener() {
+			@Override
+			public void onItemClicked(View v, int position) {
+				requestStatusRecyclerAdapter.setItemChecked(position);
+			}
+
+			@Override
+			public void onItemLongClicked(View v, int position) {
+
+			}
+		});
+
+		type_RecyclerCustomItemTouchListener =new RecyclerCustomItemTouchListener(context, requestStatusRecyclerView, new RecyclerCustomClickListener() {
+			@Override
+			public void onItemClicked(View v, int position) {
+				requestTypeRecyclerAdapter.setItemChecked(position);
+			}
+
+			@Override
+			public void onItemLongClicked(View v, int position) {
+
+			}
+		});
+	}
 
 	private void startEservicesRequestsWorkSpaceModesOperation() {
 		E_ServicesRequestWorkSpaceModesOperation operation = new E_ServicesRequestWorkSpaceModesOperation(RequestIds.E_SERVICES_REQUESTS_WORKSPACE_MODES_LIST_REQUEST_ID, false, context);
@@ -121,8 +155,8 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 		requestStatusRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 		requestTypeRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-		requestStatusRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(context, requestStatusRecyclerView, this));
-		requestTypeRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(context, requestTypeRecyclerView, this));
+		requestStatusRecyclerView.addOnItemTouchListener(status_RecyclerCustomItemTouchListener);
+		requestTypeRecyclerView.addOnItemTouchListener(type_RecyclerCustomItemTouchListener);
 
 
 		edtTxt_requestNumber = (EditText) view.findViewById(R.id.edtTxt_filter_requestNumber_value);
@@ -169,7 +203,7 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 
 	private void applyFonts()
     {
-	    UiEngine.applyFontsForAll(context,view,UiEngine.Fonts.HVAR);
+	    UiEngine.applyFontsForAll(context, view, UiEngine.Fonts.HVAR);
         /*if(spn_city !=null)
         {
             UiEngine.applyCustomFont(spn_city, UiEngine.Fonts.HVAR);
@@ -227,8 +261,8 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 	    if(!Utilities.isNullString(txtv_timeFrom.getText().toString())
 			    && !Utilities.isNullString(txtv_timeFrom.getText().toString()))
 	    {
-		    e_servicesFilterData.FromDate = txtv_timeFrom.getText().toString();
-		    e_servicesFilterData.ToDate = txtv_timeTo.getText().toString();
+		    e_servicesFilterData.FromDate = selectedDateFrom /*txtv_timeFrom.getText().toString()*/;
+		    e_servicesFilterData.ToDate = selectedDateTo /*txtv_timeFrom.getText().toString()*/;
 	    }
 
 	    E_ServiceRequestTypeItem selectedRequestType = E_ServicesManager.getInstance().getSelectedRequestType();
@@ -248,9 +282,9 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 		    if(selectedRequestMode.NameEn.equalsIgnoreCase("All") ||
 				    selectedRequestMode.NameAr.equalsIgnoreCase("الكل"))
 		    {
-			    e_servicesFilterData.RequestType= "All";
+			    e_servicesFilterData.Status= "All";
 		    }
-		    e_servicesFilterData.Status=selectedRequestType.Value;
+		    e_servicesFilterData.Status=selectedRequestMode.Value;
 	    }
 
 	    if(!Utilities.isNullString(edtTxt_requestNumber.getText().toString()))
@@ -280,10 +314,10 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txtv_news_filter_time_from_value:
-                showDateTimePicker(txtv_timeFrom);
+                showDateTimePicker(txtv_timeFrom,true);
                 break;
             case R.id.txtv_news_filter_time_to_value:
-                showDateTimePicker(txtv_timeTo);
+                showDateTimePicker(txtv_timeTo,false);
             break;
         }
     }
@@ -294,29 +328,49 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 		requestStatusRecyclerView.setAdapter(null);
 		requestTypeRecyclerView.setAdapter(null);
 	}
-    public void showDateTimePicker(final TextView textView)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final DateTimePickerDialogView dialogView = new DateTimePickerDialogView(context);
-        builder.setView(dialogView);
+	public void showDateTimePicker(final TextView textView , final boolean isDateFrom)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		final DateTimePickerDialogView dialogView = new DateTimePickerDialogView(context);
+		builder.setView(dialogView);
 
-        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(dialogView.getSelectedDateTime().getTimeInMillis()));
-                textView.setText(time);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-    }
+		builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Calendar selectedDateCalendar = dialogView.getSelectedDateTime();
+				if(isDateFrom)
+				{
+					selectedDateCalendar.set(selectedDateCalendar.get(Calendar.YEAR) ,
+							selectedDateCalendar.get(Calendar.MONTH),
+							selectedDateCalendar.get(Calendar.DAY_OF_MONTH) ,
+							1 ,0 ,0 /*hr, min , sec*/
+					);
+					selectedDateFrom = MainActivity.sdf_Source_News.format(new Date(selectedDateCalendar.getTimeInMillis()));
 
+				}
+				else{/*is Date to*/
+					selectedDateCalendar.set(selectedDateCalendar.get(Calendar.YEAR) ,
+							selectedDateCalendar.get(Calendar.MONTH),
+							selectedDateCalendar.get(Calendar.DAY_OF_MONTH) ,
+							23 ,59,59 /*hr, min , sec*/
+					);
+					selectedDateTo = MainActivity.sdf_Source_News.format(new Date(selectedDateCalendar.getTimeInMillis()));
+
+				}
+
+				CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(selectedDateCalendar.getTimeInMillis()));
+				textView.setText(time);
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.show();
+	}
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
 		if (error == null)
@@ -346,7 +400,7 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 
 	}
 
-	@Override
+/*	@Override
 	public void onItemClicked(View v, int position) {
 
 	}
@@ -354,5 +408,5 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 	@Override
 	public void onItemLongClicked(View v, int position) {
 
-	}
+	}*/
 }

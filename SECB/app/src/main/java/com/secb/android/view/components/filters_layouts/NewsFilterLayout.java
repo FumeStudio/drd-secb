@@ -14,6 +14,7 @@ import com.secb.android.R;
 import com.secb.android.controller.backend.NewsCategoryOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.NewsManager;
+import com.secb.android.model.Consts;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.view.MainActivity;
@@ -23,6 +24,7 @@ import com.secb.android.view.components.recycler_news.NewsCategoryFilterRecycler
 
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
     private Context context;
 	private List<NewsCategoryItem> categoriesList;
 	private boolean isCategoryOperationDone;
+	private String selectedDateFrom,selectedDateTo;
 
 
 	public View getLayoutView() {
@@ -158,8 +161,8 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
     }
     public NewsFilterData getFilterData() {
 	    newsFilterData.newsID="All";
-        newsFilterData.timeFrom = txtv_timeFrom.getText().toString();
-        newsFilterData.timeTo = txtv_timeTo.getText().toString();
+        newsFilterData.timeFrom = selectedDateFrom /*txtv_timeFrom.getText().toString()*/;
+        newsFilterData.timeTo = selectedDateTo/*txtv_timeTo.getText().toString()*/;
 
 	    NewsCategoryItem selectedCategory = NewsManager.getInstance().getSelectedCategory();
 
@@ -187,36 +190,57 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txtv_news_filter_time_from_value:
-                showDateTimePicker(txtv_timeFrom);
+                showDateTimePicker(txtv_timeFrom,true);
                 break;
             case R.id.txtv_news_filter_time_to_value:
-                showDateTimePicker(txtv_timeTo);
+                showDateTimePicker(txtv_timeTo,false);
                 break;
         }
     }
 
-    private void showDateTimePicker(final TextView textView) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final DateTimePickerDialogView dialogView = new DateTimePickerDialogView(context);
-        builder.setView(dialogView);
+	public void showDateTimePicker(final TextView textView , final boolean isDateFrom)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		final DateTimePickerDialogView dialogView = new DateTimePickerDialogView(context);
+		builder.setView(dialogView);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-//                CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(dialogView.getSelectedDateTime().getTimeInMillis()));
-                String time = MainActivity.sdf_Date.format(new Date(dialogView.getSelectedDateTime().getTimeInMillis()));
-	            textView.setText(time);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	        @Override
-	        public void onClick(DialogInterface dialog, int which) {
-		        dialog.dismiss();
-	        }
-        });
-        builder.show();
-    }
+		builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Calendar selectedDateCalendar = dialogView.getSelectedDateTime();
+				if(isDateFrom)
+				{
+					selectedDateCalendar.set(selectedDateCalendar.get(Calendar.YEAR) ,
+							selectedDateCalendar.get(Calendar.MONTH),
+							selectedDateCalendar.get(Calendar.DAY_OF_MONTH) ,
+							1 ,0 ,0 /*hr, min , sec*/
+					);
+					selectedDateFrom = MainActivity.sdf_Source_News.format(new Date(selectedDateCalendar.getTimeInMillis()));
+
+				}
+				else{/*is Date to*/
+					selectedDateCalendar.set(selectedDateCalendar.get(Calendar.YEAR) ,
+							selectedDateCalendar.get(Calendar.MONTH),
+							selectedDateCalendar.get(Calendar.DAY_OF_MONTH) ,
+							23 ,59,59 /*hr, min , sec*/
+					);
+					selectedDateTo = MainActivity.sdf_Source_News.format(new Date(selectedDateCalendar.getTimeInMillis()));
+
+				}
+
+				CharSequence time = Consts.APP_DEFAULT_DATE_TIME_FORMAT.format(new Date(selectedDateCalendar.getTimeInMillis()));
+				textView.setText(time);
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.show();
+	}
 
 	@Override
 	protected void onDetachedFromWindow() {

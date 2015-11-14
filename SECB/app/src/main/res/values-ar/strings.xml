@@ -153,6 +153,7 @@
     <string name="events_no_events">لا توجد فعاليات.</string>
     <string name="event_all_day">طوال اليوم</string>
     <string name="event_repeated">متكرر</string>
+    <string name="eservices_form">نموذج الخدمة</string>
     <string name="locations_no_locations">لا توجد مواقع.</string>
     <string name="organizer_no_organizers">لا يوجد منظمين.</string>
     <string name="contact_us_done">تم ارسال بياناتكم بنجاح.</string>
@@ -166,6 +167,7 @@
     <string name="minutes">دقائق</string>
     <string name="ago">منذ</string>
     <string name="error_player">لا يمكن تشغيل هذا الملف</string>
+    <string name="eservices_no_eservices">لا توجد خدمات الكترونية.</string>
 
 
 </resources>

@@ -170,7 +170,7 @@ public class GalleryFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(),true);
     }
 
     // ////////////////////////////////////////////////////////////
@@ -447,6 +447,10 @@ public class GalleryFragment extends SECBBaseFragment
 
     @Override
     public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+	    //if not attached to activity
+	    if(!isAdded())
+		    return;
+
 	    stopWaiting();
 	    if (error == null)
         {

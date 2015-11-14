@@ -51,6 +51,12 @@ public class SignUpActivity extends SECBBaseActivity {
 
         final ProgressDialog dialog =  CustomProgressDialog.getInstance(SignUpActivity.this ,true);
         dialog.show();
+
+//	    clear cookie
+	    myWebView.clearCache(true);
+	    myWebView.clearHistory();
+
+
         myWebView.setVerticalScrollBarEnabled(false);
         myWebView.setHorizontalScrollBarEnabled(false);
         WebSettings webSettings = myWebView.getSettings();

@@ -45,6 +45,7 @@ import com.secb.android.view.menu.MenuItem;
 
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.SharedPreferenceData;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -450,22 +451,30 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         }
     }
 
-
-    public void finishFragmentOrActivity(String name) {
-        hideFilterLayout();
-
-
-        FragmentManager manager = getSupportFragmentManager();
-        Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
-        boolean removed = false;
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
-            getSupportFragmentManager().popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        else {
-            moveTaskToBack(true);
-        }
+	public void finishFragmentOrActivity(String name) {
+		finishFragmentOrActivity(name, false);
     }
 
+	public void finishFragmentOrActivity(String name,boolean isBackToHome){
+		hideFilterLayout();
+		FragmentManager manager = getSupportFragmentManager();
+		Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
+		if (getSupportFragmentManager().getBackStackEntryCount() > 0)
+		{
+			getSupportFragmentManager().popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//	        remove till the home fragment
+			if(isBackToHome)
+			{
+				while (getSupportFragmentManager().getBackStackEntryCount() != 0) {
+					getSupportFragmentManager().popBackStackImmediate();
+				}
+			}
+		}
+
+		else {
+			moveTaskToBack(true);
+		}
+	}
 
     public SECBBaseFragment getCurrentDisplayedFragment() {
         currentDisplayedFragment = (SECBBaseFragment) getSupportFragmentManager().findFragmentById(R.id.simple_fragment);
@@ -698,8 +707,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void logout() {
         //clear user from manager
         UserManager.getInstance().logout();
+	    //clear caching folder from sd card
 	    CachingManager.getInstance().clearCachingFolder(this);
-        //go to login page
+	    try {
+		    //clear cookies for webview
+		    Utilities.clearCookies(this);
+	    } catch (Exception e) {
+		    e.printStackTrace();
+	    }
+
+	    //go to login page
         Intent i = new Intent(activity, LoginActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(i);

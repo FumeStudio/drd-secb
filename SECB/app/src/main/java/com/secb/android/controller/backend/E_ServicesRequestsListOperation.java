@@ -75,7 +75,17 @@ public class E_ServicesRequestsListOperation extends BaseOperation {
 		List<E_ServiceRequestItem> e_serviceRequestItems = gson.fromJson(response.response.toString(), listType);
 		removeUnCompletedItems(e_serviceRequestItems);
 
-		updateOrganizersManager(e_serviceRequestItems);
+		//cach only the un filtered lists
+		E_ServicesFilterData unFiltered = new E_ServicesFilterData();
+		if( e_servicesFilterData.FromDate==null&&
+			e_servicesFilterData.ToDate==null &&
+			e_servicesFilterData.Status.equalsIgnoreCase(unFiltered.Status) &&
+			e_servicesFilterData.RequestType.equalsIgnoreCase(unFiltered.RequestType) &&
+			e_servicesFilterData.RequestNumber.equalsIgnoreCase(unFiltered.RequestNumber)
+				)
+		{
+			updateManager(e_serviceRequestItems);
+		}
 		return e_serviceRequestItems;
 	}
 
@@ -100,7 +110,7 @@ public class E_ServicesRequestsListOperation extends BaseOperation {
 		}
 	}
 
-	private void updateOrganizersManager(List<E_ServiceRequestItem> e_serviceRequestItems)
+	private void updateManager(List<E_ServiceRequestItem> e_serviceRequestItems)
 	{
 		if (e_serviceRequestItems == null || e_serviceRequestItems.size() == 0)
 			return;

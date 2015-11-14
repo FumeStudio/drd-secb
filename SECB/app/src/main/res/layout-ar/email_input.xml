@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imgv_emailIcon"
+        android:id="@+id/imgv_userNameIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/email_icon"
+        android:src="@drawable/user_icon"
         android:visibility="visible" />
 
     <EditText
@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/login_input_text_margin_left"
-        android:layout_toLeftOf="@+id/imgv_emailIcon"
-        android:hint="@string/email_address"
+        android:layout_toLeftOf="@+id/imgv_userNameIcon"
+        android:hint="@string/username"
         android:padding="@dimen/login_input_text_pad"
         android:singleLine="true"
         android:text=""
