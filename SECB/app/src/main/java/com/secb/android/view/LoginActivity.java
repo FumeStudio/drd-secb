@@ -25,7 +25,7 @@ import net.comptoirs.android.common.helper.Utilities;
 public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 
 	private static final String TAG = "LoginActivity";
-	EditText edt_email, edt_password;
+	EditText edt_userName, edt_password;
 	TextView txtv_forgetPassword;
 	Button btn_login, btn_signUp;
 
@@ -40,10 +40,10 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 	}
 
 	private void initViews() {
-		edt_email = (EditText) findViewById(R.id.edt_email);
+		edt_userName = (EditText) findViewById(R.id.edt_email);
 		edt_password = (EditText) findViewById(R.id.edt_password);
 
-//        edt_email.setText("test741"); // secb01 , test741  , tawfik
+//        edt_userName.setText("test741"); // secb01 , test741  , tawfik
 //        edt_password.setText("test741"); // Secb01 , test741 , t123456
 
 		txtv_forgetPassword = (TextView) findViewById(R.id.txtv_forgetPassword);
@@ -82,11 +82,11 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 	}
 
 	private boolean validateInputFields() {
-//		boolean isEmailValid = Utilities.isValidEmail(edt_email.getText().toString());
-		boolean isEmailValid = !Utilities.isNullString(edt_email.getText().toString());
+//		boolean isEmailValid = Utilities.isValidEmail(edt_userName.getText().toString());
+		boolean isEmailValid = !Utilities.isNullString(edt_userName.getText().toString());
 		boolean isPasswordValid = !Utilities.isNullString(edt_password.getText().toString());
 		if (!isEmailValid)
-			edt_email.setError(getString(R.string.error_empty_email));
+			edt_userName.setError(getString(R.string.error_empty_userName));
 		if (!isPasswordValid)
 			edt_password.setError(getString(R.string.error_empty_password));
 
@@ -97,15 +97,15 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 //            focused edit text so remove focus from both editTexts
 //            and re-enable them
 
-		edt_email.setFocusable(false);
+		edt_userName.setFocusable(false);
 		edt_password.setFocusable(false);
 
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				edt_email.setFocusable(true);
+				edt_userName.setFocusable(true);
 				edt_password.setFocusable(true);
-				edt_email.setFocusableInTouchMode(true);
+				edt_userName.setFocusableInTouchMode(true);
 				edt_password.setFocusableInTouchMode(true);
 			}
 		}, 10);
@@ -115,8 +115,8 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 	}
 
 	public void applyFonts() {
-		if (edt_email != null)
-			UiEngine.applyCustomFont(edt_email, UiEngine.Fonts.HVAR);
+		if (edt_userName != null)
+			UiEngine.applyCustomFont(edt_userName, UiEngine.Fonts.HVAR);
 		if (edt_password != null)
 			UiEngine.applyCustomFont(edt_password, UiEngine.Fonts.HVAR);
 		if (txtv_forgetPassword != null)
@@ -130,7 +130,7 @@ public class LoginActivity extends SECBBaseActivity implements RequestObserver {
 
 	private void startLoginOperation() {
 		User user = new User();
-		user.userName = edt_email.getText().toString();
+		user.userName = edt_userName.getText().toString();
 		user.password = edt_password.getText().toString();
 
 		boolean rememberMe = true;

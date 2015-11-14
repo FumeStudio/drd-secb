@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/txtv_event_timeValue"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/txtv_event_placeValue"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
@@ -76,13 +76,13 @@
 
         <TextView
             android:id="@+id/txtv_event_categoryValue"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:ellipsize="end"
             android:drawableLeft="@drawable/event_card_filter_icon"
-            android:maxLines="1"
+            android:maxLines="2"
 
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/event_details_text_size" />

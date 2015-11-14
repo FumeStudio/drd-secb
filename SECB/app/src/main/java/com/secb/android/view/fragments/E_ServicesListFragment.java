@@ -78,8 +78,8 @@ public class E_ServicesListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).showFilterButton(true);//for now till the filter design is received
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
 
     }
 
@@ -88,9 +88,6 @@ public class E_ServicesListFragment extends SECBBaseFragment
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
-
     }
 
     @Override
@@ -147,7 +144,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(),true);
     }
 
     // ////////////////////////////////////////////////////////////

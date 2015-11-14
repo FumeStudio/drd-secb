@@ -21,7 +21,6 @@ import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
-import com.secb.android.view.components.EndlessRecyclerOnScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -62,8 +61,8 @@ public class NewsListFragment extends SECBBaseFragment
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news));
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
@@ -75,8 +74,6 @@ public class NewsListFragment extends SECBBaseFragment
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
     }
 
     @Override
@@ -133,7 +130,7 @@ public class NewsListFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(),true);
     }
 
     // ////////////////////////////////////////////////////////////

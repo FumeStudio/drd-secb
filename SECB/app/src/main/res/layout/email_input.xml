@@ -1,7 +1,7 @@
 <!-- email-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imgv_userNameIcon"
@@ -11,7 +11,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:src="@drawable/user_icon"
-        android:visibility="visible" />
+        android:visibility="visible"/>
 
     <EditText
         android:id="@+id/edt_email"
@@ -21,10 +21,12 @@
         android:layout_marginLeft="@dimen/login_input_text_margin_left"
         android:layout_toRightOf="@+id/imgv_userNameIcon"
         android:background="@color/white"
+        android:cursorVisible="true"
         android:hint="@string/username"
         android:padding="@dimen/login_input_text_pad"
         android:singleLine="true"
         android:text=""
         android:textColor="@color/secb_dark_text"
-        android:textSize="@dimen/login_input_text_size" />
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/login_input_text_size"/>
 </RelativeLayout>

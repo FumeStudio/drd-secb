@@ -92,6 +92,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     Bundle savedInstanceState;
 
     IntentFilter languageIntentFiler = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
+	private View filter_holder_dark_layer;
 
 //	private /*static*/ ImageFetcher mImageFetcher;
 
@@ -130,7 +131,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             setContentView(R.layout.main);
 
             ViewGroup contentLayout = (ViewGroup) findViewById(R.id.simple_fragment);
-            imgv_filter = (ImageView) findViewById(R.id.imgv_filter);
+
+	        imgv_filter = (ImageView) findViewById(R.id.imgv_filter);
             imgv_filter.setVisibility(View.GONE);
             imgv_filter.setOnClickListener(this);
             filterLayoutHolder = (LinearLayout) findViewById(R.id.filter_holder);
@@ -264,6 +266,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     public void setFilterLayoutView(View filterLayoutView) {
         this.filterLayoutView = filterLayoutView;
+	    filter_holder_dark_layer = filterLayoutView.findViewById(R.id.layout_dark_layer);
+	    layoutAnimator.setDarkLayer(filter_holder_dark_layer);
     }
 
     public void prepareFilerLayout() {
@@ -286,7 +290,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
     public void hideFilterLayout() {
-        if (this.filterLayoutHolder != null && layoutAnimator != null && isFilterLayoutOpened) {
+        if (this.filterLayoutHolder != null && layoutAnimator != null && isFilterLayoutOpened)
+        {
 //            this.filterLayoutHolder.setVisibility(View.GONE);
             isFilterLayoutOpened = false;
             layoutAnimator.hidePreviewPanel();
@@ -456,7 +461,10 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
 	public void finishFragmentOrActivity(String name,boolean isBackToHome){
-		hideFilterLayout();
+		if( isFilterLayoutOpened){
+			hideFilterLayout();
+			return;
+		}
 		FragmentManager manager = getSupportFragmentManager();
 		Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
 		if (getSupportFragmentManager().getBackStackEntryCount() > 0)
@@ -469,9 +477,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 					getSupportFragmentManager().popBackStackImmediate();
 				}
 			}
-		}
-
-		else {
+		} else {
 			moveTaskToBack(true);
 		}
 	}

@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:background="@color/transparent"
     android:weightSum="3"
-    android:background="#aa000000">
+>
 
     <LinearLayout
         android:id="@+id/layout_dark_layer"
@@ -14,6 +15,8 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:clickable="true"
+        android:background="#aa000000"
+        android:visibility="invisible"
         android:orientation="vertical">
     </LinearLayout>
     <View
@@ -22,7 +25,8 @@
         android:layout_width="2.3dp"
         android:layout_height="match_parent"
         android:layout_above="@+id/filter_container"
-        android:background="@drawable/shadow_v">
+        android:visibility="visible"
+        android:background="#aa000000">
     </View>
     <LinearLayout
         android:id="@+id/filter_container"

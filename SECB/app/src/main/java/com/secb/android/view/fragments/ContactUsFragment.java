@@ -81,8 +81,8 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.contactus));
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
 
     }
 
@@ -91,8 +91,6 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
         if (supportMapFragment != null)
             getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
 
@@ -137,8 +135,8 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
 
     private void goBack() {
         String backStateName = this.getClass().getName();
-//     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName,true);
+//     ((SECBBaseActivity) getActivity()).finishFradgmentOrActivity();
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName, true);
     }
 
     // ////////////////////////////////////////////////////////////
@@ -188,17 +186,63 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         }
     }
 
-	private void startContactUsOperation() {
-		if(!isContactUsDone){
-			User user = getUserData();
-			ContactUsOperation operation = new ContactUsOperation(RequestIds.CONTACT_US_REQUEST_ID,true,getActivity(),user);
-			operation.addRequsetObserver(this);
-			operation.execute(true);
+	private void startContactUsOperation()
+	{
+		if(!isContactUsDone)
+		{
+			if( validateInputFields())
+			{
+				User user = getUserData();
+				ContactUsOperation operation = new ContactUsOperation(RequestIds.CONTACT_US_REQUEST_ID,true,getActivity(),user);
+				operation.addRequsetObserver(this);
+				operation.execute(true);
+			}
 		}
 		else
 		{
 			displaySuccessMessage();
 		}
+	}
+
+	private boolean validateInputFields()
+	{
+		boolean isUserNameValid = !Utilities.isNullString(edtxt_name.getText().toString());
+		boolean isMobileValid = !Utilities.isNullString(edtxt_mobile.getText().toString());
+		boolean isOrganizationValid = !Utilities.isNullString(edtxt_organization.getText().toString());
+		boolean isJobValid = !Utilities.isNullString(edtxt_job.getText().toString());
+		boolean isSubjectValid = !Utilities.isNullString(edtxt_subject.getText().toString());
+		boolean isEmailValid = Utilities.isValidEmail(edtxt_email.getText().toString());
+
+		//add error to edit texts
+		if (!isUserNameValid)
+			edtxt_name.setError(getString(R.string.error_empty_userName));
+		if (!isMobileValid)
+			edtxt_mobile.setError(getString(R.string.error_empty_mobile));
+		if (!isOrganizationValid)
+			edtxt_organization.setError(getString(R.string.error_empty_organization));
+		if (!isJobValid)
+			edtxt_job.setError(getString(R.string.error_empty_job));
+		if (!isSubjectValid)
+			edtxt_subject.setError(getString(R.string.error_empty_subject));
+		if (!isEmailValid)
+			edtxt_email.setError(getString(R.string.error_empty_email));
+
+
+        //if both editTexts are empty the error msg appears on the
+        //focused edit text so remove focus from both editTexts
+        //and re-enable them
+
+		edtxt_name.setFocusable(false);
+		edtxt_mobile.setFocusable(false);
+		edtxt_organization.setFocusable(false);
+		edtxt_job.setFocusable(false);
+		edtxt_subject.setFocusable(false);
+		edtxt_email.setFocusable(false);
+
+
+		return  isUserNameValid & isMobileValid &
+				isOrganizationValid & isJobValid &
+				isSubjectValid & isEmailValid;
 	}
 
 	private void initViews(View view) {
