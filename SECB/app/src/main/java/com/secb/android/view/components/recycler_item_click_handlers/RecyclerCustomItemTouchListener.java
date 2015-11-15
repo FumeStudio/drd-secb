@@ -56,7 +56,7 @@ public class RecyclerCustomItemTouchListener implements RecyclerView.OnItemTouch
 //listen to the short click event
 
         boolean b=gestureDetector.onTouchEvent(e);
-        Logger.instance().v(TAG, "onInterceptTouchEvent gestureDetector.onTouchEvent(e) = "+b, false);
+//        Logger.instance().v(TAG, "onInterceptTouchEvent gestureDetector.onTouchEvent(e) = "+b, false);
         View child = rv.findChildViewUnder(e.getX(), e.getY());
         if (recyclerCustomClickListener != null && child != null && b)
         {

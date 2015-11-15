@@ -2,6 +2,9 @@ package com.secb.android.controller.backend;
 
 public class ServerKeys
 {
+	// Default page size
+	public static final int PAGE_SIZE_DEFAULT = 10;
+
 	public static final String STATUS_CODE = "statusCode";
 	public static final String STATUS_MESSAGE = "statusMessage";
 

@@ -334,10 +334,9 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
 
 	@Override
-	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject)
-	{
-		//if not attached to activity
-		if(!isAdded())
+	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		// if not attached to activity
+		if(getActivity() == null && !isAdded())
 			return;
 		stopWaiting();
 		if (error == null)

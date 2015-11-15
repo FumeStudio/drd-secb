@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.secb.android.R;
 import com.secb.android.controller.backend.E_GuideLocationListOperation;
 import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.EGuideLocationManager;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.LocationsFilterData;
@@ -23,6 +24,7 @@ import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.EndlessRecyclerOnScrollListener;
+import com.secb.android.view.components.RecyclerViewScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.LocationsFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -37,32 +39,32 @@ import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationsListFragment extends SECBBaseFragment
-        implements FragmentBackObserver, View.OnClickListener ,RecyclerCustomClickListener , RequestObserver
+        implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener, RequestObserver
 
 {
-	private static final String TAG = "LocationsListFragment";
+    private static final String TAG = "LocationsListFragment";
     RecyclerView locationsRecyclerView;
     LinearLayoutManager linearLayoutManager;
     LocationsItemRecyclerAdapter locationsItemRecyclerAdapter;
     ArrayList<LocationItem> locationItems;
     LocationsFilterData locationsFilterData;
-	TextView txtv_noData;
+    TextView txtv_noData;
     View view;
-    private LocationsFilterLayout locationsFilterLayout =null;
-	private ProgressDialog progressDialog;
+    private LocationsFilterLayout locationsFilterLayout = null;
+    private ProgressDialog progressDialog;
 
-    boolean mIsLoading , mIsLastPage;
-    int PAGE_SIZE = 5;
-	public static LocationsListFragment newInstance() {
+    int pageIndex = 0;
+
+    public static LocationsListFragment newInstance() {
         LocationsListFragment fragment = new LocationsListFragment();
         return fragment;
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.location_eguide));
@@ -93,29 +95,27 @@ public class LocationsListFragment extends SECBBaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view != null) {
             ViewParent oldParent = (ViewParent) view.getRootView();
-            if (oldParent != container && oldParent != null)
-            {
+            if (oldParent != container && oldParent != null) {
                 ((ViewGroup) oldParent).removeView(view);
             }
-        }
-        else {
+        } else {
             view = LayoutInflater.from(getActivity()).inflate(R.layout.location_list_fragment, container, false);
             handleButtonsEvents();
             applyFonts();
         }
-	    ((MainActivity)getActivity()).setLocationRequstObserver(this);
-	    initViews(view);
+        ((MainActivity) getActivity()).setLocationRequstObserver(this);
+        initViews(view);
         initFilterLayout();
-	    getData();
+        getData();
         return view;
     }
 
-    public void initFilterLayout()
-    {
+    public void initFilterLayout() {
         locationsFilterLayout = new LocationsFilterLayout(getActivity());
         ((SECBBaseActivity) getActivity()).setFilterLayout(locationsFilterLayout, false);
         ((SECBBaseActivity) getActivity()).setFilterLayoutView(locationsFilterLayout.getLayoutView());
     }
+
     private void handleButtonsEvents() {
     }
 
@@ -123,8 +123,8 @@ public class LocationsListFragment extends SECBBaseFragment
      * Apply Fonts
      */
     private void applyFonts() {
-	    if(txtv_noData!=null)
-		    UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
+        if (txtv_noData != null)
+            UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
     }
 
     private void goBack() {
@@ -140,8 +140,7 @@ public class LocationsListFragment extends SECBBaseFragment
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.imageViewBackHeader:
                 onBack();
                 break;
@@ -150,9 +149,9 @@ public class LocationsListFragment extends SECBBaseFragment
                 getFilterDataObject();
                 break;
 
-	        case R.id.btn_clearFilter:
-		        clearFilters();
-		        break;
+            case R.id.btn_clearFilter:
+                clearFilters();
+                break;
 
             default:
                 break;
@@ -160,10 +159,10 @@ public class LocationsListFragment extends SECBBaseFragment
     }
 
     private void getFilterDataObject() {
-	    ((MainActivity)getActivity()).hideFilterLayout();
-        locationsFilterData =this.locationsFilterLayout.getFilterData();
-	    if(locationsFilterData!=null)
-		    startLocationsListOperation(locationsFilterData,true);
+        ((MainActivity) getActivity()).hideFilterLayout();
+        locationsFilterData = this.locationsFilterLayout.getFilterData();
+        if (locationsFilterData != null)
+            startLocationsListOperation(locationsFilterData, true, 0);
 
 //        if(locationsFilterData !=null){
 //            StringBuilder types = new StringBuilder();
@@ -180,23 +179,23 @@ public class LocationsListFragment extends SECBBaseFragment
     }
 
 
-	private void clearFilters() {
-		this.locationsFilterLayout.clearFilters();
+    private void clearFilters() {
+        this.locationsFilterLayout.clearFilters();
 
-	}
-    private void initViews(View view)
-    {
+    }
+
+    private void initViews(View view) {
 //        locationItems = DevData.getLocationsList();
-	    progressDialog = CustomProgressDialog.getInstance(getActivity(), true);
-	    progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-		    @Override
-		    public void onCancel(DialogInterface dialog) {
-			    bindViews();
-		    }
-	    });
-	    txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
-	    locationsRecyclerView = (RecyclerView) view.findViewById(R.id.locationsRecyclerView);
-		linearLayoutManager = new LinearLayoutManager(getActivity());
+        progressDialog = CustomProgressDialog.getInstance(getActivity(), true);
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                bindViews();
+            }
+        });
+        txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
+        locationsRecyclerView = (RecyclerView) view.findViewById(R.id.locationsRecyclerView);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         locationsRecyclerView.setLayoutManager(linearLayoutManager);
         locationsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), locationsRecyclerView, this));
 //		locationsRecyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
@@ -206,138 +205,137 @@ public class LocationsListFragment extends SECBBaseFragment
 ////                Utilities.showToastMsg("Locationslist over scrolled", Toast.LENGTH_SHORT);
 //			}
 //		});
-//        locationsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView,
-//                                             int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                int visibleItemCount = linearLayoutManager.getChildCount();
-//                int totalItemCount = linearLayoutManager.getItemCount();
-//                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-//
-//                if (!mIsLoading && !mIsLastPage) {
-//                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-//                            && firstVisibleItemPosition >= 0
-//                            && totalItemCount >= PAGE_SIZE) {
-//                        Utilities.showToastMsg("load more...", Toast.LENGTH_SHORT);
-//                    }
-//                }
-//            }
-//        });
+        locationsRecyclerView.addOnScrollListener(new RecyclerViewScrollListener() {
+            @Override
+            public void onScrollUp() {
+
+            }
+
+            @Override
+            public void onScrollDown() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                loadMoreData();
+            }
+        });
+
     }
 
-	private void bindViews() {
-		if(locationItems!=null && locationItems.size()>0)
-		{
-			locationsRecyclerView.setVisibility(View.VISIBLE);
-			txtv_noData.setVisibility(View.GONE);
-			locationsItemRecyclerAdapter = new LocationsItemRecyclerAdapter(getActivity(), locationItems);
-			locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
-		}
-		else {
-			locationsRecyclerView.setVisibility(View.GONE);
-			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(getString(R.string.locations_no_locations));
-		}
-	}
+    private void loadMoreData() {
+
+        locationsItemRecyclerAdapter.showLoading(true);
+        locationsItemRecyclerAdapter.notifyDataSetChanged();
+
+        startLocationsListOperation(locationsFilterData != null ? locationsFilterData : new LocationsFilterData(), false, (pageIndex + 1));
+    }
+
+    private void bindViews() {
+        int lastFirstVisiblePosition = 0;
+
+        if (locationItems != null && locationItems.size() > 0) {
+            locationsRecyclerView.setVisibility(View.VISIBLE);
+            txtv_noData.setVisibility(View.GONE);
+            if(locationsItemRecyclerAdapter == null) {
+                locationsItemRecyclerAdapter = new LocationsItemRecyclerAdapter(getActivity(), locationItems);
+            } else
+                lastFirstVisiblePosition = ((LinearLayoutManager)locationsRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+            locationsItemRecyclerAdapter.setItems(locationItems);
+            locationsItemRecyclerAdapter.showLoading(false);
+            locationsItemRecyclerAdapter.notifyDataSetChanged();
+            locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
+            ((LinearLayoutManager) locationsRecyclerView.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
+        } else {
+            locationsRecyclerView.setVisibility(View.GONE);
+            txtv_noData.setVisibility(View.VISIBLE);
+            txtv_noData.setText(getString(R.string.locations_no_locations));
+        }
+    }
 
 
-	public void getData()
-	{
-		//if news list is loaded in the manager get it and bind
-		//if not and the main activity is still loading the news list
-		// wait for it and it will notify handleRequestFinished in this fragment.
-		//if the main activity finished loading news list and the manager is still empty
-		//start operation here.
+    public void getData() {
+        //if news list is loaded in the manager get it and bind
+        //if not and the main activity is still loading the news list
+        // wait for it and it will notify handleRequestFinished in this fragment.
+        //if the main activity finished loading news list and the manager is still empty
+        //start operation here.
 
 
-		locationItems = (ArrayList<LocationItem>) EGuideLocationManager.getInstance().getLocationsUnFilteredList(getActivity());
-		if(locationItems!= null && locationItems.size()>0){
-			handleRequestFinished(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, null, locationItems);
-		}
-		else {
-			if (((MainActivity) getActivity()).isLocationLoadingFinished == false) {
-				startWaiting();
-			}
-			else{
-				startLocationsListOperation(new LocationsFilterData(), true);
-			}
-		}
+        locationItems = (ArrayList<LocationItem>) EGuideLocationManager.getInstance().getLocationsUnFilteredList(getActivity());
+        if (locationItems != null && locationItems.size() > 0) {
+            handleRequestFinished(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, null, locationItems);
+        } else {
+            if (((MainActivity) getActivity()).isLocationLoadingFinished == false) {
+                startWaiting();
+            } else {
+                startLocationsListOperation(new LocationsFilterData(), true, 0);
+            }
+        }
+    }
 
-	}
+    private void startWaiting() {
+        if (progressDialog != null && !progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+    }
 
+    private void stopWaiting() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 
-	private void startWaiting() {
-		if(progressDialog!=null&& !progressDialog.isShowing())
-		{
-			progressDialog.show();
-		}
-	}
-
-	private void stopWaiting() {
-		if(progressDialog!=null&& progressDialog.isShowing()) {
-			progressDialog.dismiss();
-		}
-	}
-	private void startLocationsListOperation(LocationsFilterData locationsFilterData, boolean showDialog)
-	{
-		E_GuideLocationListOperation operation = new E_GuideLocationListOperation(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID,showDialog,getActivity(),locationsFilterData,100,0);
-		operation.addRequsetObserver(this);
-		operation.execute();
-	}
+    private void startLocationsListOperation(LocationsFilterData locationsFilterData, boolean showDialog, int pageIndex) {
+        this.pageIndex = pageIndex;
+        E_GuideLocationListOperation operation = new E_GuideLocationListOperation(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, showDialog, getActivity(), locationsFilterData, ServerKeys.PAGE_SIZE_DEFAULT, pageIndex);
+        operation.addRequsetObserver(this);
+        operation.execute();
+    }
 
 
-	@Override
-    public void onItemClicked(View v, int position)
-    {
+    @Override
+    public void onItemClicked(View v, int position) {
         ((MainActivity) getActivity()).openLocationDetailsFragment(locationItems.get(position));
     }
 
     @Override
-    public void onItemLongClicked(View v, int position)
-    {
+    public void onItemLongClicked(View v, int position) {
 
     }
 
-	@Override
-	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
-		stopWaiting();
-		if (error == null)
-		{
-			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
-			if((int)requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID && resultObject!=null){
-				locationItems= (ArrayList<LocationItem>) resultObject;
-			}
-		}
-		else if (error != null && error instanceof CTHttpError)
-		{
-			Logger.instance().v(TAG,error);
-			int statusCode = ((CTHttpError) error).getStatusCode();
-			if (RequestHandler.isRequestTimedOut(statusCode))
-			{
-				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
-			}
-			else if (statusCode == -1)
-			{
-				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
-						getActivity());
-			}
-		}
-		bindViews();
-	}
+    @Override
+    public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        stopWaiting();
+        if (error == null) {
+            Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
+            if ((int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID && resultObject != null) {
+                ArrayList<LocationItem> _locationItems = (ArrayList<LocationItem>) resultObject;
+                if (locationItems == null)
+                    locationItems = new ArrayList<>();
+                locationItems.addAll(_locationItems);
+            }
+        } else if (error != null && error instanceof CTHttpError) {
+            Logger.instance().v(TAG, error);
+            int statusCode = ((CTHttpError) error).getStatusCode();
+            if (RequestHandler.isRequestTimedOut(statusCode)) {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
+            } else if (statusCode == -1) {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+                        getActivity());
+            }
+        }
+        bindViews();
+    }
 
-	@Override
-	public void requestCanceled(Integer requestId, Throwable error) {
+    @Override
+    public void requestCanceled(Integer requestId, Throwable error) {
 
-	}
+    }
 
-	@Override
-	public void updateStatus(Integer requestId, String statusMsg) {
+    @Override
+    public void updateStatus(Integer requestId, String statusMsg) {
 
-	}
+    }
 }

@@ -71,6 +71,7 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
         super(context);
         this.context=context;
         view = LayoutInflater.from(context).inflate(R.layout.e_services_filter_screen, null);
+		view.setMinimumHeight(getResources().getDisplayMetrics().heightPixels);
 	    initRecyclersListeners();
         initViews(view);
 
