@@ -338,6 +338,8 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		if(getActivity() == null)
+			return;
 		stopWaiting();
 		if (error == null)
 		{

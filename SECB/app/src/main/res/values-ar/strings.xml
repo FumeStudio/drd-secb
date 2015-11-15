@@ -62,7 +62,7 @@
     <string name="news_filter_political_type">سياسي</string>
     <string name="news_filter_public_type">عام</string>
     <string name="filters_apply_filter">اجراء</string>
-    <string name="filters_clear_filter">اعادة الضبط</string>
+    <string name="filters_clear_filter"><u>اعادة الضبط</u></string>
     <string name="news_details">تفاصيل الخبر</string>
     <string name="filter_city">المدينة: </string>
     <string name="filter_time_starts">البداية: </string>

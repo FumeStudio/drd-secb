@@ -74,7 +74,7 @@
     <string name="news_filter_political_type">Political Type</string>
     <string name="news_filter_public_type">Public Type</string>
     <string name="filters_apply_filter">Apply Filters</string>
-    <string name="filters_clear_filter">Clear Filters</string>
+    <string name="filters_clear_filter"><u>Clear Filters</u></string>
     <string name="news_details">News Details</string>
     <string name="filter_city">City</string>
     <string name="filter_time_starts">Starts</string>

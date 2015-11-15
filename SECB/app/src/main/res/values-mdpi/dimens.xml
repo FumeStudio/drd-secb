@@ -61,7 +61,7 @@
     <dimen name="news_filter_screen_height">321dp</dimen> <!-- 905PX - HEIGHT -->
     <dimen name="news_filter_screen_recycler_height">95dp</dimen> <!-- 270PX - HEIGHT -->
 
-    <dimen name="news_filter_padding">13dp</dimen> <!-- 30PX - WIDTH -->
+    <dimen name="news_filter_padding">9dp</dimen> <!-- 30PX - WIDTH -->
     <dimen name="news_filter_text_size">8dp</dimen> <!-- 24PX - HEIGHT -->
     <dimen name="news_filter_btn_text_size">10dp</dimen> <!-- 30PX - HEIGHT -->
     <dimen name="news_details_padding">11dp</dimen> <!-- 33PX - HEIGHT -->
@@ -120,6 +120,7 @@
     <dimen name="eservice_item_padding">9dp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="eservice_item_text_size">9dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="eservice_item_title_text_size">9dp</dimen> <!-- 28PX - HEIGHT -->
+    <dimen name="eservice_filter_screen_recycler_height">55dp</dimen>
 
 
     <dimen name="about_us_h1_text_size">11dp</dimen> <!-- 33PX - HEIGHT -->
