@@ -74,7 +74,7 @@
     <dimen name="news_details_newDate_text_container">19dp</dimen> <!-- 55PX - HEIGHT -->
     <dimen name="news_details_text_container_padding">7dp</dimen> <!-- 20PX - HEIGHT -->
 
-    <dimen name="event_details_map_height">83dp</dimen> <!-- 235PX - HEIGHT -->
+    <dimen name="event_details_map_height">87dp</dimen> <!-- 245PX - HEIGHT -->
     <dimen name="event_details_header_card_height">67dp</dimen> <!-- 190PX - HEIGHT -->
     <dimen name="event_details_iconed_info_space_width">42dp</dimen> <!-- 95PX - WIDTH -->
     <dimen name="event_details_iconed_info__space_height">5dp</dimen> <!-- 15PX - HEIGHT -->

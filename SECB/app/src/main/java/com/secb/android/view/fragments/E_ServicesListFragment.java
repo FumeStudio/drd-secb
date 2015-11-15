@@ -78,8 +78,8 @@ public class E_ServicesListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).showFilterButton(true);//for now till the filter design is received
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
 
     }
 
@@ -88,9 +88,6 @@ public class E_ServicesListFragment extends SECBBaseFragment
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
-
     }
 
     @Override
@@ -147,7 +144,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(),true);
     }
 
     // ////////////////////////////////////////////////////////////
@@ -259,7 +256,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		{
 			eServicesRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
-			txtv_noData.setText(getString(R.string.events_no_events));
+			txtv_noData.setText(getString(R.string.eservices_no_eservices));
 		}
 	}
 
@@ -338,7 +335,8 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
-		if(getActivity() == null)
+		// if not attached to activity
+		if(getActivity() == null && !isAdded())
 			return;
 		stopWaiting();
 		if (error == null)
@@ -373,8 +371,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			{
 				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
 			}
-			else if (statusCode == -1)
-			{
+			else if (statusCode == -1) {
 				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
 						getActivity());
 			}

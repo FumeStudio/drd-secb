@@ -287,7 +287,7 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
             imgv_event_details_img.setImageResource(R.drawable.events_image_place_holder);
             txtv_event_details_eventTitle.setText(eventItem.Title);
 
-	         evdateStr = MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_DateTime);
+	         evdateStr = MainActivity.reFormatDate(eventItem.EventDate,MainActivity.sdf_Time);
 	        txtv_event_details_eventDate.setText(evdateStr);
             txtv_event_details_eventPlace.setText(eventItem.EventSiteCity);
             txtv_event_details_eventCategory.setText(eventItem.EventCategory);

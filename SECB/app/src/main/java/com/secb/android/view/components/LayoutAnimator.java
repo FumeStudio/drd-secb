@@ -10,6 +10,7 @@ public class LayoutAnimator {
     private final float startPointY;
     private final float startPointX;
     ViewGroup layout;
+	View darkArea;
     public boolean isDown;
     public boolean isVerticalAnimation;
     String animationDirection = "translationY";
@@ -22,15 +23,20 @@ public class LayoutAnimator {
         this.startPointX=startPointX;
         this.startPointY=startPointY;
         hideFirst();
+//	    darkArea = layout.findViewById(R.id.layout_dark_layer);
     }
-
+	public  void setDarkLayer(View _darkLayer){
+		this.darkArea=_darkLayer;
+	}
     public void hidePreviewPanel() {
 
         android.animation.Animator.AnimatorListener listener = new android.animation.Animator.AnimatorListener() {
 
             @Override
             public void onAnimationStart(Animator animator) {
-
+			//hide dark area
+	            if(darkArea!=null)
+		            darkArea.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -84,7 +90,10 @@ public class LayoutAnimator {
             public void onAnimationEnd(Animator animator) {
                 layout.setVisibility(View.VISIBLE);
                 isDown = false;
-            }
+	            //Show dark area
+	            if(darkArea!=null)
+		            darkArea.setVisibility(View.VISIBLE);
+	            }
 
             @Override
             public void onAnimationCancel(Animator animator) {

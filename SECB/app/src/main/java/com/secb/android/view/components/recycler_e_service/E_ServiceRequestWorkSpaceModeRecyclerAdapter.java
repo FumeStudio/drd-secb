@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.secb.android.R;
@@ -57,17 +56,17 @@ public class E_ServiceRequestWorkSpaceModeRecyclerAdapter extends RecyclerView.A
 	    holder.radbtn_categoryItem.setText(radbtn_text);
 	    holder.radbtn_categoryItem.setChecked(currentItem.isSelected);
 
-	    holder.radbtn_categoryItem.setOnClickListener(new OnClickListener(){
+/*	    holder.radbtn_categoryItem.setOnClickListener(new OnClickListener(){
 
 		    @Override
 		    public void onClick(View v) {
 			    setItemChecked(position,holder.radbtn_categoryItem.isChecked());
 		    }
-	    });
+	    });*/
     }
 
-	private void setItemChecked(int position, boolean checked) {
-		if(checked)
+	public void setItemChecked(int position/*, boolean checked*/) {
+//		if(checked)
 		{
 			for (int i = 0 ; i<this.itemsList.size();i++)
 			{

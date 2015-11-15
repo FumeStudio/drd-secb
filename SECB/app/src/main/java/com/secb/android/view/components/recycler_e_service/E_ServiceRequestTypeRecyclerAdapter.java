@@ -4,11 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.secb.android.R;
 import com.secb.android.model.E_ServiceRequestTypeItem;
+import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 
 import net.comptoirs.android.common.view.CTApplication;
 
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class E_ServiceRequestTypeRecyclerAdapter extends RecyclerView.Adapter<EServiceFilterRecyclerViewHolder>
+		implements RecyclerCustomClickListener
 {
     LayoutInflater inflater ;
     List<E_ServiceRequestTypeItem> itemsList = Collections.emptyList();
@@ -56,17 +58,17 @@ public class E_ServiceRequestTypeRecyclerAdapter extends RecyclerView.Adapter<ES
 	    holder.radbtn_categoryItem.setText(currentItem.Value);
 	    holder.radbtn_categoryItem.setChecked(currentItem.isSelected);
 
-	    holder.radbtn_categoryItem.setOnClickListener(new OnClickListener(){
+	    /*holder.radbtn_categoryItem.setOnClickListener(new OnClickListener(){
 
 		    @Override
 		    public void onClick(View v) {
 			    setItemChecked(position,holder.radbtn_categoryItem.isChecked());
 		    }
-	    });
+	    });*/
     }
 
-	private void setItemChecked(int position, boolean checked) {
-		if(checked)
+	public void setItemChecked(int position/*, boolean checked*/) {
+//		if(checked)
 		{
 			for (int i = 0 ; i<this.itemsList.size();i++)
 			{
@@ -94,4 +96,13 @@ public class E_ServiceRequestTypeRecyclerAdapter extends RecyclerView.Adapter<ES
     }
 
 
+	@Override
+	public void onItemClicked(View v, int position) {
+		((SECBBaseActivity)context).displayToast(""+position);
+	}
+
+	@Override
+	public void onItemLongClicked(View v, int position) {
+
+	}
 }

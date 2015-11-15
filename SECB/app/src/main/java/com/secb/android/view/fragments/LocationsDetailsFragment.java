@@ -167,6 +167,12 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
             case R.id.imageViewBackHeader:
                 onBack();
                 break;
+            case R.id.txtv_location_phone_value:
+	            callLocationPhone();
+                break;
+            case R.id.txtv_location_email_value:
+	            sendLocationEmail();
+                break;
 //            case R.id.btn_nextRoom:
 //                getNextRoom();
 //                break;
@@ -179,6 +185,19 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
 
         }
     }
+
+
+
+
+	private void sendLocationEmail() {
+		if (locationItem != null && !Utilities.isNullString(locationItem.SiteEmail))
+			Utilities.openEmail(getActivity(), locationItem.SiteEmail, "", "");
+	}
+
+	private void callLocationPhone() {
+		if (locationItem != null && !Utilities.isNullString(locationItem.SitePhone))
+			Utilities.callPhoneNumber(getActivity(), locationItem.SitePhone);
+	}
 
     private void initViews(View view) {
         txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
@@ -206,6 +225,9 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
 //
 //        btn_nextRoom.setOnClickListener(this);
 //        btn_PreviousRoom.setOnClickListener(this);
+
+	    txtv_location_email_value.setOnClickListener(this);
+	    txtv_location_phone_value.setOnClickListener(this);
 
     }
 

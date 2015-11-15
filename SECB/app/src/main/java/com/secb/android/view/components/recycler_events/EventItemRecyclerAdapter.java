@@ -74,7 +74,7 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
 	    holder.txtv_eventTitle.setText(currentItem.Title);
         holder.txtv_eventDescription.setText(currentItem.Description);
 
-	    evdateStr = MainActivity.reFormatDate(currentItem.EventDate, MainActivity.sdf_Date);
+	    evdateStr = MainActivity.reFormatDate(currentItem.EventDate, MainActivity.sdf_Time);
 
         holder.txtv_event_timeValue.setText(evdateStr);
         holder.txtv_event_placeValue.setText(currentItem.EventSiteCity);

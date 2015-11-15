@@ -20,7 +20,6 @@ public class LoginOperation extends BaseOperation {
     private static final String TAG ="LoginOperation" ;
     String loginXml;
     boolean rememberMe;
-    private Object userObject;
 
     User userToLogin ;
 
@@ -53,8 +52,8 @@ public class LoginOperation extends BaseOperation {
 
         //get cookie
 
-        String cookieValue = loginXmlGenerator.getCookieFromLoginXml(response.response+"");
-         cookieValue = (response.responseHeaders.get("Set-Cookie"));
+//        String cookieValue = loginXmlGenerator.getCookieFromLoginXml(response.response+"");
+	    String cookieValue = (response.responseHeaders.get("Set-Cookie"));
         if(!Utilities.isNullString(cookieValue))
             userToLogin.loginCookie = cookieValue;
 

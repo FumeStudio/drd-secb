@@ -67,6 +67,7 @@ public class E_ServiceItemRecyclerAdapter extends RecyclerView.Adapter<E_Service
         holder.txtv_number_value.setText(currentItem.RequestNumber);
         holder.txtv_type_value.setText(currentItem.RequestType);
 
+	    //for coloring
         if(!Utilities.isNullString(currentItem.ReuquestStatusSingleValue)) {
             if(currentItem.ReuquestStatusSingleValue.compareToIgnoreCase(MainActivity.STATUS_INBOX) == 0) {
                 holder.layout_eservice_colored_line.setBackgroundColor(context.getResources().getColor(R.color.graph_color_inbox));

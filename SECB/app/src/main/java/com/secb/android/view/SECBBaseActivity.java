@@ -45,6 +45,7 @@ import com.secb.android.view.menu.MenuItem;
 
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.SharedPreferenceData;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -91,6 +92,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     Bundle savedInstanceState;
 
     IntentFilter languageIntentFiler = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
+	private View filter_holder_dark_layer;
 
 //	private /*static*/ ImageFetcher mImageFetcher;
 
@@ -129,7 +131,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             setContentView(R.layout.main);
 
             ViewGroup contentLayout = (ViewGroup) findViewById(R.id.simple_fragment);
-            imgv_filter = (ImageView) findViewById(R.id.imgv_filter);
+
+	        imgv_filter = (ImageView) findViewById(R.id.imgv_filter);
             imgv_filter.setVisibility(View.GONE);
             imgv_filter.setOnClickListener(this);
             filterLayoutHolder = (LinearLayout) findViewById(R.id.filter_holder);
@@ -263,6 +266,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     public void setFilterLayoutView(View filterLayoutView) {
         this.filterLayoutView = filterLayoutView;
+	    filter_holder_dark_layer = filterLayoutView.findViewById(R.id.layout_dark_layer);
+	    layoutAnimator.setDarkLayer(filter_holder_dark_layer);
     }
 
     public void prepareFilerLayout() {
@@ -285,7 +290,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     }
 
     public void hideFilterLayout() {
-        if (this.filterLayoutHolder != null && layoutAnimator != null && isFilterLayoutOpened) {
+        if (this.filterLayoutHolder != null && layoutAnimator != null && isFilterLayoutOpened)
+        {
 //            this.filterLayoutHolder.setVisibility(View.GONE);
             isFilterLayoutOpened = false;
             layoutAnimator.hidePreviewPanel();
@@ -450,22 +456,31 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         }
     }
 
-
-    public void finishFragmentOrActivity(String name) {
-        hideFilterLayout();
-
-
-        FragmentManager manager = getSupportFragmentManager();
-        Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
-        boolean removed = false;
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
-            getSupportFragmentManager().popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        else {
-            moveTaskToBack(true);
-        }
+	public void finishFragmentOrActivity(String name) {
+		finishFragmentOrActivity(name, false);
     }
 
+	public void finishFragmentOrActivity(String name,boolean isBackToHome){
+		if( isFilterLayoutOpened){
+			hideFilterLayout();
+			return;
+		}
+		FragmentManager manager = getSupportFragmentManager();
+		Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
+		if (getSupportFragmentManager().getBackStackEntryCount() > 0)
+		{
+			getSupportFragmentManager().popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//	        remove till the home fragment
+			if(isBackToHome)
+			{
+				while (getSupportFragmentManager().getBackStackEntryCount() != 0) {
+					getSupportFragmentManager().popBackStackImmediate();
+				}
+			}
+		} else {
+			moveTaskToBack(true);
+		}
+	}
 
     public SECBBaseFragment getCurrentDisplayedFragment() {
         currentDisplayedFragment = (SECBBaseFragment) getSupportFragmentManager().findFragmentById(R.id.simple_fragment);
@@ -698,8 +713,16 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     public void logout() {
         //clear user from manager
         UserManager.getInstance().logout();
+	    //clear caching folder from sd card
 	    CachingManager.getInstance().clearCachingFolder(this);
-        //go to login page
+	    try {
+		    //clear cookies for webview
+		    Utilities.clearCookies(this);
+	    } catch (Exception e) {
+		    e.printStackTrace();
+	    }
+
+	    //go to login page
         Intent i = new Intent(activity, LoginActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(i);

@@ -356,7 +356,7 @@ public class Engine {
 	    public static final String APP_EGUIDE_ORGANIZERS_LIST = "app_eguide_organizers_list.dat";
 
 	    //e-services requests list
-	    public static final String APP_EGUIDE_E_SERVICES_REQUESTS_LIST =  "app_eservices_requests_list.dat"  ;
+	    public static final String APP_E_SERVICES_REQUESTS_LIST =  "app_eservices_requests_list.dat"  ;
 	    //e-services requests types list
 	    public static final String APP_EGUIDE_E_SERVICES_REQUESTS_TYPES_LIST =  "app_eservices_requests_types_list.dat"  ;
 	    //e-services requests WorkSpaceModes list

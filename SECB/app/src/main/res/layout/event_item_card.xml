@@ -153,10 +153,10 @@
 
             <TextView
                 android:id="@+id/txtv_event_timeValue"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
+
                 android:drawableLeft="@drawable/event_card_time_icon"
                 android:drawablePadding="3dp"
                 android:ellipsize="end"
@@ -167,12 +167,14 @@
 
             <TextView
                 android:id="@+id/txtv_event_placeValue"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
+
                 android:drawableLeft="@drawable/event_card_place_icon"
                 android:drawablePadding="3dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/secb_dark_text"
@@ -181,7 +183,7 @@
 
             <TextView
                 android:id="@+id/txtv_event_categoryValue"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
@@ -189,7 +191,7 @@
                 android:drawablePadding="3dp"
                 android:text=""
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
         </TableRow>

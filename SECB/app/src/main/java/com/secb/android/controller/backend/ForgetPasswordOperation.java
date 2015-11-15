@@ -2,8 +2,6 @@ package com.secb.android.controller.backend;
 
 import android.content.Context;
 
-import com.secb.android.controller.manager.UserManager;
-
 import net.comptoirs.android.common.controller.backend.BaseOperation;
 import net.comptoirs.android.common.controller.backend.CTHttpResponse;
 import net.comptoirs.android.common.controller.backend.ServerConnection;
@@ -41,7 +39,7 @@ public class ForgetPasswordOperation extends BaseOperation {
         String requestUrl = stringBuilder.toString();
 
         HashMap<String, String> cookies = new HashMap<>();
-        cookies.put("Cookie", UserManager.getInstance().getUser().loginCookie);
+//        cookies.put("Cookie", UserManager.getInstance().getUser().loginCookie);
 	    cookies =null;
 	    CTHttpResponse response = doRequest(requestUrl, HttpGet.METHOD_NAME, null, null, cookies, null, ServerConnection.ResponseType.RESP_TYPE_STRING);
         Logger.instance().v(TAG, response.response);

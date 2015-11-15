@@ -1,8 +1,7 @@
 package com.secb.android.view;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -17,7 +16,11 @@ public class SignUpActivity extends SECBBaseActivity {
 
    WebView webv_signUpPage;
 
-    public SignUpActivity() {
+	boolean loadingFinished = true;
+	boolean redirect = false;
+
+
+	public SignUpActivity() {
         super(R.layout.signup, true);
     }
 
@@ -51,6 +54,12 @@ public class SignUpActivity extends SECBBaseActivity {
 
         final ProgressDialog dialog =  CustomProgressDialog.getInstance(SignUpActivity.this ,true);
         dialog.show();
+
+//	    clear cookie
+	    myWebView.clearCache(true);
+	    myWebView.clearHistory();
+
+
         myWebView.setVerticalScrollBarEnabled(false);
         myWebView.setHorizontalScrollBarEnabled(false);
         WebSettings webSettings = myWebView.getSettings();
@@ -62,13 +71,17 @@ public class SignUpActivity extends SECBBaseActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
-                if (url.endsWith(".mp4"))
+	            if (!loadingFinished) {
+		            redirect = true;
+	            }
+	            loadingFinished = false;
+/*                if (url.endsWith(".mp4"))
                 {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setDataAndType(Uri.parse(url), "video/mp4");
                     view.getContext().startActivity(intent);
                 }
-                else
+                else*/
                 {
                     view.loadUrl(url);
                 }
@@ -76,9 +89,26 @@ public class SignUpActivity extends SECBBaseActivity {
                 return true;
             }
 
+	        @Override
+	        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+		        super.onPageStarted(view, url, favicon);
+		        loadingFinished = false;
+		        if(!dialog.isShowing())
+			        dialog.show();
+	        }
             public void onPageFinished(WebView view, String url)
             {
-                dialog.dismiss();
+	            if(!redirect){
+		            loadingFinished = true;
+	            }
+
+	            if(loadingFinished && !redirect){
+		            //HIDE LOADING IT HAS FINISHED
+		            dialog.dismiss();
+	            }
+	            else{
+		            redirect = false;
+	            }
             }
 
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)

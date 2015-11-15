@@ -37,7 +37,7 @@ public class E_ServicesStatisticsListOperation extends BaseOperation {
 
 	@Override
 	public Object doMain() throws Exception {
-		String requestUserName = UserManager.getInstance().getUser().emailAddress;
+		String requestUserName = UserManager.getInstance().getUser().userName;
 		if(Utilities.isNullString(requestUserName ))
 			return null;
 //		String language = UiEngine.getCurrentAppLanguage(context);

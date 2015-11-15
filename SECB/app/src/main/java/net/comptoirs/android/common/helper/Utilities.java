@@ -41,6 +41,8 @@ import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -879,5 +881,25 @@ public class Utilities {
 			}
 		}
 		return value;
+	}
+
+
+	public static void clearCookies(Context context)
+	{
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+			Logger.instance().v("ClearCookies", "Using ClearCookies code for API >=" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+			CookieManager.getInstance().removeAllCookies(null);
+			CookieManager.getInstance().flush();
+		} else
+		{
+			Logger.instance().v("ClearCookies" , "Using ClearCookies code for API <" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+			CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+			cookieSyncMngr.startSync();
+			CookieManager cookieManager=CookieManager.getInstance();
+			cookieManager.removeAllCookie();
+			cookieManager.removeSessionCookie();
+			cookieSyncMngr.stopSync();
+			cookieSyncMngr.sync();
+		}
 	}
 }

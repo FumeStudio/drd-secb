@@ -8,6 +8,12 @@
     <string name="error_empty_email">Email address should be entered correctly</string>
     <string name="error_empty_password">Password should be entered correctly</string>
     <string name="error_request_time_out">Timeout, please make sure of your internet connection</string>
+    <string name="error_empty_userName">User name should be entered correctly</string>
+    <string name="error_empty_mobile">Mobile number should be entered correctly</string>
+    <string name="error_empty_organization">Organization number should be entered correctly</string>
+    <string name="error_empty_job">Job number should be entered correctly</string>
+    <string name="error_empty_subject">Subject number should be entered correctly</string>
+
     <!--<string name="password_reset_done">Please check your email inbox.</string>-->
     <string name="password_reset_done">Password reset message is sent to %s . Please check your inbox.</string>
     <string name="loading">Loading..</string>
@@ -161,7 +167,7 @@
     <string name="events_no_events">There are no events</string>
     <string name="event_all_day">All Day Event</string>
     <string name="event_repeated">Repeated</string>
-    <string name="eservices_form">E-service Forms</string>
+    <string name="eservices_form">E-service Form</string>
     <string name="locations_no_locations">There are no locations</string>
     <string name="organizer_no_organizers">There are no organizers.</string>
     <string name="contact_us_done">Your data sent successfully .</string>
@@ -175,4 +181,5 @@
     <string name="ago">Ago</string>
     <string name="news_no_status">There are no Status</string>
     <string name="error_player">Can\'t Play This Video</string>
+    <string name="eservices_no_eservices">There are no E-services.</string>
 </resources>

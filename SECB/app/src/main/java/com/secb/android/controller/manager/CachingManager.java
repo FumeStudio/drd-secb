@@ -923,7 +923,7 @@ public class CachingManager {
 			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services,
 					list_file, appContext);
 
-//			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_LIST, appContext);
+//			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_E_SERVICES_REQUESTS_LIST, appContext);
 			//save Events categories in the file "app_eservices_requests_list.dat
 			try {
 				saveObject(itemsList, file);
@@ -960,9 +960,16 @@ public class CachingManager {
 		if (itemsList != null && itemsList.size() > 0) {
 			//create file called "app_eservices_requests_list.dat"
 			// inside  folder called "eservices" which existing in "Cache" folder
+
 			String list_file = Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_WORKSPACEMODE_LIST;
+
+
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			if(language!=null)
+				list_file=list_file+"_"+language.toUpperCase();
 			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services,
 					list_file, appContext);
+
 			try {
 				saveObject(itemsList, file);
 			} catch (IOException e) {
@@ -976,8 +983,13 @@ public class CachingManager {
 		//get file called "app_eservices_statistics_list.dat" from "eservices" folder
 		String list_file = Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_WORKSPACEMODE_LIST;
 
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		if(language!=null)
+			list_file=list_file+"_"+language.toUpperCase();
+
 		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services,
 				list_file, appContext);
+
 		ArrayList<E_ServiceRequestWorkSpaceModeItem> itemsList=null;
 		try
 		{
@@ -995,7 +1007,13 @@ public class CachingManager {
 		if (itemsList != null && itemsList.size() > 0) {
 			//create file called "app_eservices_requests_list.dat"
 			// inside  folder called "eservices" which existing in "Cache" folder
-			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_LIST, appContext);
+
+			String list_file = Engine.FileName.APP_E_SERVICES_REQUESTS_LIST;
+			String language = UiEngine.getCurrentAppLanguage(appContext);
+			if(language!=null)
+				list_file=list_file+"_"+language.toUpperCase();
+
+			File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, list_file, appContext);
 			//save Events categories in the file "app_eservices_requests_list.dat
 			try {
 				saveObject(itemsList, file);
@@ -1008,7 +1026,13 @@ public class CachingManager {
 	public ArrayList<E_ServiceRequestItem> loadE_ServicesRequestsList(Context appContext)
 	{
 		//get file called "app_eservices_requests_list.dat" from "eservices" folder
-		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, Engine.FileName.APP_EGUIDE_E_SERVICES_REQUESTS_LIST, appContext);
+
+		String list_file = Engine.FileName.APP_E_SERVICES_REQUESTS_LIST;
+		String language = UiEngine.getCurrentAppLanguage(appContext);
+		if(language!=null)
+			list_file=list_file+"_"+language.toUpperCase();
+
+		File file = Engine.getCacheFile(Engine.DataFolder.USER_E_Services, list_file, appContext);
 		ArrayList<E_ServiceRequestItem> itemsList = null;
 		try
 		{

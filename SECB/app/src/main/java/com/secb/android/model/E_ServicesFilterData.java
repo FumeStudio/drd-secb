@@ -4,7 +4,7 @@ import com.secb.android.controller.manager.UserManager;
 
 public class E_ServicesFilterData
 {
-	public String UserName= UserManager.getInstance().getUser().emailAddress;
+	public String UserName= UserManager.getInstance().getUser().userName;
 	public String FromDate;
 	public String ToDate;
 	public String Status="All";

@@ -148,7 +148,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(),true);
     }
 
     // ////////////////////////////////////////////////////////////
@@ -398,7 +398,11 @@ public class EventsCalendarFragment extends SECBBaseFragment
 
     @Override
     public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
-        if (error == null) {
+	    //if not attached to activity
+	    if(!isAdded())
+		    return;
+
+	    if (error == null) {
             Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
             if ((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID && resultObject != null) {
                 eventsList = (ArrayList<EventItem>) resultObject;

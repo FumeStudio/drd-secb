@@ -85,7 +85,7 @@ public class AboutUsFragment extends SECBBaseFragment implements FragmentBackObs
     {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName,true);
     }
 
     // ////////////////////////////////////////////////////////////

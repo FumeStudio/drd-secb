@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
-        <include layout="@layout/event_details_header_card" />
+
+        <include layout="@layout/event_details_header_card"/>
     </LinearLayout>
 
 
@@ -37,29 +38,35 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
             android:layout_above="@id/map_container"
-            android:layout_below="@id/event_details_iconed_info_layout">
+            android:layout_below="@id/event_details_iconed_info_layout"
+            android:fillViewport="true">
 
             <TextView
                 android:id="@+id/event_details_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_details_iconed_info_layout"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/event_details_iconed_info_margin"
                 android:layout_marginLeft="@dimen/event_details_iconed_info_margin"
                 android:layout_marginRight="@dimen/event_details_iconed_info_margin"
+
+                android:paddingLeft="@dimen/event_details_iconed_info_margin"
+                android:paddingRight="@dimen/event_details_iconed_info_margin"
+
+                android:text="
+                 اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفع        اوافق علي علي اضافتي الي روزنامة الفعاليات "
                 android:textColor="@color/secb_grey_text"
-                android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                android:textSize="@dimen/event_details_text_size" />
+                android:textSize="@dimen/event_details_text_size"/>
         </ScrollView>
 
         <LinearLayout
             android:id="@+id/map_container"
-            android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/event_details_map_height"
             android:layout_alignParentBottom="true"
-            android:layout_height="@dimen/event_details_map_height">
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/mapFrame"
@@ -68,7 +75,7 @@
                 android:layout_gravity="center_horizontal"
                 android:visibility="visible"/>
 
-           <!-- <include layout="@layout/map_fragment"/>-->
+            <!-- <include layout="@layout/map_fragment"/>-->
 
         </LinearLayout>
     </RelativeLayout>

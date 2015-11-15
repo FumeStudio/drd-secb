@@ -636,6 +636,9 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		try {
 			Date date = sdf_Source_News.parse(oldDate);
 //			DateTime dateTime = new DateTime(1978, 3, 26, 12, 35, 0, 0);
+			if(date==null){
+				return null;
+			}
 			DateTime dateTime = new DateTime(date);
 			DateTime now = new DateTime();
 			Period period = new Period(dateTime, now);

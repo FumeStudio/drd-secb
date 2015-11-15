@@ -4,6 +4,12 @@
     <string name="error_invalid_password">كلمة المرور غير صحيحة</string>
     <string name="error_empty_email">يجب ادخال عنوان البريد الالكتروني بشكل صحيح</string>
     <string name="error_empty_password">يجب ادخال كلمة المرور بشكل صحيح</string>
+    <string name="error_empty_userName">يجب ادخال اسم المستخدم بشكل صحيح</string>
+    <string name="error_empty_mobile">يجب ادخال رقم الجوال بشكل صحيح</string>
+    <string name="error_empty_organization">يجب ادخال المنظمة بشكل صحيح</string>
+    <string name="error_empty_job">يجب ادخال اللقب الوظيفي بشكل صحيح</string>
+    <string name="error_empty_subject">يجب ادخال الموضوع بشكل صحيح</string>
+
     <!--<string name="password_reset_done">يرجي مراجعة صندوق البريد الالكتروني</string>-->
     <string name="password_reset_done">تم ارسال رساله اعادة ضبط كلمة المرور الي %s . يرجي التوجه الي صندوق البريد الالكتروني</string>
     <string name="attention">انتباه</string>
@@ -153,6 +159,7 @@
     <string name="events_no_events">لا توجد فعاليات.</string>
     <string name="event_all_day">طوال اليوم</string>
     <string name="event_repeated">متكرر</string>
+    <string name="eservices_form">نموذج الخدمة</string>
     <string name="locations_no_locations">لا توجد مواقع.</string>
     <string name="organizer_no_organizers">لا يوجد منظمين.</string>
     <string name="contact_us_done">تم ارسال بياناتكم بنجاح.</string>
@@ -166,6 +173,7 @@
     <string name="minutes">دقائق</string>
     <string name="ago">منذ</string>
     <string name="error_player">لا يمكن تشغيل هذا الملف</string>
+    <string name="eservices_no_eservices">لا توجد خدمات الكترونية.</string>
 
 
 </resources>
