@@ -4,7 +4,7 @@
           android:layout_height="wrap_content"
           android:layout_marginBottom="@dimen/eservice_item_padding"
           android:background="@drawable/eservives_item_bg"
-          android:gravity="right"
+          android:gravity="right|center_vertical"
           android:orientation="horizontal">
 
     <!--item data-->

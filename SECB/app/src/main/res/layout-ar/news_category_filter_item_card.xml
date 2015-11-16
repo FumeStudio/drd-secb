@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:button="@null"
-        android:drawableLeft="@drawable/radio_btn"
+        android:drawableRight="@drawable/radio_btn"
         android:text="@string/news_filter_all_types"
         android:textColor="@color/secb_grey_text"
         android:textSize="@dimen/news_filter_text_size" />

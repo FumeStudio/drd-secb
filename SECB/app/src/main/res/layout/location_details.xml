@@ -89,12 +89,19 @@
                     layout="@layout/location_name_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/organizer_details_margin_small"/>
+                    android:layout_marginBottom="@dimen/organizer_details_margin_small"
+                    android:layout_marginLeft="@dimen/organizer_details_margin"
+
+                    android:layout_marginRight="@dimen/organizer_details_margin"
+                    android:layout_marginTop="@dimen/organizer_details_margin_small"
+                    />
 
                 <TextView
                     android:id="@+id/txtv_location_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/organizer_details_margin"
+
                     android:layout_marginTop="@dimen/organizer_details_margin_small"
                     android:text="adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad adssssssssssssasdad"
                     android:textColor="@color/secb_grey_text"
@@ -108,14 +115,21 @@
                 android:layout_marginTop="@dimen/organizer_details_margin_small"
                 android:background="@color/off_white"
                 android:paddingLeft="@dimen/organizer_details_margin"
-                android:paddingRight="@dimen/organizer_details_margin">
+                android:paddingRight="@dimen/organizer_details_margin"
+
+
+                >
 
                 <include
                     android:id="@+id/location_capacity_info"
                     layout="@layout/location_capacity_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/organizer_details_margin_small"
+                    android:layout_marginBottom="@dimen/organizer_details_margin_small"
+                    android:layout_marginLeft="@dimen/organizer_details_margin"
+
+                    android:layout_marginRight="@dimen/organizer_details_margin"
+                    android:layout_marginTop="@dimen/organizer_details_margin_small"
                     android:background="@color/off_white"
                     android:visibility="visible"
 
@@ -148,9 +162,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1.0"
-                android:background="@color/off_white">
+                android:background="@color/off_white"
+                android:paddingLeft="@dimen/organizer_details_margin"
+                android:paddingRight="@dimen/organizer_details_margin">
 
                 <include
                     android:id="@+id/location_personal_info"
