@@ -48,13 +48,16 @@
                 android:textSize="@dimen/news_filter_btn_text_size"
                 android:textStyle="bold"/>
 
+
             <!--time input-->
+            <include layout="@layout/time_input_fields"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="@dimen/news_filter_padding">
+                android:padding="@dimen/news_filter_padding"
+                android:visibility="gone">
                 <!--from title-->
                 <TextView
                     android:id="@+id/txtv_news_filter_time_from_title"

@@ -54,7 +54,7 @@ public class ServerKeys
 	public static final String EGUIDE_LOCATION_TYPES = serverUrl+"webapi/api/location/GetlocationTypes";
 
 	/*E-guide Location List*/
-	public static final String EGUIDE_LOCATION_LIST= "WebApi/api/location/GetLocation";
+	public static final String EGUIDE_LOCATION_LIST= serverUrl+"WebApi/api/location/GetLocation";
 
 	/*E-guide Location Details List*/
 	public static final String EGUIDE_LOCATION_DETAILS_LIST= serverUrl+"WebApi/api/location/GetLocationByID";

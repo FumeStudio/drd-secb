@@ -86,8 +86,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgv_news_details_newDateContiner"
-                android:layout_marginTop="@dimen/news_details_padding"
-                android:text=""
+                android:layout_marginTop="@dimen/news_filter_text_size"
+                android:text="The Saudi Exhibition and Convention Bureau (SECB) has given warnings to nine event organizing companies in the Kingdom for committing a number of violations.
+Tariq Abdul Rahman Al Eisa, executive director of SECB said, “The warnings were issued to the companies because they have committed different violations while executing a number of trade and consumer exhibitions in Riyadh, Alkhobar, Taif, Jeddah and their municipalities.
+“The companies have pledged not to commit such violations in the future,” he added.
+Al Eisa further informed that the inspectors of the Ministry of Commerce and Industry in collaboration with the SECB had detected the violations.
+The violations in the trade exhibitions include cases of direct sales to the public in addition to the participation of exhibitors who were not specialized in the activity besides the showing and marketing of real estate offers from outside the Kingdom, he pointed out.
+Violations of "
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/news_details_newBody_text_size" />
         </RelativeLayout>

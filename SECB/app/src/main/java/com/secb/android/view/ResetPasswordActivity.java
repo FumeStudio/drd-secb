@@ -1,6 +1,7 @@
 package com.secb.android.view;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +49,7 @@ public class ResetPasswordActivity extends SECBBaseActivity implements RequestOb
         switch (v.getId())
         {
             case R.id.btn_resetPassword:
-//	            if(validateInputFields())
+	            if(validateInputFields())
 //	            displaySuccessMessage();
 		            sendResetEmail();
             break;
@@ -76,6 +77,18 @@ public class ResetPasswordActivity extends SECBBaseActivity implements RequestOb
 		if(!isEmailValid)
 			edt_email.setError(getString(R.string.error_empty_email));
 
+//		if both editTexts are empty the error msg appears on the
+//      focused edit text so remove focus from both editTexts
+//      and re-enable them
+
+		edt_email.setFocusable(false);
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				edt_email.setFocusable(true);
+			}
+		}, 10);
 		return isEmailValid;
 	}
 
