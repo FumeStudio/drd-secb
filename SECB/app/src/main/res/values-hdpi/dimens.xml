@@ -134,4 +134,11 @@
     <dimen name="card_insets">2dp</dimen> <!-- 6PX - HEIGHT -->
 
 
+
+    <dimen name="organizer_item_card_height">62dp</dimen> <!-- 155PX - HEIGHT -->
+    <dimen name="time_filter_title_width">36dp</dimen> <!-- 80PX - WIDTH -->
+
+
+
+
 </resources>

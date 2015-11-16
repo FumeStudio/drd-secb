@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/news_filter_padding">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        >
+
+        <!--from value-->
+        <!--android:drawableLeft="@drawable/date_picker_icon"-->
+        <TextView
+            android:id="@+id/txtv_news_filter_time_from_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/filter_time_from"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/secb_grey_text"
+            android:textSize="@dimen/news_filter_text_size"/>
+        <!--from title-->
+        <TextView
+            android:id="@+id/txtv_news_filter_time_from_title"
+            android:layout_width="@dimen/time_filter_title_width"
+
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/event_details_iconed_info_icon_margin"
+            android:text="@string/filter_time_from"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/news_filter_text_size"
+            android:visibility="visible"/>
+    </TableRow>
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        >
+
+        <!--from value-->
+        <!--android:drawableLeft="@drawable/date_picker_icon"-->
+        <TextView
+            android:id="@+id/txtv_news_filter_time_to_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/filter_time_to"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/secb_grey_text"
+            android:textSize="@dimen/news_filter_text_size"/>
+
+
+        <!--to title-->
+        <TextView
+            android:id="@+id/txtv_news_filter_time_to_title"
+            android:layout_width="@dimen/time_filter_title_width"
+
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/event_details_iconed_info_icon_margin"
+            android:text="@string/filter_time_to"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/news_filter_text_size"
+            android:visibility="visible"/>
+    </TableRow>
+
+
+</LinearLayout>

@@ -132,6 +132,8 @@
     <dimen name="gallery_img_height">95dp</dimen> <!-- 190PX - HEIGHT -->
     <dimen name="card_insets">3dp</dimen> <!-- 6PX - HEIGHT -->
 
+    <dimen name="organizer_item_card_height">78dp</dimen> <!-- 155PX - HEIGHT -->
+    <dimen name="time_filter_title_width">40dp</dimen> <!-- 80PX - WIDTH -->
 
 
 </resources>

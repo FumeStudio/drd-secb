@@ -3,7 +3,7 @@
 <!--android:layout_height="@dimen/item_card_height"-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_card_height"
+    android:layout_height="@dimen/organizer_item_card_height"
     android:layout_marginBottom="@dimen/eguide_base_padding"
     android:layout_marginTop="@dimen/eguide_base_padding"
     android:background="@color/off_white"
