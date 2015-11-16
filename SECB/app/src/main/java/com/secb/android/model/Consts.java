@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 public class Consts {
 
     // Flurry integration
-    public static final boolean IS_FLURRY_ENABLED = false;
-    public static final String FLURRY_API_KEY = "xxxx";
+    public static final boolean IS_FLURRY_ENABLED = true;
+    public static final String FLURRY_API_KEY = "P8C4J3BXF84Z84FZNV9G";
 
     // Prefs
     public static final String PREF_FILE_NAME = "SECBPrefFileName";
