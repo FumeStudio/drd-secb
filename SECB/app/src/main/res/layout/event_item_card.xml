@@ -161,6 +161,7 @@
                 android:drawablePadding="3dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -177,6 +178,7 @@
                 android:layout_marginLeft="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -191,7 +193,8 @@
                 android:drawablePadding="3dp"
                 android:text=""
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
         </TableRow>

@@ -133,13 +133,13 @@
 
 
 
-    <string name="sunday">ح</string>
-    <string name="monday">ن</string>
-    <string name="tuesday">ث</string>
-    <string name="wednesday">ر</string>
-    <string name="thursday">خ</string>
-    <string name="friday">ج</string>
-    <string name="saturday">س</string>
+    <string name="sunday">S</string> <!-- ح -->
+    <string name="monday">M</string> <!-- ن -->
+    <string name="tuesday">T</string>  <!-- ث -->
+    <string name="wednesday">W</string>  <!-- ر -->
+    <string name="thursday">T</string> <!-- خ -->
+    <string name="friday">F</string> <!-- ج -->
+    <string name="saturday">S</string> <!-- س -->
     <string name="filter_location_type">نوع الموقع </string>
     <string name="vision_title">SECB Vision</string>
     <string name="vision_value">The Saudi Exhibition and Convention Bureau will be a national pilot program which develops the exhibition and convention sector through increased efficiency and effectiveness with the aim of supporting the country’s economy.</string>
