@@ -166,7 +166,6 @@
                     android:layout_weight="1.0"
                     android:background="@color/off_white"
                     android:visibility="visible"
-
                     />
             </LinearLayout>
 

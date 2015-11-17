@@ -112,7 +112,7 @@ public class LocationsListFragment extends SECBBaseFragment
 
     public void initFilterLayout() {
         locationsFilterLayout = new LocationsFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(locationsFilterLayout, false);
+        ((SECBBaseActivity) getActivity()).setFilterLayout(locationsFilterLayout, true);
         ((SECBBaseActivity) getActivity()).setFilterLayoutView(locationsFilterLayout.getLayoutView());
     }
 

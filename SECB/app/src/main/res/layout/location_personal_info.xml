@@ -31,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text="-"
+            android:paddingLeft="5dp"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </TableRow>
@@ -63,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text="-"
+            android:paddingLeft="5dp"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </TableRow>
@@ -86,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:paddingLeft="3dp"
             android:text="@string/email_address"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
@@ -95,7 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text="-"
+            android:paddingLeft="5dp"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </TableRow>
