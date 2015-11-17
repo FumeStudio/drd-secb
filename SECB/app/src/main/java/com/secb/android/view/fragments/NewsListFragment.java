@@ -32,6 +32,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -92,8 +93,15 @@ public class NewsListFragment extends SECBBaseFragment
 			if (oldParent != container && oldParent != null) {
 				((ViewGroup) oldParent).removeView(view);
 			}
-		} else {
+		}
+		else
+		{
+			if(Utilities.isTablet(getActivity()))
+			{
+
+			}
 			view = LayoutInflater.from(getActivity()).inflate(R.layout.news_list_fragment, container, false);
+
 			handleButtonsEvents();
 			applyFonts();
 		}
@@ -102,6 +110,16 @@ public class NewsListFragment extends SECBBaseFragment
 		initFilterLayout();
 		getData();
 		return view;
+	}
+
+	public void onCreateForTablet(){
+/*		NewsListFragment newFragment = new NewsListFragment();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		transaction.replace(R.id.list_frag, newFragment);
+		transaction.addToBackStack(null);
+		transaction.commit();*/
+
+
 	}
 
 	@Override
@@ -180,7 +198,8 @@ public class NewsListFragment extends SECBBaseFragment
 	}
 
 	private void initViews(View view) {
-//        newsList = DevData.getNewsList();
+		if(view==null)
+			return;
 		progressDialog = CustomProgressDialog.getInstance(getActivity(), true);
 		progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 			@Override

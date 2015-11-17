@@ -184,6 +184,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		NewsListFragment newsListFragment = NewsListFragment.newInstance();
 		addFragment(newsListFragment, newsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
+//		startActivity(new Intent(this,NewsActivity.class));
 	}
 
 	public void openNewDetailsFragment(NewsItem newsItem) {

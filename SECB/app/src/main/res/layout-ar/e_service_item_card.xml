@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/eservice_item_padding">
 
     <ImageView
         android:layout_width="match_parent"
@@ -11,7 +12,7 @@
         android:layout_alignRight="@+id/layout_esrvice_container"
         android:layout_alignTop="@+id/layout_esrvice_container"
         android:scaleType="centerCrop"
-        android:src="@drawable/eservives_item_bg" />
+        android:src="@drawable/eservives_item_bg"/>
 
     <LinearLayout
         android:id="@+id/layout_esrvice_container"
@@ -44,7 +45,7 @@
                     android:gravity="right"
                     android:text="aaaaaaa"
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/eservice_item_title_text_size" />
+                    android:textSize="@dimen/eservice_item_title_text_size"/>
 
                 <TextView
                     android:id="@+id/txtv_number_title"
@@ -55,7 +56,7 @@
                     android:gravity="right"
                     android:text="@string/number"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/eservice_item_title_text_size" />
+                    android:textSize="@dimen/eservice_item_title_text_size"/>
 
             </TableRow>
 
@@ -81,7 +82,7 @@
                         android:gravity="right"
                         android:text="gggg"
                         android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/contact_us_text_us" />
+                        android:textSize="@dimen/contact_us_text_us"/>
 
                     <TextView
                         android:id="@+id/txtv_status_title"
@@ -92,7 +93,7 @@
                         android:gravity="right"
                         android:text="@string/status"
                         android:textColor="@color/secb_dark_text"
-                        android:textSize="@dimen/contact_us_text_us" />
+                        android:textSize="@dimen/contact_us_text_us"/>
 
 
                 </TableRow>
@@ -113,7 +114,7 @@
                         android:gravity="right"
                         android:text="aaaaaaa"
                         android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/eservice_item_title_text_size" />
+                        android:textSize="@dimen/eservice_item_title_text_size"/>
 
                     <TextView
                         android:id="@+id/txtv_date_title"
@@ -124,7 +125,7 @@
                         android:gravity="right"
                         android:text="@string/date"
                         android:textColor="@color/secb_dark_text"
-                        android:textSize="@dimen/eservice_item_title_text_size" />
+                        android:textSize="@dimen/eservice_item_title_text_size"/>
 
 
                 </TableRow>
@@ -141,7 +142,7 @@
                 android:gravity="right"
                 android:text="Nine Firms Warned for Committing Violations."
                 android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/eservice_item_title_text_size" />
+                android:textSize="@dimen/eservice_item_title_text_size"/>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -159,7 +160,7 @@
                     android:singleLine="true"
                     android:text="aaaaaaa"
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/eservice_item_title_text_size" />
+                    android:textSize="@dimen/eservice_item_title_text_size"/>
 
                 <TextView
                     android:id="@+id/txtv_type_title"
@@ -170,7 +171,7 @@
                     android:gravity="right"
                     android:text="@string/type"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/eservice_item_title_text_size" />
+                    android:textSize="@dimen/eservice_item_title_text_size"/>
 
 
             </TableRow>

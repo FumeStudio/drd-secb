@@ -68,6 +68,10 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             ></activity>
+        <activity
+            android:name=".view.NewsActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"></activity>
 
         <activity
             android:name=".view.YoutubePlayerActivity"
