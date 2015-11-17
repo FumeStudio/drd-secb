@@ -1,163 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/eservice_item_padding"
-              android:background="@drawable/eservives_item_bg"
-              android:gravity="center_vertical"
-              android:orientation="horizontal">
-    <!--colored line-->
-    <LinearLayout
-        android:id="@+id/layout_eservice_colored_line"
-        android:layout_width="@dimen/eservice_colored_line_width"
-        android:layout_height="match_parent"
-        android:background="@color/e_services_blue"
-        android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    </LinearLayout>
-
-    <!--item data-->
-    <LinearLayout
-        android:id="@+id/layout_data_holder"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/eservice_item_padding">
+        android:layout_alignBottom="@+id/layout_esrvice_container"
+        android:layout_alignLeft="@+id/layout_esrvice_container"
+        android:layout_alignRight="@+id/layout_esrvice_container"
+        android:layout_alignTop="@+id/layout_esrvice_container"
+        android:scaleType="centerCrop"
+        android:src="@drawable/eservives_item_bg" />
 
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/eservice_item_padding"
-            android:gravity="center_vertical"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/txtv_number_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/eservice_number"
-                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
-                android:text="@string/number"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/eservice_item_title_text_size"/>
-
-            <TextView
-                android:id="@+id/txtv_number_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="aaaaaaa"
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/eservice_item_title_text_size"/>
-
-        </TableRow>
-
-
+    <LinearLayout
+        android:id="@+id/layout_esrvice_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/eservice_item_padding"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <!--colored line-->
         <LinearLayout
+            android:id="@+id/layout_eservice_colored_line"
+            android:layout_width="@dimen/eservice_colored_line_width"
+            android:layout_height="match_parent"
+            android:background="@color/e_services_blue"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <!--item data-->
+        <LinearLayout
+            android:id="@+id/layout_data_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/eservice_item_padding"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:orientation="vertical"
+            android:padding="@dimen/eservice_item_padding">
 
+
+            <!-- Number -->
             <TableRow
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/login_button_signup_margin_top"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:weightSum="3">
 
                 <TextView
-                    android:id="@+id/txtv_date_title"
+                    android:id="@+id/txtv_number_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/eservice_date"
+                    android:drawableLeft="@drawable/eservice_number"
                     android:drawablePadding="@dimen/contact_us_text_drwable_padding"
-                    android:text="@string/date"
+                    android:text="@string/number"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/eservice_item_title_text_size"/>
+                    android:textSize="@dimen/eservice_item_title_text_size" />
 
                 <TextView
-                    android:id="@+id/txtv_date_value"
+                    android:id="@+id/txtv_number_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="aaaaaaa"
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/eservice_item_title_text_size"/>
+                    android:textSize="@dimen/eservice_item_title_text_size" />
 
             </TableRow>
 
-            <TableRow
-                android:layout_width="0dp"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/login_button_signup_margin_top"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtv_date_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/eservice_date"
+                        android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                        android:text="@string/date"
+                        android:textColor="@color/secb_dark_text"
+                        android:textSize="@dimen/eservice_item_title_text_size" />
+
+                    <TextView
+                        android:id="@+id/txtv_date_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="aaaaaaa"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/eservice_item_title_text_size" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtv_status_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/eservice_status"
+                        android:drawablePadding="@dimen/contact_us_text_drwable_padding"
+                        android:text="@string/status"
+                        android:textColor="@color/secb_dark_text"
+                        android:textSize="@dimen/contact_us_text_us" />
+
+                    <TextView
+                        android:id="@+id/txtv_status_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="aaaaaaaaaaa"
+                        android:textColor="@color/secb_grey_text"
+                        android:textSize="@dimen/contact_us_text_us" />
+
+                </TableRow>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txtv_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/eservice_item_padding"
+                android:gravity="left"
+                android:text="Nine Firms Warned for Committing Violations."
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/eservice_item_title_text_size" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:weightSum="3">
 
                 <TextView
-                    android:id="@+id/txtv_status_title"
+                    android:id="@+id/txtv_type_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/eservice_status"
+                    android:drawableLeft="@drawable/eservice_type"
                     android:drawablePadding="@dimen/contact_us_text_drwable_padding"
-                    android:text="@string/status"
+                    android:text="@string/type"
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/contact_us_text_us"/>
+                    android:textSize="@dimen/eservice_item_title_text_size" />
 
                 <TextView
-                    android:id="@+id/txtv_status_value"
+                    android:id="@+id/txtv_type_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="aaaaaaaaaaa"
+                    android:text="aaaaaaa"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/contact_us_text_us"/>
+                    android:textSize="@dimen/eservice_item_title_text_size" />
 
             </TableRow>
 
-
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/txtv_item_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/eservice_item_padding"
-            android:gravity="left"
-            android:text="Nine Firms Warned for Committing Violations."
-            android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/eservice_item_title_text_size"/>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/txtv_type_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/eservice_type"
-                android:drawablePadding="@dimen/contact_us_text_drwable_padding"
-                android:text="@string/type"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/eservice_item_title_text_size"/>
-
-            <TextView
-                android:id="@+id/txtv_type_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="aaaaaaa"
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/eservice_item_title_text_size"/>
-
-        </TableRow>
-
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

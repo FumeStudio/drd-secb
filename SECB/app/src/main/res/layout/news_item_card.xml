@@ -7,12 +7,12 @@
     android:layout_marginBottom="@dimen/event_card_margin"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:weightSum="5">
+    android:weightSum="4.5">
 
     <ImageView
         android:id="@+id/imgv_newImg"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginRight="@dimen/event_card_margin"
         android:layout_weight="1"
         android:src="@drawable/news_placeholder"
@@ -24,15 +24,14 @@
         android:layout_marginRight="@dimen/event_card_margin"
         android:layout_weight="3.5"
         android:orientation="vertical"
-        android:weightSum="2.5">
+        >
 
         <TextView
             android:id="@+id/txtv_newTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="bottom"
+            android:gravity="top"
             android:textStyle="bold"
             android:maxLines="1"
             android:textColor="@color/sceb_dark_blue"
@@ -42,10 +41,11 @@
         <TextView
             android:id="@+id/txtv_newDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="-8dp"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:maxLines="1"
             android:textColor="@color/darkgrey_color"
             android:textSize="@dimen/event_card_h2_text_size" />
@@ -53,9 +53,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:orientation="horizontal"
-            android:gravity="right|top">
+            android:gravity="right|top"
+            android:layout_gravity="right"
+            >
 
             <TextView
                 android:id="@+id/txtv_newTime"

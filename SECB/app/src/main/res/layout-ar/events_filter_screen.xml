@@ -1,150 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-
-    android:orientation="horizontal"
-    android:weightSum="3">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/layout_dark_layer"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="#aa000000"
         android:clickable="true"
-        android:background="#aa000000"
-        android:visibility="invisible"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"
+        android:visibility="invisible" />
 
-    <View
-        android:id="@+id/shadow"
-        android:layout_width="2.3dp"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/filter_container"
-        android:visibility="visible"
-        android:background="#aa000000"
-        ></View>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/filter_container"
+        android:layout_alignLeft="@+id/filter_container"
+        android:layout_alignRight="@+id/filter_container"
+        android:layout_alignTop="@+id/filter_container"
+        android:scaleType="centerCrop"
+        android:src="@drawable/filter_bg" />
 
     <LinearLayout
         android:id="@+id/filter_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:background="@drawable/filter_bg"
         android:clickable="true"
         android:orientation="vertical"
-        android:padding="@dimen/news_filter_padding">
+        android:padding="@dimen/news_filter_padding"
+        android:layout_alignParentBottom="true">
 
-        <!--city input-->
-        <TableRow
+        <!-- city, starts, ends -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/news_filter_padding"
-            android:paddingRight="@dimen/news_filter_padding">
-
-            <!--city value-->
-            <Spinner
-                android:id="@+id/spn_city_filter_city_value"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:hint="@string/hint_city"
-                android:maxLines="1"
-                android:background="@color/white"
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
+            android:orientation="vertical"
+            android:padding="@dimen/news_filter_padding"
+            >
             <!--city title-->
             <TextView
-                android:id="@+id/txtv_city_filter_city_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:id="@+id/txtv_event_filter_city_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/filter_city"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/news_filter_text_size" />
 
+            <!--city value-->
+            <Spinner
+                android:id="@+id/spn_city_filter_city_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/secb_grey_text"
+                android:textSize="@dimen/news_filter_text_size"
+                android:visibility="visible"
+                android:layout_marginBottom="@dimen/news_filter_padding"/>
 
-        </TableRow>
-
-        <!--time input-->
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/news_filter_padding"
-            android:paddingRight="@dimen/news_filter_padding">
+            <!--time input-->
+            <!--from title-->
+            <TextView
+                android:id="@+id/txtv_event_filter_time_from_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/filter_time_starts"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/news_filter_text_size"
+                />
 
             <!--from value-->
-            <!--android:drawableRight="@drawable/date_picker_icon"-->
+            <!--android:drawableLeft="@drawable/date_picker_icon"-->
             <TextView
                 android:id="@+id/txtv_news_filter_time_from_value"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
                 android:hint="@string/filter_time_from"
                 android:maxLines="1"
                 android:text=""
                 android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
-            <!--from title-->
-            <TextView
-                android:id="@+id/txtv_news_filter_time_from_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/filter_time_starts"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/news_filter_text_size" />
+                android:textSize="@dimen/news_filter_text_size"
+                android:layout_marginBottom="@dimen/news_filter_padding"/>
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/news_filter_padding"
-            android:paddingRight="@dimen/news_filter_padding">
-
-
-            <!--to value-->
-            <!--android:drawableRight="@drawable/date_picker_icon"-->
-            <TextView
-                android:id="@+id/txtv_news_filter_time_to_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/filter_time_to"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/secb_grey_text"
-                android:textSize="@dimen/news_filter_text_size" />
             <!--to-->
             <TextView
-                android:id="@+id/txtv_news_filter_time_to_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:id="@+id/txtv_event_filter_time_to_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/filter_time_ends"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/news_filter_text_size" />
-        </TableRow>
+
+            <!--to value-->
+            <!--android:drawableLeft="@drawable/date_picker_icon"-->
+            <TextView
+                android:id="@+id/txtv_news_filter_time_to_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/filter_time_to"
+                android:maxLines="1"
+                android:gravity="right|center_vertical"
+                android:text=""
+                android:textColor="@color/secb_grey_text"
+                android:textSize="@dimen/news_filter_text_size"
+                android:layout_marginBottom="@dimen/news_filter_padding"/>
+        </LinearLayout>
+
+
+
 
 
         <!--types title-->
         <TextView
-            android:id="@+id/txtv_news_filter_type_title"
+            android:id="@+id/txtv_news_filter_category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/news_filter_padding"
-            android:text="@string/filter_category"
+            android:text="@string/filter_type"
             android:textColor="@color/secb_light_text"
             android:textSize="@dimen/news_filter_btn_text_size"
             android:textStyle="bold" />
@@ -157,26 +138,24 @@
             android:orientation="vertical"
             android:padding="@dimen/news_filter_padding">
 
-
             <TextView
                 android:id="@+id/txtv_noData"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/loading"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/gallery_item_text_size"
-                android:visibility="visible"
-                android:gravity="center"
-                android:text="@string/loading"/>
+                android:visibility="visible" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/eventsCategoriesRecyclerView"
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
             </android.support.v7.widget.RecyclerView>
-
 
 
         </LinearLayout>
@@ -194,6 +173,7 @@
             android:textColor="@color/secb_light_text"
             android:textSize="@dimen/news_filter_btn_text_size" />
 
+
         <!--Clear Filters button-->
 
         <TextView
@@ -201,13 +181,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/filters_clear_filter"
-            android:textAllCaps="false"
             android:background="@null"
             android:gravity="center"
+            android:text="@string/filters_clear_filter"
+            android:textAllCaps="false"
             android:textColor="@color/secb_light_text"
-            android:textSize="@dimen/news_filter_btn_text_size"/>
+            android:textSize="@dimen/news_filter_btn_text_size" />
 
 
     </LinearLayout>
-</LinearLayout>
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="2.3dp"
+        android:layout_above="@+id/filter_container"
+        android:visibility="visible"
+        android:background="#aa000000"></View>
+</RelativeLayout>

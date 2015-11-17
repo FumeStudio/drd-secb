@@ -19,6 +19,7 @@
         android:src="@drawable/event_card_img"
         android:visibility="gone" />
 
+    <!-- Event Date -->
     <LinearLayout
         android:layout_width="@dimen/evet_card_img_size"
         android:layout_height="@dimen/evet_card_img_size"
@@ -149,19 +150,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal"
-            android:weightSum="3">
+            >
 
             <TextView
                 android:id="@+id/txtv_event_timeValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-
                 android:drawableLeft="@drawable/event_card_time_icon"
                 android:drawablePadding="3dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
+                android:layout_marginRight="10dp"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size" />
 
@@ -171,11 +172,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-
+                android:maxWidth="200dp"
                 android:drawableLeft="@drawable/event_card_place_icon"
                 android:drawablePadding="3dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -188,9 +188,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
                 android:drawableLeft="@drawable/event_card_filter_icon"
                 android:drawablePadding="3dp"
+
                 android:text=""
                 android:ellipsize="end"
                 android:maxLines="1"

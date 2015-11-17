@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/home_bg"
     android:orientation="vertical"
-    tools:context="${packageName}.${activityClass}">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,9 +49,7 @@
                 android:id="@+id/event_card_container"
                 layout="@layout/event_item_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/item_card_height"
-                android:layout_marginLeft="@dimen/event_card_margin"
-                android:layout_marginRight="@dimen/event_card_margin"/>
+                android:layout_height="@dimen/item_card_height"/>
 
         </LinearLayout>
 

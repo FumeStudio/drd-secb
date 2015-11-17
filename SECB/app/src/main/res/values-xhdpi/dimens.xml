@@ -34,7 +34,7 @@
 
 
     <dimen name="header_menu_icon_margin_start">19dp</dimen> <!-- 38PX - WIDTH -->
-    <dimen name="header_menu_icon_margin_end">37dp</dimen> <!-- 73PX - WIDTH -->
+    <dimen name="header_menu_icon_margin_end">25dp</dimen> <!-- 73PX - WIDTH -->
     <dimen name="header_title_text_size">20sp</dimen><!-- 40PX - HEIGHT -->
 
 
@@ -54,7 +54,7 @@
     <dimen name="evet_card_img_size">88dp</dimen> <!-- 175PX - HEIGHT -->
     <dimen name="home_event_card_height">100dp</dimen> <!-- 200PX - HEIGHT -->
 
-    <dimen name="home_news_recycler_height">155dp</dimen> <!-- 310PX - HEIGHT -->
+    <dimen name="home_news_recycler_height">110dp</dimen> <!-- 310PX - HEIGHT -->
     <dimen name="home_news_recycler_items_margin">13dp</dimen> <!-- 25PX - HEIGHT -->
     <dimen name="news_item_card_height">70dp</dimen> <!-- 140PX - HEIGHT -->
     <dimen name="news_filter_screen_height">453dp</dimen> <!-- 905PX - HEIGHT -->
@@ -99,6 +99,7 @@
     <dimen name="organizer_p_info_h2_text_size">12dp</dimen> <!-- 24PX - HEIGHT -->
     <!--<dimen name="organizer_p_info_rows_margin">15dp</dimen> &lt;!&ndash; 30PX - HEIGHT &ndash;&gt;-->
     <dimen name="organizer_details_margin">18dp</dimen> <!-- 35PX - HEIGHT -->
+    <dimen name="location_details_margin">13dp</dimen>
     <!--<dimen name="organizer_details_margin_small">10dp</dimen>  20PX - HEIGHT -->
     <dimen name="item_card_height">105dp</dimen> <!-- 210PX - HEIGHT -->
     <dimen name="organizer_card_img_size">69dp</dimen> <!-- 138PX - HEIGHT -->
@@ -119,7 +120,7 @@
 
     <!--<dimen name="eservice_item_padding">14dp</dimen> &lt;!&ndash; 28PX - HEIGHT &ndash;&gt;-->
 
-    <dimen name="eservice_item_padding">8dp</dimen> <!-- 15PX - HEIGHT -->
+    <dimen name="eservice_item_padding">5dp</dimen> <!-- 15PX - HEIGHT -->
     <dimen name="eservice_item_text_size">13dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="eservice_item_title_text_size">14dp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="eservice_filter_screen_recycler_height">90dp</dimen>

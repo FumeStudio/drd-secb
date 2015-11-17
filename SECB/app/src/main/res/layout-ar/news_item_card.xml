@@ -15,16 +15,14 @@
         android:layout_marginLeft="@dimen/event_card_margin"
         android:layout_weight="4"
         android:orientation="vertical"
-        android:weightSum="2.5">
+        >
 
         <TextView
             android:id="@+id/txtv_newTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="bottom|right"
-
             android:maxLines="1"
             android:textColor="@color/sceb_dark_blue"
             android:textSize="@dimen/event_card_h1_text_size"
@@ -33,10 +31,11 @@
         <TextView
             android:id="@+id/txtv_newDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center_vertical|right"
+            android:gravity="top|right"
+            android:layout_marginTop="-8dp"
             android:maxLines="1"
             android:textColor="@color/darkgrey_color"
             android:textSize="@dimen/event_card_h2_text_size" />
@@ -44,7 +43,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:orientation="horizontal"
             android:gravity="top">
 

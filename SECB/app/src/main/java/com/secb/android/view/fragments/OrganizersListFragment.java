@@ -108,7 +108,7 @@ public class OrganizersListFragment extends SECBBaseFragment
     public void initFilterLayout()
     {
         organizersFilterLayout = new OrganizersFilterLayout(getActivity());
-        ((SECBBaseActivity) getActivity()).setFilterLayout(organizersFilterLayout, false);
+        ((SECBBaseActivity) getActivity()).setFilterLayout(organizersFilterLayout, true);
         ((SECBBaseActivity) getActivity()).setFilterLayoutView(organizersFilterLayout.getLayoutView());
     }
 
