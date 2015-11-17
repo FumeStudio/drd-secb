@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,11 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/loading"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/gallery_item_text_size"
-            android:visibility="visible"
-            android:gravity="center"
-            android:text="@string/loading"/>
+            android:visibility="visible"/>
 
         <RelativeLayout
             android:id="@+id/layout_detailsContainer"
@@ -34,8 +34,8 @@
             <ImageView
                 android:id="@+id/imgv_news_details_img"
                 android:layout_width="match_parent"
-                android:scaleType="centerCrop"
-                android:layout_height="@dimen/news_details_img_height" />
+                android:layout_height="@dimen/news_details_img_height"
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,14 +49,15 @@
                     android:id="@+id/txtv_news_details_newTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="2"
-
                     android:ellipsize="end"
-                    android:padding="@dimen/news_details_text_container_padding"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:paddingLeft="@dimen/news_details_text_container_padding"
+                    android:paddingRight="@dimen/news_details_text_container_padding"
                     android:text=""
                     android:textColor="@color/secb_light_text"
                     android:textSize="@dimen/news_details_newTitle_text_size"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
 
             </LinearLayout>
@@ -66,18 +67,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgv_news_details_img"
-                android:background="@color/light_grey"
+                android:background="#d4d4d4"
                 android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/txtv_news_details_newDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/news_details_text_container_padding"
                     android:maxLines="1"
+                    android:paddingLeft="@dimen/news_details_text_container_padding"
+                    android:paddingRight="@dimen/news_details_text_container_padding"
                     android:text=""
                     android:textColor="@color/secb_dark_text"
-                    android:textSize="@dimen/news_details_newDate_text_size" />
+                    android:textSize="@dimen/news_details_newDate_text_size"/>
             </LinearLayout>
 
 
@@ -94,7 +96,7 @@ Al Eisa further informed that the inspectors of the Ministry of Commerce and Ind
 The violations in the trade exhibitions include cases of direct sales to the public in addition to the participation of exhibitors who were not specialized in the activity besides the showing and marketing of real estate offers from outside the Kingdom, he pointed out.
 Violations of "
                 android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/news_details_newBody_text_size" />
+                android:textSize="@dimen/news_details_newBody_text_size"/>
         </RelativeLayout>
     </LinearLayout>
 

@@ -97,9 +97,9 @@
     <dimen name="organizer_p_info_icon_margin">8dp</dimen> <!-- 25PX - HEIGHT -->
     <dimen name="organizer_p_info_h1_text_size">9dp</dimen> <!-- 27PX - HEIGHT -->
     <dimen name="organizer_p_info_h2_text_size">8dp</dimen> <!-- 24PX - HEIGHT -->
-    <dimen name="organizer_p_info_rows_margin">10dp</dimen> <!-- 30PX - HEIGHT -->
+    <!--<dimen name="organizer_p_info_rows_margin">10dp</dimen> &lt;!&ndash; 30PX - HEIGHT &ndash;&gt;-->
     <dimen name="organizer_details_margin">12dp</dimen> <!-- 35PX - HEIGHT -->
-    <dimen name="organizer_details_margin_small">7dp</dimen> <!-- 20PX - HEIGHT -->
+    <!--<dimen name="organizer_details_margin_small">7dp</dimen> &lt;!&ndash; 20PX - HEIGHT &ndash;&gt;-->
     <dimen name="organizer_card_img_size">49dp</dimen> <!-- 138PX - HEIGHT -->
 
     <dimen name="item_card_height">74dp</dimen> <!-- 210PX - HEIGHT -->
@@ -117,7 +117,9 @@
 
     <dimen name="eservice_colored_line_width">4dp</dimen> <!-- 10PX - WIDTH -->
 
-    <dimen name="eservice_item_padding">9dp</dimen> <!-- 28PX - HEIGHT -->
+    <!--<dimen name="eservice_item_padding">9dp</dimen> &lt;!&ndash; 28PX - HEIGHT &ndash;&gt;-->
+
+    <dimen name="eservice_item_padding">5dp</dimen> <!-- 15PX - HEIGHT -->
     <dimen name="eservice_item_text_size">9dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="eservice_item_title_text_size">9dp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="eservice_filter_screen_recycler_height">55dp</dimen>
@@ -136,6 +138,8 @@
 
     <dimen name="organizer_item_card_height">55dp</dimen> <!-- 155PX - HEIGHT -->
     <dimen name="time_filter_title_width">35dp</dimen> <!-- 80PX - WIDTH -->
+    <dimen name="about_us_text_margin">4dp</dimen> <!-- 13PX - HEIGHT -->
 
-
+    <dimen name="organizer_p_info_rows_margin">5dp</dimen> <!-- 15PX - HEIGHT -->
+    <dimen name="organizer_details_margin_small">3dp</dimen> <!-- 10PX - HEIGHT -->
 </resources>

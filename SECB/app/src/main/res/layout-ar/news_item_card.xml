@@ -34,7 +34,7 @@
             android:id="@+id/txtv_newDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:maxLines="1"
