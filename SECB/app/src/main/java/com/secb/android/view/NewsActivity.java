@@ -17,21 +17,28 @@ import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
 
+import java.util.ArrayList;
+
 public class NewsActivity extends SECBBaseActivity implements RequestObserver {
-
-
 	private static final String TAG = "NewsActivity";
 //this activity for news list fragment , news details fragment
 
+	ArrayList<RequestObserver> newsRequstObserverList;
+
 	public NewsActivity() {
-		super(-1, true);
+		super(R.layout.news_activity, true);
 	}
 
 	@Override
 	protected void doOnCreate(Bundle arg0) {
+		initObservers();
 		initViews();
 		applyFonts();
 		openNewsListFragment();
+	}
+
+	private void initObservers() {
+		newsRequstObserverList = new ArrayList<>();
 	}
 
 	private void initViews() {
@@ -51,15 +58,43 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 		}
 	}
 
+	//news
+	public void setNewsRequstObserver(RequestObserver newsRequstObserver) {
+		newsRequstObserverList.add(newsRequstObserver);
+	}
+
+
 	public void openNewsListFragment() {
 		NewsListFragment newsListFragment = NewsListFragment.newInstance();
-		addFragment(newsListFragment, newsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.news_list_container, newsListFragment);
+		transaction.commit();
+
+//		addFragment(newsListFragment, newsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 	}
 
 	public void openNewDetailsFragment(NewsItem newsItem) {
 		NewsDetailsFragment newDetailsFragment = NewsDetailsFragment.newInstance(newsItem);
-		addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+		//in case of tablet
+		if(findViewById(R.id.news_details_container)!=null)
+		{
+
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.replace(R.id.news_details_container, newDetailsFragment);
+			transaction.commit();
+		}
+		else //in case of mobile
+		{
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.replace(R.id.news_list_container, newDetailsFragment);
+			transaction.addToBackStack( newDetailsFragment.getClass().getName());
+			transaction.commit();
+
+//			addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+		}
+//		addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 	}
 

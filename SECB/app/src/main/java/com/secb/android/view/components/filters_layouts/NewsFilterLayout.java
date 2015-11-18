@@ -18,6 +18,7 @@ import com.secb.android.model.Consts;
 import com.secb.android.model.NewsCategoryItem;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.view.MainActivity;
+import com.secb.android.view.NewsActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.DateTimePickerDialogView;
 import com.secb.android.view.components.recycler_news.NewsCategoryFilterRecyclerAdapter;
@@ -55,7 +56,8 @@ public class NewsFilterLayout extends LinearLayout implements View.OnClickListen
         this.context=context;
         view = LayoutInflater.from(context).inflate(R.layout.news_filter_screen, null);
         initViews(view);
-	    ((MainActivity)context).setNewsRequstObserver(this);
+//	    ((MainActivity)context).setNewsRequstObserver(this);
+	    ((NewsActivity)context).setNewsRequstObserver(this);
         applyFonts();
 
 	    categoriesList = NewsManager.getInstance().getNewsCategoryList(context);

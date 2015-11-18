@@ -18,7 +18,7 @@ import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
+import com.secb.android.view.NewsActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
@@ -32,7 +32,6 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
-import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -96,16 +95,14 @@ public class NewsListFragment extends SECBBaseFragment
 		}
 		else
 		{
-			if(Utilities.isTablet(getActivity()))
-			{
-
-			}
 			view = LayoutInflater.from(getActivity()).inflate(R.layout.news_list_fragment, container, false);
 
 			handleButtonsEvents();
 			applyFonts();
 		}
-		((MainActivity) getActivity()).setNewsRequstObserver(this);
+//		((MainActivity) getActivity()).setNewsRequstObserver(this);
+		//for tablet
+		((NewsActivity) getActivity()).setNewsRequstObserver(this);
 		initViews(view);
 		initFilterLayout();
 		getData();
@@ -244,12 +241,18 @@ public class NewsListFragment extends SECBBaseFragment
 
 
 		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList(getActivity());
-		if (newsList != null && newsList.size() > 0) {
+		if (newsList != null && newsList.size() > 0)
+		{
 			handleRequestFinished(RequestIds.NEWS_LIST_REQUEST_ID, null, newsList);
-		} else {
-			if (((MainActivity) getActivity()).isNewsLoadingFinished == false) {
+		}
+		else
+		{
+			/*if (((MainActivity) getActivity()).isNewsLoadingFinished == false)
+			{
 				startWaiting();
-			} else {
+			}
+			else*/
+			{
 				startNewsListOperation(new NewsFilterData(), true);
 			}
 		}
@@ -277,7 +280,9 @@ public class NewsListFragment extends SECBBaseFragment
 
 	@Override
 	public void onItemClicked(View v, int position) {
-		((MainActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
+//		((MainActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
+		//for tablet
+		((NewsActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
 	}
 
 	@Override
