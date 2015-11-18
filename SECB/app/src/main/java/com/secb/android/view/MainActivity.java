@@ -46,7 +46,6 @@ import com.secb.android.view.fragments.GalleryFragment;
 import com.secb.android.view.fragments.HomeFragment;
 import com.secb.android.view.fragments.LocationsDetailsFragment;
 import com.secb.android.view.fragments.LocationsListFragment;
-import com.secb.android.view.fragments.NewsDetailsFragment;
 import com.secb.android.view.fragments.OrganizersDetailsFragment;
 import com.secb.android.view.fragments.OrganizersListFragment;
 import com.secb.android.view.fragments.TestFragment;
@@ -187,9 +186,12 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	}
 
 	public void openNewDetailsFragment(NewsItem newsItem) {
-		NewsDetailsFragment newDetailsFragment = NewsDetailsFragment.newInstance(newsItem);
-		addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+//		NewsDetailsFragment newDetailsFragment = NewsDetailsFragment.newInstance(newsItem);
+//		addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
+		Intent intent = new Intent(this,NewsActivity.class);
+		intent.putExtra("item",newsItem);
+		startActivity(intent);
 	}
 
 	public void openEventListFragment() {

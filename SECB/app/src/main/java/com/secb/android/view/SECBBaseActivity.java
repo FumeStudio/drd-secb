@@ -70,7 +70,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
     float filterStartX = 0;
     float filterStartY = 0;
-    boolean isFilterLayoutOpened;
+    public boolean isFilterLayoutOpened;
     //icon when clicked , display filter view
     ImageView imgv_filter;
 
@@ -752,4 +752,15 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         }
     };
 
+	//inflate a fragment inside a layout
+
+	public void inflateFragmentInsideLayout(SECBBaseFragment fragment , int containerResId,boolean isAddtoBackStack){
+		if(fragment!=null && containerResId!=-1){
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.replace(containerResId, fragment);
+			if (isAddtoBackStack)
+				transaction.addToBackStack(fragment.getClass().getName());
+			transaction.commit();
+		}
+	}
 }

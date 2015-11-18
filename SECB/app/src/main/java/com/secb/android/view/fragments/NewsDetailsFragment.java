@@ -20,6 +20,7 @@ import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
+import com.secb.android.view.NewsActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
@@ -143,7 +144,13 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     private void goBack() {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+
+
+	    /*((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);*/
+	    if(((NewsActivity)getActivity()).isComingFromMenu  &&!Utilities.isTablet(getActivity()))
+		    ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+		else
+	        (getActivity()).finish();
     }
 
     // ////////////////////////////////////////////////////////////

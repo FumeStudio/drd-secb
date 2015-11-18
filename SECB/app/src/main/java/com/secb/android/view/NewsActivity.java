@@ -1,7 +1,6 @@
 package com.secb.android.view;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.secb.android.R;
@@ -16,6 +15,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,14 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 //this activity for news list fragment , news details fragment
 
 	ArrayList<RequestObserver> newsRequstObserverList;
+
+	NewsItem item;
+
+	/*isComingFromMenu = true means that it's not coming from
+	 * side menu ,and the intent does not contain Extras
+	 * so in mobile screen we should add details
+	 * fragment to back stack to save history*/
+	public boolean isComingFromMenu=true;
 
 	public NewsActivity() {
 		super(R.layout.news_activity, true);
@@ -34,7 +42,18 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 		initObservers();
 		initViews();
 		applyFonts();
-		openNewsListFragment();
+		if(getIntent()!=null && getIntent().getExtras()!=null &&
+				getIntent().getExtras().containsKey("item") &&
+				getIntent().getExtras().get("item")!=null)
+		{
+			isComingFromMenu=false;
+			item = (NewsItem) getIntent().getExtras().get("item");
+			openNewDetailsFragment(item);
+			if(Utilities.isTablet(this))
+				openNewsListFragment();
+		}
+		else
+			openNewsListFragment();
 	}
 
 	private void initObservers() {
@@ -66,10 +85,12 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 
 	public void openNewsListFragment() {
 		NewsListFragment newsListFragment = NewsListFragment.newInstance();
+		inflateFragmentInsideLayout(newsListFragment,R.id.news_list_container,false);
 
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+/*		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.news_list_container, newsListFragment);
-		transaction.commit();
+		transaction.commit();*/
 
 //		addFragment(newsListFragment, newsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
@@ -80,17 +101,20 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 		//in case of tablet
 		if(findViewById(R.id.news_details_container)!=null)
 		{
+			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_details_container,false);
 
-			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+	/*		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 			transaction.replace(R.id.news_details_container, newDetailsFragment);
-			transaction.commit();
+			transaction.commit();*/
 		}
 		else //in case of mobile
 		{
-			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_list_container,isComingFromMenu);
+
+			/*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 			transaction.replace(R.id.news_list_container, newDetailsFragment);
 			transaction.addToBackStack( newDetailsFragment.getClass().getName());
-			transaction.commit();
+			transaction.commit();*/
 
 //			addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 		}

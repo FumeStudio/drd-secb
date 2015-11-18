@@ -147,7 +147,13 @@ public class NewsListFragment extends SECBBaseFragment
 	}
 
 	private void goBack() {
-		((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(), true);
+		if(((SECBBaseActivity)getActivity()).isFilterLayoutOpened)
+		{
+			((SECBBaseActivity)getActivity()).hideFilterLayout();
+			return;
+		}
+		(getActivity()).finish();
+//		((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(), true);
 	}
 
 	// ////////////////////////////////////////////////////////////
