@@ -21,6 +21,7 @@ import com.secb.android.controller.backend.NewsListOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.E_ServicesManager;
 import com.secb.android.controller.manager.Engine;
+import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.E_ServiceRequestItem;
 import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.E_ServicesFilterData;
@@ -39,8 +40,6 @@ import com.secb.android.view.fragments.ContactUsFragment;
 import com.secb.android.view.fragments.E_ServiceDetailsFragment;
 import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
-import com.secb.android.view.fragments.EventDetailsFragment;
-import com.secb.android.view.fragments.EventsCalendarFragment;
 import com.secb.android.view.fragments.EventsListFragment;
 import com.secb.android.view.fragments.GalleryFragment;
 import com.secb.android.view.fragments.HomeFragment;
@@ -206,14 +205,21 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 
 	public void openEventDetailsFragment(EventItem eventItem) {
-		EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(eventItem);
-		addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+//		EventDetailsFragment eventDetailsFragment = EventDetailsFragment.newInstance(eventItem);
+//		addFragment(eventDetailsFragment, eventDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+		Intent intent = new Intent(this,EventsActivity.class);
+		intent.putExtra("item",eventItem);
+		startActivity(intent);
+
 //	    openTestFragment(eventItem);
 	}
 
 	public void openEventsCalendarFragment() {
-		EventsCalendarFragment eventsCalendarFragment = EventsCalendarFragment.newInstance();
-		addFragment(eventsCalendarFragment, eventsCalendarFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+//		EventsCalendarFragment eventsCalendarFragment = EventsCalendarFragment.newInstance();
+//		addFragment(eventsCalendarFragment, eventsCalendarFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+		startActivity(new Intent(this, EventsActivity.class));
 	}
 
 
@@ -304,7 +310,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	public void playYouTubeVideo(String videoUrlvideoUrl)
 	{
 		Intent intent = new Intent(this,YoutubePlayerActivity.class);
-		intent.putExtra("youtubeVideoId",videoUrlvideoUrl);
+		intent.putExtra("youtubeVideoId", videoUrlvideoUrl);
 		startActivity(intent);
 	}
 //==================================================================================================
@@ -466,6 +472,12 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	//events list
 	public void getEventsList() {
+		// get events of this month only
+
+
+		/*	Calendar cal = Calendar.getInstance();
+		EventsManager.getInstance().refreshEventsOfThisMonth(this, cal, this, false);*/
+
 		EventsFilterData eventsFilterData = new EventsFilterData();
 		final EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_REQUEST_ID, false, this, eventsFilterData, 100, 0);
 		operation.addRequsetObserver(this);
@@ -544,14 +556,24 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 //events
 		else if (((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID ||
 				(int) requestId == RequestIds.EVENTS_CATEGORY_REQUEST_ID ||
-				(int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID
+				(int) requestId == RequestIds.EVENTS_CITY_REQUEST_ID||
+				(int) requestId == RequestIds.EVENTS_LIST_OF_MONTH_REQUEST_ID
+
 		)
 				/*&& eventsRequstObserver!=null*/
 				&& eventsRequstObserverList.size() > 0) {
 			if ((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID)
 				isEventsLoadingFinished = true;
-			for (RequestObserver iterator : eventsRequstObserverList)
-				iterator.handleRequestFinished(requestId, error, resulObject);
+			if((int) requestId == RequestIds.EVENTS_LIST_OF_MONTH_REQUEST_ID)
+			{
+				isEventsLoadingFinished = true;
+				EventsManager.getInstance().setMonthEventsList((ArrayList<EventItem>) resulObject);
+			}
+			if(isEventsLoadingFinished)
+			{
+				for (RequestObserver iterator : eventsRequstObserverList)
+					iterator.handleRequestFinished(requestId, error, resulObject);
+			}
 
 			//because location use same city api used by events
 			//let location observer listen finishing loading event

@@ -1,6 +1,7 @@
 package com.secb.android.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.secb.android.R;
 import com.secb.android.controller.manager.Engine;
 import com.secb.android.model.AppConfiguration;
 
@@ -63,6 +65,7 @@ public class UiEngine {
 				/*context.getResources().getConfiguration().locale;*/
 		return locale;
 	}
+
 
 	public static class Fonts {
 		public static Typeface HVAR_BOLD ;
@@ -155,11 +158,42 @@ public class UiEngine {
 					applyFontsForAll(context, child, typeface);
 				}
 			} else if (v instanceof TextView || v instanceof EditText || v instanceof RadioButton ||
-					v instanceof CheckBox || v instanceof TextView || v instanceof Button) {
+					v instanceof CheckBox || v instanceof Button) {
 				applyCustomFont(v, typeface);
 			}
 		}
 		catch (Exception e) {
 		}
 	}
+
+
+	public static void applyTextColorForAll(View v , int color){
+		try
+		{
+			if (v instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) v;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					applyTextColorForAll(child, color);
+				}
+			} else if (v instanceof TextView || v instanceof EditText || v instanceof RadioButton ||
+					v instanceof CheckBox || v instanceof Button)
+			{
+				if(v instanceof TextView) ((TextView)v).setTextColor(color);
+				else if(v instanceof EditText) ((EditText)v).setTextColor(color);
+				else if(v instanceof RadioButton) ((RadioButton)v).setTextColor(color);
+				else if(v instanceof CheckBox) ((CheckBox)v).setTextColor(color);
+				else if(v instanceof Button) ((Button)v).setTextColor(color);
+			}
+		}
+		catch (Exception e) {
+		}
+	}
+	public static void setListItemSelected(View view) {
+		Resources res = CTApplication.getContext().getResources();
+		view.setBackgroundColor(res.getColor(R.color.blue_color));
+		applyTextColorForAll(view,res.getColor(R.color.white));
+	}
+
+
 }

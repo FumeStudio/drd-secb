@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_height">71dp</dimen>
+    <dimen name="page_padding_v">24dp</dimen>
+    <dimen name="page_padding_h">36dp</dimen>
+    <dimen name="graphs_card_h">295dp</dimen>
+    <dimen name="home_graphs_wheel_size">98dp</dimen>
+    <dimen name="home_graphs_value_text_size">28sp</dimen>
+    <dimen name="home_graphs_title_text_size">22sp</dimen>
+    <dimen name="page_layouts_margin_h">17dp</dimen>
+    <dimen name="home_event_card_height">153dp</dimen>
+    <dimen name="newsList_width">531dp</dimen>
+    <dimen name="newsDetails_width">667dp</dimen>
+
+    <dimen name="eventsList_width">532dp</dimen>
+    <dimen name="eventsDetails_width">650dp</dimen>
+
+</resources>

@@ -3,20 +3,25 @@ package com.secb.android.controller.manager;
 import android.content.Context;
 
 import com.secb.android.R;
+import com.secb.android.controller.backend.EventsListOperation;
+import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsCategoryItem;
 import com.secb.android.model.EventsCityItem;
+import com.secb.android.model.EventsFilterData;
 import com.secb.android.view.MainActivity;
 
+import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.Utilities;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class EventsManager {
+public class EventsManager{
     private static EventsManager instance;
 	private List<EventItem> eventsUnFilteredList   ;
 	//news Categories List
@@ -113,11 +118,19 @@ public class EventsManager {
 		CachingManager.getInstance().saveEventsList((ArrayList<EventItem>) this.eventsUnFilteredList,context);
 	}
 
-	public EventItem getEventOnDate(Date selectedDate) {
+	public EventItem getEventOnDate(Date selectedDate){
+		ArrayList<EventItem> dayList   = getListOfEventsOnDate(selectedDate);
+		if(dayList !=null && dayList.size()>0)
+			return dayList.get(0);
+		else
+			return null;
+	}
+	public ArrayList<EventItem>  getListOfEventsOnDate(Date selectedDate)
+	{
 		if(selectedDate==null || monthEventsList /*eventsUnFilteredList*/==null)
 			return null;
-/*		// to return list of events on this day
-		ArrayList<EventItem> dayEvents = new ArrayList<>();*/
+		// to return list of events on this day
+		ArrayList<EventItem> dayEvents = new ArrayList<>();
 
 		//parse date of each event
 		EventItem eventItem=null;
@@ -136,11 +149,11 @@ public class EventsManager {
 			}
 			// get event
 			if(Utilities.isSameDay(eventDate, selectedDate)){
-//				dayEvents.add(iterator); // to return list of events on this day
-				return iterator; // to return first matching event on this day
+				dayEvents.add(iterator); // to return list of events on this day
+//				return iterator; // to return first matching event on this day
 			}
 		}
-		return eventItem;
+		return dayEvents;
 	}
 
 
@@ -179,4 +192,50 @@ public class EventsManager {
 	public ArrayList<EventItem> getMonthEventsList() {
 		return monthEventsList;
 	}
+
+	public void refreshEventsOfThisMonth(Context context, Calendar cal, RequestObserver observer, boolean isShowDialog)
+	{
+		if(observer==null || context == null)
+			return;
+		//prepare date
+		if(cal==null) cal =Calendar.getInstance();
+
+		Calendar calendarFrom = Calendar.getInstance(),
+				calendarTo = Calendar.getInstance();
+
+		calendarFrom.set(cal.get(Calendar.YEAR),
+				cal.get(cal.MONTH),
+				cal.getActualMinimum(Calendar.DAY_OF_MONTH),
+				1, 0, 0 /*hr, min , sec*/
+		);
+		String startDate = MainActivity.sdf_Source_News.format(new Date(calendarFrom.getTimeInMillis()));
+
+
+		calendarTo.set(cal.get(Calendar.YEAR),
+				cal.get(cal.MONTH),
+				cal.getActualMaximum(Calendar.DAY_OF_MONTH),
+				23, 59, 59 /*hr, min , sec*/
+		);
+		String endDate = MainActivity.sdf_Source_News.format(new Date(calendarTo.getTimeInMillis()));
+
+		//if this month is cached previously skip operation
+//		isMonthCached(startDate);
+
+		//get month events
+		EventsFilterData eventsFilterData = new EventsFilterData();
+		eventsFilterData.timeFrom=startDate;
+		eventsFilterData.timeTo=endDate;
+		EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_OF_MONTH_REQUEST_ID,isShowDialog,context,eventsFilterData,100,0);
+		operation.addRequsetObserver(observer);
+		operation.execute();
+
+	}
+
+	public void isMonthCached(String startDate)
+	{
+		/*if(monthEventsList !=null && monthEventsList.size()>0&&monthEventsList.get(0)!=null){
+			if(monthEventsList.get(0).EventDate)
+		}*/
+	}
+
 }

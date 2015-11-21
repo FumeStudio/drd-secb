@@ -2,6 +2,7 @@ package com.secb.android.view.components.recycler_news;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,10 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     LayoutInflater inflater ;
     List<NewsItem>itemsList = Collections.emptyList();
     Context context;
+	private View view;
+	private SparseBooleanArray selectedItems;
 
-    public NewsItemRecyclerAdapter(Context context, List<NewsItem> itemsList) {
+	public NewsItemRecyclerAdapter(Context context, List<NewsItem> itemsList) {
 
         this.itemsList = itemsList;
 	    this.context=context;
@@ -46,7 +49,7 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 		if(inflater==null && context!=null)
 			this.inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.news_item_card, parent, false);
+        view = inflater.inflate(R.layout.news_item_card, parent, false);
 
         NewsItemRecyclerViewHolder vh = new NewsItemRecyclerViewHolder(view);
         return vh;
@@ -56,6 +59,7 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     @Override
     public void onBindViewHolder(NewsItemRecyclerViewHolder holder, int position)
     {
+//	    view.setSelected(selectedItems.get(position, false));
         final NewsItem currentItem = itemsList.get(position);
 		Logger.instance().v("News-Card", "Image: "+currentItem.getImageUrl(), false);
 	    if(!Utilities.isNullString(currentItem.getImageUrl()))
@@ -88,4 +92,7 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
     }
 
 
+	public void setItemSelected(View v) {
+		v.setSelected(true);
+	}
 }

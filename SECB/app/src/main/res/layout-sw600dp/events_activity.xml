@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@drawable/tab_bg"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/page_padding_v"
+              android:paddingLeft="@dimen/page_padding_h"
+              android:paddingRight="@dimen/page_padding_h"
+              android:paddingTop="@dimen/page_padding_v"
+    >
 
     <FrameLayout
         android:id="@+id/events_list_container"
-        android:layout_width="500dp"
-        android:background="@color/light_grey"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/eventsList_width"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/page_layouts_margin_h"
+        >
     </FrameLayout>
+
     <FrameLayout
         android:id="@+id/events_details_container"
-        android:layout_width="500dp"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/eventsDetails_width"
+        android:layout_height="match_parent"
+        android:background="@color/tab_white_layer">
     </FrameLayout>
 </LinearLayout>

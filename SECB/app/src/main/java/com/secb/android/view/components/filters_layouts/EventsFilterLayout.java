@@ -21,6 +21,7 @@ import com.secb.android.model.Consts;
 import com.secb.android.model.EventsCategoryItem;
 import com.secb.android.model.EventsCityItem;
 import com.secb.android.model.EventsFilterData;
+import com.secb.android.view.EventsActivity;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.EventFilterCitiesSpinnerAdapter;
@@ -72,7 +73,7 @@ public class EventsFilterLayout extends LinearLayout implements View.OnClickList
         this.context=context;
         view = LayoutInflater.from(context).inflate(R.layout.events_filter_screen, null);
         initViews(view);
-	    ((MainActivity)context).setEventsRequstObserver(this);
+	    ((EventsActivity)context).setEventsRequstObserver(this);
         applyFonts();
 	    categoriesList = EventsManager.getInstance().getEventsCategoryList(context);
 	    if(categoriesList==null || categoriesList.size()==0)

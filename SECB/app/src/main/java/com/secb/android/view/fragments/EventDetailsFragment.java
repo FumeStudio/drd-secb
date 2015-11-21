@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
+import com.secb.android.view.EventsActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
@@ -72,9 +73,18 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.event_details));
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+//        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+//        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
 
+	    if(!Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    }
+	    else{
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
     }
 
     @Override
@@ -82,8 +92,18 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+//        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+//        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    if(Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    }
+	    else{
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
+
 	    if (supportMapFragment != null)
 		    getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
 
@@ -195,7 +215,14 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
     {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+
+	    if(((EventsActivity)getActivity()).isComingFromMenu  /*&&!Utilities.isTablet(getActivity())*/)
+		    ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+	    else
+		    (getActivity()).finish();
+
+
+//        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
     }
 
     // ////////////////////////////////////////////////////////////
