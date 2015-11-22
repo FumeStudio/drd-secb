@@ -67,7 +67,7 @@ public class E_GuideLocationListOperation extends BaseOperation {
         Type listType = new TypeToken<List<LocationItem>>() {
         }.getType();
         List<LocationItem> locationItems = gson.fromJson(response.response.toString(), listType);
-        removeUnCompletedItems(locationItems);
+//        removeUnCompletedItems(locationItems);
 
 //	    only cache the not filtered list
 //	    i.e. name = all , id = all , city = all , selectedType = all , capacity = all

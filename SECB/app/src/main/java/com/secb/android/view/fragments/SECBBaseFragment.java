@@ -28,8 +28,8 @@ public class SECBBaseFragment extends Fragment {
     }
 
     /*
-         * hide keyboard
-         */
+     * hide keyboard
+     */
     public void hideKeyboard(View view) {
         try {
             InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(

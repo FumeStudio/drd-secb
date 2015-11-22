@@ -30,12 +30,16 @@ public class LocationsItemRecyclerAdapter extends FooterLoaderAdapter<LocationsI
 	    if(context == null)
 		    this.context= CTApplication.getContext();
 
-	    this.itemsList = itemsList;
+	    setItemsList(itemsList);
 	    try {
 		    this.inflater = LayoutInflater.from(context);
 	    } catch (Exception e) {
 		    e.printStackTrace();
 	    }
+    }
+    public void setItemsList(List<LocationItem> itemsList) {
+        setItems(itemsList);
+        this.itemsList = itemsList;
     }
 
     @Override
@@ -119,7 +123,7 @@ public class LocationsItemRecyclerAdapter extends FooterLoaderAdapter<LocationsI
 
     @Override
     public int getItemCount() {
-        return itemsList.size();
+        return super.getItemCount();
     }
 
     public void deleteItem(int position){

@@ -118,6 +118,9 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
             case R.id.txtv_organizer_phone_value:
 	            callOrganizerPhone();
                 break;
+            case R.id.txtv_organizer_website_value:
+                openOrganizerWebsite();
+                break;
             case R.id.txtv_organizer_email_value:
 	            sendOrganizerEmail();
                 break;
@@ -135,6 +138,10 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
 		if (organizerItem != null && !Utilities.isNullString(organizerItem.OrganizerPhone))
 			Utilities.callPhoneNumber(getActivity(), organizerItem.OrganizerPhone);
 	}
+    private void openOrganizerWebsite() {
+        if (organizerItem != null && !Utilities.isNullString(organizerItem.OrganizerWebAddress))
+            Utilities.openUrlInBrowser(getActivity(), organizerItem.OrganizerWebAddress);
+    }
 
     private void initViews(View view) {
         imgv_organizerImg = (ImageView) view.findViewById(R.id.imgv_organizerImg);
@@ -147,6 +154,7 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
 
 	    txtv_organizer_phone_value.setOnClickListener(this);
 	    txtv_organizer_email_value.setOnClickListener(this);
+        txtv_organizer_website_value.setOnClickListener(this);
     }
 
     private void bindViews() {

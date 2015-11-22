@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/home_icon"
             android:gravity="center_vertical"
-            android:text="@string/address"
+            android:text="@string/address_"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
 
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/phone_icon"
             android:gravity="center_vertical"
-            android:text="@string/phone"
+            android:text="@string/phone_"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
 
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/email_icon"
             android:gravity="center_vertical"
-            android:text="@string/email_address"
+            android:text="@string/email_address_"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
 

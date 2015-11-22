@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/home_icon"
             android:gravity="center_vertical"
-            android:text="@string/address"
+            android:text="@string/address_"
             android:textColor="@color/secb_dark_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
 
@@ -34,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/address_title"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text="-"
+            android:paddingRight="3dp"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </RelativeLayout>
@@ -69,7 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/phone_title"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text="-"
+            android:paddingRight="3dp"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </RelativeLayout>
@@ -104,7 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/email_title"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text=""
+            android:paddingRight="3dp"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </RelativeLayout>
@@ -139,7 +142,8 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/website_title"
             android:gravity="center_vertical"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:paddingRight="3dp"
+            android:text="-"
             android:textColor="@color/secb_grey_text"
             android:textSize="@dimen/organizer_p_info_h1_text_size" />
     </RelativeLayout>

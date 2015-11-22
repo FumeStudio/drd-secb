@@ -19,6 +19,7 @@ import com.secb.android.view.components.dialogs.DialogConfirmListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 import com.secb.android.view.fragments.AboutUsFragment;
+import com.secb.android.view.fragments.ContactUsFragment;
 import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventsCalendarFragment;
@@ -134,7 +135,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
     @Override
     public void onItemClicked(View v, int position)
     {
-        currentDisplayedFragment= ((SECBBaseActivity)getActivity()).getCurrentDisplayedFragment();
+        boolean isNavigationChanged = false;
+        currentDisplayedFragment = ((SECBBaseActivity)getActivity()).getCurrentDisplayedFragment();
         switch (position)
         {
             case 0:
@@ -142,6 +144,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 if ( !(currentDisplayedFragment instanceof HomeFragment))
                 {
                     ((SECBBaseActivity)getActivity()).openHomeFragment(true);
+	                isNavigationChanged = true;
                 }
                 break;
             case 1:
@@ -149,6 +152,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 if ( !(currentDisplayedFragment instanceof E_ServicesListFragment))
                 {
                     ((SECBBaseActivity)getActivity()).openE_ServicesFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 2:
@@ -156,6 +160,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 if ( !(currentDisplayedFragment instanceof NewsListFragment))
                 {
                     ((SECBBaseActivity)getActivity()).openNewsListFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 3:
@@ -163,6 +168,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 if ( !(currentDisplayedFragment instanceof EguideHomeFragment))
                 {
                     ((SECBBaseActivity)getActivity()).openEguideHomeFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 4:
@@ -170,6 +176,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 if ( !(currentDisplayedFragment instanceof EventsCalendarFragment))
                 {
                     ((SECBBaseActivity)getActivity()).openEventsCalendarFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 5:
@@ -188,6 +195,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 {
                     ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY);
                 }*/
+	            isNavigationChanged = true;
                 break;
             case 6:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
@@ -205,17 +213,20 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 {
                     ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY);
                 }*/
+	            isNavigationChanged = true;
                 break;
             case 7:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof AboutUsFragment))
                 {
                     ((SECBBaseActivity)getActivity()).openAboutUsFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 8:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 ((SECBBaseActivity)getActivity()).openContactUsFragment();
+	            isNavigationChanged = true;
                 break;
             case 9:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
@@ -232,6 +243,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                         messageDialog.toString(), this);
                 break;
         }
+
+        if(isNavigationChanged)
+            ((SECBBaseActivity)getActivity()).hideFilterLayout();
     }
 
 

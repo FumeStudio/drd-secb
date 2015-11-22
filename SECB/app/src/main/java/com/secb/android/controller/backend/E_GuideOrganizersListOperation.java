@@ -51,7 +51,7 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 
 		StringBuilder stringBuilder;
 		stringBuilder = new StringBuilder(ServerKeys.EGUIDE_ORGANIZERS_LIST);
-		stringBuilder.append("?Lang=" + language + "&Name=" + organizersFilterData.name+
+		stringBuilder.append("?Lang=" + language + "&Name=" + (!Utilities.isNullString(organizersFilterData.name) ? organizersFilterData.name : "All")+
 				"&OrganizerCity=" + organizersFilterData.city +
 				"&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
 

@@ -211,17 +211,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal">
-
-                    <!--Location name-->
-                    <EditText
-                        android:id="@+id/edtTxt_filter_requestNumber_value"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:maxLines="1"
-                        android:text=""
-                        android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/news_filter_text_size"/>
                     <!--location name-->
                     <TextView
                         android:id="@+id/edtTxt_filter_requestNumber_title"
@@ -231,6 +220,17 @@
                         android:gravity="center_vertical"
                         android:text="@string/number"
                         android:textColor="@color/secb_dark_text"
+                        android:textSize="@dimen/news_filter_text_size"/>
+                    <!--Location name-->
+                    <EditText
+                        android:id="@+id/edtTxt_filter_requestNumber_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/secb_grey_text"
+                        android:singleLine="true"
                         android:textSize="@dimen/news_filter_text_size"/>
                 </TableRow>
 

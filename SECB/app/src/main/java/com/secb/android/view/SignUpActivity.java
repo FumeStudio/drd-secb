@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.secb.android.R;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 
-public class SignUpActivity extends SECBBaseActivity {
+public class SignUpActivity extends SECBBaseActivity implements View.OnClickListener{
 
    WebView webv_signUpPage;
 
@@ -22,6 +22,18 @@ public class SignUpActivity extends SECBBaseActivity {
 
 	public SignUpActivity() {
         super(R.layout.signup, true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        enableHeaderBackButton(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        disableHeaderBackButton();
     }
 
     @Override
@@ -39,13 +51,6 @@ public class SignUpActivity extends SECBBaseActivity {
 
     }
 
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        switch (v.getId())
-        {
-        }
-    }
     public void loadUrl(final WebView myWebView, String url)
     {
 //        final ProgressDialog dialog = ProgressDialog.show(SignUpActivity.this, "",  getString(R.string.loading), true);
@@ -123,4 +128,15 @@ public class SignUpActivity extends SECBBaseActivity {
         myWebView.loadUrl(url);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imageViewBackHeader:
+                finish();
+                break;
+
+            default:
+                break;
+        }
+    }
 }

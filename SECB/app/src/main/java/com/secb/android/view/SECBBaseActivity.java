@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -690,8 +691,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //                break;
             case R.id.imageViewFilterHeader:
             case R.id.imgv_filter:
-	            if(!isFilterLayoutOpened)
-                    prepareFilerLayout();
+                prepareFilerLayout();
                 break;
 
             default:
@@ -1023,4 +1023,17 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 		valuesList.add((int)(100*((double)progressRequests/(double)sumOfAllRequests)));
 		return valuesList;
 	}
+
+    /*
+     * hide keyboard
+     */
+    public void hideKeyboard(View view) {
+        try {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
 }

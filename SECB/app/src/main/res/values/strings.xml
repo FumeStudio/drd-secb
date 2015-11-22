@@ -35,6 +35,7 @@
     <string name="login_login">Login</string>
     <string name="login_signup">Sign Up</string>
     <string name="email_address">Email Address</string>
+    <string name="email_address_">Email Address:</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
 
@@ -90,8 +91,9 @@
     <string name="location_eguide">Location E-Guide</string>
     <string name="organizers_eguide">Organizers E-Guide</string>
     <string name="filter_organizer_name">Organizer Name</string>
-    <string name="address">Address:</string>
+    <string name="address_">Address:</string>
     <string name="phone">Phone Number</string>
+    <string name="phone_">Phone Number:</string>
     <string name="website">Website</string>
     <string name="organizer_details">Organizers Details</string>
     <string name="location_capacityTitle">Capacity:</string>
