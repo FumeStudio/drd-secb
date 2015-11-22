@@ -79,7 +79,7 @@ public class OrganizersFilterLayout extends LinearLayout implements RequestObser
         organizersFilterData.name= edtxt_name.getText().toString();
 
 	    EventsCityItem selectedItem = ((EventsCityItem) spn_city.getSelectedItem());
-	    organizersFilterData.city=selectedItem.ID;
+	    organizersFilterData.city = selectedItem.ID;//selectedItem.ID;
 
         return organizersFilterData;
     }

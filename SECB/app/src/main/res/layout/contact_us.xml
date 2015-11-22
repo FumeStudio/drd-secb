@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/contact_us_base_margin">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/contact_us_base_margin">
 
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:drawablePadding="14dp"
             android:text="@string/secb_location_address"
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/contact_us_text_us"/>
+            android:textSize="@dimen/contact_us_text_us" />
 
         <TextView
             android:id="@+id/txtv_email"
@@ -36,7 +36,7 @@
             android:drawablePadding="9dp"
             android:text="@string/secb_email_address"
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/contact_us_text_us"/>
+            android:textSize="@dimen/contact_us_text_us" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                 android:drawablePadding="13dp"
                 android:text="@string/secb_phone_number"
                 android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/contact_us_text_us"/>
+                android:textSize="@dimen/contact_us_text_us" />
 
             <TextView
                 android:id="@+id/txtv_fax"
@@ -66,7 +66,7 @@
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:text="@string/secb_fax_number"
                 android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/contact_us_text_us"/>
+                android:textSize="@dimen/contact_us_text_us" />
 
         </TableRow>
 
@@ -74,8 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/contact_us_text_drwable_padding"
-            android:weightSum="8"
-            >
+            android:weightSum="8">
 
 
             <ImageView
@@ -84,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
 
-                android:src="@drawable/fb_icon"/>
+                android:src="@drawable/fb_icon" />
 
             <ImageView
                 android:id="@+id/imgv_twitter"
@@ -92,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
 
-                android:src="@drawable/tw"/>
+                android:src="@drawable/tw" />
 
             <ImageView
                 android:id="@+id/imgv_google"
@@ -100,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
 
-                android:src="@drawable/gp"/>
+                android:src="@drawable/gp" />
 
             <ImageView
                 android:id="@+id/imgv_linkedin"
@@ -108,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
 
-                android:src="@drawable/in_icon"/>
+                android:src="@drawable/in_icon" />
 
 
         </TableRow>
@@ -126,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:visibility="visible"/>
+                android:visibility="visible" />
             <!--<include layout="@layout/map_fragment"/>-->
         </LinearLayout>
 
@@ -143,7 +142,7 @@
             android:padding="@dimen/contact_us_base_margin"
             android:text="@string/contact_us_form_title"
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/contact_us_text_us"/>
+            android:textSize="@dimen/contact_us_text_us" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,17 +165,17 @@
                 android:drawableLeft="@drawable/user_shape_icon"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:hint="@string/hint_name"
+                android:singleLine="true"
                 android:paddingLeft="@dimen/contact_us_text_drwable_padding"
                 android:textColor="@color/secb_dark_text"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/contact_us_text_us"
-                />
+                android:textSize="@dimen/contact_us_text_us" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_margin="@dimen/contact_us_text_drwable_padding"
-                android:background="#000"/>
+                android:background="#000" />
 
             <EditText
                 android:id="@+id/edtxt_mobile"
@@ -185,20 +184,21 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:cursorVisible="true"
-
+                android:singleLine="true"
                 android:drawableLeft="@drawable/mobile_icon"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:hint="@string/hint_mobile"
                 android:paddingLeft="@dimen/contact_us_text_drwable_padding"
+                android:inputType="phone"
                 android:textColor="@color/secb_dark_text"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/contact_us_text_us"/>
+                android:textSize="@dimen/contact_us_text_us" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_margin="@dimen/contact_us_text_drwable_padding"
-                android:background="#000"/>
+                android:background="#000" />
 
             <EditText
                 android:id="@+id/edtxt_organization"
@@ -210,16 +210,17 @@
                 android:drawableLeft="@drawable/organization_icon"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:hint="@string/hint_organization"
+                android:singleLine="true"
                 android:paddingLeft="@dimen/contact_us_text_drwable_padding"
                 android:textColor="@color/secb_dark_text"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/contact_us_text_us"/>
+                android:textSize="@dimen/contact_us_text_us" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_margin="@dimen/contact_us_text_drwable_padding"
-                android:background="#000"/>
+                android:background="#000" />
 
             <EditText
                 android:id="@+id/edtxt_email"
@@ -231,16 +232,18 @@
                 android:drawableLeft="@drawable/email_icon"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:hint="@string/email_address"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
                 android:paddingLeft="@dimen/contact_us_text_drwable_padding"
                 android:textColor="@color/secb_dark_text"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/contact_us_text_us"/>
+                android:textSize="@dimen/contact_us_text_us" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_margin="@dimen/contact_us_text_drwable_padding"
-                android:background="#000"/>
+                android:background="#000" />
 
             <EditText
                 android:id="@+id/edtxt_job"
@@ -249,19 +252,20 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:cursorVisible="true"
-                android:paddingLeft="@dimen/contact_us_text_drwable_padding"
                 android:drawableLeft="@drawable/job_icon"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:hint="@string/hint_job_title"
+                android:singleLine="true"
+                android:paddingLeft="@dimen/contact_us_text_drwable_padding"
                 android:textColor="@color/secb_dark_text"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/contact_us_text_us"/>
+                android:textSize="@dimen/contact_us_text_us" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_margin="@dimen/contact_us_text_drwable_padding"
-                android:background="#000"/>
+                android:background="#000" />
 
             <EditText
                 android:id="@+id/edtxt_subject"
@@ -273,10 +277,11 @@
                 android:drawableLeft="@drawable/subject_icon"
                 android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                 android:hint="@string/hint_subject"
+                android:singleLine="true"
                 android:paddingLeft="@dimen/contact_us_text_drwable_padding"
                 android:textColor="@color/secb_dark_text"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/contact_us_text_us"/>
+                android:textSize="@dimen/contact_us_text_us" />
 
 
         </LinearLayout>
@@ -291,7 +296,7 @@
             android:text="@string/send"
             android:textAllCaps="false"
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/contact_us_btn_text_us"/>
+            android:textSize="@dimen/contact_us_btn_text_us" />
 
     </LinearLayout>
 </ScrollView>

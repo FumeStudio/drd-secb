@@ -37,6 +37,8 @@ public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOpera
 
     protected Object requestID = 0;
 
+    public boolean isOperationInProgress = false;
+
     public BaseOperation(Object requestID, boolean isShowLoadingDialog, Context activity) {
         this.isShowLoadingDialog = isShowLoadingDialog;
         this.context = activity;
@@ -85,6 +87,7 @@ public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOpera
 
     @Override
     protected void onPreExecute() {
+        isOperationInProgress = true;
         activeOperations.put(this.getClass().getName(), this);
         if (requestID != null)
             activeOperationsMapByRequstId.put((int) requestID, this);
@@ -138,6 +141,7 @@ public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOpera
 
     @Override
     protected void onPostExecute(CTOperationResponse result) {
+        isOperationInProgress = false;
         activeOperations.remove(this.getClass().getName());
         if (requestID != null)
             activeOperationsMapByRequstId.remove(requestID);

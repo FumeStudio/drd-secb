@@ -25,6 +25,7 @@
     <dimen name="login_logo_img_height">108dp</dimen> <!-- 215PX - HEIGHT -->
 
     <dimen name="forget_pass_input_container_vertical_pad">13dp</dimen> <!-- 25PX - HEIGHT -->
+    <dimen name="forget_pass_logo_margin_bottom">70dp</dimen>
 
     <dimen name="menu_item_icon_horizontal_margin">28dp</dimen> <!-- 55PX - WIDTH -->
     <dimen name="menu_item_vertical_margin">10dp</dimen> <!-- 20PX - HEIGHT -->
@@ -56,7 +57,7 @@
 
     <dimen name="home_news_recycler_height">110dp</dimen> <!-- 310PX - HEIGHT -->
     <dimen name="home_news_recycler_items_margin">13dp</dimen> <!-- 25PX - HEIGHT -->
-    <dimen name="news_item_card_height">70dp</dimen> <!-- 140PX - HEIGHT -->
+    <dimen name="news_item_card_height">75dp</dimen> <!-- 140PX - HEIGHT -->
     <dimen name="news_filter_screen_height">453dp</dimen> <!-- 905PX - HEIGHT -->
     <dimen name="news_filter_screen_recycler_height">135dp</dimen> <!-- 270PX - HEIGHT -->
 

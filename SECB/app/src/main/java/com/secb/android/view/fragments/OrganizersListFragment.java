@@ -238,7 +238,7 @@ public class OrganizersListFragment extends SECBBaseFragment
 
     private void getFilterDataObject() {
 	    ((MainActivity)getActivity()).hideFilterLayout();
-        organizerFilterData =this.organizersFilterLayout.getFilterData();
+        organizerFilterData = this.organizersFilterLayout.getFilterData();
         if(organizerFilterData !=null){
 	            startOrganizeListOperation(organizerFilterData, true);
 //            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +

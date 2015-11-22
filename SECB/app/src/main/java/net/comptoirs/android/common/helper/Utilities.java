@@ -787,6 +787,8 @@ public class Utilities {
         context.startActivity(chooser);
     }
     public static void openUrlInBrowser(Context context, String url) {
+        if(!isNullString(url) && !url.toLowerCase().startsWith("http"))
+            url = "http://"+url;
         Intent browserIntent = new Intent(Intent.ACTION_VIEW);
         browserIntent.setData(Uri.parse(url));
         Intent chooser = Intent.createChooser(browserIntent, "");

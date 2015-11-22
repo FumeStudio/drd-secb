@@ -242,11 +242,14 @@ public class LocationsListFragment extends SECBBaseFragment
                 locationsItemRecyclerAdapter = new LocationsItemRecyclerAdapter(getActivity(), locationItems);
             } else
                 lastFirstVisiblePosition = ((LinearLayoutManager)locationsRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-            locationsItemRecyclerAdapter.setItems(locationItems);
+            locationsItemRecyclerAdapter.setItemsList(locationItems);
             locationsItemRecyclerAdapter.showLoading(false);
             locationsItemRecyclerAdapter.notifyDataSetChanged();
             locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
             ((LinearLayoutManager) locationsRecyclerView.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
+            locationsItemRecyclerAdapter.notifyDataSetChanged();
+            locationsRecyclerView.refreshDrawableState();
+            locationsRecyclerView.postInvalidate();
         } else {
             locationsRecyclerView.setVisibility(View.GONE);
             txtv_noData.setVisibility(View.VISIBLE);
@@ -312,7 +315,7 @@ public class LocationsListFragment extends SECBBaseFragment
             Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
             if ((int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID && resultObject != null) {
                 ArrayList<LocationItem> _locationItems = (ArrayList<LocationItem>) resultObject;
-                if (locationItems == null)
+                if (locationItems == null || pageIndex == 0)
                     locationItems = new ArrayList<>();
                 locationItems.addAll(_locationItems);
             }

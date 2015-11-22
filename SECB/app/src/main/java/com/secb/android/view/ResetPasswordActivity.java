@@ -58,6 +58,7 @@ public class ResetPasswordActivity extends SECBBaseActivity implements RequestOb
 
 	private void sendResetEmail()
 	{
+		hideKeyboard(edt_email);
 		ForgetPasswordOperation operation = new ForgetPasswordOperation(RequestIds.FORGET_PASSWORD_REQUEST_ID,true,this, edt_email.getText().toString());
 		operation.addRequsetObserver(this);
 		operation.execute();
@@ -72,24 +73,24 @@ public class ResetPasswordActivity extends SECBBaseActivity implements RequestOb
     }
 	private boolean validateInputFields()
 	{
-		boolean isEmailValid = Utilities.isValidEmail(edt_email.getText().toString());
+		boolean isUsernameValid = !Utilities.isNullString(edt_email.getText().toString());
 
-		if(!isEmailValid)
-			edt_email.setError(getString(R.string.error_empty_email));
+		if(!isUsernameValid)
+			edt_email.setError(getString(R.string.error_empty_userName));
 
 //		if both editTexts are empty the error msg appears on the
 //      focused edit text so remove focus from both editTexts
 //      and re-enable them
 
-		edt_email.setFocusable(false);
+//		edt_email.setFocusable(false);
 
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				edt_email.setFocusable(true);
-			}
-		}, 10);
-		return isEmailValid;
+//		new Handler().postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				edt_email.setFocusable(true);
+//			}
+//		}, 10);
+		return isUsernameValid;
 	}
 
 	public void displaySuccessMessage(){
