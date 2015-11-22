@@ -32,6 +32,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -227,6 +228,12 @@ public class NewsListFragment extends SECBBaseFragment
 
 	public void bindViews() {
 		if (newsList != null && newsList.size() > 0) {
+
+			//if the current screen is tablet , display the first item by default
+			if(Utilities.isTablet(getActivity())){
+				((NewsActivity)getActivity()).currentNewsItemDetails=(newsList.get(0));
+			}
+
 			newsRecyclerView.setVisibility(View.VISIBLE);
 			txtv_noData.setVisibility(View.GONE);
 			newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
@@ -288,6 +295,10 @@ public class NewsListFragment extends SECBBaseFragment
 	public void onItemClicked(View v, int position) {
 //		((MainActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
 		//for tablet
+//		UiEngine.setListItemSelected(v);
+
+//		newsItemRecyclerAdapter.setItemSelected(v);
+
 		((NewsActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
 	}
 

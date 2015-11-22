@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@drawable/tab_bg"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/page_padding_v"
+              android:paddingLeft="@dimen/page_padding_h"
+              android:paddingRight="@dimen/page_padding_h"
+              android:paddingTop="@dimen/page_padding_v"
+    >
+
+    <RelativeLayout
+        android:layout_width="@dimen/eventsList_width"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/page_layouts_margin_h">
+
+        <FrameLayout
+            android:id="@+id/events_list_container"
+            android:layout_width="@dimen/eventsList_width"
+            android:layout_height="match_parent"
+            >
+        </FrameLayout>
+
+        <!--view all events-->
+        <TextView
+            android:id="@+id/txtv_viewAllEvents"
+            android:layout_width="@dimen/eventsList_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/home_graphs_card_padding"
+            android:layout_marginLeft="@dimen/home_graphs_card_padding"
+            android:layout_marginRight="@dimen/page_layouts_margin_h"
+            android:layout_marginTop="@dimen/home_graphs_card_padding"
+android:visibility="gone"
+            android:gravity="center_vertical|right"
+            android:text="@string/view_all_events"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_card_h3_text_size"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 
     <FrameLayout
-        android:id="@+id/events_list_container"
-        android:layout_width="500dp"
-        android:background="@color/light_grey"
-        android:layout_height="match_parent">
-    </FrameLayout>
-    <FrameLayout
         android:id="@+id/events_details_container"
-        android:layout_width="500dp"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/eventsDetails_width"
+        android:layout_height="match_parent"
+        android:background="@color/tab_white_layer">
     </FrameLayout>
 </LinearLayout>

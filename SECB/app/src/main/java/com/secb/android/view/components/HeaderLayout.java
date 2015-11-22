@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.addthis.core.AddThis;
 import com.addthis.core.Config;
 import com.addthis.models.ATShareItem;
-import com.addthis.ui.views.ATButton;
 import com.secb.android.R;
 import com.secb.android.model.ShareItemInterface;
 import com.secb.android.view.UiEngine;
@@ -50,7 +49,8 @@ public class HeaderLayout extends LinearLayout {
 	    imageViewShareHeader = (ImageView) view.findViewById(R.id.imageViewShareHeader);
 //        addthisShareButton = (ATButton) view.findViewById(R.id.addthisShareButton);
         textViewTitleHeader = (TextView) view.findViewById(R.id.textViewTitleHeader);
-        layoutContainerHeader.setMinimumHeight(120);// (int)getResources().getDimension(R.dimen.header_height)
+//        layoutContainerHeader.setMinimumHeight(120);// (int)getResources().getDimension(R.dimen.header_height)
+        layoutContainerHeader.setMinimumHeight( (int)getResources().getDimension(R.dimen.header_height));//
 
         removeAllViews();
         addView(view);

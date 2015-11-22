@@ -67,6 +67,14 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).enableHeaderShareButton(newsItem);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+
+	    if( Utilities.isTablet(getActivity()) && ( (NewsActivity) getActivity()).isDoublePane)
+	    {
+		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news));
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
+
     }
 
     @Override

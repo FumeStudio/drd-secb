@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -122,6 +123,12 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+	    //if tablet force screen to be landscape else portrait
+	    if(Utilities.isTablet(this))
+	        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+	    else
+		    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // startIncomingView();
         Logger.instance().v("SecbBaseActivity", "onCreate", false);

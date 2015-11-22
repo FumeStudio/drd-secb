@@ -54,4 +54,5 @@
     <color name="purple_shide">#FF0080</color>
     <color name="dark_blue">#006699</color>
     <color name="e_services_blue">#4cb0da</color>
+    <color name="tab_white_layer">#99ffffff</color>
 </resources>

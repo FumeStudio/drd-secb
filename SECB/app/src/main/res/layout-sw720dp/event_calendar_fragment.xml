@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@drawable/calendar_bg">
+
+    <TextView
+        android:id="@+id/month_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/calendar_moth_padding"
+        android:textColor="@color/sceb_dark_blue"
+        android:textSize="@dimen/calendar_moth_text_size"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:background="@color/calendar_header_bgcolor"/>
+
+    <com.p_v.flexiblecalendar.FlexibleCalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:layout_below="@+id/month_text_view"
+        />
+    <!--event card-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtv_viewAllEvents"
+        android:visibility="gone"
+        >
+
+        <!--@dimen/home_event_card_height-->
+        <include
+            android:id="@+id/event_card_container"
+            layout="@layout/event_item_card"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/event_card_margin"
+            android:layout_height="@dimen/home_event_card_height"
+            />
+
+        <!--view all events-->
+        <TextView
+            android:id="@+id/txtv_viewAllEvents"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical|right"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/view_all_events"
+            android:textColor="@color/secb_dark_text"
+            android:paddingBottom="@dimen/event_card_margin"
+            android:paddingLeft="@dimen/event_card_margin"
+            android:paddingRight="@dimen/event_card_margin"
+            android:textSize="@dimen/calendar_viewAllEvents_text_size"
+            />
+    </RelativeLayout>
+</LinearLayout>

@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.GalleryItem;
 
-import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
@@ -22,8 +21,9 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
     LayoutInflater inflater ;
     List<GalleryItem>itemsList = Collections.emptyList();
     Context context;
+	private View view;
 
-    public GalleryItemRecyclerAdapter(Context context, List<GalleryItem> itemsList) {
+	public GalleryItemRecyclerAdapter(Context context, List<GalleryItem> itemsList) {
 	    this.context=context;
 	    if(context == null)
 		    this.context= CTApplication.getContext();
@@ -35,14 +35,15 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
 
     @Override
     public GalleryItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.gallary_item, parent, false);
+        view = inflater.inflate(R.layout.gallary_item, parent, false);
 
         GalleryItemRecyclerViewHolder vh = new GalleryItemRecyclerViewHolder(view);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(GalleryItemRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(GalleryItemRecyclerViewHolder holder, int position)
+    {
         GalleryItem currentItem = itemsList.get(position);
         int currentItemType = currentItem.galleryItemType;
 
@@ -77,6 +78,7 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
         {
             holder.imgv_galleryPlayVideoIcon.setVisibility(View.GONE);
         }
+
 
     }
 

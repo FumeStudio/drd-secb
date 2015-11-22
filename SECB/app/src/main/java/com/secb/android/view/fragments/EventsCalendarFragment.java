@@ -19,6 +19,7 @@ import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
+import com.secb.android.view.EventsActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
@@ -75,6 +76,8 @@ public class EventsCalendarFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.events));
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
+	    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
 	    if(calendarView!=null)
 		    calendarView.refresh();
@@ -105,7 +108,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
             handleButtonsEvents();
             applyFonts();
         }
-        ((MainActivity) getActivity()).setEventsRequstObserver(this);
+        ((EventsActivity) getActivity()).setEventsRequstObserver(this);
         initViews(view);
         initCalendar();
         customizeCalendarView(calendarView);
@@ -148,7 +151,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(),true);
+        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(), true);
     }
 
     // ////////////////////////////////////////////////////////////
@@ -162,10 +165,10 @@ public class EventsCalendarFragment extends SECBBaseFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtv_viewAllEvents:
-                ((MainActivity) getActivity()).openEventListFragment(startDate,endDate);
+                ((EventsActivity) getActivity()).openEventListFragment(startDate,endDate);
                 break;
             case R.id.event_card_container:
-                ((MainActivity) getActivity()).openEventDetailsFragment(cardEventItem);
+                ((EventsActivity) getActivity()).openEventDetailsFragment(cardEventItem);
                 break;
             default:
                 break;
@@ -296,7 +299,7 @@ public class EventsCalendarFragment extends SECBBaseFragment
 		calendarFrom.set(cal.get(Calendar.YEAR),
 				cal.get(cal.MONTH),
 				cal.getActualMinimum(Calendar.DAY_OF_MONTH),
-				1, 0, 0 /*hr, min , sec*/
+				1, 0, 0 //*hr, min , sec*//*
 		);
 		startDate = MainActivity.sdf_Source_News.format(new Date(calendarFrom.getTimeInMillis()));
 
@@ -304,10 +307,12 @@ public class EventsCalendarFragment extends SECBBaseFragment
 		calendarTo.set(cal.get(Calendar.YEAR),
 				cal.get(cal.MONTH),
 				cal.getActualMaximum(Calendar.DAY_OF_MONTH),
-				23, 59, 59 /*hr, min , sec*/
+				23, 59, 59 //*hr, min , sec*//*
 		);
 		endDate = MainActivity.sdf_Source_News.format(new Date(calendarTo.getTimeInMillis()));
 		startEventOperation();
+
+//		EventsManager.getInstance().refreshEventsOfThisMonth(getActivity(),cal,this, true);
 	}
 
 	private void startEventOperation() {
@@ -339,7 +344,13 @@ public class EventsCalendarFragment extends SECBBaseFragment
         calendar.set(year, month, day);
 
         lastSelectedDate = calendar.getTime();
-        bindEventCard(lastSelectedDate,false);
+	    if(Utilities.isTablet(getActivity()))
+	    {
+		    ArrayList<EventItem> dayEventsList = EventsManager.getInstance().getListOfEventsOnDate(lastSelectedDate);
+		    ((EventsActivity)getActivity()).updateEventsList(dayEventsList);
+	    }
+	    else
+	        bindEventCard(lastSelectedDate,false);
     }
 
     private void bindEventCard(Date selectedDate ,boolean isLoadFirstItemInListWithoutTodayDate) {
@@ -413,7 +424,13 @@ public class EventsCalendarFragment extends SECBBaseFragment
 		        eventsList = (ArrayList<EventItem>) resultObject;
 		        EventsManager.getInstance().setMonthEventsList(eventsList);
 	            calendarView.refresh();
-                bindEventCard(lastSelectedDate,true);
+	           //tablet
+	             if(Utilities.isTablet(getActivity()))
+	            {
+		            ((EventsActivity)getActivity()).updateEventsList(eventsList);
+	            }
+	            else
+                    bindEventCard(lastSelectedDate,true);
             }
 
 

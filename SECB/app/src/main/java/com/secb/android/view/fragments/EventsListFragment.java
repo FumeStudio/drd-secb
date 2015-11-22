@@ -17,6 +17,7 @@ import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
+import com.secb.android.view.EventsActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
@@ -57,6 +58,16 @@ public class EventsListFragment extends SECBBaseFragment
         return fragment;
     }
 
+    public static EventsListFragment newInstance(ArrayList<EventItem> eventsList)
+    {
+        EventsListFragment fragment = new EventsListFragment();
+	    Bundle bundle = new Bundle();
+	    bundle.putSerializable("eventsList", eventsList);
+	    fragment.setArguments(bundle);
+        return fragment;
+    }
+
+	//to get list of events in dates
     public static EventsListFragment newInstance(String startDate, String endDate) {
         EventsListFragment fragment = new EventsListFragment();
         Bundle bundle = new Bundle();
@@ -73,8 +84,16 @@ public class EventsListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.events));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+
+	    if(!Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    }
+	    else{
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
         ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
 
     }
@@ -82,10 +101,19 @@ public class EventsListFragment extends SECBBaseFragment
     @Override
     public void onPause() {
         super.onPause();
+	    ((SECBBaseActivity) getActivity()).displayToast("Calendar onResume");
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+
+	    if(Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    }
+	    else{
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
 
     }
 
@@ -110,10 +138,12 @@ public class EventsListFragment extends SECBBaseFragment
         if (bundle != null) {
             startDate = bundle.getString("startDate");
             endDate = bundle.getString("endDate");
+	        if(bundle.containsKey("eventsList") && Utilities.isTablet(getActivity()))
+		        this.eventsList = (ArrayList<EventItem>) bundle.get("eventsList");
         }
 
         initViews(view);
-        ((MainActivity) getActivity()).setEventsRequstObserver(this);
+        ((EventsActivity) getActivity()).setEventsRequstObserver(this);
         initFilterLayout();
         getData();
         return view;
@@ -225,7 +255,7 @@ public class EventsListFragment extends SECBBaseFragment
 
     @Override
     public void onItemClicked(View v, int position) {
-        ((MainActivity) getActivity()).openEventDetailsFragment(eventsList.get(position));
+        ((EventsActivity) getActivity()).openEventDetailsFragment(eventsList.get(position));
     }
 
     @Override
@@ -241,7 +271,12 @@ public class EventsListFragment extends SECBBaseFragment
         //start operation here.
 
 
-        if (!Utilities.isNullString(startDate) && !Utilities.isNullString(endDate)) {
+	    //in case of tablets
+	    if(Utilities.isTablet(getActivity()) && eventsList!=null)
+	    {
+		    handleRequestFinished(RequestIds.EVENTS_LIST_REQUEST_ID, null, eventsList);
+	    }
+        else if (!Utilities.isNullString(startDate) && !Utilities.isNullString(endDate)) {
         /*from calendar*/
 			/*eventsFilterData = new EventsFilterData();
 			eventsFilterData.timeFrom=startDate;

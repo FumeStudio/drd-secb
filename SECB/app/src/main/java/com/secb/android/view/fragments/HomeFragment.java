@@ -50,6 +50,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
             txtv_graph_value_inbox, txtv_graph_value_closed, txtv_graph_value_inProgress;
 
     TextView txtv_viewAllNews;
+    TextView txtv_viewAllEvents;
 
     TextView txtv_noData;
     RecyclerView newsRecyclerView;
@@ -233,6 +234,9 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
             case R.id.txtv_viewAllNews:
                 ((MainActivity) getActivity()).openNewsListFragment();
                 break;
+            case R.id.txtv_viewAllEvents:
+                ((MainActivity) getActivity()).openEventDetailsFragment(null);
+                break;
             case R.id.event_card_container:
                 ((MainActivity) getActivity()).openEventDetailsFragment(eventItem);
                 break;
@@ -278,6 +282,13 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	    txtv_eventImgDate_month = (TextView) view.findViewById(R.id.txtv_eventImgDate_month);
 	    event_card_container.setVisibility(View.GONE);
         event_card_container.setOnClickListener(this);
+
+	    txtv_viewAllEvents=(TextView) view.findViewById(R.id.txtv_viewAllEvents);
+	    if(txtv_viewAllEvents!=null)
+	    {
+		    txtv_viewAllEvents.setOnClickListener(this);
+		    txtv_viewAllEvents.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+	    }
 
 //	    eventItem = DevData.getEventsList().get(0);
 //	    eventItem = (EventsManager.getInstance().getEventsUnFilteredList())!=null ?

@@ -5,12 +5,12 @@ import android.view.View;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.fragments.NewsDetailsFragment;
 import com.secb.android.view.fragments.NewsListFragment;
 
 import net.comptoirs.android.common.controller.backend.CTHttpError;
-import net.comptoirs.android.common.controller.backend.CTHttpResponse;
 import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
@@ -24,14 +24,17 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 //this activity for news list fragment , news details fragment
 
 	ArrayList<RequestObserver> newsRequstObserverList;
+	public NewsItem currentNewsItemDetails;
 
-	NewsItem item;
+	public boolean isDoublePane=false;
 
-	/*isComingFromMenu = true means that it's not coming from
+	/*isComingFromMenu = true means that it  coming from
 	 * side menu ,and the intent does not contain Extras
 	 * so in mobile screen we should add details
 	 * fragment to back stack to save history*/
 	public boolean isComingFromMenu=true;
+
+	private ArrayList<NewsItem> newsList;
 
 	public NewsActivity() {
 		super(R.layout.news_activity, true);
@@ -41,19 +44,31 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 	protected void doOnCreate(Bundle arg0) {
 		initObservers();
 		initViews();
+		isDoublePane=findViewById(R.id.news_details_container)!=null;
+		newsList = (ArrayList<NewsItem>) NewsManager.getInstance().getNewsUnFilteredList(this);
+
 		applyFonts();
 		if(getIntent()!=null && getIntent().getExtras()!=null &&
 				getIntent().getExtras().containsKey("item") &&
 				getIntent().getExtras().get("item")!=null)
 		{
 			isComingFromMenu=false;
-			item = (NewsItem) getIntent().getExtras().get("item");
+			NewsItem item = (NewsItem) getIntent().getExtras().get("item");
 			openNewDetailsFragment(item);
 			if(Utilities.isTablet(this))
 				openNewsListFragment();
 		}
 		else
+		{
 			openNewsListFragment();
+
+			//load details of first item
+			if(isDoublePane && newsList != null && newsList.size() > 0)
+			{
+
+				openNewDetailsFragment(newsList.get(0));
+			}
+		}
 	}
 
 	private void initObservers() {
@@ -86,48 +101,31 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 	public void openNewsListFragment() {
 		NewsListFragment newsListFragment = NewsListFragment.newInstance();
 		inflateFragmentInsideLayout(newsListFragment,R.id.news_list_container,false);
-
-
-/*		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.news_list_container, newsListFragment);
-		transaction.commit();*/
-
-//		addFragment(newsListFragment, newsListFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
-
 	}
 
 	public void openNewDetailsFragment(NewsItem newsItem) {
+		if(newsItem==null)
+			return;
+		currentNewsItemDetails=newsItem;
 		NewsDetailsFragment newDetailsFragment = NewsDetailsFragment.newInstance(newsItem);
 		//in case of tablet
-		if(findViewById(R.id.news_details_container)!=null)
+		if(isDoublePane)
 		{
 			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_details_container,false);
-
-	/*		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-			transaction.replace(R.id.news_details_container, newDetailsFragment);
-			transaction.commit();*/
 		}
 		else //in case of mobile
 		{
 			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_list_container,isComingFromMenu);
-
-			/*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-			transaction.replace(R.id.news_list_container, newDetailsFragment);
-			transaction.addToBackStack( newDetailsFragment.getClass().getName());
-			transaction.commit();*/
-
-//			addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 		}
-//		addFragment(newDetailsFragment, newDetailsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 	}
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resulObject) {
 		if (error == null) {
-			if ((int) requestId == RequestIds.FORGET_PASSWORD_REQUEST_ID &&
-					resulObject != null &&
-					((CTHttpResponse) resulObject).statusCode == 200) {
+			if ((int) requestId == RequestIds.NEWS_LIST_REQUEST_ID &&
+					resulObject != null)
+			{
 
 			}
 		} else if (error != null && error instanceof CTHttpError) {
