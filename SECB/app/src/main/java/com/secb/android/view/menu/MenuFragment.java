@@ -22,7 +22,6 @@ import com.secb.android.view.fragments.AboutUsFragment;
 import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventsCalendarFragment;
-import com.secb.android.view.fragments.GalleryFragment;
 import com.secb.android.view.fragments.HomeFragment;
 import com.secb.android.view.fragments.NewsListFragment;
 import com.secb.android.view.fragments.SECBBaseFragment;
@@ -175,7 +174,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 break;
             case 5:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
-                //check if the displayed fragment is gallery or not
+	            ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY);
+               /* //check if the displayed fragment is gallery or not
                 boolean isGalleryFragment = (currentDisplayedFragment instanceof GalleryFragment);
                 boolean isVideoGallery=false ;
 
@@ -186,13 +186,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isVideoGallery)
                 {
-                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, -1);
-                }
+                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY);
+                }*/
                 break;
             case 6:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
+	            ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY);
                 //check if the displayed fragment is gallery or not
-                isGalleryFragment = (currentDisplayedFragment instanceof GalleryFragment);
+          /*      isGalleryFragment = (currentDisplayedFragment instanceof GalleryFragment);
                 boolean isImageGallery=false ;
 
                 //in case of gallery check it's image gallery or not
@@ -202,8 +203,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isImageGallery)
                 {
-                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, -1);
-                }
+                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY);
+                }*/
                 break;
             case 7:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();

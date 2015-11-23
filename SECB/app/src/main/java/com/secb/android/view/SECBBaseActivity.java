@@ -47,11 +47,7 @@ import com.secb.android.model.ShareItemInterface;
 import com.secb.android.view.components.HeaderLayout;
 import com.secb.android.view.components.LayoutAnimator;
 import com.secb.android.view.components.dialogs.DialogConfirmListener;
-import com.secb.android.view.fragments.AboutUsFragment;
-import com.secb.android.view.fragments.AlbumFragment;
-import com.secb.android.view.fragments.ContactUsFragment;
 import com.secb.android.view.fragments.EventsListFragment;
-import com.secb.android.view.fragments.GalleryFragment;
 import com.secb.android.view.fragments.LocationsDetailsFragment;
 import com.secb.android.view.fragments.LocationsListFragment;
 import com.secb.android.view.fragments.OrganizersDetailsFragment;
@@ -904,20 +900,34 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 	}
 
 
-	public void openGalleryFragment(int galleryType, int galleryId) {
-		GalleryFragment galleryFragment = GalleryFragment.newInstance(galleryType, galleryId);
-		addFragment(galleryFragment, galleryFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+	public void openGalleryFragment(int galleryType)
+	{
+//		GalleryFragment galleryFragment = GalleryFragment.newInstance(galleryType, galleryId);
+//		addFragment(galleryFragment, galleryFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
+		Intent intent = new Intent(this,GalleryActivity.class);
+		intent.putExtra("galleryType",galleryType);
+		startActivity(intent);
 	}
 
 	public void openAlbumFragment(int galleryType, String folderPath, String albumId) {
-		AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType, folderPath, albumId);
-		addFragment(albumFragment, albumFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+//		AlbumFragment albumFragment = AlbumFragment.newInstance(galleryType, folderPath, albumId);
+//		addFragment(albumFragment, albumFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+
+		Intent intent = new Intent(this,GalleryActivity.class);
+		intent.putExtra("galleryType",galleryType);
+		intent.putExtra("folderPath",folderPath);
+		intent.putExtra("albumId",albumId);
+		startActivity(intent);
 	}
 
 	public void openContactUsFragment() {
-		ContactUsFragment contactUsFragment = ContactUsFragment.newInstance();
-		addFragment(contactUsFragment, contactUsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+//		ContactUsFragment contactUsFragment = ContactUsFragment.newInstance();
+//		addFragment(contactUsFragment, contactUsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+		startActivity(new Intent(this, ContactUsActivity.class));
 	}
 
 	public void openE_ServicesFragment() {
@@ -937,8 +947,10 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 	}
 
 	public void openAboutUsFragment() {
-		AboutUsFragment fragment = AboutUsFragment.newInstance();
-		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+//		AboutUsFragment fragment = AboutUsFragment.newInstance();
+//		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
+
+		startActivity(new Intent(this,AboutUsActivity.class));
 	}
 
 

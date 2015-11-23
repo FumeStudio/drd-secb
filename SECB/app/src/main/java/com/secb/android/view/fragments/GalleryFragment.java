@@ -27,6 +27,7 @@ import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.GalleryManager;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.view.FragmentBackObserver;
+import com.secb.android.view.GalleryActivity;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
@@ -70,7 +71,7 @@ public class GalleryFragment extends SECBBaseFragment
 	private boolean isPlayerReadey;
 
 
-	public static GalleryFragment newInstance(int galleryType , int galleryId)
+	public static GalleryFragment newInstance(int galleryType )
     {
         GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
@@ -335,7 +336,8 @@ public class GalleryFragment extends SECBBaseFragment
         if(Boolean.valueOf(clickedItem.IsFolder) && (clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||
 		        clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY) )
         {
-            ((SECBBaseActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id);
+//            ((SECBBaseActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id);
+            ((GalleryActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id,true);
         }
 
         //This item is a single item  Not Album of Items

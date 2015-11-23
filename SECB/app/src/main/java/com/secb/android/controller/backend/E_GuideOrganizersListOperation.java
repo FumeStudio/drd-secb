@@ -66,7 +66,7 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<OrganizerItem>>() {}.getType();
 		List<OrganizerItem> organizerItems = gson.fromJson(response.response.toString(), listType);
-		removeUnCompletedItems(organizerItems);
+//		removeUnCompletedItems(organizerItems);
 
 //	    only cache the not filtered list
 //	    i.e. name = all , id = all , city = all , selectedType = all , capacity = all
