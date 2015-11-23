@@ -13,7 +13,6 @@ import android.view.ViewParent;
 
 import com.secb.android.R;
 import com.secb.android.model.GalleryItem;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.DialogConfirmListener;
@@ -143,35 +142,35 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof HomeFragment))
                 {
-                    ((MainActivity)getActivity()).openHomeFragment(true);
+                    ((SECBBaseActivity)getActivity()).openHomeFragment(true);
                 }
                 break;
             case 1:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof E_ServicesListFragment))
                 {
-                    ((MainActivity)getActivity()).openE_ServicesFragment();
+                    ((SECBBaseActivity)getActivity()).openE_ServicesFragment();
                 }
                 break;
             case 2:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof NewsListFragment))
                 {
-                    ((MainActivity)getActivity()).openNewsListFragment();
+                    ((SECBBaseActivity)getActivity()).openNewsListFragment();
                 }
                 break;
             case 3:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof EguideHomeFragment))
                 {
-                    ((MainActivity)getActivity()).openEguideHomeFragment();
+                    ((SECBBaseActivity)getActivity()).openEguideHomeFragment();
                 }
                 break;
             case 4:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof EventsCalendarFragment))
                 {
-                    ((MainActivity)getActivity()).openEventsCalendarFragment();
+                    ((SECBBaseActivity)getActivity()).openEventsCalendarFragment();
                 }
                 break;
             case 5:
@@ -187,7 +186,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isVideoGallery)
                 {
-                    ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, -1);
+                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, -1);
                 }
                 break;
             case 6:
@@ -203,19 +202,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isImageGallery)
                 {
-                    ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, -1);
+                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, -1);
                 }
                 break;
             case 7:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof AboutUsFragment))
                 {
-                    ((MainActivity)getActivity()).openAboutUsFragment();
+                    ((SECBBaseActivity)getActivity()).openAboutUsFragment();
                 }
                 break;
             case 8:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
-                ((MainActivity)getActivity()).openContactUsFragment();
+                ((SECBBaseActivity)getActivity()).openContactUsFragment();
                 break;
             case 9:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();

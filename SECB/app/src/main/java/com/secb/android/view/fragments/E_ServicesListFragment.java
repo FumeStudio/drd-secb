@@ -22,7 +22,6 @@ import com.secb.android.model.E_ServiceRequestTypeItem;
 import com.secb.android.model.E_ServiceStatisticsItem;
 import com.secb.android.model.E_ServicesFilterData;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
@@ -107,7 +106,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
             handleButtonsEvents();
 
         }
-	    ((MainActivity)getActivity()).setEservicesRequstObserver(this);
+//	    ((MainActivity)getActivity()).setEservicesRequstObserver(this);
         initViews(view);
         applyFonts();
         initFilterLayout();
@@ -231,7 +230,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
 //		eServicesList = DevData.getE_ServicesList();
 		try {
-			graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+			graphsValues = ((SECBBaseActivity)getActivity()).calculateGraphsValues();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -262,7 +261,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
 	@Override
 	public void onItemClicked(View v, int position) {
-		((MainActivity) getActivity()).openE_ServiceDetailsFragment(eServicesList.get(position));
+		((SECBBaseActivity) getActivity()).openE_ServiceDetailsFragment(eServicesList.get(position));
 	}
 
 	@Override
@@ -284,10 +283,11 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			handleRequestFinished(RequestIds.E_SERVICES_REQUESTS_LIST_REQUEST_ID, null, eServicesList);
 		}
 		else {
-			if (((MainActivity) getActivity()).isEservicesRequestLoadingFinished == false) {
-				startWaiting();
-			}
-			else{
+//			if (((MainActivity) getActivity()).isEservicesRequestLoadingFinished == false) {
+//				startWaiting();
+//			}
+//			else
+			{
 				startEServicesRequestListOperation(new E_ServicesFilterData(), true);
 			}
 		}
@@ -349,7 +349,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			{
 
 				try {
-					graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
+					graphsValues = ((SECBBaseActivity)getActivity()).calculateGraphsValues();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

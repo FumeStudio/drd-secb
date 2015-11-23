@@ -173,7 +173,7 @@ public class E_ServiceDetailsFragment extends SECBBaseFragment implements Fragme
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				super.onPageStarted(view, url, favicon);
 				loadingFinished = false;
-				if(!dialog.isShowing())
+				if(!dialog.isShowing() && isAdded())
 					dialog.show();
 			}
 

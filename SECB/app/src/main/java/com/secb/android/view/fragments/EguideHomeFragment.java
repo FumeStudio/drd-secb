@@ -8,8 +8,8 @@ import android.view.ViewParent;
 import android.widget.Button;
 
 import com.secb.android.R;
+import com.secb.android.view.EguideActivity;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 
@@ -98,10 +98,10 @@ public class EguideHomeFragment extends SECBBaseFragment implements FragmentBack
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_location_eguide:
-                ((MainActivity) getActivity()).openEguideLocationFragment();
+                ((EguideActivity) getActivity()).openLocationsListFragment();
                 break;
             case R.id.btn_organizers_eguide:
-                ((MainActivity) getActivity()).openEguideOrganizersFragment();
+                ((EguideActivity) getActivity()).openOrganizersListFragment();
                 break;
             default:
                 break;

@@ -351,7 +351,7 @@ public class AlbumFragment extends SECBBaseFragment
         vidv_videoAlbum.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                ((MainActivity)getActivity()).displayToast("stopped");
+                ((SECBBaseActivity)getActivity()).displayToast("stopped");
             }
         });
     }
@@ -373,7 +373,7 @@ public class AlbumFragment extends SECBBaseFragment
 //			    youTubePlayer.cueVideo(videoId);
 
 //			    initYoutubePlayer(videoId);
-		    ((MainActivity)getActivity()).playYouTubeVideo(videoId);
+		    ((SECBBaseActivity)getActivity()).playYouTubeVideo(videoId);
 	    }
     }
 	    else
@@ -386,7 +386,7 @@ public class AlbumFragment extends SECBBaseFragment
         if (choserIntent!=null)
             startActivity(choserIntent);
         else
-            ((MainActivity)getActivity()).displayToast("can't play this video file ");
+            ((SECBBaseActivity)getActivity()).displayToast("can't play this video file ");
 	    }
     }
 

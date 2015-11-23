@@ -101,7 +101,6 @@ public class EventsListFragment extends SECBBaseFragment
     @Override
     public void onPause() {
         super.onPause();
-	    ((SECBBaseActivity) getActivity()).displayToast("Calendar onResume");
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
 

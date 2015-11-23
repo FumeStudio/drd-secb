@@ -122,7 +122,7 @@ public class GalleryFragment extends SECBBaseFragment
         {
             galleryType = bundle.getInt("galleryType");
         }
-	    ((MainActivity)getActivity()).setGalleryRequstObserver(this);
+//	    ((MainActivity)getActivity()).setGalleryRequstObserver(this);
         setHeaderTitle();
         initViews(view);
         getData();
@@ -266,10 +266,11 @@ public class GalleryFragment extends SECBBaseFragment
 	        }
 	        else
 	        {
-		        if (((MainActivity) getActivity()).isPhotoGalleryLoadingFinished== false) {
-			        startWaiting();
-		        }
-		        else{
+//		        if (((MainActivity) getActivity()).isPhotoGalleryLoadingFinished== false) {
+//			        startWaiting();
+//		        }
+//		        else
+                {
 			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true);
 		        }
 	        }
@@ -284,10 +285,11 @@ public class GalleryFragment extends SECBBaseFragment
 	        }
 	        else
 	        {
-		        if (((MainActivity) getActivity()).isVideoGalleryLoadingFinished == false) {
-			        startWaiting();
-		        }
-		        else{
+//		        if (((MainActivity) getActivity()).isVideoGalleryLoadingFinished == false) {
+//			        startWaiting();
+//		        }
+//		        else
+		        {
 			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, true);
 		        }
 	        }
@@ -333,7 +335,7 @@ public class GalleryFragment extends SECBBaseFragment
         if(Boolean.valueOf(clickedItem.IsFolder) && (clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||
 		        clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY) )
         {
-            ((MainActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id);
+            ((SECBBaseActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id);
         }
 
         //This item is a single item  Not Album of Items
@@ -359,7 +361,7 @@ public class GalleryFragment extends SECBBaseFragment
 			String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
 			if(!Utilities.isNullString(videoId)/*&&youTubePlayer!=null*/)
 			{
-				((MainActivity)getActivity()).playYouTubeVideo(videoId);
+				((SECBBaseActivity)getActivity()).playYouTubeVideo(videoId);
 			    layout_videoPlayerContainer.setVisibility(View.VISIBLE);
 //			    youTubePlayer.cueVideo(videoId);
 
@@ -376,7 +378,7 @@ public class GalleryFragment extends SECBBaseFragment
 			if (choserIntent!=null)
 				startActivity(choserIntent);
 			else
-				((MainActivity)getActivity()).displayToast("can't play this video file ");
+				((SECBBaseActivity)getActivity()).displayToast("can't play this video file ");
 		}
 	}
 

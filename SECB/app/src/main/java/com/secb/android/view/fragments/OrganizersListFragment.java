@@ -18,7 +18,6 @@ import com.secb.android.controller.manager.EGuideOrganizersManager;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.OrganizersFilterLayout;
@@ -98,7 +97,7 @@ public class OrganizersListFragment extends SECBBaseFragment
             handleButtonsEvents();
             applyFonts();
         }
-	    ((MainActivity)getActivity()).setOrganizersRequstObserver(this);
+//	    ((MainActivity)getActivity()).setOrganizersRequstObserver(this);
         initViews(view);
         initFilterLayout();
 	    getData();
@@ -202,10 +201,11 @@ public class OrganizersListFragment extends SECBBaseFragment
 			handleRequestFinished(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, null, organizerList);
 		}
 		else {
-			if (((MainActivity) getActivity()).isOrganizerLoadingFinished == false) {
-				startWaiting();
-			}
-			else{
+//			if (((MainActivity) getActivity()).isOrganizerLoadingFinished == false) {
+//				startWaiting();
+//			}
+//			else
+			{
 				startOrganizeListOperation(new OrganizersFilterData(), true);
 			}
 		}
@@ -237,7 +237,7 @@ public class OrganizersListFragment extends SECBBaseFragment
 
 
     private void getFilterDataObject() {
-	    ((MainActivity)getActivity()).hideFilterLayout();
+	    ((SECBBaseActivity)getActivity()).hideFilterLayout();
         organizerFilterData =this.organizersFilterLayout.getFilterData();
         if(organizerFilterData !=null){
 	            startOrganizeListOperation(organizerFilterData, true);
@@ -256,7 +256,7 @@ public class OrganizersListFragment extends SECBBaseFragment
 	@Override
     public void onItemClicked(View v, int position)
     {
-        ((MainActivity) getActivity()).openOrganizerDetailsFragment(organizerList.get(position));
+        ((SECBBaseActivity) getActivity()).openOrganizerDetailsFragment(organizerList.get(position));
     }
 
     @Override

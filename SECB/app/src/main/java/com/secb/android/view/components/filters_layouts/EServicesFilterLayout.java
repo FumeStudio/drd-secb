@@ -75,7 +75,7 @@ public class EServicesFilterLayout extends LinearLayout implements View.OnClickL
 	    initRecyclersListeners();
         initViews(view);
 
-	    ((MainActivity)context).setEventsRequstObserver(this);
+//	    ((MainActivity)context).setEventsRequstObserver(this);
         applyFonts();
 	    requestTypesList = E_ServicesManager.getInstance().getEservicesRequestsTypesList(context);
 	    if(requestTypesList==null || requestTypesList.size()==0)
