@@ -10,16 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.E_GuideOrganizersListOperation;
 import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.EGuideOrganizersManager;
+import com.secb.android.controller.manager.PagingManager;
+import com.secb.android.model.LocationItem;
+import com.secb.android.model.LocationsFilterData;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
+import com.secb.android.view.components.RecyclerViewScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.OrganizersFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -31,12 +37,12 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
 public class OrganizersListFragment extends SECBBaseFragment
         implements FragmentBackObserver, View.OnClickListener ,RecyclerCustomClickListener , RequestObserver
-
 {
 	private static final String TAG = "OrganizersListFragment";
 	RecyclerView organizerRecyclerView;
@@ -171,15 +177,61 @@ public class OrganizersListFragment extends SECBBaseFragment
 		organizerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 		organizerRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), organizerRecyclerView, this));
+
+        organizerRecyclerView.addOnScrollListener(new RecyclerViewScrollListener() {
+			@Override
+			public void onScrollUp() {
+
+			}
+
+			@Override
+			public void onScrollDown() {
+
+			}
+
+			@Override
+			public void onLoadMore() {
+				loadMoreData();
+			}
+		});
 	}
 
-	private void bindViews() {
+    private void loadMoreData() {
+
+        organizerItemRecyclerAdapter.showLoading(true);
+        organizerItemRecyclerAdapter.notifyDataSetChanged();
+
+        startOrganizeListOperation(organizerFilterData != null ? organizerFilterData : new OrganizersFilterData(), false, (PagingManager.getLastPageNumber(organizerList) + 1) );
+    }
+
+
+    private void bindViews() {
 		if(organizerList!=null && organizerList.size()>0)
 		{
 			organizerRecyclerView.setVisibility(View.VISIBLE);
 			txtv_noData.setVisibility(View.GONE);
-			organizerItemRecyclerAdapter = new OrganizerItemRecyclerAdapter(getActivity(), organizerList);
-			organizerRecyclerView.setAdapter(organizerItemRecyclerAdapter);
+            int lastFirstVisiblePosition = 0;
+            if(organizerItemRecyclerAdapter == null) {
+                organizerItemRecyclerAdapter = new OrganizerItemRecyclerAdapter(getActivity(), organizerList);
+                organizerItemRecyclerAdapter.setItemsList(organizerList);
+                organizerRecyclerView.setAdapter(organizerItemRecyclerAdapter);
+            }
+            else {
+                organizerItemRecyclerAdapter.setItemsList(organizerList);
+                lastFirstVisiblePosition = Utilities.getScrollYOfRecycler(organizerRecyclerView);
+                organizerItemRecyclerAdapter.notifyItemRangeChanged(0, organizerList.size());
+            }
+
+            organizerItemRecyclerAdapter.showLoading(false);
+
+
+
+//                    ((LinearLayoutManager) organizerRecyclerView.getLayoutManager()).scrollToPositionWithOffset(0, lastFirstVisiblePosition);
+//            Utilities.showToastMsg("" + lastFirstVisiblePosition, Toast.LENGTH_SHORT);
+//            organizerItemRecyclerAdapter.notifyDataSetChanged();
+//            organizerRecyclerView.refreshDrawableState();
+//            organizerRecyclerView.postInvalidate();
+
 		}
 		else {
 			organizerRecyclerView.setVisibility(View.GONE);
@@ -206,7 +258,7 @@ public class OrganizersListFragment extends SECBBaseFragment
 				startWaiting();
 			}
 			else{
-				startOrganizeListOperation(new OrganizersFilterData(), true);
+				startOrganizeListOperation(new OrganizersFilterData(), true, 0);
 			}
 		}
 
@@ -228,9 +280,9 @@ public class OrganizersListFragment extends SECBBaseFragment
 	}
 
 	//E-Guide Organizers List
-	private void startOrganizeListOperation(OrganizersFilterData organizersFilterData, boolean showDialog)
+	private void startOrganizeListOperation(OrganizersFilterData organizersFilterData, boolean showDialog, int pageIndex)
 	{
-		E_GuideOrganizersListOperation operation = new E_GuideOrganizersListOperation(RequestIds.EGUIDE_ORGANIZERS_LIST_REQUEST_ID,showDialog,getActivity(), organizersFilterData,100,0);
+		E_GuideOrganizersListOperation operation = new E_GuideOrganizersListOperation(RequestIds.EGUIDE_ORGANIZERS_LIST_REQUEST_ID,showDialog,getActivity(), organizersFilterData, ServerKeys.PAGE_SIZE_DEFAULT, pageIndex);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -240,7 +292,7 @@ public class OrganizersListFragment extends SECBBaseFragment
 	    ((MainActivity)getActivity()).hideFilterLayout();
         organizerFilterData = this.organizersFilterLayout.getFilterData();
         if(organizerFilterData !=null){
-	            startOrganizeListOperation(organizerFilterData, true);
+	            startOrganizeListOperation(organizerFilterData, true, 0);
 //            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
 //                    "Name : "+ organizerFilterData.name+"\n" +
 //                    "City : "+ organizerFilterData.city+" \n" );
@@ -273,8 +325,11 @@ public class OrganizersListFragment extends SECBBaseFragment
 		{
 			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
 			if((int)requestId == RequestIds.EGUIDE_ORGANIZERS_LIST_REQUEST_ID && resultObject!=null){
-				organizerList= (ArrayList<OrganizerItem>) resultObject;
-
+                ArrayList<OrganizerItem> _organizerList = (ArrayList<OrganizerItem>) resultObject;
+                int pageIndex = PagingManager.getLastPageNumber(_organizerList);
+                if (organizerList == null || pageIndex == 0)
+                    organizerList = new ArrayList<>();
+                organizerList.addAll(_organizerList);
 			}
 
 		}

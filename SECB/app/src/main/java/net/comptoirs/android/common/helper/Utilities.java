@@ -30,6 +30,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -103,6 +105,13 @@ public class Utilities {
 
         return errorMessage.toString();
     }
+
+    public static int getScrollYOfRecycler(RecyclerView recyclerView) {
+        View c = recyclerView.getChildAt(0);
+        int scrolly = -c.getTop() + ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition() * c.getHeight();
+        return scrolly;
+    }
+
 
     public static String md5Hash(String key) {
         String cacheKey;

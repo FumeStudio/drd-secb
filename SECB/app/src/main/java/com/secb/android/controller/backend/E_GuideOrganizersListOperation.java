@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.secb.android.controller.manager.EGuideOrganizersManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.OrganizersFilterData;
@@ -66,6 +67,7 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<OrganizerItem>>() {}.getType();
 		List<OrganizerItem> organizerItems = gson.fromJson(response.response.toString(), listType);
+		organizerItems = (List<OrganizerItem>) PagingManager.updatePaging(organizerItems, pageIndex);
 //		removeUnCompletedItems(organizerItems);
 
 //	    only cache the not filtered list
@@ -77,7 +79,8 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 				organizersFilterData.city.equalsIgnoreCase("All") )
 		{
 
-			updateOrganizersManager(organizerItems);
+            if(pageIndex == 0)
+			    updateOrganizersManager(organizerItems);
 		}
 		return organizerItems;
 	}
