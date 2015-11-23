@@ -571,7 +571,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     /*
      * Add LocationUpdatedListener UI Observer to List
      */
-    public void addBackObserver(FragmentBackObserver fragmentBackObserver) {
+    public synchronized void addBackObserver(FragmentBackObserver fragmentBackObserver) {
         // remove the observer if it was already added here
         removeBackObserver(fragmentBackObserver);
 
@@ -582,11 +582,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     /*
      * Remove LocationUpdatedListener UI Observer from the list
      */
-    public void removeBackObserver(FragmentBackObserver fragmentBackObserver) {
+    public synchronized void removeBackObserver(FragmentBackObserver fragmentBackObserver) {
         backObservers.remove(fragmentBackObserver);
     }
 
-    private void callBack() {
+    private synchronized void callBack() {
         if (backObservers != null)
             for (FragmentBackObserver backObserver : backObservers)
                 backObserver.onBack();

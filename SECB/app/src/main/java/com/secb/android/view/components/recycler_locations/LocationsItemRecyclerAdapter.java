@@ -130,6 +130,4 @@ public class LocationsItemRecyclerAdapter extends FooterLoaderAdapter<LocationsI
         itemsList.remove(position);
         notifyItemRemoved(position);
     }
-
-
 }

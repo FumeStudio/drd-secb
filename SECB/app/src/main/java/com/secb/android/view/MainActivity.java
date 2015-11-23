@@ -246,7 +246,6 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	//e-guide Locations
 	public void setLocationRequstObserver(RequestObserver locationRequstObserver) {
-
 		locationRequstObserverList.add(locationRequstObserver);
 	}
 

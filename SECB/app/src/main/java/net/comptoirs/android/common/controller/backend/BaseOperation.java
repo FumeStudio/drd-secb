@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.secb.android.model.Paging;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 
 import net.comptoirs.android.common.controller.CTOperationResponse;
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class BaseOperation<T> extends AsyncTask<Object, Object, CTOperationResponse> {
 
