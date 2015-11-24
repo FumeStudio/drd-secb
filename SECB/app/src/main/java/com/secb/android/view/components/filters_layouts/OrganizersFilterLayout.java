@@ -13,7 +13,6 @@ import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EventsCityItem;
 import com.secb.android.model.OrganizersFilterData;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.EventFilterCitiesSpinnerAdapter;
 
@@ -42,7 +41,7 @@ public class OrganizersFilterLayout extends LinearLayout implements RequestObser
         this.context=context;
         view = LayoutInflater.from(context).inflate(R.layout.organizers_filter_screen, null);
         initViews(view);
-	    ((MainActivity)context).setOrganizersRequstObserver(this);
+//	    ((MainActivity)context).setOrganizersRequstObserver(this);
         applyFonts(view);
 	    if(citiesList!=null && citiesList.size()>0)
 	    {

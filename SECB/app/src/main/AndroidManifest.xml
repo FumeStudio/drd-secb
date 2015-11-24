@@ -76,6 +76,28 @@
             android:name=".view.EventsActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize"></activity>
+        <activity
+            android:name=".view.EservicesActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"></activity>
+        <activity
+            android:name=".view.EguideActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"></activity>
+        <activity
+            android:name=".view.GalleryActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"></activity>
+
+        <activity
+            android:name=".view.AboutUsActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"></activity>
+
+        <activity
+            android:name=".view.ContactUsActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"></activity>
 
 
 

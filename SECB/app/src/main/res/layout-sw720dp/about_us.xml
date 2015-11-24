@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/page_padding_v"
+              android:paddingLeft="@dimen/page_padding_h"
+              android:paddingRight="@dimen/page_padding_h"
+              android:paddingTop="@dimen/page_padding_v">
+
+
+    <ScrollView
+        android:layout_width="@dimen/aboutUsDescription_width"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:padding="@dimen/eguide_base_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtv_aboutusVisionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="@dimen/about_us_margin"
+                    android:layout_marginRight="@dimen/about_us_margin"
+                    android:layout_marginTop="@dimen/about_us_title_margin_top"
+                    android:text="@string/vision_title"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/about_us_h1_text_size"/>
+
+                <TextView
+                    android:id="@+id/txtv_aboutusVisionValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/about_us_margin"
+                    android:layout_marginLeft="@dimen/about_us_margin"
+                    android:layout_marginRight="@dimen/about_us_margin"
+                    android:text="@string/vision_value"
+                    android:textColor="@color/darkgrey_color"
+                    android:textSize="@dimen/about_us_h2_text_size"/>
+
+                <TextView
+                    android:id="@+id/txtv_aboutusMissionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="@dimen/about_us_margin"
+                    android:layout_marginRight="@dimen/about_us_margin"
+                    android:layout_marginTop="@dimen/about_us_title_margin_top"
+                    android:text="@string/mission_title"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/about_us_h1_text_size"/>
+
+                <TextView
+                    android:id="@+id/txtv_aboutusMissionValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/about_us_margin"
+                    android:layout_marginLeft="@dimen/about_us_margin"
+                    android:layout_marginRight="@dimen/about_us_margin"
+                    android:text="@string/mission_value"
+                    android:textColor="@color/darkgrey_color"
+                    android:textSize="@dimen/about_us_h2_text_size"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imgv_aboutusImg"
+        android:layout_width="@dimen/aboutUsImg_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|top"
+        android:scaleType="centerCrop"
+        android:src="@drawable/aboutus_img_tablet"/>
+
+
+</LinearLayout>

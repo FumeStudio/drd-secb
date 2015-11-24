@@ -22,7 +22,6 @@ import com.secb.android.model.EventsFilterData;
 import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.EventsActivity;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.RecyclerViewScrollListener;
@@ -103,7 +102,6 @@ public class EventsListFragment extends SECBBaseFragment
     @Override
     public void onPause() {
         super.onPause();
-	    ((SECBBaseActivity) getActivity()).displayToast("Calendar onResume");
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
 
@@ -322,11 +320,15 @@ public class EventsListFragment extends SECBBaseFragment
             eventsList = (ArrayList<EventItem>) EventsManager.getInstance().getEventsUnFilteredList(getActivity());
             if (eventsList != null && eventsList.size() > 0) {
                 handleRequestFinished(RequestIds.EVENTS_LIST_REQUEST_ID, null, eventsList);
-            } else {
-                if (((MainActivity) getActivity()).isEventsLoadingFinished == false) {
-                    startWaiting();
-                } else {
-                    startEventsListOperation(new EventsFilterData(), true, 0);
+            } else
+            {
+//                if (((MainActivity) getActivity()).isEventsLoadingFinished == false)
+//                {
+//                    startWaiting();
+//                }
+//                else
+                {
+                    startEventsListOperation(new EventsFilterData(), true);
                 }
             }
         }

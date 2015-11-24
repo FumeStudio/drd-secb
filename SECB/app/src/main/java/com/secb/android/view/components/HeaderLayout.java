@@ -25,13 +25,15 @@ public class HeaderLayout extends LinearLayout {
     ImageView imageViewBackHeader;
     ImageView imageViewShareHeader;
 //    ATButton addthisShareButton;
+private ImageView imageViewFilterHeader;
     TextView textViewTitleHeader;
 
     OnClickListener menuOnClickListener;
     OnClickListener backOnClickListener;
+	OnClickListener headrFilterOnClickListener;
     ShareItemInterface shareItemInterface;
 
-    public HeaderLayout(Context context) {
+	public HeaderLayout(Context context) {
         this(context, null);
     }
 
@@ -47,6 +49,7 @@ public class HeaderLayout extends LinearLayout {
         imageViewMenuHeader = (ImageView) view.findViewById(R.id.imageViewMenuHeader);
         imageViewBackHeader = (ImageView) view.findViewById(R.id.imageViewBackHeader);
 	    imageViewShareHeader = (ImageView) view.findViewById(R.id.imageViewShareHeader);
+	    imageViewFilterHeader = (ImageView) view.findViewById(R.id.imageViewFilterHeader);
 //        addthisShareButton = (ATButton) view.findViewById(R.id.addthisShareButton);
         textViewTitleHeader = (TextView) view.findViewById(R.id.textViewTitleHeader);
 //        layoutContainerHeader.setMinimumHeight(120);// (int)getResources().getDimension(R.dimen.header_height)
@@ -79,6 +82,14 @@ public class HeaderLayout extends LinearLayout {
                 imageViewBackHeader.setVisibility(View.VISIBLE);
             } else
                 imageViewBackHeader.setVisibility(View.GONE);
+        }
+        if (imageViewFilterHeader != null)
+        {
+            if (headrFilterOnClickListener != null) {
+	            imageViewFilterHeader.setOnClickListener(headrFilterOnClickListener);
+	            imageViewFilterHeader.setVisibility(View.VISIBLE);
+            } else
+	            imageViewFilterHeader.setVisibility(View.GONE);
         }
         if (imageViewShareHeader != null) {
             if (shareItemInterface != null) {
@@ -133,6 +144,15 @@ public class HeaderLayout extends LinearLayout {
         enableMenuButton(null);
     }
 
+
+	public void enableFilterButton(OnClickListener filterOnClickListener) {
+		this.headrFilterOnClickListener = filterOnClickListener;
+		handleButtonsEvents();
+	}
+
+	public void disableFilterButton() {
+		enableFilterButton(null);
+	}
 
     public void enableShareButton(ShareItemInterface shareItemInterface) {
         this.shareItemInterface = shareItemInterface;

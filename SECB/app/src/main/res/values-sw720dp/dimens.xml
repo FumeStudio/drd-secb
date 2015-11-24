@@ -15,4 +15,9 @@
     <dimen name="eventsList_width">532dp</dimen>
     <dimen name="eventsDetails_width">650dp</dimen>
 
+    <dimen name="aboutUsDescription_width">730dp</dimen>
+    <dimen name="aboutUsImg_width">485dp</dimen>
+    <dimen name="contact_us_left_side_width">666dp</dimen>
+    <dimen name="contact_us_right_side_width">535dp</dimen>
+
 </resources>

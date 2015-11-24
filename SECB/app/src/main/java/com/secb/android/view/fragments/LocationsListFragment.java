@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.E_GuideLocationListOperation;
@@ -21,10 +20,8 @@ import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.LocationsFilterData;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
-import com.secb.android.view.components.EndlessRecyclerOnScrollListener;
 import com.secb.android.view.components.RecyclerViewScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.LocationsFilterLayout;
@@ -37,10 +34,8 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
-import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LocationsListFragment extends SECBBaseFragment
         implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener, RequestObserver
@@ -101,7 +96,7 @@ public class LocationsListFragment extends SECBBaseFragment
             handleButtonsEvents();
             applyFonts();
         }
-        ((MainActivity) getActivity()).setLocationRequstObserver(this);
+//        ((MainActivity) getActivity()).setLocationRequstObserver(this);
         initViews(view);
         initFilterLayout();
         getData();
@@ -156,7 +151,7 @@ public class LocationsListFragment extends SECBBaseFragment
     }
 
     private void getFilterDataObject() {
-        ((MainActivity) getActivity()).hideFilterLayout();
+        ((SECBBaseActivity) getActivity()).hideFilterLayout();
         locationsFilterData = this.locationsFilterLayout.getFilterData();
         if (locationsFilterData != null)
             startLocationsListOperation(locationsFilterData, true, 0);
@@ -271,10 +266,14 @@ public class LocationsListFragment extends SECBBaseFragment
         locationItems = (ArrayList<LocationItem>) EGuideLocationManager.getInstance().getLocationsUnFilteredList(getActivity());
         if (locationItems != null && locationItems.size() > 0) {
             handleRequestFinished(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, null, locationItems);
-        } else {
-            if (((MainActivity) getActivity()).isLocationLoadingFinished == false) {
-                startWaiting();
-            } else {
+        }
+        else
+        {
+//            if (((MainActivity) getActivity()).isLocationLoadingFinished == false) {
+//                startWaiting();
+//            }
+//            else
+            {
                 startLocationsListOperation(new LocationsFilterData(), true, 0);
             }
         }
@@ -301,7 +300,7 @@ public class LocationsListFragment extends SECBBaseFragment
 
     @Override
     public void onItemClicked(View v, int position) {
-        ((MainActivity) getActivity()).openLocationDetailsFragment(locationItems.get(position));
+        ((SECBBaseActivity) getActivity()).openLocationDetailsFragment(locationItems.get(position));
     }
 
     @Override

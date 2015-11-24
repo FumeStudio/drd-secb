@@ -116,6 +116,10 @@ public class EventsActivity extends SECBBaseActivity implements RequestObserver 
 		eventsList =EventsManager.getInstance().getMonthEventsList();
 		openEventsListFragment(eventsList);
 
+		//get the un filtered list of events
+		openEventListFragment(null,null);
+
+
 		//2-open eventDetails of first event in case of tablet
 		if(item==null)
 		{

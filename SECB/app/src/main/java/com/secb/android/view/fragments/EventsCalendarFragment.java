@@ -165,7 +165,10 @@ public class EventsCalendarFragment extends SECBBaseFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtv_viewAllEvents:
-                ((EventsActivity) getActivity()).openEventListFragment(startDate,endDate);
+
+/**as per leader request to display all events without filtering with the month*/
+//                ((EventsActivity) getActivity()).openEventListFragment(startDate,endDate);
+                ((EventsActivity) getActivity()).openEventListFragment(null,null);
                 break;
             case R.id.event_card_container:
                 ((EventsActivity) getActivity()).openEventDetailsFragment(cardEventItem);

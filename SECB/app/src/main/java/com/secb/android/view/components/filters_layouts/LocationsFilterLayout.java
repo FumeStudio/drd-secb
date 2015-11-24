@@ -21,7 +21,6 @@ import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.model.EGuideLocationTypeItem;
 import com.secb.android.model.EventsCityItem;
 import com.secb.android.model.LocationsFilterData;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.EventFilterCitiesSpinnerAdapter;
 import com.secb.android.view.components.NewDividerItemDecoration;
@@ -62,7 +61,7 @@ public class LocationsFilterLayout extends LinearLayout implements RequestObserv
         super(context);
         this.context = context;
         view = LayoutInflater.from(context).inflate(R.layout.locations_filter_screen, null);
-        ((MainActivity) context).setLocationRequstObserver(this);
+//        ((MainActivity) context).setLocationRequstObserver(this);
         initViews(view);
         applyFonts(view);
         locationTypesList = EGuideLocationManager.getInstance().getLocationTypesList(context);

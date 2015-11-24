@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.E_GuideOrganizersListOperation;
@@ -18,12 +17,9 @@ import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.EGuideOrganizersManager;
 import com.secb.android.controller.manager.PagingManager;
-import com.secb.android.model.LocationItem;
-import com.secb.android.model.LocationsFilterData;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.RecyclerViewScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
@@ -100,7 +96,7 @@ public class OrganizersListFragment extends SECBBaseFragment
             handleButtonsEvents();
             applyFonts();
         }
-        ((MainActivity) getActivity()).setOrganizersRequstObserver(this);
+//	    ((MainActivity)getActivity()).setOrganizersRequstObserver(this);
         initViews(view);
         initFilterLayout();
         getData();
@@ -235,16 +231,19 @@ public class OrganizersListFragment extends SECBBaseFragment
         //start operation here.
 
 
-        organizerList = (ArrayList<OrganizerItem>) EGuideOrganizersManager.getInstance().getOrganizersUnFilteredList(getActivity());
-        if (organizerList != null && organizerList.size() > 0) {
-            handleRequestFinished(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, null, organizerList);
-        } else {
-            if (((MainActivity) getActivity()).isOrganizerLoadingFinished == false) {
-                startWaiting();
-            } else {
-                startOrganizeListOperation(new OrganizersFilterData(), true, 0);
-            }
-        }
+		organizerList = (ArrayList<OrganizerItem>) EGuideOrganizersManager.getInstance().getOrganizersUnFilteredList(getActivity());
+		if(organizerList!= null && organizerList.size()>0){
+			handleRequestFinished(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, null, organizerList);
+		}
+		else {
+//			if (((MainActivity) getActivity()).isOrganizerLoadingFinished == false) {
+//				startWaiting();
+//			}
+//			else
+			{
+				startOrganizeListOperation(new OrganizersFilterData(), true, 0);
+			}
+		}
 
     }
 
@@ -270,7 +269,7 @@ public class OrganizersListFragment extends SECBBaseFragment
 
 
     private void getFilterDataObject() {
-        ((MainActivity) getActivity()).hideFilterLayout();
+        ((SECBBaseActivity) getActivity()).hideFilterLayout();
         organizerFilterData = this.organizersFilterLayout.getFilterData();
         if (organizerFilterData != null) {
             startOrganizeListOperation(organizerFilterData, true, 0);
@@ -286,9 +285,10 @@ public class OrganizersListFragment extends SECBBaseFragment
     }
 
 
-    @Override
-    public void onItemClicked(View v, int position) {
-        ((MainActivity) getActivity()).openOrganizerDetailsFragment(organizerList.get(position));
+	@Override
+    public void onItemClicked(View v, int position)
+    {
+        ((SECBBaseActivity) getActivity()).openOrganizerDetailsFragment(organizerList.get(position));
     }
 
     @Override

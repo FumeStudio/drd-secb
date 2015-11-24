@@ -30,6 +30,7 @@ import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
+import com.secb.android.view.GalleryActivity;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
@@ -73,7 +74,7 @@ public class GalleryFragment extends SECBBaseFragment
     private boolean isPlayerReadey;
 
 
-    public static GalleryFragment newInstance(int galleryType, int galleryId) {
+    public static GalleryFragment newInstance(int galleryType) {
         GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("galleryType", galleryType);
@@ -118,7 +119,7 @@ public class GalleryFragment extends SECBBaseFragment
         if (bundle != null) {
             galleryType = bundle.getInt("galleryType");
         }
-        ((MainActivity) getActivity()).setGalleryRequstObserver(this);
+//	    ((MainActivity)getActivity()).setGalleryRequstObserver(this);
         setHeaderTitle();
         initViews(view);
         getData();
@@ -275,29 +276,38 @@ public class GalleryFragment extends SECBBaseFragment
         if (galleryType == GalleryItem.GALLERY_TYPE_IMAGE_GALLERY) {
             photoGalleryItemList = GalleryManager.getInstance().getImageGalleryList(getActivity());
 
-            if (photoGalleryItemList != null && photoGalleryItemList.size() > 0) {
-                handleRequestFinished(RequestIds.PHOTO_GALLERY_REQUEST_ID, null, photoGalleryItemList);
-            } else {
-                if (((MainActivity) getActivity()).isPhotoGalleryLoadingFinished == false) {
-                    startWaiting();
-                } else {
-                    startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true, 0);
-                }
-            }
+	        if(photoGalleryItemList != null && photoGalleryItemList.size()>0){
+		        handleRequestFinished(RequestIds.PHOTO_GALLERY_REQUEST_ID , null,photoGalleryItemList);
+	        }
+	        else
+	        {
+//		        if (((MainActivity) getActivity()).isPhotoGalleryLoadingFinished== false) {
+//			        startWaiting();
+//		        }
+//		        else
+                {
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true);
+		        }
+	        }
         }
 
         //get VideoGallery
-        else if (galleryType == GalleryItem.GALLERY_TYPE_VIDEO_GALLERY) {
-            videoGalleryItemList = GalleryManager.getInstance().getVideoGalleryList(getActivity());
-            if (videoGalleryItemList != null && videoGalleryItemList.size() > 0) {
-                handleRequestFinished(RequestIds.VIDEO_GALLERY_REQUEST_ID, null, videoGalleryItemList);
-            } else {
-                if (((MainActivity) getActivity()).isVideoGalleryLoadingFinished == false) {
-                    startWaiting();
-                } else {
-                    startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, true, 0);
-                }
-            }
+        else if(galleryType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY )
+        {
+	        videoGalleryItemList = GalleryManager.getInstance().getVideoGalleryList(getActivity());
+	        if(videoGalleryItemList != null && videoGalleryItemList.size()>0){
+		        handleRequestFinished(RequestIds.VIDEO_GALLERY_REQUEST_ID , null,videoGalleryItemList);
+	        }
+	        else
+	        {
+//		        if (((MainActivity) getActivity()).isVideoGalleryLoadingFinished == false) {
+//			        startWaiting();
+//		        }
+//		        else
+		        {
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, true);
+		        }
+	        }
         }
     }
 
@@ -331,10 +341,12 @@ public class GalleryFragment extends SECBBaseFragment
     public void onItemClicked(View v, int position) {
         GalleryItem clickedItem = (GalleryItem) galleryItemList.get(position);
 
-        //This item is an Album of Items
-        if (Boolean.valueOf(clickedItem.IsFolder) && (clickedItem.galleryItemType == GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||
-                clickedItem.galleryItemType == GalleryItem.GALLERY_TYPE_VIDEO_GALLERY)) {
-            ((MainActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType + 1, clickedItem.FolderPath, clickedItem.Id);
+	    //This item is an Album of Items
+        if(Boolean.valueOf(clickedItem.IsFolder) && (clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_IMAGE_GALLERY ||
+		        clickedItem.galleryItemType== GalleryItem.GALLERY_TYPE_VIDEO_GALLERY) )
+        {
+//            ((SECBBaseActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id);
+            ((GalleryActivity) getActivity()).openAlbumFragment(clickedItem.galleryItemType+1, clickedItem.FolderPath , clickedItem.Id,true);
         }
 
         //This item is a single item  Not Album of Items
@@ -352,26 +364,31 @@ public class GalleryFragment extends SECBBaseFragment
 
     private void playVideo(String videoUrlvideoUrl) {
 
-        if (!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube")) {
-            String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
-            if (!Utilities.isNullString(videoId)/*&&youTubePlayer!=null*/) {
-                ((MainActivity) getActivity()).playYouTubeVideo(videoId);
-                layout_videoPlayerContainer.setVisibility(View.VISIBLE);
+		if(!Utilities.isNullString(videoUrlvideoUrl) && videoUrlvideoUrl.contains("youtube"))
+		{
+			String videoId = MainActivity.getYoutubeVideoId(videoUrlvideoUrl);
+			if(!Utilities.isNullString(videoId)/*&&youTubePlayer!=null*/)
+			{
+				((SECBBaseActivity)getActivity()).playYouTubeVideo(videoId);
+			    layout_videoPlayerContainer.setVisibility(View.VISIBLE);
 //			    youTubePlayer.cueVideo(videoId);
 
 //				initYoutubePlayer(videoId);
-            }
-        } else if (!Utilities.isNullString(videoUrlvideoUrl)) {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.parse(videoUrlvideoUrl), "video/*");
-            Intent choserIntent = Intent.createChooser(intent, "");
-            if (choserIntent != null)
-                startActivity(choserIntent);
-            else
-                ((MainActivity) getActivity()).displayToast("can't play this video file ");
-        }
-    }
+			}
+		}
+		else
+		if(!Utilities.isNullString(videoUrlvideoUrl) )
+		{
+			Intent intent = new Intent();
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.parse(videoUrlvideoUrl), "video/*");
+			Intent choserIntent = Intent.createChooser(intent, "");
+			if (choserIntent!=null)
+				startActivity(choserIntent);
+			else
+				((SECBBaseActivity)getActivity()).displayToast("can't play this video file ");
+		}
+	}
 
 
     private void playImage(String imageUrl) {

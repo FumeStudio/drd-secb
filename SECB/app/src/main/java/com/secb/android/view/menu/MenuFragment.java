@@ -13,7 +13,6 @@ import android.view.ViewParent;
 
 import com.secb.android.R;
 import com.secb.android.model.GalleryItem;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.DialogConfirmListener;
@@ -24,7 +23,6 @@ import com.secb.android.view.fragments.ContactUsFragment;
 import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventsCalendarFragment;
-import com.secb.android.view.fragments.GalleryFragment;
 import com.secb.android.view.fragments.HomeFragment;
 import com.secb.android.view.fragments.NewsListFragment;
 import com.secb.android.view.fragments.SECBBaseFragment;
@@ -145,45 +143,46 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof HomeFragment))
                 {
-                    ((MainActivity)getActivity()).openHomeFragment(true);
-                    isNavigationChanged = true;
+                    ((SECBBaseActivity)getActivity()).openHomeFragment(true);
+	                isNavigationChanged = true;
                 }
                 break;
             case 1:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof E_ServicesListFragment))
                 {
-                    ((MainActivity)getActivity()).openE_ServicesFragment();
-                    isNavigationChanged = true;
+                    ((SECBBaseActivity)getActivity()).openE_ServicesFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 2:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof NewsListFragment))
                 {
-                    ((MainActivity)getActivity()).openNewsListFragment();
-                    isNavigationChanged = true;
+                    ((SECBBaseActivity)getActivity()).openNewsListFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 3:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof EguideHomeFragment))
                 {
-                    ((MainActivity)getActivity()).openEguideHomeFragment();
-                    isNavigationChanged = true;
+                    ((SECBBaseActivity)getActivity()).openEguideHomeFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 4:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof EventsCalendarFragment))
                 {
-                    ((MainActivity)getActivity()).openEventsCalendarFragment();
-                    isNavigationChanged = true;
+                    ((SECBBaseActivity)getActivity()).openEventsCalendarFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 5:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
-                //check if the displayed fragment is gallery or not
+	            ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY);
+               /* //check if the displayed fragment is gallery or not
                 boolean isGalleryFragment = (currentDisplayedFragment instanceof GalleryFragment);
                 boolean isVideoGallery=false ;
 
@@ -194,14 +193,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isVideoGallery)
                 {
-                    ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, -1);
-                    isNavigationChanged = true;
-                }
+                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY);
+                }*/
+	            isNavigationChanged = true;
                 break;
             case 6:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
+	            ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY);
                 //check if the displayed fragment is gallery or not
-                isGalleryFragment = (currentDisplayedFragment instanceof GalleryFragment);
+          /*      isGalleryFragment = (currentDisplayedFragment instanceof GalleryFragment);
                 boolean isImageGallery=false ;
 
                 //in case of gallery check it's image gallery or not
@@ -211,24 +211,25 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isImageGallery)
                 {
-                    ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, -1);
-                    isNavigationChanged = true;
-                }
+                    ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY);
+                }*/
+	            isNavigationChanged = true;
                 break;
             case 7:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof AboutUsFragment))
                 {
-                    ((MainActivity)getActivity()).openAboutUsFragment();
-                    isNavigationChanged = true;
+                    ((SECBBaseActivity)getActivity()).openAboutUsFragment();
+	                isNavigationChanged = true;
                 }
                 break;
             case 8:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
-                if ( !(currentDisplayedFragment instanceof ContactUsFragment)) {
-                    ((MainActivity) getActivity()).openContactUsFragment();
-                    isNavigationChanged = true;
-                }
+                ((SECBBaseActivity)getActivity()).openContactUsFragment();
+	            if ( !(currentDisplayedFragment instanceof ContactUsFragment)) {
+		            ((SECBBaseActivity) getActivity()).openContactUsFragment();
+		            isNavigationChanged = true;
+	            }
                 break;
             case 9:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
