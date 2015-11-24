@@ -765,6 +765,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         Intent i = new Intent(activity, SplashActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(i);
+//        activity.overridePendingTransition(0, 0);
     }
 
     public void logout() {

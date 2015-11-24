@@ -262,7 +262,7 @@ public class EventsListFragment extends SECBBaseFragment
         eventItemRecyclerAdapter.showLoading(true);
         eventItemRecyclerAdapter.notifyDataSetChanged();
 
-        startEventsListOperation(eventsFilterData != null ? eventsFilterData  : new EventsFilterData(), false, (PagingManager.getLastPageNumber(eventsList) + 1));
+        startEventsListOperation(eventsFilterData != null ? eventsFilterData : new EventsFilterData(), false, (PagingManager.getLastPageNumber(eventsList) + 1));
     }
 
     public void bindViews() {
@@ -328,7 +328,7 @@ public class EventsListFragment extends SECBBaseFragment
 //                }
 //                else
                 {
-                    startEventsListOperation(new EventsFilterData(), true);
+                    startEventsListOperation(new EventsFilterData(), true, 0);
                 }
             }
         }

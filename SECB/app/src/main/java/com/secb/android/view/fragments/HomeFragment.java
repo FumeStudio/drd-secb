@@ -311,7 +311,13 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		    graphsValues = new ArrayList<>();
 		    graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
 	    }
-        fillWheelPercentage(graphsValues.get(0), graphsValues.get(1), graphsValues.get(2));
+
+//        new android.os.Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+                fillWheelPercentage(graphsValues.get(0), graphsValues.get(1), graphsValues.get(2));
+//            }
+//        }, 0);
 
         txtv_viewAllNews.setOnClickListener(this);
     }

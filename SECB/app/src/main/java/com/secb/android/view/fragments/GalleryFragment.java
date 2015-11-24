@@ -286,7 +286,7 @@ public class GalleryFragment extends SECBBaseFragment
 //		        }
 //		        else
                 {
-			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true);
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, true, 0);
 		        }
 	        }
         }
@@ -305,7 +305,7 @@ public class GalleryFragment extends SECBBaseFragment
 //		        }
 //		        else
 		        {
-			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, true);
+			        startGalleryListOperation(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, true, 0);
 		        }
 	        }
         }

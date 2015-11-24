@@ -14,6 +14,8 @@ import android.view.View;
 
 import com.secb.android.view.UiEngine;
 
+import net.comptoirs.android.common.helper.Logger;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -153,7 +155,7 @@ public class ProgressWheel extends View
 //		canvas.drawArc(circleBounds, -90, 360, false, shadeCirclePaint);
 		canvas.drawArc(circleBounds, 270, 360, false, shadeCirclePaint);
 //
-// Logger.instance().v("barLength", "Length: "+barLength+", percentageNumber: "+percentageNumber);
+ Logger.instance().v("ProgressWheel", "Length: "+barLength+", percentageNumber: "+percentageNumber+" Color: "+wheel_fill_color);
         if(barLength !=0 && percentageNumber != 0)
 		{
 //			canvas.drawArc(circleBounds, -90, barLength, false, barPaint);
@@ -206,12 +208,13 @@ public class ProgressWheel extends View
 	int seconds = 0, minutes = 0;
 	private void incrementProgress()
 	{
-//		Logger.instance().v("ProgressWheel", "Progress: "+progress+" Text: "+percentageStr+" ParLength: "+barLength, false);
+		Logger.instance().v("ProgressWheel", "Progress: "+progress+" percentageNumber: "+percentageNumber+" ParLength: "+barLength +" degrees: "+degrees, false);
 		isSpinning = true;
-		progress++;
-		barLength ++;
-		loadingMillis = (progress * loadingInterval);
-		
+        if (progress < degrees) {
+            progress++;
+            barLength++;
+            loadingMillis = (progress * loadingInterval);
+        }
 		initText();
 		changeDegreeColors();
 		// setText(Math.round(((float)progress/360)*100) + "%");
@@ -231,7 +234,10 @@ public class ProgressWheel extends View
 
 	public void startLoading(int percentage, int loadingTimeInMillis, String placeHolderTime , int _radius)
 	{
+		Logger.instance().v("ProgressWheel","startLoading: percentage? "+percentage);
 		radius = _radius;
+        reset();
+        stopTimerLoading();
 		changeDegreeColors();
 		if(percentage == 0 || percentageNumber != percentage)
 		{
@@ -291,7 +297,7 @@ public class ProgressWheel extends View
 		schedFeature = scheduler.scheduleAtFixedRate(refereshJob, loadingInterval, loadingInterval, TimeUnit.MILLISECONDS);
 	}
 	private void stopTimerLoading() {
-//		Logger.instance().v("Circle Timer", " << Stop Timer", false);
+		Logger.instance().v("ProgressWheel", " << Stop Timer", false);
 		if(schedFeature != null)
 			schedFeature.cancel(true);
 		
@@ -320,6 +326,7 @@ public class ProgressWheel extends View
 //					progress = 0;
 					loadingMillis = loadingTotalTimeInMillis;
 					initText();
+                    
 					stopTimerLoading();
 					invalidate();
 				}
