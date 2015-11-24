@@ -20,7 +20,6 @@ import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
-import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.RecyclerViewScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
@@ -251,10 +250,11 @@ public class OrganizersListFragment extends SECBBaseFragment
 			handleRequestFinished(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, null, organizerList);
 		}
 		else {
-			if (((MainActivity) getActivity()).isOrganizerLoadingFinished == false) {
-				startWaiting();
-			}
-			else{
+//			if (((MainActivity) getActivity()).isOrganizerLoadingFinished == false) {
+//				startWaiting();
+//			}
+//			else
+			{
 				startOrganizeListOperation(new OrganizersFilterData(), true, 0);
 			}
 		}

@@ -691,7 +691,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //                break;
             case R.id.imageViewFilterHeader:
             case R.id.imgv_filter:
-                prepareFilerLayout();
+	            if(!isFilterLayoutOpened)
+                    prepareFilerLayout();
                 break;
 
             default:

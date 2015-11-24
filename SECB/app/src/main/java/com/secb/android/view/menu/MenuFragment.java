@@ -226,7 +226,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
             case 8:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 ((SECBBaseActivity)getActivity()).openContactUsFragment();
-	            isNavigationChanged = true;
+	            if ( !(currentDisplayedFragment instanceof ContactUsFragment)) {
+		            ((SECBBaseActivity) getActivity()).openContactUsFragment();
+		            isNavigationChanged = true;
+	            }
                 break;
             case 9:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
