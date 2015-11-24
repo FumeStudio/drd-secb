@@ -4,7 +4,7 @@ import net.comptoirs.android.common.helper.Utilities;
 
 import java.io.Serializable;
 
-public class NewsItem implements Serializable, ShareItemInterface
+public class NewsItem extends Paging implements ShareItemInterface
 {
     static final long serialVersionUID =-5921136756892110095L;
 

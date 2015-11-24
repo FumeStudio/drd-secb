@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.NewsItem;
 import com.secb.android.view.MainActivity;
+import com.secb.android.view.components.FooterLoaderAdapter;
 
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
@@ -19,7 +20,7 @@ import net.comptoirs.android.common.view.CTApplication;
 import java.util.Collections;
 import java.util.List;
 
-public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecyclerViewHolder>
+public class NewsItemRecyclerAdapter extends FooterLoaderAdapter<NewsItemRecyclerViewHolder>
 {
     LayoutInflater inflater ;
     List<NewsItem>itemsList = Collections.emptyList();
@@ -28,8 +29,8 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 	private SparseBooleanArray selectedItems;
 
 	public NewsItemRecyclerAdapter(Context context, List<NewsItem> itemsList) {
-
-        this.itemsList = itemsList;
+        super(context);
+        setItemsList(itemsList);
 	    this.context=context;
 	    if(context == null)
 	    {
@@ -43,8 +44,18 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 	    }
     }
 
+    @Override
+    public long getYourItemId(int position) {
+        return (itemsList.get(position).ID).hashCode();
+    }
+
+    public void setItemsList(List<NewsItem> itemsList) {
+        this.itemsList = itemsList;
+        setItems(itemsList);
+    }
+
 	@Override
-    public NewsItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public NewsItemRecyclerViewHolder getYourItemViewHolder(ViewGroup parent)
 	{
 		if(inflater==null && context!=null)
 			this.inflater = LayoutInflater.from(context);
@@ -57,8 +68,9 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 
 
     @Override
-    public void onBindViewHolder(NewsItemRecyclerViewHolder holder, int position)
+    public void bindYourViewHolder(RecyclerView.ViewHolder _holder, int position)
     {
+        NewsItemRecyclerViewHolder holder = (NewsItemRecyclerViewHolder) _holder;
 //	    view.setSelected(selectedItems.get(position, false));
         final NewsItem currentItem = itemsList.get(position);
 		Logger.instance().v("News-Card", "Image: "+currentItem.getImageUrl(), false);
@@ -79,11 +91,8 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
         holder.txtv_newTime.setText(newdateStr);
     }
 
-    @Override
     public int getItemCount() {
-	    if(itemsList!=null)
-	        return itemsList.size();
-	    return 0;
+        return super.getItemCount();
     }
 
     public void deleteItem(int position){

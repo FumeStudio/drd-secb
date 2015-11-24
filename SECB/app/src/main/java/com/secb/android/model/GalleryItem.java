@@ -4,7 +4,7 @@ import net.comptoirs.android.common.helper.Utilities;
 
 import java.io.Serializable;
 
-public class GalleryItem implements Serializable
+public class GalleryItem extends Paging
 {
     public static int GALLERY_TYPE_IMAGE_GALLERY = 1;
     public static int GALLERY_TYPE_IMAGE_ALBUM = 2;

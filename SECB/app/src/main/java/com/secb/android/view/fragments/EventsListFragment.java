@@ -14,14 +14,18 @@ import android.widget.TextView;
 import com.secb.android.R;
 import com.secb.android.controller.backend.EventsListOperation;
 import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.EventsManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
+import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.EventsActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.secb.android.view.components.RecyclerViewScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.EventsFilterLayout;
 import com.secb.android.view.components.recycler_events.EventItemRecyclerAdapter;
@@ -38,9 +42,7 @@ import net.comptoirs.android.common.helper.Utilities;
 import java.util.ArrayList;
 
 public class EventsListFragment extends SECBBaseFragment
-        implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener, RequestObserver
-
-{
+        implements FragmentBackObserver, View.OnClickListener, RecyclerCustomClickListener, RequestObserver {
     private static final String TAG = "EventsListFragment";
     RecyclerView eventsRecyclerView;
     EventItemRecyclerAdapter eventItemRecyclerAdapter;
@@ -210,7 +212,7 @@ public class EventsListFragment extends SECBBaseFragment
 
         ((SECBBaseActivity) getActivity()).hideFilterLayout();
         if (eventsFilterData != null) {
-            startEventsListOperation(eventsFilterData, true);
+            startEventsListOperation(eventsFilterData, true, 0);
 //            ((SECBBaseActivity) getActivity()).displayToast("Filter Data \n " +
 //                    " city: "+ eventsFilterData.city +"\n" +
 //                    " Time From: "+ eventsFilterData.timeFrom+"\n" +
@@ -238,14 +240,45 @@ public class EventsListFragment extends SECBBaseFragment
         eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
         eventsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eventsRecyclerView, this));
+
+        eventsRecyclerView.addOnScrollListener(new RecyclerViewScrollListener() {
+            @Override
+            public void onScrollUp() {
+
+            }
+
+            @Override
+            public void onScrollDown() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                loadMoreData();
+            }
+        });
+    }
+
+    private void loadMoreData() {
+
+        eventItemRecyclerAdapter.showLoading(true);
+        eventItemRecyclerAdapter.notifyDataSetChanged();
+
+        startEventsListOperation(eventsFilterData != null ? eventsFilterData  : new EventsFilterData(), false, (PagingManager.getLastPageNumber(eventsList) + 1));
     }
 
     public void bindViews() {
         if (eventsList != null && eventsList.size() > 0) {
             eventsRecyclerView.setVisibility(View.VISIBLE);
             txtv_noData.setVisibility(View.GONE);
-            eventItemRecyclerAdapter = new EventItemRecyclerAdapter(getActivity(), eventsList);
-            eventsRecyclerView.setAdapter(eventItemRecyclerAdapter);
+            if(eventItemRecyclerAdapter == null) {
+                eventItemRecyclerAdapter = new EventItemRecyclerAdapter(getActivity(), eventsList);
+                eventsRecyclerView.setAdapter(eventItemRecyclerAdapter);
+            } else {
+                eventItemRecyclerAdapter.setItemsList(eventsList);
+                eventItemRecyclerAdapter.showLoading(false);
+                eventItemRecyclerAdapter.notifyItemRangeChanged(0, eventsList.size());
+            }
         } else {
             eventsRecyclerView.setVisibility(View.GONE);
             txtv_noData.setVisibility(View.VISIBLE);
@@ -293,7 +326,7 @@ public class EventsListFragment extends SECBBaseFragment
                 if (((MainActivity) getActivity()).isEventsLoadingFinished == false) {
                     startWaiting();
                 } else {
-                    startEventsListOperation(new EventsFilterData(), true);
+                    startEventsListOperation(new EventsFilterData(), true, 0);
                 }
             }
         }
@@ -312,19 +345,29 @@ public class EventsListFragment extends SECBBaseFragment
         }
     }
 
-    private void startEventsListOperation(EventsFilterData eventFilterData, boolean showDialog) {
-        EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_REQUEST_ID, showDialog, getActivity(), eventFilterData, 100, 0);
+    private void startEventsListOperation(EventsFilterData eventFilterData, boolean showDialog, int pageIndex) {
+        EventsListOperation operation = new EventsListOperation(RequestIds.EVENTS_LIST_REQUEST_ID, showDialog, getActivity(), eventFilterData, ServerKeys.PAGE_SIZE_DEFAULT, pageIndex);
         operation.addRequsetObserver(this);
         operation.execute();
     }
 
     @Override
     public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        if(getActivity() == null)
+            return;
         stopWaiting();
+        if(eventItemRecyclerAdapter != null) {
+            eventItemRecyclerAdapter.showLoading(false);
+            eventItemRecyclerAdapter.notifyDataSetChanged();
+        }
         if (error == null) {
             Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
             if ((int) requestId == RequestIds.EVENTS_LIST_REQUEST_ID && resultObject != null) {
-                eventsList = (ArrayList<EventItem>) resultObject;
+                ArrayList<EventItem> _eventsList = (ArrayList<EventItem>) resultObject;
+                int pageIndex = PagingManager.getLastPageNumber(_eventsList);
+                if (eventsList == null || pageIndex == 0)
+                    eventsList = new ArrayList<>();
+                eventsList.addAll(_eventsList);
             }
 
 

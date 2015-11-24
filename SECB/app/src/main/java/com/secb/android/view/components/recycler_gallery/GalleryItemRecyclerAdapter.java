@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.GalleryItem;
+import com.secb.android.model.OrganizerItem;
+import com.secb.android.view.components.FooterLoaderAdapter;
+import com.secb.android.view.components.recycler_organizers.OrganizerItemRecyclerViewHolder;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -16,7 +19,7 @@ import net.comptoirs.android.common.view.CTApplication;
 import java.util.Collections;
 import java.util.List;
 
-public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItemRecyclerViewHolder>
+public class GalleryItemRecyclerAdapter extends FooterLoaderAdapter<GalleryItemRecyclerViewHolder>
 {
     LayoutInflater inflater ;
     List<GalleryItem>itemsList = Collections.emptyList();
@@ -24,17 +27,25 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
 	private View view;
 
 	public GalleryItemRecyclerAdapter(Context context, List<GalleryItem> itemsList) {
-	    this.context=context;
+        super(context);
+        this.context=context;
 	    if(context == null)
 		    this.context= CTApplication.getContext();
 
-
-	    this.itemsList = itemsList;
+        setItemsList(itemsList);
 	    this.inflater = LayoutInflater.from(this.context);
+    }
+    public void setItemsList(List<GalleryItem> itemsList) {
+        setItems(itemsList);
+        this.itemsList = itemsList;
+    }
+    @Override
+    public long getYourItemId(int position) {
+        return (itemsList.get(position).Id).hashCode();
     }
 
     @Override
-    public GalleryItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GalleryItemRecyclerViewHolder getYourItemViewHolder(ViewGroup parent) {
         view = inflater.inflate(R.layout.gallary_item, parent, false);
 
         GalleryItemRecyclerViewHolder vh = new GalleryItemRecyclerViewHolder(view);
@@ -42,8 +53,10 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
     }
 
     @Override
-    public void onBindViewHolder(GalleryItemRecyclerViewHolder holder, int position)
+    public void bindYourViewHolder(RecyclerView.ViewHolder _holder, int position)
     {
+        GalleryItemRecyclerViewHolder holder = (GalleryItemRecyclerViewHolder) _holder;
+
         GalleryItem currentItem = itemsList.get(position);
         int currentItemType = currentItem.galleryItemType;
 
@@ -151,11 +164,8 @@ public class GalleryItemRecyclerAdapter extends RecyclerView.Adapter<GalleryItem
             holder.txtv_galleryTitle.setText(currentItem.Title);
     }
 
-    @Override
     public int getItemCount() {
-        if(itemsList!=null)
-            return itemsList.size();
-        return 0;
+        return super.getItemCount();
     }
 
     public void deleteItem(int position){

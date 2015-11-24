@@ -8,8 +8,10 @@ import net.comptoirs.android.common.helper.Utilities;
 
 import java.io.Serializable;
 
-public class EventItem implements Serializable ,Event{
+public class EventItem extends Paging implements Event{
 /*    public transient  Bitmap eventItemImage;*/
+
+	static final long serialVersionUID =3246079031338613679L;
 
     public double eventItemLatitude ;
     public double eventItemLongitude ;

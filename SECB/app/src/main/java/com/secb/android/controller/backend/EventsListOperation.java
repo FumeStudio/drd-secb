@@ -6,9 +6,11 @@ import android.net.Uri;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.secb.android.controller.manager.EventsManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
+import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.controller.backend.BaseOperation;
@@ -68,6 +70,7 @@ public class EventsListOperation extends BaseOperation {
 		Type listType = new TypeToken<List<EventItem>>() {}.getType();
 		List<EventItem> eventsItems = gson.fromJson(response.response.toString(), listType);
 		removeUnCompletedItems(eventsItems);
+		eventsItems = (List<EventItem>) PagingManager.updatePaging(eventsItems, pageIndex);
 
 //		eventsItems.add(getTestingElement());
 
@@ -80,7 +83,8 @@ public class EventsListOperation extends BaseOperation {
 				Utilities.isNullString(eventsFilterData.timeFrom) &&
 				eventsFilterData.eventID.equalsIgnoreCase("All")) {
 
-			updateEventsManager(eventsItems);
+			if(pageIndex == 0)
+				updateEventsManager(eventsItems);
 		}
 		return eventsItems;
 	}

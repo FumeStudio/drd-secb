@@ -14,13 +14,18 @@ import android.widget.TextView;
 import com.secb.android.R;
 import com.secb.android.controller.backend.NewsListOperation;
 import com.secb.android.controller.backend.RequestIds;
+import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.NewsManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
+import com.secb.android.model.OrganizerItem;
+import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.NewsActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
+import com.secb.android.view.components.RecyclerViewScrollListener;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
 import com.secb.android.view.components.filters_layouts.NewsFilterLayout;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
@@ -190,7 +195,7 @@ public class NewsListFragment extends SECBBaseFragment
                     " Time To: "+ newsFilterData.timeTo+" \n" +
                     " Type: "+ newsFilterData.selectedCategoryId+
                     " Selected Category: "+ newsFilterData.newsCategory);*/
-			startNewsListOperation(newsFilterData, true);
+			startNewsListOperation(newsFilterData, true, 0);
 		}
 
 
@@ -217,13 +222,31 @@ public class NewsListFragment extends SECBBaseFragment
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 		newsRecyclerView.setLayoutManager(linearLayoutManager);
 		newsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), newsRecyclerView, this));
-//		newsRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-//			@Override
-//			public void onLoadMore(int current_page) {
-//				Logger.instance().v("Paging", "NewsList over scrolled");
-//			}
-//		});
 
+		newsRecyclerView.addOnScrollListener(new RecyclerViewScrollListener() {
+			@Override
+			public void onScrollUp() {
+
+			}
+
+			@Override
+			public void onScrollDown() {
+
+			}
+
+			@Override
+			public void onLoadMore() {
+				loadMoreData();
+			}
+		});
+	}
+
+	private void loadMoreData() {
+
+		newsItemRecyclerAdapter.showLoading(true);
+		newsItemRecyclerAdapter.notifyDataSetChanged();
+
+		startNewsListOperation(newsFilterData != null ? newsFilterData : new NewsFilterData(), false, (PagingManager.getLastPageNumber(newsList) + 1));
 	}
 
 	public void bindViews() {
@@ -236,8 +259,16 @@ public class NewsListFragment extends SECBBaseFragment
 
 			newsRecyclerView.setVisibility(View.VISIBLE);
 			txtv_noData.setVisibility(View.GONE);
-			newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
-			newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
+			if(newsItemRecyclerAdapter == null) {
+				newsItemRecyclerAdapter = new NewsItemRecyclerAdapter(getActivity(), newsList);
+				newsItemRecyclerAdapter.setItemsList(newsList);
+				newsRecyclerView.setAdapter(newsItemRecyclerAdapter);
+			} else {
+				newsItemRecyclerAdapter.setItemsList(newsList);
+//                lastFirstVisiblePosition = Utilities.getScrollYOfRecycler(organizerRecyclerView);
+				newsItemRecyclerAdapter.showLoading(false);
+				newsItemRecyclerAdapter.notifyItemRangeChanged(0, newsList.size());
+			}
 		} else {
 			newsRecyclerView.setVisibility(View.GONE);
 			txtv_noData.setVisibility(View.VISIBLE);
@@ -266,7 +297,7 @@ public class NewsListFragment extends SECBBaseFragment
 			}
 			else*/
 			{
-				startNewsListOperation(new NewsFilterData(), true);
+				startNewsListOperation(new NewsFilterData(), true, 0);
 			}
 		}
 
@@ -285,8 +316,8 @@ public class NewsListFragment extends SECBBaseFragment
 		}
 	}
 
-	private void startNewsListOperation(NewsFilterData newsFilterData, boolean showDialog) {
-		NewsListOperation operation = new NewsListOperation(RequestIds.NEWS_LIST_REQUEST_ID, showDialog, getActivity(), newsFilterData, 100, 0);
+	private void startNewsListOperation(NewsFilterData newsFilterData, boolean showDialog, int pageIndex) {
+		NewsListOperation operation = new NewsListOperation(RequestIds.NEWS_LIST_REQUEST_ID, showDialog, getActivity(), newsFilterData, ServerKeys.PAGE_SIZE_DEFAULT, pageIndex);
 		operation.addRequsetObserver(this);
 		operation.execute();
 	}
@@ -310,11 +341,21 @@ public class NewsListFragment extends SECBBaseFragment
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		if(getActivity() == null)
+			return;
 		stopWaiting();
+		if(newsItemRecyclerAdapter != null) {
+            newsItemRecyclerAdapter.showLoading(false);
+            newsItemRecyclerAdapter.notifyDataSetChanged();
+        }
 		if (error == null) {
 			Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
 			if ((int) requestId == RequestIds.NEWS_LIST_REQUEST_ID && resultObject != null) {
-				newsList = (ArrayList<NewsItem>) resultObject;
+				ArrayList<NewsItem> _newsList = (ArrayList<NewsItem>) resultObject;
+				int pageIndex = PagingManager.getLastPageNumber(_newsList);
+				if (newsList == null || pageIndex == 0)
+					newsList = new ArrayList<>();
+				newsList.addAll(_newsList);
 				bindViews();
 			}
 

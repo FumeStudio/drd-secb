@@ -237,16 +237,21 @@ public class LocationsListFragment extends SECBBaseFragment
             txtv_noData.setVisibility(View.GONE);
             if(locationsItemRecyclerAdapter == null) {
                 locationsItemRecyclerAdapter = new LocationsItemRecyclerAdapter(getActivity(), locationItems);
-            } else
+                locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
+            } else {
+                locationsItemRecyclerAdapter.setItemsList(locationItems);
                 lastFirstVisiblePosition = ((LinearLayoutManager)locationsRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-            locationsItemRecyclerAdapter.setItemsList(locationItems);
-            locationsItemRecyclerAdapter.showLoading(false);
-            locationsItemRecyclerAdapter.notifyDataSetChanged();
-            locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
-            ((LinearLayoutManager) locationsRecyclerView.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
-            locationsItemRecyclerAdapter.notifyDataSetChanged();
-            locationsRecyclerView.refreshDrawableState();
-            locationsRecyclerView.postInvalidate();
+                locationsItemRecyclerAdapter.showLoading(false);
+                locationsItemRecyclerAdapter.setItemsList(locationItems);
+                locationsItemRecyclerAdapter.notifyItemRangeChanged(0, locationItems.size());
+            }
+
+//            locationsItemRecyclerAdapter.notifyDataSetChanged();
+//            locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
+//            ((LinearLayoutManager) locationsRecyclerView.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
+//            locationsItemRecyclerAdapter.notifyDataSetChanged();
+//            locationsRecyclerView.refreshDrawableState();
+//            locationsRecyclerView.postInvalidate();
         } else {
             locationsRecyclerView.setVisibility(View.GONE);
             txtv_noData.setVisibility(View.VISIBLE);
@@ -306,7 +311,13 @@ public class LocationsListFragment extends SECBBaseFragment
 
     @Override
     public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        if(getActivity() == null)
+            return;
         stopWaiting();
+        if(locationsItemRecyclerAdapter != null) {
+            locationsItemRecyclerAdapter.showLoading(false);
+            locationsItemRecyclerAdapter.notifyDataSetChanged();
+        }
         if (error == null) {
             Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
             if ((int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID && resultObject != null) {

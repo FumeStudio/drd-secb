@@ -25,94 +25,93 @@ import java.util.HashMap;
 import java.util.List;
 
 public class E_GuideOrganizersListOperation extends BaseOperation {
-	private static final String TAG = "E_GuideOrganizersListOperation";
-	Context context;
-	OrganizersFilterData organizersFilterData;
-	private int pageIndex;
-	private int pageSize;
+    private static final String TAG = "E_GuideOrganizersListOperation";
+    Context context;
+    OrganizersFilterData organizersFilterData;
+    private int pageIndex;
+    private int pageSize;
 
-	public E_GuideOrganizersListOperation(int requestID, boolean isShowLoadingDialog, Context context,
-	                                      OrganizersFilterData organizersFilterData, int pageSize, int pageIndex) {
-		super(requestID, isShowLoadingDialog, context);
-		this.context = context;
-		this.organizersFilterData = organizersFilterData;
-		this.pageIndex = pageIndex;
-		this.pageSize = pageSize;
-	}
+    public E_GuideOrganizersListOperation(int requestID, boolean isShowLoadingDialog, Context context,
+                                          OrganizersFilterData organizersFilterData, int pageSize, int pageIndex) {
+        super(requestID, isShowLoadingDialog, context);
+        this.context = context;
+        this.organizersFilterData = organizersFilterData;
+        this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
+    }
 
 
-	@Override
-	public Object doMain() throws Exception {
-		if (organizersFilterData == null)
-			return null;
-		String language = UiEngine.getCurrentAppLanguage(context);
+    @Override
+    public Object doMain() throws Exception {
+        if (organizersFilterData == null)
+            return null;
+        String language = UiEngine.getCurrentAppLanguage(context);
 
-		if(Utilities.isNullString(language))
-			language=UiEngine.getCurrentDeviceLanguage(context);
+        if (Utilities.isNullString(language))
+            language = UiEngine.getCurrentDeviceLanguage(context);
 
-		StringBuilder stringBuilder;
-		stringBuilder = new StringBuilder(ServerKeys.EGUIDE_ORGANIZERS_LIST);
-		stringBuilder.append("?Lang=" + language + "&Name=" + (!Utilities.isNullString(organizersFilterData.name) ? organizersFilterData.name : "All")+
-				"&OrganizerCity=" + organizersFilterData.city +
-				"&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
+        StringBuilder stringBuilder;
+        stringBuilder = new StringBuilder(ServerKeys.EGUIDE_ORGANIZERS_LIST);
+        stringBuilder.append("?Lang=" + language + "&Name=" + (!Utilities.isNullString(organizersFilterData.name) ? organizersFilterData.name : "All") +
+                "&OrganizerCity=" + organizersFilterData.city +
+                "&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
 
-		String requestUrl = stringBuilder.toString();
-		requestUrl = Uri.encode(requestUrl, ServerKeys.ALLOWED_URI_CHARS);
-		HashMap<String, String> cookies = new HashMap<>();
-		cookies.put("Cookie", UserManager.getInstance().getUser().loginCookie);
+        String requestUrl = stringBuilder.toString();
+        requestUrl = Uri.encode(requestUrl, ServerKeys.ALLOWED_URI_CHARS);
+        HashMap<String, String> cookies = new HashMap<>();
+        cookies.put("Cookie", UserManager.getInstance().getUser().loginCookie);
 
-		CTHttpResponse response = doRequest(requestUrl, HttpGet.METHOD_NAME, null, null, cookies, null, ServerConnection.ResponseType.RESP_TYPE_STRING);
-		Logger.instance().v(TAG, response.response);
+        CTHttpResponse response = doRequest(requestUrl, HttpGet.METHOD_NAME, null, null, cookies, null, ServerConnection.ResponseType.RESP_TYPE_STRING);
+        Logger.instance().v(TAG, response.response);
 
-		Gson gson = new Gson();
-		Type listType = new TypeToken<List<OrganizerItem>>() {}.getType();
-		List<OrganizerItem> organizerItems = gson.fromJson(response.response.toString(), listType);
-		organizerItems = (List<OrganizerItem>) PagingManager.updatePaging(organizerItems, pageIndex);
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<OrganizerItem>>() {
+        }.getType();
+        List<OrganizerItem> organizerItems = gson.fromJson(response.response.toString(), listType);
+        organizerItems = (List<OrganizerItem>) PagingManager.updatePaging(organizerItems, pageIndex);
 //		removeUnCompletedItems(organizerItems);
 
 //	    only cache the not filtered list
 //	    i.e. name = all , id = all , city = all , selectedType = all , capacity = all
-		if (    !Utilities.isNullString(organizersFilterData.name) &&
-				organizersFilterData.name.equalsIgnoreCase("All") &&
+        if (!Utilities.isNullString(organizersFilterData.name) &&
+                organizersFilterData.name.equalsIgnoreCase("All") &&
 
-				!Utilities.isNullString(organizersFilterData.city) &&
-				organizersFilterData.city.equalsIgnoreCase("All") )
-		{
+                !Utilities.isNullString(organizersFilterData.city) &&
+                organizersFilterData.city.equalsIgnoreCase("All")) {
 
-            if(pageIndex == 0)
-			    updateOrganizersManager(organizerItems);
-		}
-		return organizerItems;
-	}
+            if (pageIndex == 0)
+                updateOrganizersManager(organizerItems);
+        }
+        return organizerItems;
+    }
 
-	//if news Item does not contain title and brief and date remove it.
-	private void removeUnCompletedItems(List<OrganizerItem> organizerItems) {
-		if (organizerItems == null || organizerItems.size() == 0)
-			return;
-		//to avoid Concurrent Modification Exception
-		/*synchronized(organizerItems)*/{
-			for (int i = 0 ; i<organizerItems.size();i++)
-			{
-				OrganizerItem currentItem =organizerItems.get(i);
-				if (Utilities.isNullString(currentItem.OrganizerName) ||
-						Utilities.isNullString(currentItem.OrganizerEmail) ||
-						Utilities.isNullString(currentItem.OrganizerDescription) )
-				{
-					organizerItems.remove(currentItem);
-					i-=1; //to reLoop current items
-				}
+    //if news Item does not contain title and brief and date remove it.
+    private void removeUnCompletedItems(List<OrganizerItem> organizerItems) {
+        if (organizerItems == null || organizerItems.size() == 0)
+            return;
+        //to avoid Concurrent Modification Exception
+        /*synchronized(organizerItems)*/
+        {
+            for (int i = 0; i < organizerItems.size(); i++) {
+                OrganizerItem currentItem = organizerItems.get(i);
+                if (Utilities.isNullString(currentItem.OrganizerName) ||
+                        Utilities.isNullString(currentItem.OrganizerEmail) ||
+                        Utilities.isNullString(currentItem.OrganizerDescription)) {
+                    organizerItems.remove(currentItem);
+                    i -= 1; //to reLoop current items
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	private void updateOrganizersManager(List<OrganizerItem> organizerItemList) {
-		if (organizerItemList == null || organizerItemList.size() == 0)
-			return;
+    private void updateOrganizersManager(List<OrganizerItem> organizerItemList) {
+        if (organizerItemList == null || organizerItemList.size() == 0)
+            return;
 
-		EGuideOrganizersManager.getInstance().setOrganizersUnFilteredList(organizerItemList,context);
+        EGuideOrganizersManager.getInstance().setOrganizersUnFilteredList(organizerItemList, context);
 
-	}
+    }
 
 
 }

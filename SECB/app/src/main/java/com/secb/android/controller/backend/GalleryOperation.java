@@ -5,8 +5,10 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.secb.android.controller.manager.GalleryManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.GalleryItem;
+import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.controller.backend.BaseOperation;
@@ -72,8 +74,10 @@ public class GalleryOperation extends BaseOperation {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<GalleryItem>>(){}.getType();
         List<GalleryItem> galleryItems = gson.fromJson(response.response.toString(), listType);
+        galleryItems = (List<GalleryItem>) PagingManager.updatePaging(galleryItems, pageIndex);
 
-        updateGalleryManager(galleryType , galleryItems);
+        if (pageIndex == 0)
+            updateGalleryManager(galleryType , galleryItems);
         return galleryItems;
     }
 

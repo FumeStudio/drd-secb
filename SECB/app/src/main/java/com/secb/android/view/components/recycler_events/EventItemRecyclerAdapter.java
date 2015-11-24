@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.model.EventItem;
+import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.MainActivity;
+import com.secb.android.view.components.FooterLoaderAdapter;
+import com.secb.android.view.components.recycler_organizers.OrganizerItemRecyclerViewHolder;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
@@ -17,28 +20,38 @@ import net.comptoirs.android.common.view.CTApplication;
 import java.util.Collections;
 import java.util.List;
 
-public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecyclerViewHolder>
+public class EventItemRecyclerAdapter extends FooterLoaderAdapter<EventItemRecyclerViewHolder>
 {
     LayoutInflater inflater ;
     List<EventItem>itemsList = Collections.emptyList();
     Context context;
 
     public EventItemRecyclerAdapter(Context context, List<EventItem> itemsList) {
+		super(context);
 	    this.context=context;
 	    if(context == null)
 		    this.context= CTApplication.getContext();
 
-        this.itemsList = itemsList;
+		setItemsList(itemsList);
 	    try {
 		    this.inflater = LayoutInflater.from(context);
 	    } catch (Exception e) {
 		    e.printStackTrace();
 	    }
-
     }
 
+	public void setItemsList(List<EventItem> itemsList) {
+		setItems(itemsList);
+		this.itemsList = itemsList;
+	}
+
+	@Override
+	public long getYourItemId(int position) {
+		return (itemsList.get(position).ID).hashCode();
+	}
+
     @Override
-    public EventItemRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EventItemRecyclerViewHolder getYourItemViewHolder(ViewGroup parent) {
 
 	    if(inflater==null && context!=null)
 		    this.inflater = LayoutInflater.from(context);
@@ -50,8 +63,9 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
     }
 
     @Override
-    public void onBindViewHolder(EventItemRecyclerViewHolder holder, int position)
+    public void bindYourViewHolder(RecyclerView.ViewHolder _holder, int position)
     {
+		EventItemRecyclerViewHolder holder = (EventItemRecyclerViewHolder) _holder;
         EventItem currentItem = itemsList.get(position);
 	    if(!Utilities.isNullString(currentItem.ImageUrl))
 	    {
@@ -83,7 +97,7 @@ public class EventItemRecyclerAdapter extends RecyclerView.Adapter<EventItemRecy
 
     @Override
     public int getItemCount() {
-        return itemsList.size();
+		return super.getItemCount();
     }
 
     public void deleteItem(int position){

@@ -6,9 +6,11 @@ import android.net.Uri;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.secb.android.controller.manager.NewsManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
+import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.controller.backend.BaseOperation;
@@ -66,6 +68,7 @@ public class NewsListOperation extends BaseOperation {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<NewsItem>>() {}.getType();
 		List<NewsItem> newsItems = gson.fromJson(response.response.toString(), listType);
+		newsItems = (List<NewsItem>) PagingManager.updatePaging(newsItems, pageIndex);
 //		removeUnCompletedItems(newsItems);
 
 //	    only cache the not filtered list
@@ -76,7 +79,8 @@ public class NewsListOperation extends BaseOperation {
 				Utilities.isNullString(newsFilterData.timeFrom) &&
 				newsFilterData.newsID.equalsIgnoreCase("All")) {
 
-			updateNewsManager(newsItems);
+            if(pageIndex == 0)
+			    updateNewsManager(newsItems);
 		}
 		return newsItems;
 	}
