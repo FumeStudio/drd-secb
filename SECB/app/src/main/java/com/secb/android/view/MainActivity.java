@@ -77,6 +77,8 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	public static SimpleDateFormat sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Source_EService = new SimpleDateFormat("dd MMM yyyy", UiEngine.getCurrentAppLocale());
 
+	public static SimpleDateFormat sdf_day_MONTH_year = new SimpleDateFormat("dd MMMM yyyy", UiEngine.getCurrentAppLocale());
+
     public static String STATUS_INPROGRESS = "InProgress";
     public static String STATUS_CLOSEDREQUESTS = "Closes";
     public static String STATUS_INBOX = "Inbox";
@@ -537,11 +539,18 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 					.printZeroNever()
 					.toFormatter();
 
-			if(UiEngine.isAppLanguageArabic(CTApplication.getContext())){
-				elapsed = ago+" "+formatter.print(period);
+			String periodValueStr=formatter.print(period);
+			if(!Utilities.isNullString(periodValueStr)&& periodValueStr.contains(","))
+			{
+				periodValueStr=periodValueStr.substring(0,periodValueStr.indexOf(","));
+			}
+			if(UiEngine.isAppLanguageArabic(CTApplication.getContext()))
+			{
+				elapsed = ago+" "+periodValueStr;
 			}
 			else{
-				elapsed = formatter.print(period)+" "+ago;
+//				elapsed = formatter.print(period)+" "+ago;
+				elapsed = periodValueStr+" "+ago;
 			}
 
 			newString = sdf.format(date);

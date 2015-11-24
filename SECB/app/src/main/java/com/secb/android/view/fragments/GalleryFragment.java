@@ -28,7 +28,6 @@ import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.GalleryManager;
 import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.GalleryItem;
-import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.GalleryActivity;
 import com.secb.android.view.MainActivity;

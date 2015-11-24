@@ -32,7 +32,9 @@ import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBackObserver, View.OnClickListener, RequestObserver {
 
@@ -143,7 +145,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         if (txtv_news_details_newDate != null)
             UiEngine.applyCustomFont(txtv_news_details_newDate, UiEngine.Fonts.HVAR);
         if (txtv_news_details_newBody != null)
-            UiEngine.applyCustomFont(txtv_news_details_newDate, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_news_details_newBody, UiEngine.Fonts.HVAR);
         if (txtv_noData != null) {
             UiEngine.applyCustomFont(txtv_noData, UiEngine.Fonts.HVAR);
         }
@@ -199,8 +201,18 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
 
             txtv_news_details_newTitle.setText(newsItem.Title);
 
-	        String new_day = MainActivity.reFormatNewsDate(newsItem.CreationDate,MainActivity.sdf_Time);
-            txtv_news_details_newDate.setText(new_day);
+//	        String new_day = MainActivity.reFormatNewsDate(newsItem.CreationDate,MainActivity.sdf_Time);
+	        Date date = null; String new_day="";
+	        try {
+		        date = MainActivity.sdf_Source_News.parse(newsItem.CreationDate);
+	        } catch (ParseException e) {
+		        e.printStackTrace();
+	        }
+	        if(date!=null){
+		        new_day= MainActivity.sdf_day_MONTH_year.format(date);
+	        }
+
+	        txtv_news_details_newDate.setText(new_day);
             String decodedBody = Uri.decode(newsItem.NewsBody);
             txtv_news_details_newBody.setText(!Utilities.isNullString(decodedBody) ? Html.fromHtml(decodedBody) : "");
 
