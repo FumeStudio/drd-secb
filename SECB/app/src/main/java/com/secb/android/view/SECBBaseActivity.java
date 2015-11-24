@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -570,7 +571,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     /*
      * Add LocationUpdatedListener UI Observer to List
      */
-    public void addBackObserver(FragmentBackObserver fragmentBackObserver) {
+    public synchronized void addBackObserver(FragmentBackObserver fragmentBackObserver) {
         // remove the observer if it was already added here
         removeBackObserver(fragmentBackObserver);
 
@@ -581,11 +582,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     /*
      * Remove LocationUpdatedListener UI Observer from the list
      */
-    public void removeBackObserver(FragmentBackObserver fragmentBackObserver) {
+    public synchronized void removeBackObserver(FragmentBackObserver fragmentBackObserver) {
         backObservers.remove(fragmentBackObserver);
     }
 
-    private void callBack() {
+    private synchronized void callBack() {
         if (backObservers != null)
             for (FragmentBackObserver backObserver : backObservers)
                 backObserver.onBack();
@@ -820,6 +821,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 		}
 	}
 
+<<<<<<< HEAD
 	public void openHomeFragment(boolean addToBackStack) {
 		Intent i = new Intent(activity, MainActivity.class);
 		activity.startActivity(i);
@@ -1023,4 +1025,17 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 		valuesList.add((int)(100*((double)progressRequests/(double)sumOfAllRequests)));
 		return valuesList;
 	}
+=======
+    /*
+     * hide keyboard
+     */
+    public void hideKeyboard(View view) {
+        try {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
 }

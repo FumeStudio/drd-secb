@@ -188,6 +188,7 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
 
 	private void startContactUsOperation()
 	{
+        hideKeyboard(edtxt_name);
 		if(!isContactUsDone)
 		{
 			if( validateInputFields())
@@ -232,12 +233,12 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         //focused edit text so remove focus from both editTexts
         //and re-enable them
 
-		edtxt_name.setFocusable(false);
-		edtxt_mobile.setFocusable(false);
-		edtxt_organization.setFocusable(false);
-		edtxt_job.setFocusable(false);
-		edtxt_subject.setFocusable(false);
-		edtxt_email.setFocusable(false);
+//		edtxt_name.setFocusable(false);
+//		edtxt_mobile.setFocusable(false);
+//		edtxt_organization.setFocusable(false);
+//		edtxt_job.setFocusable(false);
+//		edtxt_subject.setFocusable(false);
+//		edtxt_email.setFocusable(false);
 
 
 		return  isUserNameValid & isMobileValid &
@@ -394,11 +395,13 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     @Override
     public void onDestroy() {
         super.onDestroy();
-	    if(supportMapFragment!=null)
-	    {
-		    getFragmentManager().popBackStack("MAP",FragmentManager.POP_BACK_STACK_INCLUSIVE);
-		    getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
-	    }
+	    try {
+            if(supportMapFragment!=null)
+            {
+                getFragmentManager().popBackStack("MAP",FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+            }
+        }catch (Exception ex){ex.printStackTrace();}
     }
 
     @Override

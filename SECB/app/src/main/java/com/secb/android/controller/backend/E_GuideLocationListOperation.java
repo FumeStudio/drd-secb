@@ -6,9 +6,11 @@ import android.net.Uri;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.secb.android.controller.manager.EGuideLocationManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.LocationsFilterData;
+import com.secb.android.model.Paging;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.controller.backend.BaseOperation;
@@ -20,6 +22,7 @@ import net.comptoirs.android.common.helper.Utilities;
 import org.apache.http.client.methods.HttpGet;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,7 +70,8 @@ public class E_GuideLocationListOperation extends BaseOperation {
         Type listType = new TypeToken<List<LocationItem>>() {
         }.getType();
         List<LocationItem> locationItems = gson.fromJson(response.response.toString(), listType);
-        removeUnCompletedItems(locationItems);
+        locationItems = (List<LocationItem>) PagingManager.updatePaging(locationItems, pageIndex);
+//        removeUnCompletedItems(locationItems);
 
 //	    only cache the not filtered list
 //	    i.e. name = all , id = all , city = all , selectedType = all , capacity = all
@@ -117,6 +121,5 @@ public class E_GuideLocationListOperation extends BaseOperation {
             return;
         EGuideLocationManager.getInstance().setLocationsUnFilteredList(newsItems, context);
     }
-
 
 }

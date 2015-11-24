@@ -2,7 +2,7 @@ package com.secb.android.model;
 
 import java.io.Serializable;
 
-public class OrganizerItem implements Serializable
+public class OrganizerItem extends Paging
 {
 //    public transient Bitmap OraganizerItemImage;
     public String OrganizerName;

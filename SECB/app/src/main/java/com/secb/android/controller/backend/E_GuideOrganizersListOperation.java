@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.secb.android.controller.manager.EGuideOrganizersManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.OrganizersFilterData;
@@ -51,7 +52,7 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 
 		StringBuilder stringBuilder;
 		stringBuilder = new StringBuilder(ServerKeys.EGUIDE_ORGANIZERS_LIST);
-		stringBuilder.append("?Lang=" + language + "&Name=" + organizersFilterData.name+
+		stringBuilder.append("?Lang=" + language + "&Name=" + (!Utilities.isNullString(organizersFilterData.name) ? organizersFilterData.name : "All")+
 				"&OrganizerCity=" + organizersFilterData.city +
 				"&pageSize=" + pageSize + "&pageIndex=" + pageIndex);
 
@@ -66,6 +67,10 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<OrganizerItem>>() {}.getType();
 		List<OrganizerItem> organizerItems = gson.fromJson(response.response.toString(), listType);
+<<<<<<< HEAD
+=======
+		organizerItems = (List<OrganizerItem>) PagingManager.updatePaging(organizerItems, pageIndex);
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
 //		removeUnCompletedItems(organizerItems);
 
 //	    only cache the not filtered list
@@ -77,7 +82,8 @@ public class E_GuideOrganizersListOperation extends BaseOperation {
 				organizersFilterData.city.equalsIgnoreCase("All") )
 		{
 
-			updateOrganizersManager(organizerItems);
+            if(pageIndex == 0)
+			    updateOrganizersManager(organizerItems);
 		}
 		return organizerItems;
 	}

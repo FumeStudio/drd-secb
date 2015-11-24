@@ -1,16 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/bg"
-              android:gravity="center"
-              android:orientation="vertical"
-              android:paddingLeft="@dimen/login_page_horizontal_pad"
-              android:paddingRight="@dimen/login_page_horizontal_pad"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/login_page_horizontal_pad"
+    android:paddingRight="@dimen/login_page_horizontal_pad">
 
     <LinearLayout
-
         android:layout_width="@dimen/login_container_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -24,7 +22,7 @@
             android:layout_marginBottom="@dimen/login_logo_margin_bottom"
             android:scaleType="centerCrop"
             android:src="@drawable/login_logo"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
         <!--input fields-->
         <!-- @dimen/login_input_container_height-->
@@ -41,9 +39,9 @@
             android:paddingRight="@dimen/login_input_container_pad_right">
             <!-- email-->
             <!-- email-->
-            <include layout="@layout/email_input"/>
+            <include layout="@layout/email_input" />
             <!--password-->
-            <include layout="@layout/password_input"/>
+            <include layout="@layout/password_input" />
         </LinearLayout>
 
         <!--forget loginXml-->
@@ -56,7 +54,7 @@
             android:gravity="end"
             android:text="@string/login_forget_pass"
             android:textColor="@color/secb_light_text"
-            android:textSize="@dimen/login_forget_pass_text_size"/>
+            android:textSize="@dimen/login_forget_pass_text_size" />
 
         <!--login button-->
         <Button
@@ -67,7 +65,7 @@
             android:text="@string/login_login"
             android:textAllCaps="false"
             android:textColor="@color/secb_dark_text"
-            android:textSize="@dimen/login_button_text_size"/>
+            android:textSize="@dimen/login_button_text_size" />
 
         <!--sign up button-->
         <!--android:background="@color/secb_grey"-->
@@ -80,6 +78,6 @@
             android:text="@string/login_signup"
             android:textAllCaps="false"
             android:textColor="@color/secb_light_text"
-            android:textSize="@dimen/login_button_text_size"/>
+            android:textSize="@dimen/login_button_text_size" />
     </LinearLayout>
 </LinearLayout>

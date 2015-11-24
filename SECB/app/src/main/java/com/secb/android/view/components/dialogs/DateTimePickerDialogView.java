@@ -18,6 +18,7 @@ public class DateTimePickerDialogView extends LinearLayout{
     DatePicker datePicker;
     TimePicker timePicker;
     public static final int TIME_LIMIT=7;
+    boolean isLimitDatePicker = false;
     public DateTimePickerDialogView(Context context) {
         super(context);
         init();
@@ -40,7 +41,8 @@ public class DateTimePickerDialogView extends LinearLayout{
         timePicker = (TimePicker) view.findViewById(R.id.timePickerTime);
         removeAllViews();
         addView(view);
-        limitDatePicker();
+        if(isLimitDatePicker)
+            limitDatePicker();
     }
 
     private void limitDatePicker() {

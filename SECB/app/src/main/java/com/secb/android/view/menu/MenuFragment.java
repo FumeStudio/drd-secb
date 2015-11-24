@@ -19,6 +19,7 @@ import com.secb.android.view.components.dialogs.DialogConfirmListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
 import com.secb.android.view.fragments.AboutUsFragment;
+import com.secb.android.view.fragments.ContactUsFragment;
 import com.secb.android.view.fragments.E_ServicesListFragment;
 import com.secb.android.view.fragments.EguideHomeFragment;
 import com.secb.android.view.fragments.EventsCalendarFragment;
@@ -134,42 +135,68 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
     @Override
     public void onItemClicked(View v, int position)
     {
-        currentDisplayedFragment= ((SECBBaseActivity)getActivity()).getCurrentDisplayedFragment();
+        boolean isNavigationChanged = false;
+        currentDisplayedFragment = ((SECBBaseActivity)getActivity()).getCurrentDisplayedFragment();
         switch (position)
         {
             case 0:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof HomeFragment))
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openHomeFragment(true);
+=======
+                    ((MainActivity)getActivity()).openHomeFragment(true);
+                    isNavigationChanged = true;
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 }
                 break;
             case 1:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof E_ServicesListFragment))
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openE_ServicesFragment();
+=======
+                    ((MainActivity)getActivity()).openE_ServicesFragment();
+                    isNavigationChanged = true;
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 }
                 break;
             case 2:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof NewsListFragment))
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openNewsListFragment();
+=======
+                    ((MainActivity)getActivity()).openNewsListFragment();
+                    isNavigationChanged = true;
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 }
                 break;
             case 3:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof EguideHomeFragment))
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openEguideHomeFragment();
+=======
+                    ((MainActivity)getActivity()).openEguideHomeFragment();
+                    isNavigationChanged = true;
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 }
                 break;
             case 4:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof EventsCalendarFragment))
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openEventsCalendarFragment();
+=======
+                    ((MainActivity)getActivity()).openEventsCalendarFragment();
+                    isNavigationChanged = true;
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 }
                 break;
             case 5:
@@ -186,8 +213,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isVideoGallery)
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY);
                 }*/
+=======
+                    ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_IMAGE_GALLERY, -1);
+                    isNavigationChanged = true;
+                }
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 break;
             case 6:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
@@ -203,19 +236,37 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                 //if the current is video gallery , then open image gallery
                 if(! isGalleryFragment || isImageGallery)
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY);
                 }*/
+=======
+                    ((MainActivity)getActivity()).openGalleryFragment(GalleryItem.GALLERY_TYPE_VIDEO_GALLERY, -1);
+                    isNavigationChanged = true;
+                }
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 break;
             case 7:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
                 if ( !(currentDisplayedFragment instanceof AboutUsFragment))
                 {
+<<<<<<< HEAD
                     ((SECBBaseActivity)getActivity()).openAboutUsFragment();
+=======
+                    ((MainActivity)getActivity()).openAboutUsFragment();
+                    isNavigationChanged = true;
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 }
                 break;
             case 8:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
+<<<<<<< HEAD
                 ((SECBBaseActivity)getActivity()).openContactUsFragment();
+=======
+                if ( !(currentDisplayedFragment instanceof ContactUsFragment)) {
+                    ((MainActivity) getActivity()).openContactUsFragment();
+                    isNavigationChanged = true;
+                }
+>>>>>>> 77e96ffa925b36a4e730956cc2e4b39686f00b55
                 break;
             case 9:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
@@ -232,6 +283,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
                         messageDialog.toString(), this);
                 break;
         }
+
+        if(isNavigationChanged)
+            ((SECBBaseActivity)getActivity()).hideFilterLayout();
     }
 
 

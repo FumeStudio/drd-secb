@@ -16,6 +16,7 @@ import com.secb.android.controller.backend.E_GuideLocationListOperation;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.EGuideLocationManager;
+import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.LocationsFilterData;
 import com.secb.android.view.FragmentBackObserver;
@@ -51,8 +52,6 @@ public class LocationsListFragment extends SECBBaseFragment
     private LocationsFilterLayout locationsFilterLayout = null;
     private ProgressDialog progressDialog;
 
-    int pageIndex = 0;
-
     public static LocationsListFragment newInstance() {
         LocationsListFragment fragment = new LocationsListFragment();
         return fragment;
@@ -78,7 +77,6 @@ public class LocationsListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
-
     }
 
     @Override
@@ -111,8 +109,7 @@ public class LocationsListFragment extends SECBBaseFragment
         ((SECBBaseActivity) getActivity()).setFilterLayoutView(locationsFilterLayout.getLayoutView());
     }
 
-    private void handleButtonsEvents() {
-    }
+    private void handleButtonsEvents() {}
 
     /*
      * Apply Fonts
@@ -224,7 +221,7 @@ public class LocationsListFragment extends SECBBaseFragment
         locationsItemRecyclerAdapter.showLoading(true);
         locationsItemRecyclerAdapter.notifyDataSetChanged();
 
-        startLocationsListOperation(locationsFilterData != null ? locationsFilterData : new LocationsFilterData(), false, (pageIndex + 1));
+        startLocationsListOperation(locationsFilterData != null ? locationsFilterData : new LocationsFilterData(), false, (PagingManager.getLastPageNumber(locationItems) + 1));
     }
 
     private void bindViews() {
@@ -237,11 +234,14 @@ public class LocationsListFragment extends SECBBaseFragment
                 locationsItemRecyclerAdapter = new LocationsItemRecyclerAdapter(getActivity(), locationItems);
             } else
                 lastFirstVisiblePosition = ((LinearLayoutManager)locationsRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-            locationsItemRecyclerAdapter.setItems(locationItems);
+            locationsItemRecyclerAdapter.setItemsList(locationItems);
             locationsItemRecyclerAdapter.showLoading(false);
             locationsItemRecyclerAdapter.notifyDataSetChanged();
             locationsRecyclerView.setAdapter(locationsItemRecyclerAdapter);
             ((LinearLayoutManager) locationsRecyclerView.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
+            locationsItemRecyclerAdapter.notifyDataSetChanged();
+            locationsRecyclerView.refreshDrawableState();
+            locationsRecyclerView.postInvalidate();
         } else {
             locationsRecyclerView.setVisibility(View.GONE);
             txtv_noData.setVisibility(View.VISIBLE);
@@ -287,7 +287,6 @@ public class LocationsListFragment extends SECBBaseFragment
     }
 
     private void startLocationsListOperation(LocationsFilterData locationsFilterData, boolean showDialog, int pageIndex) {
-        this.pageIndex = pageIndex;
         E_GuideLocationListOperation operation = new E_GuideLocationListOperation(RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID, showDialog, getActivity(), locationsFilterData, ServerKeys.PAGE_SIZE_DEFAULT, pageIndex);
         operation.addRequsetObserver(this);
         operation.execute();
@@ -311,7 +310,8 @@ public class LocationsListFragment extends SECBBaseFragment
             Logger.instance().v(TAG, "Success \n\t\t" + resultObject);
             if ((int) requestId == RequestIds.EGUIDE_LOCATION_LIST_REQUEST_ID && resultObject != null) {
                 ArrayList<LocationItem> _locationItems = (ArrayList<LocationItem>) resultObject;
-                if (locationItems == null)
+                int pageIndex = PagingManager.getLastPageNumber(_locationItems);
+                if (locationItems == null || pageIndex == 0)
                     locationItems = new ArrayList<>();
                 locationItems.addAll(_locationItems);
             }

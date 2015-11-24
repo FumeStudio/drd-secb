@@ -232,6 +232,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:maxLines="1"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="@color/secb_grey_text"
                         android:textSize="@dimen/news_filter_text_size"/>

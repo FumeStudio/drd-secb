@@ -3,7 +3,7 @@ package com.secb.android.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class LocationItem implements Serializable
+public class LocationItem extends Paging
 {
     public String LoccationItemRoomType;
     public int LoccationItemRoomCapacity;
