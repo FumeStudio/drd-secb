@@ -252,7 +252,15 @@ public class LocationsDetailsFragment extends SECBBaseFragment implements Fragme
             txtv_location_description.setText(locationItem.SiteDescription);
             txtv_location_capacityValue.setText(locationItem.SiteCapacity + "");
             txtv_location_spaceValue.setText(locationItem.SiteArea + "");
-            txtv_location_address_value.setText(locationItem.SiteAddressDescription);
+	        String address ="";
+	        if(!Utilities.isNullString(locationItem.SiteStreet))
+		        address =address+locationItem.SiteStreet;
+	        if(!Utilities.isNullString(locationItem.SiteDistrict))
+		        address =address+","+locationItem.SiteDistrict;
+	        if(!Utilities.isNullString(locationItem.SiteCity))
+		        address =address+","+locationItem.SiteCity;
+
+            txtv_location_address_value.setText(address);
             txtv_location_phone_value.setText(locationItem.SitePhone);
             txtv_location_email_value.setText(locationItem.SiteEmail);
 

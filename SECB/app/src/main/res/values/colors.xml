@@ -32,6 +32,7 @@
     <color name="secb_dark_text">#122d53</color>
     <color name="secb_light_text">#ffffff</color>
     <color name="secb_grey_text">#555555</color>
+    <color name="secb_light_grey_text">#8a8a8a</color>
 
 
     <color name="link_color">#324f85</color>

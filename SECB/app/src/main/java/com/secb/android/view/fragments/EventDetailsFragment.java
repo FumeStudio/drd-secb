@@ -104,8 +104,8 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
 		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
 	    }
 
-	    if (supportMapFragment != null)
-		    getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
+//	    if (supportMapFragment != null)
+//		    getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
 
     }
 

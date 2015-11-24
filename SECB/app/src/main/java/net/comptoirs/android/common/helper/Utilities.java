@@ -810,8 +810,11 @@ public class Utilities {
         Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
 
         // Create intent to show chooser
-        Intent chooser = Intent.createChooser(callIntent, "");
-        context.startActivity(chooser);
+//        Intent chooser = Intent.createChooser(callIntent, "");
+//        context.startActivity(chooser);
+	    if(callIntent.resolveActivity(context.getPackageManager()) != null){
+		    context.startActivity(callIntent);
+	    }
 
     }
 

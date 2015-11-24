@@ -84,6 +84,7 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
 
+	    initMap();
     }
 
     @Override
@@ -91,8 +92,6 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
-        if (supportMapFragment != null)
-            getFragmentManager().beginTransaction().remove(supportMapFragment).commit();
 
     }
 
@@ -278,7 +277,6 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
         googleMap = fragment.getMap();*/
 
 
-        initMap();
 
         txtv_email.setOnClickListener(this);
         txtv_phone.setOnClickListener(this);
@@ -395,6 +393,7 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     @Override
     public void onDestroy() {
         super.onDestroy();
+
 	    try {
             if(supportMapFragment!=null)
             {

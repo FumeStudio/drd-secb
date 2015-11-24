@@ -19,7 +19,6 @@ import com.secb.android.controller.manager.EventsManager;
 import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.EventItem;
 import com.secb.android.model.EventsFilterData;
-import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.EventsActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
@@ -328,7 +327,7 @@ public class EventsListFragment extends SECBBaseFragment
 //                }
 //                else
                 {
-                    startEventsListOperation(new EventsFilterData(), true);
+                    startEventsListOperation(new EventsFilterData(), true, 0);
                 }
             }
         }
