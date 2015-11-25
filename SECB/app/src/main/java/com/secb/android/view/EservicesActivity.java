@@ -110,7 +110,6 @@ public class EservicesActivity extends SECBBaseActivity implements RequestObserv
 		{
 			inflateFragmentInsideLayout(fragment, R.id.list_container,isComingFromMenu);
 		}
-
 	}
 
 	@Override

@@ -142,9 +142,14 @@ public class AlbumFragment extends SECBBaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        galleryRecyclerView.setAdapter(null);
+        // galleryRecyclerView.setAdapter(null);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        galleryRecyclerView.setAdapter(null);
+    }
 
     private void setHeaderTitle() {
         if (galleryType == GalleryItem.GALLERY_TYPE_IMAGE_ALBUM) {

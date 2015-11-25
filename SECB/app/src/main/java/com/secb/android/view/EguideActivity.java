@@ -119,11 +119,11 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 
 	public void openLocationsListFragment() {
 		LocationsListFragment fragment = LocationsListFragment.newInstance();
-		inflateFragmentInsideLayout(fragment,R.id.list_container,false);
+		inflateFragmentInsideLayout(fragment,R.id.list_container,true);
 	}
 	public void openOrganizersListFragment() {
 		OrganizersListFragment fragment = OrganizersListFragment.newInstance();
-		inflateFragmentInsideLayout(fragment,R.id.list_container,false);
+		inflateFragmentInsideLayout(fragment,R.id.list_container,true);
 	}
 
 

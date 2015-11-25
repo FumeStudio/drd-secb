@@ -151,6 +151,12 @@ public class EventsListFragment extends SECBBaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+//        eventsRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         eventsRecyclerView.setAdapter(null);
     }
 

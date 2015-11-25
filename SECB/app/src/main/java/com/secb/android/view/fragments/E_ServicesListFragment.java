@@ -36,6 +36,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -117,8 +118,14 @@ public class E_ServicesListFragment extends SECBBaseFragment
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		eServicesRecyclerView.setAdapter(null);
+		// eServicesRecyclerView.setAdapter(null);
 	}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        eServicesRecyclerView.setAdapter(null);
+    }
 
     public void initFilterLayout() {
 	    eServicesFilterLayout = new EServicesFilterLayout(getActivity());
@@ -335,6 +342,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+		Logger.instance().v("RquestFinished", "E-Serviceslist requestId: "+requestId+" error: "+error+" resultObject: "+resultObject);
 		// if not attached to activity
 		if(getActivity() == null && !isAdded())
 			return;
@@ -366,11 +374,15 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		else if (error != null && error instanceof CTHttpError)
 		{
 			Logger.instance().v(TAG,error);
-			int statusCode = ((CTHttpError) error).getStatusCode();
+            int statusCode = ((CTHttpError) error).getStatusCode();
+            String errorMsg = ((CTHttpError) error).getErrorMsg();
 			if (RequestHandler.isRequestTimedOut(statusCode))
 			{
 				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
 			}
+            else if(!Utilities.isNullString(errorMsg)){
+                ErrorDialog.showMessageDialog(getString(R.string.attention), errorMsg, getActivity());
+            }
 			else if (statusCode == -1) {
 				ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
 						getActivity());

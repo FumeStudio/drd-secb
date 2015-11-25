@@ -515,8 +515,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 		finishFragmentOrActivity(name, false);
     }
 
-	public void finishFragmentOrActivity(String name,boolean isBackToHome){
-		if( isFilterLayoutOpened){
+	public void finishFragmentOrActivity(String name, boolean isBackToHome){
+		if(isFilterLayoutOpened){
 			hideFilterLayout();
 			return;
 		}
@@ -524,7 +524,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 		Logger.instance().v("finishFragmentOrActivity", manager.getBackStackEntryCount(), false);
 		if (getSupportFragmentManager().getBackStackEntryCount() > 0)
 		{
-			getSupportFragmentManager().popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			getSupportFragmentManager().popBackStack(); //(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 //	        remove till the home fragment
 			if(isBackToHome)
 			{

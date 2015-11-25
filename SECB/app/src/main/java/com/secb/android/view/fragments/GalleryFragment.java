@@ -128,6 +128,12 @@ public class GalleryFragment extends SECBBaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+//        galleryRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         galleryRecyclerView.setAdapter(null);
     }
 
@@ -158,7 +164,8 @@ public class GalleryFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(), true);
+//        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName(), true);
+        getActivity().finish();
     }
 
     // ////////////////////////////////////////////////////////////

@@ -71,7 +71,6 @@ public class NewsListFragment extends SECBBaseFragment
 		((SECBBaseActivity) getActivity()).showFilterButton(true);
 		((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
 		((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
-
 	}
 
 	@Override
@@ -128,6 +127,13 @@ public class NewsListFragment extends SECBBaseFragment
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
+		//		newsRecyclerView.setAdapter(null);
+//		((SECBBaseActivity) getActivity()).hideFilterLayout();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
 		newsRecyclerView.setAdapter(null);
 		((SECBBaseActivity) getActivity()).hideFilterLayout();
 	}

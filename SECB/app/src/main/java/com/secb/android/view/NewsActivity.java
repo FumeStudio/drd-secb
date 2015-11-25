@@ -104,18 +104,16 @@ public class NewsActivity extends SECBBaseActivity implements RequestObserver {
 	}
 
 	public void openNewDetailsFragment(NewsItem newsItem) {
-		if(newsItem==null)
+		if (newsItem == null)
 			return;
-		currentNewsItemDetails=newsItem;
+		currentNewsItemDetails = newsItem;
 		NewsDetailsFragment newDetailsFragment = NewsDetailsFragment.newInstance(newsItem);
-		//in case of tablet
-		if(isDoublePane)
+		// in case of tablet
+		if (isDoublePane) {
+			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_details_container, false);
+		} else //in case of mobile
 		{
-			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_details_container,false);
-		}
-		else //in case of mobile
-		{
-			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_list_container,isComingFromMenu);
+			inflateFragmentInsideLayout(newDetailsFragment, R.id.news_list_container, isComingFromMenu);
 		}
 
 	}

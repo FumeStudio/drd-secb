@@ -60,12 +60,12 @@ public class GalleryActivity extends SECBBaseActivity implements RequestObserver
 				this.galleryType = getIntent().getExtras().getInt("galleryType");
 
 		}
-		openGalleryFragment(false);
+		openGalleryFragment(true);
 
 		//load details of first item
 		if (isDoublePane) {
 
-			openAlbumFragment(galleryType, folderPath, albumId, true);
+			openAlbumFragment(galleryType, folderPath, albumId, true); // I made it true, to make the gallery get the back event to handle the image appearance.
 		}
 
 	}

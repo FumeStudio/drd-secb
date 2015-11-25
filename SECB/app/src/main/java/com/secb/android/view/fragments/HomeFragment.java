@@ -31,7 +31,11 @@ import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCus
 import com.secb.android.view.components.recycler_news.NewsItemRecyclerAdapter;
 import com.secb.android.view.menu.MenuItem;
 
+import net.comptoirs.android.common.controller.backend.CTHttpError;
+import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
+import net.comptoirs.android.common.helper.ErrorDialog;
+import net.comptoirs.android.common.helper.Logger;
 import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
@@ -312,12 +316,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		    graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
 	    }
 
-//        new android.os.Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-                fillWheelPercentage(graphsValues.get(0), graphsValues.get(1), graphsValues.get(2));
-//            }
-//        }, 0);
+        fillWheelPercentage(graphsValues.get(0), graphsValues.get(1), graphsValues.get(2));
 
         txtv_viewAllNews.setOnClickListener(this);
     }
@@ -420,6 +419,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
+        Logger.instance().v("RquestFinished", "HomeFragment requestId: "+requestId+" error: "+error+" resultObject: "+resultObject);
         if(getActivity() == null)
             return;
 		if (error == null)
@@ -450,9 +450,31 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 					graphsValues = new ArrayList<>();
 					graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
 				}
-				fillWheelPercentage(graphsValues.get(0),graphsValues.get(1),graphsValues.get(2));
+//                new android.os.Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+                        fillWheelPercentage(graphsValues.get(0),graphsValues.get(1),graphsValues.get(2));
+//                    }
+//                }, 2 * PROGRESS_WHEEL_TIME);
+
 			}
 		}
+        else if (error != null && error instanceof CTHttpError) {
+            Logger.instance().v(TAG,error);
+            int statusCode = ((CTHttpError) error).getStatusCode();
+            String errorMsg = ((CTHttpError) error).getErrorMsg();
+            if (RequestHandler.isRequestTimedOut(statusCode))
+            {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.timeout), getActivity());
+            }
+            else if(!Utilities.isNullString(errorMsg)){
+                ErrorDialog.showMessageDialog(getString(R.string.attention), errorMsg, getActivity());
+            }
+            else if (statusCode == -1) {
+                ErrorDialog.showMessageDialog(getString(R.string.attention), getString(R.string.conn_error),
+                        getActivity());
+            }
+        }
 	}
 
 	@Override
