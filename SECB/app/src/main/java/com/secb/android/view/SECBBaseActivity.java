@@ -824,6 +824,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
 	public void openHomeFragment(boolean addToBackStack) {
 		Intent i = new Intent(activity, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(i);
 	}
 

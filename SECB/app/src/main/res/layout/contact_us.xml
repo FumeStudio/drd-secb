@@ -15,7 +15,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/home_bg"
         android:orientation="vertical"
-        android:padding="@dimen/contact_us_padding">
+        android:padding="@dimen/contact_us_padding"
+        android:focusableInTouchMode="true">
 
         <TextView
             android:id="@+id/txtv_location"

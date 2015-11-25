@@ -54,7 +54,6 @@ public class ContactUsFragment extends SECBBaseFragment implements FragmentBackO
     ImageView imgv_google;
     ImageView imgv_linkedin;
 
-
     EditText edtxt_name;
     EditText edtxt_mobile;
     EditText edtxt_organization;

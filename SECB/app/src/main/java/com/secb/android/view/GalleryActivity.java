@@ -29,7 +29,7 @@ public class GalleryActivity extends SECBBaseActivity implements RequestObserver
 	public boolean isComingFromMenu = true;
 	private GalleryItem currentItemDetails;
 
-	int galleryType = 0;
+	public int galleryType = 0;
 	String folderPath;
 	private String albumId;
 

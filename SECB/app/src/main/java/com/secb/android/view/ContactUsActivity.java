@@ -15,12 +15,12 @@ public class ContactUsActivity extends SECBBaseActivity{
 
 	@Override
 	protected void doOnCreate(Bundle arg0) {
-		openAboutUsFragment();
+		openContactUsFragment();
 
 	}
 
 
-	public void openAboutUsFragment() {
+	public void openContactUsFragment() {
 		ContactUsFragment fragment = ContactUsFragment.newInstance();
 		inflateFragmentInsideLayout(fragment,R.id.list_container,false);
 	}
