@@ -24,5 +24,8 @@
     <dimen name="eservice_item_margin_tablet">15dp</dimen>
     <dimen name="eservice_colored_line_width">8dp</dimen>
     <dimen name="filter_width_tablet">590dp</dimen>
-    <dimen name="menu_width">375dp</dimen> <!-- 500PX - WIDTH -->
+    <dimen name="menu_width">375dp</dimen>
+    <dimen name="eguide_tab_width">155dp</dimen>
+    <dimen name="eguide_tab_text_size">20sp</dimen>
+    <!-- 500PX - WIDTH -->
 </resources>

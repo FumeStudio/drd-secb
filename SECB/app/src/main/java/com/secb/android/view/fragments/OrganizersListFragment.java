@@ -19,6 +19,7 @@ import com.secb.android.controller.manager.EGuideOrganizersManager;
 import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.model.OrganizersFilterData;
+import com.secb.android.view.EguideActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.RecyclerViewScrollListener;
@@ -33,7 +34,6 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
-import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -314,6 +314,9 @@ public class OrganizersListFragment extends SECBBaseFragment
                 if (organizerList == null || pageIndex == 0)
                     organizerList = new ArrayList<>();
                 organizerList.addAll(_organizerList);
+
+	            //tell the activity that the list is ready , if tablet open details of first item
+	            ((EguideActivity)getActivity()).organizersListReady();
             }
 
         } else if (error != null && error instanceof CTHttpError) {

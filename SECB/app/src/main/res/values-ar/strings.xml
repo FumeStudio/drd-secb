@@ -176,6 +176,8 @@
     <string name="ago">منذ</string>
     <string name="error_player">لا يمكن تشغيل هذا الملف</string>
     <string name="eservices_no_eservices">لا توجد خدمات الكترونية.</string>
+    <string name="location">المواقع</string>
+    <string name="organizers">المنظمين</string>
 
 
 </resources>

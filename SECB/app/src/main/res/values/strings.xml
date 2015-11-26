@@ -184,4 +184,6 @@
     <string name="news_no_status">There are no Status</string>
     <string name="error_player">Can\'t Play This Video</string>
     <string name="eservices_no_eservices">There are no E-services.</string>
+    <string name="location">Locations</string>
+    <string name="organizers">Organizers</string>
 </resources>

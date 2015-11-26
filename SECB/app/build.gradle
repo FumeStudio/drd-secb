@@ -77,12 +77,13 @@ android {
              versionName '1.0.5'
          }
      }*/
-    productFlavors {
-    }
+    productFlavors
+            {
+            }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.google.android.gms:play-services:7.3.0'
     compile 'commons-io:commons-io:+'

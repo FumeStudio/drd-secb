@@ -99,7 +99,10 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     private void goBack() {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+	    if(Utilities.isTablet(getActivity()))
+		    (getActivity()).finish();
+        else
+	        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
     }
 
     // ////////////////////////////////////////////////////////////

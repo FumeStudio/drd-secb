@@ -2,10 +2,12 @@ package com.secb.android.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.secb.android.R;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.controller.manager.EGuideLocationManager;
+import com.secb.android.controller.manager.EGuideOrganizersManager;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.fragments.EguideHomeFragment;
@@ -37,11 +39,16 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 	public boolean isComingFromMenu=true;
 	private LocationItem currentLocationItemDetails;
 	private ArrayList<LocationItem> locationsList;
+	private ArrayList<OrganizerItem> organizersList;
 	private OrganizerItem currentOrganizerItemDetails;
+	TextView txtv_location_tab,txtv_organizer_tab;
 
+	int indexOfCurrentOrganizer;
+	int indexOfCurrentLocation;
 
+	boolean isLocationTabActive=true;
 	public EguideActivity() {
-		super(R.layout.activity_activity, true);
+		super(R.layout.eguide_activity, true);
 	}
 
 	@Override
@@ -50,6 +57,7 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 		initViews();
 		isDoublePane=findViewById(R.id.details_container)!=null;
 		locationsList = (ArrayList<LocationItem>) EGuideLocationManager.getInstance().getLocationsUnFilteredList(this);
+		organizersList = (ArrayList<OrganizerItem>) EGuideOrganizersManager.getInstance().getOrganizersUnFilteredList(this);
 
 		applyFonts();
 		if(getIntent()!=null && getIntent().getExtras()!=null &&
@@ -61,13 +69,13 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 			if(object instanceof LocationItem)
 			{
 				LocationItem item = (LocationItem) object;
-				openLocationDetailsFragment(item);
+				openLocationDetailsFragment(item, -1);
 				if(Utilities.isTablet(this))
 					openLocationsListFragment();
 			}
 			else if(object instanceof OrganizerItem){
 				OrganizerItem item=(OrganizerItem)object;
-				openOrganizerDetailsFragment(item);
+				openOrganizerDetailsFragment(item,-1);
 				if(Utilities.isTablet(this))
 					openOrganizersListFragment();
 			}
@@ -79,7 +87,7 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 			//load details of first item
 			if(isDoublePane && locationsList != null && locationsList.size() > 0) {
 
-				openLocationDetailsFragment(locationsList.get(0));
+				openLocationDetailsFragment(locationsList.get(0), 0);
 			}
 		}
 	}
@@ -88,7 +96,13 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 	}
 
 	private void initViews() {
+		txtv_location_tab = (TextView) findViewById(R.id.txtv_location_tab);
+		txtv_organizer_tab = (TextView) findViewById(R.id.txtv_organizer_tab);
 
+		if(txtv_location_tab!=null)
+			txtv_location_tab.setOnClickListener(this);
+		if(txtv_organizer_tab!=null)
+			txtv_organizer_tab.setOnClickListener(this);
 	}
 
 	private void applyFonts() {
@@ -98,9 +112,60 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
-		switch (v.getId()) {
+		switch (v.getId())
+		{
+			case R.id.txtv_location_tab:
+				openLocations();
+				break;
+			case R.id.txtv_organizer_tab:
+				openOrganizer();
+				break;
 			default:
 				break;
+		}
+	}
+
+	private void openLocations() {
+		handleTabsBg(true);
+		//open list
+		openLocationsListFragment();
+		//open details of first (or last opened )Item
+		if(locationsList!=null&&locationsList.size()>0)
+		{
+			if(locationsList.size()>indexOfCurrentLocation)
+				openLocationDetailsFragment(locationsList.get(indexOfCurrentLocation), indexOfCurrentLocation);
+			else
+				openLocationDetailsFragment(locationsList.get(0), 0);
+		}
+
+
+	}
+
+	private void openOrganizer() {
+		handleTabsBg(false);
+		openOrganizersListFragment();
+		//open details of first Item
+		if(organizersList!=null&&organizersList.size()>0)
+		{
+			if(organizersList.size()>indexOfCurrentOrganizer)
+				openOrganizerDetailsFragment(organizersList.get(indexOfCurrentOrganizer),indexOfCurrentOrganizer);
+			else
+				openOrganizerDetailsFragment(organizersList.get(0),0);
+		}
+	}
+
+	private void handleTabsBg(boolean isLocationActive)
+	{
+		isLocationTabActive=isLocationActive;
+		if(isLocationActive)
+		{
+			txtv_location_tab.setBackgroundResource(R.drawable.eguid_tab_active);
+			txtv_organizer_tab.setBackgroundResource(R.drawable.eguid_tab_deactive);
+		}
+		else
+		{
+			txtv_location_tab.setBackgroundResource(R.drawable.eguid_tab_deactive);
+			txtv_organizer_tab.setBackgroundResource(R.drawable.eguid_tab_active);
 		}
 	}
 
@@ -109,7 +174,7 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 		if(!isDoublePane)
 		{
 			EguideHomeFragment fragment = EguideHomeFragment.newInstance();
-			inflateFragmentInsideLayout(fragment,R.id.list_container,false);
+			inflateFragmentInsideLayout(fragment, R.id.list_container, false);
 		}
 		else{
 			openLocationsListFragment();
@@ -127,10 +192,15 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 	}
 
 
-	public void openLocationDetailsFragment(LocationItem item) {
+	public void openLocationDetailsFragment(LocationItem item, int position)
+	{
 		if (item == null)
 			return;
 		currentLocationItemDetails = item;
+		// -1 means it's not coming from list
+		if(position>-1)
+			indexOfCurrentLocation=position;
+
 		LocationsDetailsFragment fragment = LocationsDetailsFragment.newInstance(item);
 		//in case of tablet
 		if (isDoublePane) {
@@ -140,9 +210,12 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 			inflateFragmentInsideLayout(fragment, R.id.list_container, isComingFromMenu);
 		}
 	}
-	public void openOrganizerDetailsFragment(OrganizerItem item) {
+	public void openOrganizerDetailsFragment(OrganizerItem item,int position) {
 		if(item==null)
 			return;
+		if(position>-1)
+			indexOfCurrentOrganizer=position;
+
 		currentOrganizerItemDetails =item;
 		 OrganizersDetailsFragment fragment = OrganizersDetailsFragment.newInstance(item);
 		//in case of tablet
@@ -195,4 +268,40 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 	public void setNewsRequstObserver(NewsListFragment newsListFragment) {
 
 	}
+
+	//if the list wasn't cached when opening ListFragment
+	//load the list and if is Tablet open the details of first item
+	public void locationListReady()
+	{
+		if(!Utilities.isTablet(this))
+			return;
+		if(isLocationTabActive)
+		{
+			locationsList = (ArrayList<LocationItem>) EGuideLocationManager.getInstance().getLocationsUnFilteredList(this);
+			if(locationsList!=null && locationsList.size()>indexOfCurrentLocation
+					&& locationsList.get(indexOfCurrentLocation)!=null)
+			{
+				openLocationDetailsFragment(locationsList.get(indexOfCurrentLocation), indexOfCurrentLocation);
+			}
+		}
+	}
+
+	//if the list wasn't cached when opening ListFragment
+	//load the list and if is Tablet open the details of first item
+	public void organizersListReady()
+	{
+		if(!Utilities.isTablet(this))
+			return;
+		if(!isLocationTabActive)
+		{
+			organizersList = (ArrayList<OrganizerItem>) EGuideOrganizersManager.getInstance().getOrganizersUnFilteredList(this);
+			if(organizersList!=null &&
+					organizersList.size()>indexOfCurrentOrganizer&&
+					organizersList.get(indexOfCurrentOrganizer)!=null)
+			{
+				openOrganizerDetailsFragment(organizersList.get(indexOfCurrentOrganizer),indexOfCurrentOrganizer);
+			}
+		}
+	}
+
 }

@@ -19,6 +19,7 @@ import com.secb.android.controller.manager.EGuideLocationManager;
 import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.LocationItem;
 import com.secb.android.model.LocationsFilterData;
+import com.secb.android.view.EguideActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
@@ -300,7 +301,7 @@ public class LocationsListFragment extends SECBBaseFragment
 
     @Override
     public void onItemClicked(View v, int position) {
-        ((SECBBaseActivity) getActivity()).openLocationDetailsFragment(locationItems.get(position));
+        ((EguideActivity) getActivity()).openLocationDetailsFragment(locationItems.get(position), position);
     }
 
     @Override
@@ -325,6 +326,9 @@ public class LocationsListFragment extends SECBBaseFragment
                 if (locationItems == null || pageIndex == 0)
                     locationItems = new ArrayList<>();
                 locationItems.addAll(_locationItems);
+
+	            //tell the activity that the list is ready , if tablet open details of first item
+	            ((EguideActivity)getActivity()).locationListReady();
             }
         } else if (error != null && error instanceof CTHttpError) {
             Logger.instance().v(TAG, error);
