@@ -3,6 +3,7 @@ package com.secb.android.view.fragments;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -231,7 +232,13 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		eServicesRecyclerView = (RecyclerView) view.findViewById(R.id.eServicesRecyclerView);
 		e_serviceItemRecyclerAdapter = new E_ServiceItemRecyclerAdapter(getActivity(), eServicesList);
 		eServicesRecyclerView.setAdapter(e_serviceItemRecyclerAdapter);
-		eServicesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getActivity());
+		GridLayoutManager gridLayoutManager= new GridLayoutManager(getActivity(),2);
+
+		if(Utilities.isTablet(getActivity()))
+			eServicesRecyclerView.setLayoutManager(gridLayoutManager);
+		else
+			eServicesRecyclerView.setLayoutManager(linearLayoutManager);
 
 		eServicesRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eServicesRecyclerView, this));
 

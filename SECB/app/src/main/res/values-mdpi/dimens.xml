@@ -122,6 +122,7 @@
     <!--<dimen name="eservice_item_padding">9dp</dimen> &lt;!&ndash; 28PX - HEIGHT &ndash;&gt;-->
 
     <dimen name="eservice_item_padding">3dp</dimen> <!-- 15PX - HEIGHT -->
+    <dimen name="eservice_item_margin_btm">3dp</dimen> <!-- 15PX - HEIGHT -->
     <dimen name="eservice_item_text_size">9dp</dimen> <!-- 26PX - HEIGHT -->
     <dimen name="eservice_item_title_text_size">9dp</dimen> <!-- 28PX - HEIGHT -->
     <dimen name="eservice_filter_screen_recycler_height">55dp</dimen>
@@ -143,5 +144,7 @@
     <dimen name="about_us_text_margin">4dp</dimen> <!-- 13PX - HEIGHT -->
 
     <dimen name="organizer_p_info_rows_margin">5dp</dimen> <!-- 15PX - HEIGHT -->
-    <dimen name="organizer_details_margin_small">3dp</dimen> <!-- 10PX - HEIGHT -->
+    <dimen name="organizer_details_margin_small">3dp</dimen>
+    <dimen name="eservice_item_margin_tablet">0dp</dimen>
+    <!-- 10PX - HEIGHT -->
 </resources>

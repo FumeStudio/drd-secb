@@ -177,6 +177,8 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
                 @Override
                 public void onDrawerSlide(View arg0, float offset) {
+	                mDrawerLayout.requestLayout();
+
                 }
 
                 @Override

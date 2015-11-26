@@ -16,7 +16,6 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
-import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,6 @@ public class EservicesActivity extends SECBBaseActivity implements RequestObserv
 	private static final String TAG = "EservicesActivity";
 //this activity for e-services list fragment , e-services details fragment
 
-	public boolean isDoublePane=false;
 
 	/*isComingFromMenu = true means that it  coming from
 	 * side menu ,and the intent does not contain Extras
@@ -36,14 +34,13 @@ public class EservicesActivity extends SECBBaseActivity implements RequestObserv
 
 
 	public EservicesActivity() {
-		super(R.layout.activity_activity, true);
+		super(R.layout.eservice_activity, true);
 	}
 
 	@Override
 	protected void doOnCreate(Bundle arg0) {
 		initObservers();
 		initViews();
-		isDoublePane=findViewById(R.id.details_container)!=null;
 		ersrviceList = (ArrayList<E_ServiceRequestItem>) E_ServicesManager.getInstance().getEservicesRequestsUnFilteredList(this);
 
 		applyFonts();
@@ -54,19 +51,10 @@ public class EservicesActivity extends SECBBaseActivity implements RequestObserv
 			isComingFromMenu=false;
 			E_ServiceRequestItem item = (E_ServiceRequestItem) getIntent().getExtras().get("item");
 			openEServicesDetailsFragment(item);
-			if(Utilities.isTablet(this))
-				openEServicesListFragment();
 		}
 		else
 		{
 			openEServicesListFragment();
-
-			//load details of first item
-			if(isDoublePane && ersrviceList != null && ersrviceList.size() > 0)
-			{
-
-				openEServicesDetailsFragment(ersrviceList.get(0));
-			}
 		}
 	}
 
@@ -102,11 +90,7 @@ public class EservicesActivity extends SECBBaseActivity implements RequestObserv
 		currentItemDetails=item;
 		 E_ServiceDetailsFragment fragment = E_ServiceDetailsFragment.newInstance(item);
 		//in case of tablet
-		if(isDoublePane)
-		{
-			inflateFragmentInsideLayout(fragment, R.id.details_container,false);
-		}
-		else //in case of mobile
+		//in case of mobile
 		{
 			inflateFragmentInsideLayout(fragment, R.id.list_container,isComingFromMenu);
 		}

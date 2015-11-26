@@ -24,4 +24,5 @@ public class AboutUsActivity extends SECBBaseActivity{
 		AboutUsFragment fragment = AboutUsFragment.newInstance();
 		inflateFragmentInsideLayout(fragment,R.id.list_container,false);
 	}
+
 }

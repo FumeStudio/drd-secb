@@ -296,4 +296,6 @@ public class EventsActivity extends SECBBaseActivity implements RequestObserver 
 	public void updateStatus(Integer requestId, String statusMsg) {
 
 	}
+
+
 }

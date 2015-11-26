@@ -81,5 +81,19 @@
             android:src="@drawable/share_icon"
             android:visibility="visible" />
 
+        <ImageView
+            android:id="@+id/imageViewFilterHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="@dimen/header_menu_icon_margin_start"
+            android:paddingLeft="@dimen/header_menu_icon_margin_start"
+            android:paddingRight="@dimen/header_menu_icon_margin_end"
+            android:paddingTop="@dimen/header_menu_icon_margin_start"
+            android:src="@drawable/event_card_filter_icon2"
+            android:visibility="gone"/>
+
+
     </RelativeLayout>
 </LinearLayout>

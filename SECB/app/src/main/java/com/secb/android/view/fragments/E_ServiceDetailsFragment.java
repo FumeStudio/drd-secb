@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.secb.android.R;
 import com.secb.android.controller.manager.UserManager;
 import com.secb.android.model.E_ServiceRequestItem;
+import com.secb.android.view.EservicesActivity;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.components.dialogs.CustomProgressDialog;
@@ -102,7 +103,13 @@ public class E_ServiceDetailsFragment extends SECBBaseFragment implements Fragme
     {
         String backStateName = this.getClass().getName();
 //     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity();
-     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+/*     ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);*/
+
+	     /*((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);*/
+	    if(((EservicesActivity)getActivity()).isComingFromMenu  &&!Utilities.isTablet(getActivity()))
+		    ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(backStateName);
+	    else
+		    (getActivity()).finish();
     }
 
     // ////////////////////////////////////////////////////////////
