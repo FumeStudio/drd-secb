@@ -17,6 +17,7 @@ public class OrganizerItemRecyclerViewHolder extends RecyclerView.ViewHolder
     TextView txtv_organizerTitle;
     TextView txtv_organizerDescription;
     ImageView imgv_organizerImg;
+	public View layout_item_root;
 
     public OrganizerItemRecyclerViewHolder(View itemView)
     {
@@ -33,5 +34,6 @@ public class OrganizerItemRecyclerViewHolder extends RecyclerView.ViewHolder
         txtv_organizerTitle = (TextView) itemView.findViewById(R.id.txtv_organizerTitle);
         txtv_organizerDescription = (TextView) itemView.findViewById(R.id.txtv_organizerDescription);
         imgv_organizerImg = (ImageView)itemView.findViewById(R.id.imgv_organizerImg);
+	    layout_item_root = itemView.findViewById(R.id.layout_item_root);
     }
 }

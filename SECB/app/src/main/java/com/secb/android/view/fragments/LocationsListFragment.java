@@ -302,6 +302,8 @@ public class LocationsListFragment extends SECBBaseFragment
     @Override
     public void onItemClicked(View v, int position) {
         ((EguideActivity) getActivity()).openLocationDetailsFragment(locationItems.get(position), position);
+
+	    locationsItemRecyclerAdapter.setItemSelected(v,position);
     }
 
     @Override

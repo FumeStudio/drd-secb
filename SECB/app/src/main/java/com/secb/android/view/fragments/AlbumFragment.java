@@ -30,8 +30,8 @@ import com.secb.android.controller.backend.ServerKeys;
 import com.secb.android.controller.manager.GalleryManager;
 import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.GalleryItem;
-import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
+import com.secb.android.view.GalleryActivity;
 import com.secb.android.view.MainActivity;
 import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
@@ -178,14 +178,38 @@ public class AlbumFragment extends SECBBaseFragment
     }
 
     private void goBack() {
-        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
+//        ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
+	    if(Utilities.isTablet(getActivity()))
+		    (getActivity()).finish();
+	    else
+		    ((SECBBaseActivity) getActivity()).finishFragmentOrActivity(getClass().getName());
     }
 
     // ////////////////////////////////////////////////////////////
 
     @Override
     public void onBack() {
-        goBack();
+	    /*if (layout_imagePlayerContainer != null &&
+			    (layout_imagePlayerContainer.getVisibility() == View.VISIBLE ||
+					    layout_videoPlayerContainer.getVisibility() == View.VISIBLE)) {
+		    hidePlayers();
+	    }*/
+//	    if(((GalleryActivity)getActivity()).hidePlayers());
+//	        return;
+//	    else
+
+	   if(((GalleryActivity)getActivity()).isImageVisible)
+		    ((GalleryActivity)getActivity()).hidePlayers();
+	    //mobile and image is not displayed then go back
+	    else if(!((GalleryActivity)getActivity()).isImageVisible && !Utilities.isTablet(getActivity()))
+		    goBack();
+
+
+	    //tablet and image is not displayed do nothing because this check handled in Gallery
+	    if(!((GalleryActivity)getActivity()).isImageVisible && Utilities.isTablet(getActivity()))
+	    {
+//		    goBack();
+	    }
     }
 
     @Override
@@ -323,8 +347,12 @@ public class AlbumFragment extends SECBBaseFragment
             playVideo(clickedItem.VideoGalleryUrl);
         }
         //display image
-        else if (galleryType == GalleryItem.GALLERY_TYPE_IMAGE_ALBUM) {
-            playImage(clickedItem.PhotoGalleryImageUrl);
+        else if (galleryType == GalleryItem.GALLERY_TYPE_IMAGE_ALBUM)
+        {
+/*	        if(!Utilities.isTablet(getActivity()))
+		        playImage(clickedItem.PhotoGalleryImageUrl);
+	        else*/
+	        ((GalleryActivity)getActivity()).playImage(clickedItem.PhotoGalleryImageUrl);
         }
     }
 

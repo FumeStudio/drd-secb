@@ -47,6 +47,9 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 	int indexOfCurrentLocation;
 
 	boolean isLocationTabActive=true;
+	private LocationsListFragment locationFragment;
+	private OrganizersListFragment organizersListFragment;
+
 	public EguideActivity() {
 		super(R.layout.eguide_activity, true);
 	}
@@ -183,12 +186,12 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 	}
 
 	public void openLocationsListFragment() {
-		LocationsListFragment fragment = LocationsListFragment.newInstance();
-		inflateFragmentInsideLayout(fragment,R.id.list_container,true);
+		locationFragment = LocationsListFragment.newInstance();
+		inflateFragmentInsideLayout(locationFragment,R.id.list_container,true);
 	}
 	public void openOrganizersListFragment() {
-		OrganizersListFragment fragment = OrganizersListFragment.newInstance();
-		inflateFragmentInsideLayout(fragment,R.id.list_container,true);
+		organizersListFragment = OrganizersListFragment.newInstance();
+		inflateFragmentInsideLayout(organizersListFragment,R.id.list_container,true);
 	}
 
 
@@ -205,6 +208,7 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 		//in case of tablet
 		if (isDoublePane) {
 			inflateFragmentInsideLayout(fragment, R.id.details_container, false);
+
 		} else //in case of mobile
 		{
 			inflateFragmentInsideLayout(fragment, R.id.list_container, isComingFromMenu);
@@ -217,11 +221,13 @@ public class EguideActivity extends SECBBaseActivity implements RequestObserver 
 			indexOfCurrentOrganizer=position;
 
 		currentOrganizerItemDetails =item;
-		 OrganizersDetailsFragment fragment = OrganizersDetailsFragment.newInstance(item);
+
+		OrganizersDetailsFragment fragment = OrganizersDetailsFragment.newInstance(item);
 		//in case of tablet
 		if(isDoublePane)
 		{
 			inflateFragmentInsideLayout(fragment, R.id.details_container,false);
+
 		}
 		else //in case of mobile
 		{

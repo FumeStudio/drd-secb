@@ -2,7 +2,10 @@ package com.secb.android.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.controller.backend.RequestIds;
 import com.secb.android.model.GalleryItem;
@@ -32,9 +35,11 @@ public class GalleryActivity extends SECBBaseActivity implements RequestObserver
 	public int galleryType = 0;
 	String folderPath;
 	private String albumId;
+	private LinearLayout layout_imagePlayerContainer;
+	ImageView imgv_imageAlbum;
 
 	public GalleryActivity() {
-		super(R.layout.activity_activity, true);
+		super(R.layout.gallery_activity, true);
 	}
 
 	@Override
@@ -91,6 +96,13 @@ public class GalleryActivity extends SECBBaseActivity implements RequestObserver
 	}
 
 	private void initViews() {
+		layout_imagePlayerContainer =(LinearLayout)findViewById(R.id.layout_imagePlayerContainer);
+		imgv_imageAlbum = (ImageView)findViewById(R.id.imgv_imageAlbum);
+
+		if(layout_imagePlayerContainer!=null)
+		{   layout_imagePlayerContainer.setOnClickListener(this);
+			imgv_imageAlbum.setOnClickListener(this);
+		}
 
 	}
 
@@ -102,8 +114,33 @@ public class GalleryActivity extends SECBBaseActivity implements RequestObserver
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
+			case R.id.imgv_imageAlbum:
+			case R.id.layout_imagePlayerContainer:
+			case R.id.layout_videoPlayerContainer:
+				hidePlayers();
+				break;
 			default:
 				break;
+		}
+	}
+	public boolean isImageVisible=false;
+	public void playImage(String imageUrl) {
+
+		if (imgv_imageAlbum != null && layout_imagePlayerContainer != null) {
+			Glide.with(this)
+					.load(imageUrl)
+					.placeholder(R.drawable.image_place_holder) // optional
+//					.centerCrop()
+					.into(imgv_imageAlbum);
+			isImageVisible=true;
+			layout_imagePlayerContainer.setVisibility(View.VISIBLE);
+		}
+	}
+	public void hidePlayers() {
+		if (layout_imagePlayerContainer != null) {
+			layout_imagePlayerContainer.setVisibility(View.GONE);
+			isImageVisible=false;
+			imgv_imageAlbum.setImageBitmap(null);
 		}
 	}
 

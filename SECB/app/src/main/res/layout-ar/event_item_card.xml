@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?><!--android:paddingBottom="@dimen/event_card_margin"
      android:paddingTop="@dimen/event_card_margin"-->
-<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+<TableRow
+    android:id="@+id/layout_item_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_card_height"
     android:layout_marginBottom="@dimen/eguide_base_padding"
     android:layout_marginTop="@dimen/eguide_base_padding"
-    android:background="@color/off_white"
+    android:background="@drawable/recycler_view_item"
     android:gravity="right"
     android:orientation="horizontal"
     android:padding="@dimen/event_card_margin"
@@ -27,9 +30,9 @@
             android:ellipsize="end"
             android:gravity="right"
             android:maxLines="1"
-            android:textColor="@color/secb_dark_text"
+            android:textColor="@color/white_blue_def_blue_selector"
             android:textSize="@dimen/event_card_h1_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtv_eventDescription"
@@ -40,7 +43,7 @@
             android:gravity="right"
             android:maxLines="2"
             android:textColor="@color/secb_grey_text"
-            android:textSize="@dimen/event_card_h3_text_size" />
+            android:textSize="@dimen/event_card_h3_text_size"/>
 
         <!--<LinearLayout
             android:layout_width="match_parent"
@@ -125,12 +128,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="3dp"
-                android:drawableRight="@drawable/event_card_time_icon"
+                android:drawableRight="@drawable/event_time_icon_selector"
                 android:ellipsize="end"
                 android:gravity="right"
                 android:maxLines="1"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/event_card_h3_text_size" />
+                android:textColor="@color/white_blue_def_blue_selector"
+                android:textSize="@dimen/event_card_h3_text_size"/>
 
 
             <!--android:layout_marginLeft="@dimen/event_card_margin"-->
@@ -142,12 +145,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:drawablePadding="3dp"
-                android:drawableRight="@drawable/event_card_place_icon"
+                android:drawableRight="@drawable/event_place_icon_selector"
                 android:ellipsize="end"
                 android:gravity="right"
                 android:maxLines="1"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/event_card_h3_text_size" />
+                android:textColor="@color/white_blue_def_blue_selector"
+                android:textSize="@dimen/event_card_h3_text_size"/>
 
 
             <TextView
@@ -156,12 +159,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="3dp"
-                android:drawableRight="@drawable/event_card_filter_icon"
+                android:drawableRight="@drawable/event_filter_icon_selector"
                 android:ellipsize="end"
                 android:gravity="right"
                 android:maxLines="1"
-                android:textColor="@color/secb_dark_text"
-                android:textSize="@dimen/event_card_h3_text_size" />
+                android:textColor="@color/white_blue_def_blue_selector"
+                android:textSize="@dimen/event_card_h3_text_size"/>
         </TableRow>
 
     </LinearLayout>
@@ -173,7 +176,7 @@
         android:layout_height="@dimen/evet_card_img_size"
         android:layout_marginLeft="@dimen/event_card_margin"
         android:src="@drawable/event_card_img"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="@dimen/evet_card_img_size"
@@ -191,7 +194,7 @@
             android:text="13"
             android:textColor="@color/secb_orange"
             android:textSize="@dimen/eventImgDate_day_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtv_eventImgDate_month"
@@ -199,7 +202,7 @@
             android:layout_height="wrap_content"
             android:text="OCT"
             android:textColor="@color/white"
-            android:textSize="@dimen/eventImgDate_month_text_size" />
+            android:textSize="@dimen/eventImgDate_month_text_size"/>
     </LinearLayout>
 
 </TableRow>

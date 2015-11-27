@@ -20,7 +20,7 @@ public class LocationsItemRecyclerViewHolder extends RecyclerView.ViewHolder
     TextView txtv_location_spaceValue;
 
     ImageView imgv_locationImg;
-
+	View layout_item_root;
 
     public LocationsItemRecyclerViewHolder(View itemView)
     {
@@ -38,6 +38,8 @@ public class LocationsItemRecyclerViewHolder extends RecyclerView.ViewHolder
         txtv_location_spaceTitle = (TextView) itemView.findViewById(R.id.txtv_location_spaceTitle);
         txtv_location_spaceValue = (TextView) itemView.findViewById(R.id.txtv_location_spaceValue);
         imgv_locationImg = (ImageView)itemView.findViewById(R.id.imgv_locationImg);
+	    layout_item_root= itemView.findViewById(R.id.layout_item_root);
+
     }
 
     private void applyFonts(View itemView)

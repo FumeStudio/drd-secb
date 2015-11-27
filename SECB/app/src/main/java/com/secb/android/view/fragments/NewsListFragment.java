@@ -19,8 +19,6 @@ import com.secb.android.controller.manager.NewsManager;
 import com.secb.android.controller.manager.PagingManager;
 import com.secb.android.model.NewsFilterData;
 import com.secb.android.model.NewsItem;
-import com.secb.android.model.OrganizerItem;
-import com.secb.android.model.OrganizersFilterData;
 import com.secb.android.view.FragmentBackObserver;
 import com.secb.android.view.NewsActivity;
 import com.secb.android.view.SECBBaseActivity;
@@ -334,7 +332,7 @@ public class NewsListFragment extends SECBBaseFragment
 		//for tablet
 //		UiEngine.setListItemSelected(v);
 
-//		newsItemRecyclerAdapter.setItemSelected(v);
+		newsItemRecyclerAdapter.setItemSelected(v,position);
 
 		((NewsActivity) getActivity()).openNewDetailsFragment(newsList.get(position));
 	}

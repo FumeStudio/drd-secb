@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--selected white , Not selected blue , default blue-->
+    <item android:state_selected="true" android:drawable="@drawable/location_space_icon2"/> <!--selected-->
+    <item android:state_selected="false" android:drawable="@drawable/location_space_icon"/> <!--Not selected-->
+    <item android:drawable="@drawable/location_space_icon"/><!--default blue-->
+</selector>

@@ -292,6 +292,8 @@ public class EventsListFragment extends SECBBaseFragment
     @Override
     public void onItemClicked(View v, int position) {
         ((EventsActivity) getActivity()).openEventDetailsFragment(eventsList.get(position));
+	    int id = (eventsList.get(position).ID).hashCode();
+	    eventItemRecyclerAdapter.setItemSelected(v,id);
     }
 
     @Override

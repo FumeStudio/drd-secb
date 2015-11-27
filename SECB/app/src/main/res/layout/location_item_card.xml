@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--@dimen/item_card_height-->
 <LinearLayout
+    android:id="@+id/layout_item_root"
+    android:background="@drawable/recycler_view_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_card_height"
@@ -8,7 +10,7 @@
     android:layout_marginBottom="@dimen/eguide_base_padding"
     android:layout_marginTop="@dimen/eguide_base_padding"
     android:padding="@dimen/eguide_base_padding"
-    android:background="@color/off_white">
+    >
 
     <ImageView
         android:id="@+id/imgv_locationImg"
@@ -33,7 +35,7 @@
             android:maxLines="1"
             android:gravity="bottom"
             android:text="Saudi Arabia"
-            android:textColor="@color/secb_dark_text"
+            android:textColor="@color/white_blue_def_blue_selector"
             android:textSize="@dimen/event_card_h1_text_size"
             android:textStyle="bold"/>
 
@@ -46,7 +48,7 @@
             android:maxLines="2"
             android:gravity="top"
             android:text="Saudi Arabia has "
-            android:textColor="@color/secb_grey_text"
+            android:textColor="@color/white_grey_def_grey_selector"
             android:textSize="@dimen/event_card_h2_text_size" />
 
         <LinearLayout
@@ -64,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/location_capacity_icon" />
+                    android:src="@drawable/location_capacity_icon_selector" />
 
                 <TextView
                     android:id="@+id/txtv_location_capacityTitle"
@@ -75,7 +77,7 @@
                     android:maxLines="1"
                     android:textStyle="bold"
                     android:text="@string/location_capacityTitle"
-                    android:textColor="@color/secb_dark_text"
+                    android:textColor="@color/white_blue_def_blue_selector"
                     android:textSize="@dimen/event_card_h3_text_size" />
 
                 <TextView
@@ -86,7 +88,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="5000"
-                    android:textColor="@color/secb_grey_text"
+                    android:textColor="@color/white_blue_def_blue_selector"
                     android:textSize="@dimen/event_card_h3_text_size" />
 
             </TableRow>
@@ -101,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/location_space_icon" />
+                    android:src="@drawable/location_space_icon_selector" />
 
                 <TextView
                     android:id="@+id/txtv_location_spaceTitle"
@@ -112,7 +114,7 @@
                     android:maxLines="1"
                     android:text="@string/location_spaceTitle"
                     android:textStyle="bold"
-                    android:textColor="@color/secb_dark_text"
+                    android:textColor="@color/white_blue_def_blue_selector"
                     android:textSize="@dimen/event_card_h3_text_size" />
 
                 <TextView
@@ -124,7 +126,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="2222"
-                    android:textColor="@color/secb_grey_text"
+                    android:textColor="@color/white_blue_def_blue_selector"
                     android:textSize="@dimen/event_card_h3_text_size" />
             </TableRow>
 

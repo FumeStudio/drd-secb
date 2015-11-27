@@ -22,8 +22,9 @@ public class EventItemRecyclerViewHolder extends RecyclerView.ViewHolder
     TextView txtv_eventImgDate_day;
     TextView txtv_eventImgDate_month;
     ImageView imgv_eventImg;
+	public View layout_item_root;
 
-    public EventItemRecyclerViewHolder(View itemView)
+	public EventItemRecyclerViewHolder(View itemView)
     {
         super(itemView);
         initViews(itemView);
@@ -40,6 +41,7 @@ public class EventItemRecyclerViewHolder extends RecyclerView.ViewHolder
 	    txtv_eventImgDate_month = (TextView) itemView.findViewById(R.id.txtv_eventImgDate_month);
 
         imgv_eventImg = (ImageView)itemView.findViewById(R.id.imgv_eventImg);
+	    layout_item_root = itemView.findViewById(R.id.layout_item_root);
     }
     private void applyFonts() {
         if(txtv_eventTitle!=null)

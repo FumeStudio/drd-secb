@@ -32,6 +32,7 @@ import com.secb.android.view.fragments.TestFragment;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
+import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -516,6 +517,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 			if(date==null){
 				return null;
 			}
+			JodaTimeAndroid.init(CTApplication.getContext());
 			DateTime dateTime = new DateTime(date);
 			DateTime now = new DateTime();
 			Period period = new Period(dateTime, now);

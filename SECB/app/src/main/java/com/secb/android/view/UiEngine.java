@@ -192,7 +192,27 @@ public class UiEngine {
 	public static void setListItemSelected(View view) {
 		Resources res = CTApplication.getContext().getResources();
 		view.setBackgroundColor(res.getColor(R.color.blue_color));
-		applyTextColorForAll(view,res.getColor(R.color.white));
+		applyTextColorForAll(view, res.getColor(R.color.white));
+//		setAllTextsSelected(view,true);
+	}
+
+	public static void setAllTextsSelected(View v, boolean isSelected) {
+		try
+		{
+			if (v instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup) v;
+				for (int i = 0; i < vg.getChildCount(); i++) {
+					View child = vg.getChildAt(i);
+					setAllTextsSelected(child, isSelected);
+				}
+			}
+			else if (v instanceof TextView)
+			{
+				v.setSelected(isSelected);
+			}
+		}
+		catch (Exception e) {
+		}
 	}
 
 

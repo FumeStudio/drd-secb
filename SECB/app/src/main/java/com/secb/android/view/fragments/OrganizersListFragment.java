@@ -288,7 +288,8 @@ public class OrganizersListFragment extends SECBBaseFragment
 	@Override
     public void onItemClicked(View v, int position)
     {
-        ((SECBBaseActivity) getActivity()).openOrganizerDetailsFragment(organizerList.get(position));
+        ((EguideActivity) getActivity()).openOrganizerDetailsFragment(organizerList.get(position),position);
+	    organizerItemRecyclerAdapter.setItemSelected(v, position);
     }
 
     @Override

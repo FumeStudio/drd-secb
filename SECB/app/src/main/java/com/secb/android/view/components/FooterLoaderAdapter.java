@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.secb.android.R;
+import com.secb.android.view.UiEngine;
 
+import net.comptoirs.android.common.helper.Utilities;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FooterLoaderAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -111,4 +114,32 @@ public abstract class FooterLoaderAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public abstract void bindYourViewHolder(RecyclerView.ViewHolder holder, int position);
 
+
+	// handle selected item color for tablet
+
+
+	public void setItemSelected( ArrayList<Integer> selectedIndices ,
+	                             ArrayList<View> selectedViews ,
+	                             Context context, View v, int index) {
+		if(!Utilities.isTablet(context)) return;
+		removeSelection(selectedIndices,selectedViews,context);
+		selectedIndices.add(index);
+		selectedViews.add(v);
+		v.setSelected(true);
+//		UiEngine.setListItemSelected(v);
+		UiEngine.setAllTextsSelected(v, true);
+
+	}
+
+	private void removeSelection( ArrayList<Integer> selectedIndices ,
+	                              ArrayList<View> selectedViews ,
+	                              Context context)
+	{
+		if(!Utilities.isTablet(context)) return;
+		selectedIndices.clear();
+		for(View v:selectedViews){
+			v.setSelected(false);
+			UiEngine.setAllTextsSelected(v, false);
+		}
+	}
 }

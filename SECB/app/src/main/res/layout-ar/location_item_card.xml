@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/item_card_height"
-    android:layout_marginBottom="@dimen/eguide_base_padding"
-    android:layout_marginRight="@dimen/eguide_base_padding"
-    android:padding="@dimen/eguide_base_padding"
-    android:layout_marginTop="@dimen/event_card_margin"
-    android:background="@color/off_white"
-    android:orientation="horizontal"
+<LinearLayout android:id="@+id/layout_item_root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/item_card_height"
+              android:layout_marginBottom="@dimen/eguide_base_padding"
+              android:layout_marginRight="@dimen/eguide_base_padding"
+              android:layout_marginTop="@dimen/event_card_margin"
+              android:background="@drawable/recycler_view_item"
+              android:orientation="horizontal"
+
+              android:padding="@dimen/eguide_base_padding"
     >
 
     <LinearLayout
@@ -26,9 +28,9 @@
             android:gravity="top"
             android:maxLines="1"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
-            android:textColor="@color/secb_dark_text"
+            android:textColor="@color/white_blue_def_blue_selector"
             android:textSize="@dimen/event_card_h1_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtv_locationDescription"
@@ -39,8 +41,8 @@
             android:gravity="top"
             android:maxLines="2"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
-            android:textColor="@color/secb_grey_text"
-            android:textSize="@dimen/event_card_h2_text_size" />
+            android:textColor="@color/white_grey_def_grey_selector"
+            android:textSize="@dimen/event_card_h2_text_size"/>
 
 
         <!--<include
@@ -70,7 +72,7 @@
                     android:layout_alignParentRight="true"
 
                     android:layout_centerVertical="true"
-                    android:src="@drawable/location_space_icon" />
+                    android:src="@drawable/location_space_icon_selector"/>
 
                 <TextView
                     android:id="@+id/txtv_location_spaceTitle"
@@ -81,9 +83,9 @@
 
                     android:gravity="center_vertical"
                     android:text="@string/location_spaceTitle"
-                    android:textColor="@color/secb_dark_text"
+                    android:textColor="@color/white_blue_def_blue_selector"
                     android:textSize="@dimen/organizer_p_info_h1_text_size"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txtv_location_spaceValue"
@@ -96,8 +98,8 @@
                     android:maxLines="1"
 
                     android:text="2222"
-                    android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/organizer_p_info_h1_text_size" />
+                    android:textColor="@color/white_grey_def_grey_selector"
+                    android:textSize="@dimen/organizer_p_info_h1_text_size"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -112,7 +114,7 @@
 
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/location_capacity_icon" />
+                    android:src="@drawable/location_capacity_icon_selector"/>
 
                 <TextView
                     android:id="@+id/txtv_location_capacityTitle"
@@ -124,9 +126,9 @@
                     android:layout_toLeftOf="@+id/imgv_location_capacityIcon"
 
                     android:text="@string/location_capacityTitle"
-                    android:textColor="@color/secb_dark_text"
+                    android:textColor="@color/white_blue_def_blue_selector"
                     android:textSize="@dimen/organizer_p_info_h1_text_size"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
 
                 <TextView
@@ -140,8 +142,8 @@
 
                     android:maxLines="1"
                     android:text="5000"
-                    android:textColor="@color/secb_grey_text"
-                    android:textSize="@dimen/organizer_p_info_h1_text_size" />
+                    android:textColor="@color/white_grey_def_grey_selector"
+                    android:textSize="@dimen/organizer_p_info_h1_text_size"/>
             </RelativeLayout>
 
         </LinearLayout>
@@ -153,6 +155,6 @@
         android:layout_width="@dimen/evet_card_img_size"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"
-        android:src="@drawable/event_card_img" />
+        android:src="@drawable/event_card_img"/>
 
 </LinearLayout>

@@ -172,12 +172,16 @@ public class GalleryFragment extends SECBBaseFragment
 
     @Override
     public void onBack() {
-        if (layout_imagePlayerContainer != null &&
+/*        if (layout_imagePlayerContainer != null &&
                 (layout_imagePlayerContainer.getVisibility() == View.VISIBLE ||
                         layout_videoPlayerContainer.getVisibility() == View.VISIBLE)) {
             hidePlayers();
         } else
-            goBack();
+            goBack();*/
+	    if(((GalleryActivity)getActivity()).isImageVisible)
+		    ((GalleryActivity)getActivity()).hidePlayers();
+	    else
+	        goBack();
     }
 
     @Override
@@ -363,7 +367,10 @@ public class GalleryFragment extends SECBBaseFragment
             }
             //display image
             else if (galleryType == GalleryItem.GALLERY_TYPE_IMAGE_GALLERY) {
-                playImage(clickedItem.PhotoGalleryImageUrl);
+/*	            if(!Utilities.isTablet(getActivity()))
+		            playImage(clickedItem.PhotoGalleryImageUrl);
+	            else*/
+		            ((GalleryActivity)getActivity()).playImage(clickedItem.PhotoGalleryImageUrl);
             }
         }
     }

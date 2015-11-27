@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--android:layout_height="@dimen/item_card_height"-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/organizer_item_card_height"
-    android:layout_marginBottom="@dimen/eguide_base_padding"
-    android:layout_marginTop="@dimen/eguide_base_padding"
-    android:background="@color/off_white"
-    android:orientation="horizontal"
-    android:padding="@dimen/eguide_base_padding"
-    android:weightSum="5">
+<LinearLayout android:id="@+id/layout_item_root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/organizer_item_card_height"
+              android:layout_marginBottom="@dimen/eguide_base_padding"
+              android:layout_marginTop="@dimen/eguide_base_padding"
+              android:background="@drawable/recycler_view_item"
+              android:orientation="horizontal"
+              android:padding="@dimen/eguide_base_padding"
+              android:weightSum="5">
 
     <!--android:layout_width="0dp"-->
     <ImageView
@@ -20,7 +21,7 @@
         android:layout_marginRight="@dimen/eguide_base_padding"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        android:src="@drawable/event_card_img" />
+        android:src="@drawable/event_card_img"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -39,9 +40,9 @@
             android:gravity="bottom"
             android:maxLines="1"
             android:text="Saudi Arabia has enhanced the development of exhibitions."
-            android:textColor="@color/sceb_dark_blue"
+            android:textColor="@color/white_blue_def_blue_selector"
             android:textSize="@dimen/event_card_h1_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
 
         <!--android:gravity="center_vertical"-->
@@ -54,7 +55,7 @@
             android:gravity="top"
             android:maxLines="2"
             android:text="Saudi Arabia has enhanced the development of exhibitions."
-            android:textColor="@color/darkgrey_color"
-            android:textSize="@dimen/event_card_h2_text_size" />
+            android:textColor="@color/white_grey_def_grey_selector"
+            android:textSize="@dimen/event_card_h2_text_size"/>
     </LinearLayout>
 </LinearLayout>

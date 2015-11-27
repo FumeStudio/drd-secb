@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.secb.android.R;
-import com.secb.android.model.LocationItem;
 import com.secb.android.model.OrganizerItem;
 import com.secb.android.view.components.FooterLoaderAdapter;
-import com.secb.android.view.components.recycler_locations.LocationsItemRecyclerViewHolder;
 
 import net.comptoirs.android.common.helper.Utilities;
 import net.comptoirs.android.common.view.CTApplication;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,18 +22,23 @@ public class OrganizerItemRecyclerAdapter extends FooterLoaderAdapter<OrganizerI
     LayoutInflater inflater;
     List<OrganizerItem> itemsList = Collections.emptyList();
     Context context;
+	private ArrayList<Integer> selectedIndices;
+	private ArrayList<View>selectedViews;
 
     public OrganizerItemRecyclerAdapter(Context context, List<OrganizerItem> itemsList) {
         super(context);
         this.context = context;
-        if (context == null)
+	    selectedIndices = new ArrayList<>();
+	    selectedViews = new ArrayList<>();
+
+	    if (context == null)
             this.context = CTApplication.getContext();
 
         setItemsList(itemsList);
         this.inflater = LayoutInflater.from(context);
     }
 
-    public void setItemsList(List<OrganizerItem> itemsList) {
+	public void setItemsList(List<OrganizerItem> itemsList) {
         setItems(itemsList);
         this.itemsList = itemsList;
     }
@@ -83,5 +87,8 @@ public class OrganizerItemRecyclerAdapter extends FooterLoaderAdapter<OrganizerI
         notifyItemRemoved(position);
     }
 
+	public void setItemSelected(View v,int index) {
+		setItemSelected(selectedIndices,selectedViews,context,v,index);
+	}
 
 }
