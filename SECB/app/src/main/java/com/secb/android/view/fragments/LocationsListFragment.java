@@ -35,6 +35,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -62,22 +63,33 @@ public class LocationsListFragment extends SECBBaseFragment
     public void onResume() {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.location_eguide));
         ((SECBBaseActivity) getActivity()).showFilterButton(true);
         ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
         ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
 
+	    if( Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.eguide));
+	    }
+	    else
+	    {
+		    ((SECBBaseActivity) getActivity()).addBackObserver(this);
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.location_eguide));
+
+	    }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    ((SECBBaseActivity) getActivity()).showFilterButton(Utilities.isTablet(getActivity()));
     }
 
     @Override

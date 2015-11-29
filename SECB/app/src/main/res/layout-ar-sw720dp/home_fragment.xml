@@ -1,0 +1,162 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/tab_bg"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/page_padding_v"
+              android:paddingLeft="@dimen/page_padding_h"
+              android:paddingRight="@dimen/page_padding_h"
+              android:paddingTop="@dimen/page_padding_v"
+              android:weightSum="2"
+    >
+
+    <!--last news card-->
+    <LinearLayout
+        android:layout_marginRight="@dimen/page_layouts_margin_h"
+
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/tab_white_layer"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/home_graphs_card_padding"
+        android:paddingRight="@dimen/home_graphs_card_padding"
+        >
+
+        <!--Title:services requests-->
+        <include
+            layout="@layout/home_last_news_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/home_graphs_card_padding"
+            android:layout_marginTop="@dimen/home_graphs_card_padding"
+            />
+
+        <TextView
+            android:id="@+id/txtv_noData"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/home_news_recycler_height"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/gallery_item_text_size"
+            android:visibility="visible"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/newsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_news_recycler_height"
+            android:layout_weight="3"
+            android:visibility="gone">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/txtv_viewAllNews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/home_graphs_card_padding"
+            android:layout_marginLeft="@dimen/home_graphs_card_padding"
+            android:layout_marginRight="@dimen/home_graphs_card_padding"
+            android:layout_marginTop="@dimen/home_graphs_card_padding"
+            android:gravity="center_vertical|right"
+
+            android:text="@string/view_all_news"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/event_card_h3_text_size"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+    <!-- Events & Services requests -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+
+        <!--graph card  @dimen/home_graphs_card_height-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/graphs_card_h"
+            android:layout_marginBottom="@dimen/page_layouts_margin_h"
+            android:layout_weight="1"
+            android:background="@color/tab_white_layer"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/home_graphs_card_padding"
+            android:paddingLeft="@dimen/home_graphs_card_padding"
+            android:paddingRight="@dimen/home_graphs_card_padding"
+            android:paddingTop="@dimen/home_graphs_card_padding">
+
+            <!--Title:services requests-->
+            <include layout="@layout/home_services_request_title"/>
+
+            <!--graphs-->
+            <include
+                layout="@layout/graphs_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+
+        <!--events card-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/graphs_card_h"
+            android:layout_weight="1"
+            android:background="@color/tab_white_layer"
+            android:orientation="vertical">
+            <!--Title:Events-->
+            <include
+                android:id="@+id/events_title"
+                layout="@layout/home_events_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/home_graphs_card_padding"
+                android:layout_marginRight="@dimen/home_graphs_card_padding"
+                android:layout_marginTop="@dimen/home_graphs_card_padding"
+                />
+
+            <!--Event Card-->
+            <!--@dimen/home_event_card_height-->
+            <include
+
+                android:id="@+id/event_card_container"
+                layout="@layout/event_item_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/home_graphs_card_padding"
+                android:layout_marginRight="@dimen/home_graphs_card_padding"
+                />
+
+            <!--view all events-->
+            <TextView
+                android:id="@+id/txtv_viewAllEvents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/home_graphs_card_padding"
+                android:layout_marginLeft="@dimen/home_graphs_card_padding"
+                android:layout_marginRight="@dimen/home_graphs_card_padding"
+                android:layout_marginTop="@dimen/home_graphs_card_padding"
+
+                android:layout_weight="0.5"
+                android:gravity="center_vertical|right"
+                android:text="@string/view_all_events"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/event_card_h3_text_size"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

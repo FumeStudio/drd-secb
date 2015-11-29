@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <!--header-->
+    <include layout="@layout/eguide_tabs_header"/>
+    <!--body-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@drawable/tab_bg"
+                  android:orientation="horizontal"
+        >
+
+        <FrameLayout
+            android:id="@+id/details_container"
+            android:layout_width="@dimen/contact_us_left_side_width"
+
+            android:layout_marginRight="@dimen/page_layouts_margin_h"
+
+            android:layout_height="match_parent">
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/list_container"
+            android:layout_width="@dimen/newsList_width"
+            android:paddingBottom="@dimen/page_padding_v"
+            android:paddingLeft="@dimen/page_padding_h"
+            android:paddingRight="@dimen/page_padding_h"
+            android:paddingTop="@dimen/page_padding_v"
+            android:layout_height="match_parent"
+   >
+        </FrameLayout>
+
+        <!--android:layout_width="@dimen/newsDetails_width"-->
+
+    </LinearLayout>
+</LinearLayout>

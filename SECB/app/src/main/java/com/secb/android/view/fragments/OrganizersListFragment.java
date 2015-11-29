@@ -34,6 +34,7 @@ import net.comptoirs.android.common.controller.backend.RequestHandler;
 import net.comptoirs.android.common.controller.backend.RequestObserver;
 import net.comptoirs.android.common.helper.ErrorDialog;
 import net.comptoirs.android.common.helper.Logger;
+import net.comptoirs.android.common.helper.Utilities;
 
 import java.util.ArrayList;
 
@@ -59,13 +60,26 @@ public class OrganizersListFragment extends SECBBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizers_eguide));
-        ((SECBBaseActivity) getActivity()).showFilterButton(true);
-        ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
-        ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+
+	    ((SECBBaseActivity) getActivity()).addBackObserver(this);
+	    ((SECBBaseActivity) getActivity()).showFilterButton(true);
+	    ((SECBBaseActivity) getActivity()).setApplyFilterClickListener(this);
+	    ((SECBBaseActivity) getActivity()).setClearFilterClickListener(this);
+
+	    if( Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.eguide));
+	    }
+	    else
+	    {
+		    ((SECBBaseActivity) getActivity()).addBackObserver(this);
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizers_eguide));
+
+	    }
 
     }
 
@@ -73,9 +87,9 @@ public class OrganizersListFragment extends SECBBaseFragment
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    ((SECBBaseActivity) getActivity()).showFilterButton(Utilities.isTablet(getActivity()));
 
     }
 

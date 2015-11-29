@@ -169,6 +169,20 @@ public class CachingManager {
 	{
 		try {
 			Engine.deleteFileRecursive(Engine.getCacheRootDir(context));
+			//get sub-folders inside cache folder
+			File cacheFolder = Engine.getCacheRootDir(context);
+			File[] subFolders = Engine.getSubFolders(cacheFolder);
+			if (subFolders != null && subFolders.length > 0) {
+				for (File folder : subFolders) {
+					try {
+						Engine.deleteFileRecursive(folder);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

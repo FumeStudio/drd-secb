@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_dark_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#aa000000"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="visible"></LinearLayout>
+
+    <!--android:layout_height="@dimen/news_filter_screen_height"-->
+    <LinearLayout
+        android:id="@+id/filter_container"
+        android:layout_width="@dimen/filter_width_tablet"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/filter_bg"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/news_filter_padding">
+
+
+
+            <!--time input-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/news_filter_padding"
+                android:orientation="vertical">
+
+                <!-- title-->
+                <TextView
+                    android:id="@+id/txtv_news_filter_time_from_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/filter_organizer_name"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/news_filter_text_size" />
+
+                <!--name value-->
+                <EditText
+                    android:id="@+id/txtv_news_filter_time_from_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_name"
+                    android:background="@color/white"
+                    android:cursorVisible="true"
+                    android:maxLines="1"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size"
+                    android:layout_marginBottom="@dimen/news_filter_padding"/>
+
+                <!--city input-->
+                <!--city title-->
+                <TextView
+                    android:id="@+id/txtv_city_filter_city_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/filter_city"
+                    android:textColor="@color/secb_dark_text"
+                    android:textSize="@dimen/news_filter_text_size" />
+
+                <!--city value-->
+                <Spinner
+                    android:id="@+id/spn_city_filter_city_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_city"
+                    android:maxLines="1"
+                    android:textColor="@color/secb_grey_text"
+                    android:textSize="@dimen/news_filter_text_size" />
+            </LinearLayout>
+
+            <!--apply button-->
+            <Button
+                android:id="@+id/btn_applyFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/news_filter_padding"
+                android:background="@color/secb_orange"
+                android:text="@string/filters_apply_filter"
+                android:textAllCaps="false"
+                android:textColor="@color/secb_light_text"
+                android:textSize="@dimen/news_filter_btn_text_size" />
+
+            <!--Clear Filters button-->
+
+            <TextView
+                android:id="@+id/btn_clearFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@string/filters_clear_filter"
+                android:textAllCaps="false"
+                android:textColor="@color/secb_light_text"
+                android:textSize="@dimen/news_filter_btn_text_size" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

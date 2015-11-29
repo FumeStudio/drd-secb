@@ -93,7 +93,10 @@ public class EventsActivity extends SECBBaseActivity implements RequestObserver 
 
 	private void applyFonts() {
 		if (txtv_viewAllEvents != null)
-		UiEngine.applyCustomFont(txtv_viewAllEvents, UiEngine.Fonts.HVAR);
+		{
+			UiEngine.applyCustomFont(txtv_viewAllEvents, UiEngine.Fonts.HVAR);
+			txtv_viewAllEvents.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+		}
 
 	}
 
@@ -123,6 +126,10 @@ public class EventsActivity extends SECBBaseActivity implements RequestObserver 
 		//2-open eventDetails of first event in case of tablet
 		if(item==null)
 		{
+			//month list is empty get the unfiltered list
+			if(eventsList==null || eventsList.size()>0)
+				eventsList = (ArrayList<EventItem>) EventsManager.getInstance().getEventsUnFilteredList(this);
+
 			if(eventsList!=null && eventsList.size()>0 && isDoublePane)
 			{
 				item=eventsList.get(0);

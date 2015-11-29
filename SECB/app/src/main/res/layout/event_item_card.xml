@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?><!--    android:paddingBottom="@dimen/event_card_margin"
     android:paddingTop="@dimen/event_card_margin"-->
+
+<!--    android:layout_marginBottom="@dimen/eguide_base_padding"
+    android:layout_marginTop="@dimen/eguide_base_padding"-->
 <LinearLayout
     android:id="@+id/layout_item_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-
     android:layout_height="@dimen/item_card_height"
     android:layout_marginBottom="@dimen/eguide_base_padding"
     android:layout_marginTop="@dimen/eguide_base_padding"
@@ -66,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:textColor="@color/white_blue_def_blue_selector"
             android:textSize="@dimen/event_card_h1_text_size"
@@ -77,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:ellipsize="end"
+            android:gravity="center_vertical"
             android:maxLines="2"
             android:textColor="@color/white_grey_def_grey_selector"
             android:textSize="@dimen/event_card_h3_text_size"/>

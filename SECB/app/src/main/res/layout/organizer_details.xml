@@ -46,6 +46,7 @@
                     android:layout_marginLeft="@dimen/organizer_details_margin"
                     android:layout_marginRight="@dimen/organizer_details_margin"
                     android:text="@string/hint_name"
+                    android:textSize="@dimen/event_card_h2_text_size"
                     android:textColor="@color/secb_dark_text"/>
 
                 <TextView
@@ -55,9 +56,9 @@
                     android:layout_marginBottom="@dimen/organizer_details_margin"
                     android:layout_marginLeft="@dimen/organizer_details_margin"
                     android:layout_marginRight="@dimen/organizer_details_margin"
+                    android:textSize="@dimen/event_card_h3_text_size"
                     android:text="Saudi Arabia has enhanced the development of exhibitions."
-                    android:textColor="@color/darkgrey_color"
-                    android:textSize="@dimen/event_card_h2_text_size"/>
+                    android:textColor="@color/darkgrey_color"/>
             </LinearLayout>
         </LinearLayout>
 

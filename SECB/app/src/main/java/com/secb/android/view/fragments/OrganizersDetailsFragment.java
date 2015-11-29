@@ -43,20 +43,31 @@ public class OrganizersDetailsFragment extends SECBBaseFragment implements Fragm
     public void onResume() {
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizer_details));
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
+
+	    ((SECBBaseActivity) getActivity()).showFilterButton(Utilities.isTablet(getActivity()));
+
+	    if( Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.eguide));
+	    }
+	    else
+	    {
+		    ((SECBBaseActivity) getActivity()).addBackObserver(this);
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.organizer_details));
+	    }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
-
+	    ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
     @Override

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.addthis.core.AddThis;
+import com.addthis.models.ATShareItem;
 import com.bumptech.glide.Glide;
 import com.secb.android.R;
 import com.secb.android.controller.backend.NewsDetailsOperation;
@@ -47,7 +49,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     View view;
     RelativeLayout layout_detailsContainer;
     TextView txtv_noData;
-
+	ImageView imageViewShareHeader;
     private NewsFilterLayout newsFilterLayout = null;
     private ArrayList<NewsItem> newsList;
 
@@ -67,14 +69,17 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news_details));
         ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
         ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
-        ((SECBBaseActivity) getActivity()).enableHeaderShareButton(newsItem);
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
+
+	    ((SECBBaseActivity) getActivity()).showFilterButton(Utilities.isTablet(getActivity()));
 
 	    if( Utilities.isTablet(getActivity()) && ( (NewsActivity) getActivity()).isDoublePane)
 	    {
 		    ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.news));
 		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
 		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
+	    else{
+		    ((SECBBaseActivity) getActivity()).enableHeaderShareButton(newsItem);
 	    }
 
     }
@@ -83,7 +88,7 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
+	    ((SECBBaseActivity) getActivity()).showFilterButton(false);
         ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
         ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
         ((SECBBaseActivity) getActivity()).disableHeaderShareButton();
@@ -177,12 +182,23 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
                 onBack();
                 break;
 
+            case R.id.imageViewShareHeader:
+	            onShareClicked();
+                break;
+
             default:
                 break;
         }
     }
 
-    private void initViews(View view) {
+	private void onShareClicked() {
+		if(newsItem==null)return;
+		((SECBBaseActivity)getActivity()).initSharingConfigs();
+		ATShareItem item = new ATShareItem("http://secb.gov.sa",newsItem.getSharingTitle(), newsItem.getSharingDesc());
+		AddThis.presentAddThisMenu(getActivity(), item);
+	}
+
+	private void initViews(View view) {
 //        NewsItem locationItem = new NewsItem();
         imgv_news_details_img = (ImageView) view.findViewById(R.id.imgv_news_details_img);
         txtv_news_details_newTitle = (TextView) view.findViewById(R.id.txtv_news_details_newTitle);
@@ -191,6 +207,10 @@ public class NewsDetailsFragment extends SECBBaseFragment implements FragmentBac
         txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
         layout_detailsContainer = (RelativeLayout) view.findViewById(R.id.layout_detailsContainer);
 
+	    imageViewShareHeader = (ImageView) view.findViewById(R.id.imageViewShareHeader);
+	    if(imageViewShareHeader!=null){
+		    imageViewShareHeader.setOnClickListener(this);
+	    }
     }
 
     private void bindViews() {

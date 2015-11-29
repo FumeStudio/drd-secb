@@ -16,12 +16,15 @@
         android:orientation="vertical">
 
         <!--logo-->
+        <!--android:layout_height="@dimen/login_logo_img_height"
+        android:scaleType="centerCrop"-->
+
         <ImageView
             android:layout_width="@dimen/login_logo_img_width"
-            android:layout_height="@dimen/login_logo_img_height"
-            android:layout_gravity="center_horizontal"
+           android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/login_logo_margin_bottom"
-            android:scaleType="centerCrop"
+
             android:src="@drawable/login_logo"
             android:visibility="visible" />
 
@@ -38,6 +41,7 @@
                 android:layout_marginRight="@dimen/login_button_signup_margin_top"
                 android:background="@color/secb_orange"
                 android:text="@string/language_english"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/secb_dark_text"
@@ -51,6 +55,7 @@
                 android:background="@color/secb_orange"
                 android:text="@string/language_arabic"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/login_button_text_size"  />

@@ -8,7 +8,7 @@
     <dimen name="home_graphs_value_text_size">28sp</dimen>
     <dimen name="home_graphs_title_text_size">22sp</dimen>
     <dimen name="page_layouts_margin_h">17dp</dimen>
-    <dimen name="home_event_card_height">153dp</dimen>
+    <dimen name="home_event_card_height">157dp</dimen>
     <dimen name="newsList_width">531dp</dimen>
     <dimen name="newsDetails_width">667dp</dimen>
 
@@ -27,5 +27,49 @@
     <dimen name="menu_width">375dp</dimen>
     <dimen name="eguide_tab_width">155dp</dimen>
     <dimen name="eguide_tab_text_size">20sp</dimen>
-    <!-- 500PX - WIDTH -->
+
+    <dimen name="login_container_width">520dp</dimen>
+    <dimen name="login_logo_img_width">294dp</dimen>
+    <dimen name="login_logo_img_height">215dp</dimen>
+    <dimen name="login_forget_pass_text_size">20sp</dimen>
+
+    <dimen name="login_button_text_size">33sp</dimen>
+    <dimen name="login_button_height">70dp</dimen>
+
+    <dimen name="login_input_text_margin_left">20dp</dimen>
+    <dimen name="login_input_text_size">26sp</dimen>
+    <dimen name="menu_item_text_size">20sp</dimen>
+    <dimen name="header_title_text_size">22sp</dimen>
+    <dimen name="event_card_h1_text_size">19sp</dimen>
+    <dimen name="event_card_h2_text_size">16sp</dimen>
+    <dimen name="event_card_h3_text_size">15sp</dimen>
+
+
+    <dimen name="home_graphs_card_padding">24dp</dimen>
+    <dimen name="eservice_item_title_text_size">20sp</dimen>
+
+    <dimen name="news_item_card_height">117dp</dimen>
+    <dimen name="item_card_height">143dp</dimen>
+    <dimen name="gallery_item_text_size">20sp</dimen>
+    <dimen name="news_details_newTitle_text_size">20sp</dimen>
+    <dimen name="news_details_newDate_text_size">18dp</dimen>
+    <dimen name="news_details_newBody_text_size">17dp</dimen>
+    <dimen name="organizer_p_info_h1_text_size">15dp</dimen>
+    <dimen name="organizer_p_info_h2_text_size">14dp</dimen>
+    <dimen name="organizer_item_card_height">117dp</dimen>
+    <dimen name="event_details_map_height">150dp</dimen>
+
+    <dimen name="contact_us_padding">10dp</dimen>
+    <dimen name="contact_us_base_margin">6dp</dimen>
+    <dimen name="contact_us_text_us">18dp</dimen>
+    <dimen name="contact_us_btn_text_us">23dp</dimen>
+    <dimen name="contact_us_text_drwable_padding">15dp</dimen>
+
+    <dimen name="about_us_h1_text_size">30sp</dimen> <!-- 33PX - HEIGHT -->
+    <dimen name="about_us_h2_text_size">20sp</dimen> <!-- 26PX - HEIGHT -->
+    <dimen name="about_us_title_margin_top">25sp</dimen> <!-- 40PX - HEIGHT -->
+    <dimen name="about_us_margin">23dp</dimen> <!-- 35PX - HEIGHT -->
+    <dimen name="about_us_margin_small">15dp</dimen> <!-- 20PX - HEIGHT -->
+
+
 </resources>

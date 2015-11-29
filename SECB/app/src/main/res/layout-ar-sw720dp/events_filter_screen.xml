@@ -14,7 +14,7 @@
         android:background="#aa000000"
         android:clickable="true"
         android:orientation="vertical"
-        android:visibility="visible"></LinearLayout>
+        android:visibility="gone"></LinearLayout>
 
 
     <ImageView

@@ -43,6 +43,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,11 +73,11 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 	public static SimpleDateFormat sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Time = new SimpleDateFormat("kk:mm a", UiEngine.getCurrentAppLocale());
-	public static SimpleDateFormat sdf_day_mon = new SimpleDateFormat("dd-MMM", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_day_mon = new SimpleDateFormat("dd-MMMM", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm", UiEngine.getCurrentAppLocale());
 	public static SimpleDateFormat sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ", UiEngine.getCurrentAppLocale());
-	public static SimpleDateFormat sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss", UiEngine.getCurrentAppLocale());
-	public static SimpleDateFormat sdf_Source_EService = new SimpleDateFormat("dd MMM yyyy", UiEngine.getCurrentAppLocale());
+	public static SimpleDateFormat sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss",  Locale.ENGLISH);
+	public static SimpleDateFormat sdf_Source_EService = new SimpleDateFormat("dd MMMM yyyy", UiEngine.getCurrentAppLocale());
 
 	public static SimpleDateFormat sdf_day_MONTH_year = new SimpleDateFormat("dd MMMM yyyy", UiEngine.getCurrentAppLocale());
 
@@ -116,10 +117,11 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 		sdf_Date = new SimpleDateFormat("MM/dd/yyyy", UiEngine.getCurrentAppLocale());
 		sdf_Time = new SimpleDateFormat("kk:mm a", UiEngine.getCurrentAppLocale());
-		sdf_day_mon = new SimpleDateFormat("dd-MMM", UiEngine.getCurrentAppLocale());
+		sdf_day_mon = new SimpleDateFormat("dd-MMMM", UiEngine.getCurrentAppLocale());
 		sdf_DateTime = new SimpleDateFormat("dd/MM/yyyy kk:mm", UiEngine.getCurrentAppLocale());
 		sdf_Source = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss ", UiEngine.getCurrentAppLocale());
-		sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss", UiEngine.getCurrentAppLocale());
+		sdf_Source_News = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss", Locale.ENGLISH);
+		sdf_Source_EService = new SimpleDateFormat("dd MMMM yyyy", UiEngine.getCurrentAppLocale());
 
 
 	}

@@ -52,8 +52,9 @@ public class EventsListFragment extends SECBBaseFragment
     private EventsFilterLayout eventsFilterLayout = null;
     private ProgressDialog progressDialog;
     private String startDate, endDate;
+	private boolean isEnablePaging;
 
-    public static EventsListFragment newInstance() {
+	public static EventsListFragment newInstance() {
         EventsListFragment fragment = new EventsListFragment();
         return fragment;
     }
@@ -102,7 +103,7 @@ public class EventsListFragment extends SECBBaseFragment
     public void onPause() {
         super.onPause();
         ((SECBBaseActivity) getActivity()).removeBackObserver(this);
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
+	    ((SECBBaseActivity) getActivity()).showFilterButton(Utilities.isTablet(getActivity()));
 
 	    if(Utilities.isTablet(getActivity()))
 	    {
@@ -138,13 +139,18 @@ public class EventsListFragment extends SECBBaseFragment
             startDate = bundle.getString("startDate");
             endDate = bundle.getString("endDate");
 	        if(bundle.containsKey("eventsList") && Utilities.isTablet(getActivity()))
+	        {
 		        this.eventsList = (ArrayList<EventItem>) bundle.get("eventsList");
+		        isEnablePaging=true;
+	        }
+	        else isEnablePaging=false;
+
         }
 
         initViews(view);
         ((EventsActivity) getActivity()).setEventsRequstObserver(this);
         initFilterLayout();
-        getData();
+	    getData();
         return view;
     }
 
@@ -244,22 +250,25 @@ public class EventsListFragment extends SECBBaseFragment
         txtv_noData = (TextView) view.findViewById(R.id.txtv_noData);
         eventsRecyclerView.addOnItemTouchListener(new RecyclerCustomItemTouchListener(getActivity(), eventsRecyclerView, this));
 
-        eventsRecyclerView.addOnScrollListener(new RecyclerViewScrollListener() {
-            @Override
-            public void onScrollUp() {
+	    if(isEnablePaging)
+	    {
+		    eventsRecyclerView.addOnScrollListener(new RecyclerViewScrollListener() {
+			    @Override
+			    public void onScrollUp() {
 
-            }
+			    }
 
-            @Override
-            public void onScrollDown() {
+			    @Override
+			    public void onScrollDown() {
 
-            }
+			    }
 
-            @Override
-            public void onLoadMore() {
-                loadMoreData();
-            }
-        });
+			    @Override
+			    public void onLoadMore() {
+//				    loadMoreData();
+			    }
+		    });
+	    }
     }
 
     private void loadMoreData() {

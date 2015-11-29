@@ -16,7 +16,7 @@
         android:src="@drawable/eservices_icon_2" />
 
     <TextView
-        android:id="@+id/textViewTitleHeader"
+        android:id="@+id/txtv_home_services_requests_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

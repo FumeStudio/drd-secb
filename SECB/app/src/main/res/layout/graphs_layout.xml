@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:weightSum="3"
+    android:gravity="center_horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/home_graphs_card_margin_top"
         android:layout_weight="1"
-        android:layout_width="0dp"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:gravity="right">
 
         <RelativeLayout
             android:layout_height="wrap_content"
@@ -59,7 +61,7 @@
         android:layout_marginRight="@dimen/home_graphs_horizontal_margin"
         android:layout_marginTop="@dimen/home_graphs_card_margin_top"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -105,8 +107,9 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/home_graphs_card_margin_top"
         android:layout_weight="1"
-        android:layout_width="0dp"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:gravity="left">
 
         <RelativeLayout
             android:layout_height="match_parent"

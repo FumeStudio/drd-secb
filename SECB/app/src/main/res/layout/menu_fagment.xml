@@ -12,7 +12,8 @@ android:choiceMode="singleChoice" >
 <fragment
     android:id="@+id/fragmentLeftMenu"
     android:layout_width="@dimen/menu_width"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
     class="com.secb.android.view.menu.MenuFragment"
     tools:layout="@layout/menu_layout" />
 </LinearLayout>

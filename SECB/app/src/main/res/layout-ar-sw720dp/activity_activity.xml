@@ -11,17 +11,16 @@
     >
 
     <FrameLayout
-        android:id="@+id/events_list_container"
-        android:layout_width="@dimen/eventsList_width"
+        android:id="@+id/details_container"
+        android:layout_width="@dimen/newsDetails_width"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/page_layouts_margin_h"
-        >
+        android:layout_marginRight="@dimen/page_layouts_margin_h">
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/list_container"
+        android:layout_width="@dimen/newsList_width"
+        android:layout_height="match_parent"
+>
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/events_details_container"
-        android:layout_width="@dimen/eventsDetails_width"
-        android:layout_height="match_parent"
-        android:background="@color/tab_white_layer">
-    </FrameLayout>
 </LinearLayout>

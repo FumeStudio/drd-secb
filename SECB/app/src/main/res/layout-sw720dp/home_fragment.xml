@@ -66,12 +66,16 @@
                 />
 
             <!--Event Card-->
+            <!--@dimen/home_event_card_height-->
             <include
+
                 android:id="@+id/event_card_container"
                 layout="@layout/event_item_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/home_event_card_height"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/home_graphs_card_padding"
+                android:layout_marginRight="@dimen/home_graphs_card_padding"
                 />
 
             <!--view all events-->
@@ -90,7 +94,7 @@
                 android:text="@string/view_all_events"
                 android:textColor="@color/secb_dark_text"
                 android:textSize="@dimen/event_card_h3_text_size"
-                android:textStyle="bold"/>
+                />
         </RelativeLayout>
 
 

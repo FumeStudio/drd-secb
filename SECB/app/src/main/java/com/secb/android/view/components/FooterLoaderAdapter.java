@@ -120,14 +120,16 @@ public abstract class FooterLoaderAdapter<T> extends RecyclerView.Adapter<Recycl
 
 	public void setItemSelected( ArrayList<Integer> selectedIndices ,
 	                             ArrayList<View> selectedViews ,
-	                             Context context, View v, int index) {
-		if(!Utilities.isTablet(context)) return;
-		removeSelection(selectedIndices,selectedViews,context);
+	                             Context context, View v, int index)
+	{
+	//known issue
+/*		if(!Utilities.isTablet(context)) return;
+		removeSelection(selectedIndices, selectedViews,context);
 		selectedIndices.add(index);
 		selectedViews.add(v);
+
 		v.setSelected(true);
-//		UiEngine.setListItemSelected(v);
-		UiEngine.setAllTextsSelected(v, true);
+		UiEngine.setAllTextsSelected(v, true);*/
 
 	}
 

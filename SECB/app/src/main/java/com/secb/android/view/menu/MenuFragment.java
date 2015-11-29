@@ -14,6 +14,7 @@ import android.view.ViewParent;
 import com.secb.android.R;
 import com.secb.android.model.GalleryItem;
 import com.secb.android.view.AboutUsActivity;
+import com.secb.android.view.ContactUsActivity;
 import com.secb.android.view.EguideActivity;
 import com.secb.android.view.EservicesActivity;
 import com.secb.android.view.EventsActivity;
@@ -25,13 +26,6 @@ import com.secb.android.view.UiEngine;
 import com.secb.android.view.components.dialogs.DialogConfirmListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomClickListener;
 import com.secb.android.view.components.recycler_item_click_handlers.RecyclerCustomItemTouchListener;
-import com.secb.android.view.fragments.AboutUsFragment;
-import com.secb.android.view.fragments.ContactUsFragment;
-import com.secb.android.view.fragments.E_ServicesListFragment;
-import com.secb.android.view.fragments.EguideHomeFragment;
-import com.secb.android.view.fragments.EventsCalendarFragment;
-import com.secb.android.view.fragments.HomeFragment;
-import com.secb.android.view.fragments.NewsListFragment;
 import com.secb.android.view.fragments.SECBBaseFragment;
 import com.secb.android.view.menu.items_recycler.MenuItemObject;
 import com.secb.android.view.menu.items_recycler.MenuItemRecyclerAdapter;
@@ -239,7 +233,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Recy
             case 8:
                 ((SECBBaseActivity)getActivity()).closeMenuPanel();
 //                ((SECBBaseActivity)getActivity()).openContactUsFragment();
-	            if ( !(getActivity() instanceof AboutUsActivity)) //  !(currentDisplayedFragment instanceof ContactUsFragment)
+	            if ( !(getActivity() instanceof ContactUsActivity)) //  !(currentDisplayedFragment instanceof ContactUsFragment)
 	            {
 		            ((SECBBaseActivity) getActivity()).openContactUsFragment();
 		            isNavigationChanged = true;

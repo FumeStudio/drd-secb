@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+
+              android:background="@drawable/tab_bg"
+              android:paddingBottom="@dimen/page_padding_v"
+              android:paddingLeft="@dimen/page_padding_h"
+              android:paddingRight="@dimen/page_padding_h"
+              android:paddingTop="@dimen/page_padding_v"
+            >
+
+    <FrameLayout
+        android:id="@+id/list_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+</LinearLayout>

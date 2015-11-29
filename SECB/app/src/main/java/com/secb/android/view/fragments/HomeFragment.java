@@ -67,7 +67,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
     View view;
     View event_card_container;
     private ImageView imgv_eventImg;
-    private TextView textViewTitleHeader;
+    private TextView txtv_home_services_requests_title;
     private TextView txtv_home_last_news_title;
     private TextView txtv_eventTitle;
     private TextView txtv_eventDescription;
@@ -77,6 +77,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
 	private TextView txtv_eventImgDate_day;
 	private TextView txtv_eventImgDate_month;
+	private TextView txtv_home_events_title;
 
 
 	public static HomeFragment newInstance() {
@@ -172,13 +173,27 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 
     public void applyFonts()
     {
-        if(textViewTitleHeader!=null)
+	    if(Utilities.isTablet(getActivity())){
+		    if(txtv_home_services_requests_title!=null)
+		        txtv_home_services_requests_title.setText(getResources().getString(R.string.eservices));
+
+		    if(txtv_home_last_news_title!=null)
+			    txtv_home_last_news_title.setText(getResources().getString(R.string.news));
+		    if(txtv_home_events_title!=null)
+		        txtv_home_events_title.setText(getResources().getString(R.string.events));
+
+	    }
+        if(txtv_home_services_requests_title !=null)
         {
-            UiEngine.applyCustomFont(textViewTitleHeader, UiEngine.Fonts.HVAR);
+            UiEngine.applyCustomFont(txtv_home_services_requests_title, UiEngine.Fonts.HVAR);
         }
 
         if(txtv_home_last_news_title!=null)
             UiEngine.applyCustomFont(txtv_home_last_news_title, UiEngine.Fonts.HVAR);
+
+
+        if(txtv_home_events_title!=null)
+            UiEngine.applyCustomFont(txtv_home_events_title, UiEngine.Fonts.HVAR);
 
 
         if(txtv_graph_title_closed!=null)
@@ -257,8 +272,11 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         progressWheelInbox = (ProgressWheel) view.findViewById(R.id.progressWheelInbox);
         progressWheelInProgress = (ProgressWheel) view.findViewById(R.id.progressWheelProgress);
 
-        textViewTitleHeader = (TextView) view.findViewById(R.id.textViewTitleHeader);
+	    txtv_home_services_requests_title = (TextView) view.findViewById(R.id.txtv_home_services_requests_title);
         txtv_home_last_news_title = (TextView) view.findViewById(R.id.txtv_home_last_news_title);
+
+
+	    txtv_home_events_title= (TextView) view.findViewById(R.id.txtv_home_events_title);
 
 
         txtv_graph_title_closed = (TextView) view.findViewById(R.id.txtv_graph_title_closed);
@@ -292,6 +310,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	    {
 		    txtv_viewAllEvents.setOnClickListener(this);
 		    txtv_viewAllEvents.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+		    UiEngine.applyCustomFont(txtv_viewAllEvents, UiEngine.Fonts.HVAR);
 	    }
 
 //	    eventItem = DevData.getEventsList().get(0);
@@ -329,6 +348,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	    }
 
 	    event_card_container.setVisibility(View.VISIBLE);
+	    if(Utilities.isTablet(getActivity()))
+		    event_card_container.setBackgroundColor(getResources().getColor(R.color.off_white));
 //	    if(!Utilities.isNullString(eventItem.ImageUrl))
 //	    {
 //		    Picasso.with(getActivity())

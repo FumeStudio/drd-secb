@@ -27,7 +27,7 @@
             android:layout_marginRight="@dimen/page_layouts_margin_h">
         </FrameLayout>
 
-        android:layout_width="@dimen/newsDetails_width"
+        <!--android:layout_width="@dimen/newsDetails_width"-->
 
         <FrameLayout
             android:id="@+id/details_container"

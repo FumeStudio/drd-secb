@@ -121,7 +121,8 @@
                         android:drawablePadding="@dimen/contact_us_text_drwable_padding"
                         android:text="@string/status"
                         android:textColor="@color/secb_dark_text"
-                        android:textSize="@dimen/contact_us_text_us" />
+                        android:textSize="@dimen/eservice_item_title_text_size"
+                        />
 
                     <TextView
                         android:id="@+id/txtv_status_value"
@@ -130,7 +131,7 @@
                         android:layout_weight="2"
                         android:text="aaaaaaaaaaa"
                         android:textColor="@color/secb_grey_text"
-                        android:textSize="@dimen/contact_us_text_us" />
+                        android:textSize="@dimen/eservice_item_title_text_size" />
 
                 </TableRow>
 

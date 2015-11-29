@@ -80,7 +80,7 @@ public class NewsListFragment extends SECBBaseFragment
 	public void onPause() {
 		super.onPause();
 		((SECBBaseActivity) getActivity()).removeBackObserver(this);
-		((SECBBaseActivity) getActivity()).showFilterButton(false);
+		((SECBBaseActivity) getActivity()).showFilterButton(Utilities.isTablet(getActivity()));
 	}
 
 	@Override

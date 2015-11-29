@@ -78,9 +78,10 @@ public class AlbumFragment extends SECBBaseFragment
     public static final String YOUTUBE_API_KEY = "AIzaSyBYpLwG4bwNDTpqX5uzAJLFvXfXiE9BW-U";
     public YouTubePlayer youTubePlayer;
     private boolean isPlayerReadey;
+	private boolean isFromBackClickd;
 
 
-    public static AlbumFragment newInstance(int galleryType, String folderPath, String albumId) {
+	public static AlbumFragment newInstance(int galleryType, String folderPath, String albumId) {
         AlbumFragment fragment = new AlbumFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("galleryType", galleryType);
@@ -94,9 +95,18 @@ public class AlbumFragment extends SECBBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        ((SECBBaseActivity) getActivity()).addBackObserver(this);
-        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
-        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    if( Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
+	    else
+	    {
+		    ((SECBBaseActivity) getActivity()).addBackObserver(this);
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    }
+
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 
@@ -200,15 +210,17 @@ public class AlbumFragment extends SECBBaseFragment
 
 	   if(((GalleryActivity)getActivity()).isImageVisible)
 		    ((GalleryActivity)getActivity()).hidePlayers();
+
 	    //mobile and image is not displayed then go back
 	    else if(!((GalleryActivity)getActivity()).isImageVisible && !Utilities.isTablet(getActivity()))
 		    goBack();
 
 
 	    //tablet and image is not displayed do nothing because this check handled in Gallery
-	    if(!((GalleryActivity)getActivity()).isImageVisible && Utilities.isTablet(getActivity()))
+	    else if(!((GalleryActivity)getActivity()).isImageVisible && Utilities.isTablet(getActivity()) &&isFromBackClickd)
 	    {
-//		    goBack();
+		    isFromBackClickd=false;
+		    goBack();
 	    }
     }
 
@@ -216,6 +228,7 @@ public class AlbumFragment extends SECBBaseFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageViewBackHeader:
+	            isFromBackClickd=true;
                 onBack();
                 break;
             case R.id.layout_videoPlayerContainer:

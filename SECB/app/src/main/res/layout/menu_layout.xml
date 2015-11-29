@@ -1,10 +1,11 @@
+<!--android:paddingTop="@dimen/header_menu_icon_margin_start"-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/menu_bg"
     android:orientation="vertical"
-    android:paddingTop="@dimen/header_menu_icon_margin_start">
+  >
 
     <View
         android:layout_width="match_parent"

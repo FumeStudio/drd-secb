@@ -85,7 +85,18 @@ public class GalleryFragment extends SECBBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        ((SECBBaseActivity) getActivity()).addBackObserver(this);
+	    if( Utilities.isTablet(getActivity()))
+	    {
+		    ((SECBBaseActivity) getActivity()).disableHeaderBackButton();
+		    ((SECBBaseActivity) getActivity()).enableHeaderMenuButton();
+	    }
+	    else
+	    {
+		    ((SECBBaseActivity) getActivity()).addBackObserver(this);
+		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
+		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
+	    }
+
         ((SECBBaseActivity) getActivity()).showFilterButton(false);
     }
 

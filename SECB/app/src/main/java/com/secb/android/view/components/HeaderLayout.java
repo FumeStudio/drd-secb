@@ -11,16 +11,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.addthis.core.AddThis;
-import com.addthis.core.Config;
 import com.addthis.models.ATShareItem;
 import com.secb.android.R;
 import com.secb.android.model.ShareItemInterface;
+import com.secb.android.view.SECBBaseActivity;
 import com.secb.android.view.UiEngine;
 
 import net.comptoirs.android.common.helper.Utilities;
 
 public class HeaderLayout extends LinearLayout {
-    RelativeLayout layoutContainerHeader;
+	private final Context context;
+	RelativeLayout layoutContainerHeader;
     ImageView imageViewMenuHeader;
     ImageView imageViewBackHeader;
     ImageView imageViewShareHeader;
@@ -39,7 +40,8 @@ private ImageView imageViewFilterHeader;
 
     public HeaderLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+	    this.context=context;
+	    init();
     }
 
     private void init() {
@@ -91,16 +93,29 @@ private ImageView imageViewFilterHeader;
             } else
 	            imageViewFilterHeader.setVisibility(View.GONE);
         }
-        if (imageViewShareHeader != null) {
-            if (shareItemInterface != null) {
+
+        if (imageViewShareHeader != null)
+        {
+            if (shareItemInterface != null)
+            {
+/*
                 Config.configObject().setAddThisPubId("ra-563a8a466b38d02f");
                 Config.configObject().setFacebookAppId("1648071015475595");
                 Config.configObject().setTwitterConsumerKey("4ZvogbsyKFgjEFkB3jIi4I7tt");
                 Config.configObject().setTwitterConsumerSecret("ZKkReMP7ep6xgk9ighBbL2PijvTmhYh901nZVtSPr2VterAiPZ");
+*/
+	            ((SECBBaseActivity)context).initSharingConfigs();
+
 //                Config.configObject().setShouldUseFacebookConnect(true);
 //                Config.configObject().setTwitterCallbackUrl("<any-url-need-not-be-existing-one>");
 //				imageViewShareHeader.setOnClickListener(shareOnClickListener);
-                imageViewShareHeader.setVisibility(View.VISIBLE);
+	            if( ! Utilities.isTablet(context))
+	            {
+		            imageViewShareHeader.setVisibility(View.VISIBLE);
+	            }
+	            else{
+		            imageViewShareHeader.setVisibility(View.GONE);
+	            }
                 imageViewShareHeader.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -111,7 +126,8 @@ private ImageView imageViewFilterHeader;
 
 //                addthisShareButton.setItem(item);
 //                AddThis.presentAddThisMenu(getContext(), "http;//www.addthis.com", "title", "description");
-            } else
+            }
+            else
                 imageViewShareHeader.setVisibility(View.GONE);
         }
     }

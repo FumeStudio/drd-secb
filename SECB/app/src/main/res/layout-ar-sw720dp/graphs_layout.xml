@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/home_graphs_card_margin_top"
+        android:orientation="vertical"
+        android:gravity="right">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/txtv_graph_value_closed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="15"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/home_graphs_value_text_size"
+                android:textStyle="bold"/>
+
+
+            <com.secb.android.view.components.dialogs.ProgressWheel
+                android:id="@+id/progressWheelClosed"
+                android:layout_width="@dimen/home_graphs_wheel_size"
+                android:layout_height="@dimen/home_graphs_wheel_size"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtv_graph_title_closed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressWheelClosed"
+            android:gravity="center_horizontal|center_vertical"
+            android:includeFontPadding="false"
+            android:lines="2"
+            android:text="@string/graph_title_closed"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/home_graphs_title_text_size"
+            android:textStyle="normal"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/home_graphs_horizontal_margin"
+        android:layout_marginRight="@dimen/home_graphs_horizontal_margin"
+        android:layout_marginTop="@dimen/home_graphs_card_margin_top"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/txtv_graph_value_inbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="15"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/home_graphs_value_text_size"
+                android:textStyle="bold"/>
+
+
+            <com.secb.android.view.components.dialogs.ProgressWheel
+                android:id="@+id/progressWheelInbox"
+                android:layout_width="@dimen/home_graphs_wheel_size"
+                android:layout_height="@dimen/home_graphs_wheel_size"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtv_graph_title_inbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/progressWheelInbox"
+            android:gravity="center_horizontal|center_vertical"
+            android:lines="2"
+            android:text="@string/graph_title_inbox"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/home_graphs_title_text_size"
+            android:textStyle="normal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/home_graphs_card_margin_top"
+        android:orientation="vertical"
+        android:gravity="left">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/txtv_graph_value_inProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="15"
+                android:textColor="@color/secb_dark_text"
+                android:textSize="@dimen/home_graphs_value_text_size"
+                android:textStyle="bold"/>
+
+
+            <com.secb.android.view.components.dialogs.ProgressWheel
+                android:id="@+id/progressWheelProgress"
+                android:layout_width="@dimen/home_graphs_wheel_size"
+                android:layout_height="@dimen/home_graphs_wheel_size"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtv_graph_title_inProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/progressWheelProgress"
+            android:gravity="center_horizontal|center_vertical"
+            android:lines="2"
+            android:text="@string/graph_title_inProgress"
+            android:textColor="@color/secb_dark_text"
+            android:textSize="@dimen/home_graphs_title_text_size"
+            android:textStyle="normal"/>
+    </LinearLayout>
+
+
+</LinearLayout>

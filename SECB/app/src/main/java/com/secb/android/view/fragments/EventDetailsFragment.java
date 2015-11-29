@@ -72,11 +72,13 @@ public class EventDetailsFragment  extends SECBBaseFragment implements FragmentB
         super.onResume();
         ((SECBBaseActivity) getActivity()).addBackObserver(this);
         ((SECBBaseActivity) getActivity()).setHeaderTitleText(getString(R.string.event_details));
-        ((SECBBaseActivity) getActivity()).showFilterButton(false);
+
 //        ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
 //        ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();
 
-	    if(!Utilities.isTablet(getActivity()))
+	    ((SECBBaseActivity) getActivity()).showFilterButton(Utilities.isTablet(getActivity()));
+
+	    if( ! Utilities.isTablet(getActivity()))
 	    {
 		    ((SECBBaseActivity) getActivity()).enableHeaderBackButton(this);
 		    ((SECBBaseActivity) getActivity()).disableHeaderMenuButton();

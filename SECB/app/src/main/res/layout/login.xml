@@ -15,12 +15,14 @@
         android:orientation="vertical">
 
         <!--logo-->
+        <!--android:scaleType="centerCrop"
+        android:layout_height="@dimen/login_logo_img_height"-->
         <ImageView
             android:layout_width="@dimen/login_logo_img_width"
-            android:layout_height="@dimen/login_logo_img_height"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/login_logo_margin_bottom"
-            android:scaleType="centerCrop"
+
             android:src="@drawable/login_logo"
             android:visibility="visible" />
 
@@ -37,9 +39,15 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/login_input_container_pad_left"
             android:paddingRight="@dimen/login_input_container_pad_right">
-            <!-- email-->
+
             <!-- email-->
             <include layout="@layout/email_input" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/secb_dark_text"></LinearLayout>
+
             <!--password-->
             <include layout="@layout/password_input" />
         </LinearLayout>

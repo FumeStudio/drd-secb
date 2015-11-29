@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.addthis.core.Config;
 import com.flurry.android.FlurryAgent;
 import com.secb.android.R;
 import com.secb.android.controller.manager.CachingManager;
@@ -236,6 +237,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     protected void onResume() {
         super.onResume();
 //        registerLanguageBroadcastReceiver();
+	    activity = SECBBaseActivity.this;
     }
 
     @Override
@@ -270,11 +272,11 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
     {
 	    if(Utilities.isTablet(this))
 	    {
-		    enableHeaderFilterButton(this);
-		 /*   if(isVisible)
+//		    enableHeaderFilterButton(this);
+		    if(isVisible)
 			    enableHeaderFilterButton(this);
 		    else
-			    disableHeaderFilterButton();*/
+			    disableHeaderFilterButton();
 	    }
         else
 	    {
@@ -400,18 +402,12 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 	    {
 		    headerLayoutHome.enableShareButton(shareItemInterface);
 	    }
-	    else
-	    {
-		    //enable share icon from news details
-	    }
-
     }
 
     // Disable header 'share' button
     public void disableHeaderShareButton() {
         headerLayoutHome.disableShareButton();
     }
-
 
     // hide header layout
     public void hideHeader() {
@@ -765,7 +761,7 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
         Logger.instance().v(TAG + " myOnConfigurationChanged - Language changed", newConfig.locale.getDisplayLanguage() + "");
 
         Intent i = new Intent(activity, SplashActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
         activity.startActivity(i);
 //        activity.overridePendingTransition(0, 0);
     }
@@ -783,9 +779,10 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 	    }
 
 	    //go to login page
-        Intent i = new Intent(activity, LoginActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(i);
+
+	    Intent i = new Intent(activity, LoginActivity.class);
+	    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+	    activity.startActivity(i);
 
 
     }
@@ -826,13 +823,21 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 
 	public void openHomeFragment(boolean addToBackStack) {
 		Intent i = new Intent(activity, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+		i.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|*/
+				Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP );
 		activity.startActivity(i);
 	}
 
 
 	public void openNewsListFragment() {
-		startActivity(new Intent(this, NewsActivity.class));
+		Intent i = new Intent(activity, NewsActivity.class);
+
+//		i.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|*/
+//				Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		if(! (activity instanceof  MainActivity))
+			finish();
 	}
 
 
@@ -872,7 +877,15 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //		EventsCalendarFragment eventsCalendarFragment = EventsCalendarFragment.newInstance();
 //		addFragment(eventsCalendarFragment, eventsCalendarFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-		startActivity(new Intent(this, EventsActivity.class));
+//		startActivity(new Intent(this, EventsActivity.class));
+
+		Intent i = new Intent(activity, EventsActivity.class);
+
+//		i.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|*/
+//				Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		if(! (activity instanceof  MainActivity))
+			finish();
 	}
 
 
@@ -880,7 +893,15 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //		EguideHomeFragment eguideHomeFragment = EguideHomeFragment.newInstance();
 //		addFragment(eguideHomeFragment, eguideHomeFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-		startActivity(new Intent(this, EguideActivity.class));
+//		startActivity(new Intent(this, EguideActivity.class));
+
+		Intent i = new Intent(activity, EguideActivity.class);
+
+//		i.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|*/
+//				Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		if(! (activity instanceof  MainActivity))
+			finish();
 	}
 
 	public void openEguideLocationFragment() {
@@ -911,8 +932,10 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //		addFragment(galleryFragment, galleryFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
 		Intent intent = new Intent(this,GalleryActivity.class);
-		intent.putExtra("galleryType",galleryType);
+		intent.putExtra("galleryType", galleryType);
 		startActivity(intent);
+		if(! (activity instanceof  MainActivity))
+			finish();
 	}
 
 	public void openAlbumFragment(int galleryType, String folderPath, String albumId) {
@@ -932,14 +955,31 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //		ContactUsFragment contactUsFragment = ContactUsFragment.newInstance();
 //		addFragment(contactUsFragment, contactUsFragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-		startActivity(new Intent(this, ContactUsActivity.class));
+//		startActivity(new Intent(this, ContactUsActivity.class));
+		Intent i = new Intent(activity, ContactUsActivity.class);
+
+//		i.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|*/
+//				Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		if(! (activity instanceof  MainActivity))
+			finish();
+
+
 	}
 
 	public void openE_ServicesFragment() {
 //		E_ServicesListFragment fragment = E_ServicesListFragment.newInstance();
 //		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-		startActivity(new Intent (this,EservicesActivity.class));
+//		startActivity(new Intent (this,EservicesActivity.class));
+		Intent i = new Intent(activity, EservicesActivity.class);
+
+//		i.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|*/
+//				Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		if(! (activity instanceof  MainActivity))
+			finish();
+
 	}
 
 	public void openE_ServiceDetailsFragment(E_ServiceRequestItem e_serviceRequestItem) {
@@ -955,7 +995,15 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
 //		AboutUsFragment fragment = AboutUsFragment.newInstance();
 //		addFragment(fragment, fragment.getClass().getName(), FragmentTransaction.TRANSIT_EXIT_MASK, true);
 
-		startActivity(new Intent(this,AboutUsActivity.class));
+//		startActivity(new Intent(this,AboutUsActivity.class));
+
+		Intent i = new Intent(activity, AboutUsActivity.class);
+//		i.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|*/
+//				Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		if(! (activity instanceof  MainActivity))
+			finish();
+
 	}
 
 
@@ -1040,5 +1088,13 @@ public abstract class SECBBaseActivity extends FragmentActivity /*AppCompatActiv
             e.printStackTrace();
         }
     }
-	
+
+
+	//initialize sharing config
+	public void initSharingConfigs(){
+		Config.configObject().setAddThisPubId("ra-563a8a466b38d02f");
+		Config.configObject().setFacebookAppId("1648071015475595");
+		Config.configObject().setTwitterConsumerKey("4ZvogbsyKFgjEFkB3jIi4I7tt");
+		Config.configObject().setTwitterConsumerSecret("ZKkReMP7ep6xgk9ighBbL2PijvTmhYh901nZVtSPr2VterAiPZ");
+	}
 }
