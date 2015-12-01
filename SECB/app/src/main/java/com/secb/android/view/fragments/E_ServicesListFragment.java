@@ -53,6 +53,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
     E_ServicesFilterData e_servicesFilterData;
 	
     LinearLayout layout_graphs_container;
+	private LinearLayout layout_graphs_progressBar;
     ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
 	ArrayList<Integer> graphsValues;
@@ -253,6 +254,9 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			graphsValues = new ArrayList<>();
 			graphsValues.add(0);graphsValues.add(0);graphsValues.add(0);
 		}
+
+		layout_graphs_progressBar=(LinearLayout)view.findViewById(R.id.layout_graphs_progressBar);
+
 		fillWheelPercentage(graphsValues.get(0), graphsValues.get(1), graphsValues.get(2));
 
 	}
@@ -290,6 +294,17 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		// wait for it and it will notify handleRequestFinished in this fragment.
 		//if the main activity finished loading events list and the manager is still empty
 		//start operation here.
+		e_ServicesStatisticsList = (ArrayList<E_ServiceStatisticsItem>) E_ServicesManager.getInstance().getEservicesStatisticsList(getActivity());
+		if(e_ServicesStatisticsList !=null&& e_ServicesStatisticsList.size()>0)
+		{
+			//hide loading layout
+			layout_graphs_progressBar.setVisibility(View.GONE);
+			handleRequestFinished(RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID,null, e_ServicesStatisticsList);
+		}
+		else{
+			layout_graphs_progressBar.setVisibility(View.VISIBLE);
+
+		}
 
 
 		eServicesList = (ArrayList<E_ServiceRequestItem>) E_ServicesManager.getInstance().getEservicesRequestsUnFilteredList(getActivity());
@@ -362,7 +377,7 @@ public class E_ServicesListFragment extends SECBBaseFragment
 			}
 			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
 			{
-
+				layout_graphs_progressBar.setVisibility(View.GONE);
 				try {
 					graphsValues = ((SECBBaseActivity)getActivity()).calculateGraphsValues();
 				} catch (Exception e) {
@@ -380,6 +395,9 @@ public class E_ServicesListFragment extends SECBBaseFragment
 		}
 		else if (error != null && error instanceof CTHttpError)
 		{
+			if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID ){
+				layout_graphs_progressBar.setVisibility(View.GONE);
+			}
 			Logger.instance().v(TAG,error);
             int statusCode = ((CTHttpError) error).getStatusCode();
             String errorMsg = ((CTHttpError) error).getErrorMsg();

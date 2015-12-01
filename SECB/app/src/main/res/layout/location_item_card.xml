@@ -5,7 +5,7 @@
     android:background="@drawable/recycler_view_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_card_height"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginBottom="@dimen/eguide_base_padding"
     android:layout_marginTop="@dimen/eguide_base_padding"
@@ -17,11 +17,12 @@
         android:layout_width="@dimen/evet_card_img_size"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/event_card_margin"
+        android:scaleType="centerCrop"
         android:src="@drawable/event_card_img" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/event_card_margin"
         android:layout_weight="1"
         android:orientation="vertical"
@@ -46,6 +47,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
+            android:lines="2"
             android:gravity="top"
             android:text="Saudi Arabia has "
             android:textColor="@color/white_grey_def_grey_selector"

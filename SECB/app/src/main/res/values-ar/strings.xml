@@ -82,7 +82,8 @@
     <string name="address_">العنوان:</string>
     <string name="phone">رقم التليفون:</string>
     <string name="phone_">رقم التليفون:</string>
-    <string name="website">الموقع الالكتروني:</string>
+    <string name="website">الموقع الالكتروني</string>
+    <string name="website_">الموقع الالكتروني:</string>
     <string name="organizer_details">بيانات المنظم</string>
     <string name="location_capacityTitle">السعة:</string>
     <string name="location_spaceTitle">المساحة:</string>

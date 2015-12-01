@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secb.android.R;
@@ -46,6 +47,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	private static final String TAG = "HomeFragment";
 	ProgressWheel progressWheelClosed, progressWheelInbox, progressWheelInProgress;
     private static final int PROGRESS_WHEEL_TIME = 2 * 1000;
+	private LinearLayout layout_graphs_progressBar;
 
     ArrayList<Integer> graphsValues;
 
@@ -141,7 +143,8 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		}
 		else {
 			//retry
-			if (((MainActivity) getActivity()).isNewsLoadingFinished==true) {
+//			if (((MainActivity) getActivity()).isNewsLoadingFinished==true)
+			{
 				((MainActivity) getActivity()).getNewsList(); /* (new NewsFilterData(),false);*/
 			}
 		}
@@ -153,15 +156,25 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 		}
 		else{
 			//retry
-			if (((MainActivity) getActivity()).isEventsLoadingFinished==true) {
+//			if (((MainActivity) getActivity()).isEventsLoadingFinished==true)
+			{
 				((MainActivity) getActivity()).getEventsList();/*startEventsListOperation(new NewsFilterData(),false);*/
 			}
+
 		}
 
 	/**E-services statistics*/
 		e_ServicesStatisticsList = (ArrayList<E_ServiceStatisticsItem>) E_ServicesManager.getInstance().getEservicesStatisticsList(getActivity());
 		if(e_ServicesStatisticsList !=null&& e_ServicesStatisticsList.size()>0)
+		{
+			//hide loading layout
+			layout_graphs_progressBar.setVisibility(View.GONE);
 			handleRequestFinished(RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID,null, e_ServicesStatisticsList);
+		}
+		else{
+			layout_graphs_progressBar.setVisibility(View.VISIBLE);
+			((MainActivity) getActivity()).getEserviceStatisticsList();
+		}
 	}
 
 	private void handleButtonsEvents() {
@@ -271,6 +284,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
         progressWheelClosed = (ProgressWheel) view.findViewById(R.id.progressWheelClosed);
         progressWheelInbox = (ProgressWheel) view.findViewById(R.id.progressWheelInbox);
         progressWheelInProgress = (ProgressWheel) view.findViewById(R.id.progressWheelProgress);
+	    layout_graphs_progressBar=(LinearLayout)view.findViewById(R.id.layout_graphs_progressBar);
 
 	    txtv_home_services_requests_title = (TextView) view.findViewById(R.id.txtv_home_services_requests_title);
         txtv_home_last_news_title = (TextView) view.findViewById(R.id.txtv_home_last_news_title);
@@ -441,7 +455,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 	@Override
 	public void handleRequestFinished(Object requestId, Throwable error, Object resultObject) {
         Logger.instance().v("RquestFinished", "HomeFragment requestId: "+requestId+" error: "+error+" resultObject: "+resultObject);
-        if(getActivity() == null)
+        if(getActivity() == null || !isAdded())
             return;
 		if (error == null)
 		{
@@ -460,6 +474,7 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 			}
 			else if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID && resultObject!=null)
 			{
+				layout_graphs_progressBar.setVisibility(View.GONE);
 				try {
 					graphsValues = ((MainActivity)getActivity()).calculateGraphsValues();
 				} catch (Exception e) {
@@ -479,8 +494,13 @@ public class HomeFragment extends SECBBaseFragment implements FragmentBackObserv
 //                }, 2 * PROGRESS_WHEEL_TIME);
 
 			}
+
 		}
-        else if (error != null && error instanceof CTHttpError) {
+        else if (error != null && error instanceof CTHttpError)
+		{
+			if((int)requestId == RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID ){
+				layout_graphs_progressBar.setVisibility(View.GONE);
+			}
             Logger.instance().v(TAG,error);
             int statusCode = ((CTHttpError) error).getStatusCode();
             String errorMsg = ((CTHttpError) error).getErrorMsg();

@@ -101,7 +101,8 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 		//if disabled the boolean values are initialized with true
 		//and the sync operations will not be executed
 		disableSync(true);
-		startSyncForHome();
+
+//		startSyncForHome();
 
 /*
 	    //Initializes the Google Maps Android API so that its classes are ready for use
@@ -223,6 +224,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 
 		/*Events UnFiltered  List*/
 		getEventsList();
+
 
 		/*E-Service Statistics List*/
 		getEserviceStatisticsList();
@@ -370,7 +372,7 @@ public class MainActivity extends SECBBaseActivity implements RequestObserver {
 	}
 
 	//	E-Service Requests List
-	private void getEserviceStatisticsList() {
+	public void getEserviceStatisticsList() {
 		E_ServicesStatisticsListOperation operation = new E_ServicesStatisticsListOperation(RequestIds.E_SERVICES_STATISTICS_LIST_REQUEST_ID, false, this, 100, 0);
 		operation.addRequsetObserver(this);
 		operation.execute();

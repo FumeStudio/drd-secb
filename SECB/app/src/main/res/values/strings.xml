@@ -95,6 +95,7 @@
     <string name="phone">Phone Number</string>
     <string name="phone_">Phone Number:</string>
     <string name="website">Website</string>
+    <string name="website_">Website:</string>
     <string name="organizer_details">Organizers Details</string>
     <string name="location_capacityTitle">Capacity:</string>
     <string name="location_spaceTitle">Space:</string>

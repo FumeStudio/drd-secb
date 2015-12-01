@@ -16,6 +16,7 @@ import com.secb.android.model.AppConfiguration;
 import net.comptoirs.android.common.helper.Utilities;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -316,6 +317,12 @@ public class Engine {
 	//create file called "fileName" inside the "parent" File
 	public static File getCacheFile(File parent, String fileName, Context appContext) {
 		File file = new File(parent + File.separator + fileName + "");
+		if(!file.exists())
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		return file;
 	}
 

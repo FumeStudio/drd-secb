@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+    <!--android:minHeight="@dimen/item_card_height"-->
 <LinearLayout android:id="@+id/layout_item_root"
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/item_card_height"
+              android:layout_height="wrap_content"
               android:layout_marginBottom="@dimen/eguide_base_padding"
               android:layout_marginRight="@dimen/eguide_base_padding"
               android:layout_marginTop="@dimen/event_card_margin"
@@ -14,7 +15,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/event_card_margin"
         android:layout_weight="1"
         android:orientation="vertical"
@@ -27,6 +28,7 @@
             android:ellipsize="end"
             android:gravity="top"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها. لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/white_blue_def_blue_selector"
             android:textSize="@dimen/event_card_h1_text_size"
@@ -35,11 +37,11 @@
         <TextView
             android:id="@+id/txtv_locationDescription"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="top"
             android:maxLines="2"
+            android:lines="2"
             android:text="لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها.  لقد قامت السعودية بتطوير المؤتمرات المنعقدة ليديها."
             android:textColor="@color/white_grey_def_grey_selector"
             android:textSize="@dimen/event_card_h2_text_size"/>
@@ -155,6 +157,7 @@
         android:layout_width="@dimen/evet_card_img_size"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/event_card_margin"
-        android:src="@drawable/event_card_img"/>
+        android:src="@drawable/event_card_img"
+        />
 
 </LinearLayout>
